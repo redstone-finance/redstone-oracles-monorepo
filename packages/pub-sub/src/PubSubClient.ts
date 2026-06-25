@@ -1,4 +1,16 @@
 import { ContentTypes } from "@redstone-finance/internal-utils";
+import { RedstoneCommon } from "@redstone-finance/utils";
+import { z } from "zod";
+
+/**
+ * When enabled, pub-sub clients decompress incoming message payloads off the main event loop
+ * via the async (libuv threadpool) zlib variants instead of the synchronous ones. Defaults to
+ * false to preserve existing behavior; flag-gated so the difference can be measured easily.
+ */
+export const ASYNC_DESERIALIZE = RedstoneCommon.getFromEnv(
+  "PUB_SUB_ASYNC_DESERIALIZE",
+  z.boolean().default(false)
+);
 
 export type PubSubPayload = {
   /** valid topic @see topic.ts */

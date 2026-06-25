@@ -11,6 +11,7 @@ import {
   nkeyAuthenticator,
   Subscription,
 } from "nats";
+import { deserializeAndDispatch } from "./deserialize-incoming-message";
 import { PubSubClient, PubSubPayload, SubscribeCallback } from "./PubSubClient";
 
 const CONTENT_TYPE_HEADER = "Content-Type";
@@ -176,25 +177,13 @@ export class NatsClient implements PubSubClient {
           return;
         }
         const contentType = msg.headers?.get(CONTENT_TYPE_HEADER) as ContentTypes | undefined;
-        let data: unknown;
-        try {
-          RedstoneCommon.assert(
-            RedstoneCommon.isDefined(contentType),
-            `${CONTENT_TYPE_HEADER} must be set in nats headers`
-          );
-          const deserializer = getSerializerDeserializer(contentType);
-          data = deserializer.deserialize(Buffer.from(msg.data));
-        } catch (e) {
-          this.onMessageCallback?.(
-            natsSubjectToMqttTopic(msg.subject),
-            null,
-            RedstoneCommon.stringifyError(e),
-            this
-          );
-
-          return;
-        }
-        this.onMessageCallback?.(natsSubjectToMqttTopic(msg.subject), data, null, this);
+        deserializeAndDispatch(
+          natsSubjectToMqttTopic(msg.subject),
+          contentType,
+          Buffer.from(msg.data),
+          this.onMessageCallback,
+          this
+        );
       };
 
       const sub = nc.subscribe(mqttTopicToNatsSubject(topic), {
