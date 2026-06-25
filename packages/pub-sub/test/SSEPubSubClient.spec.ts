@@ -1,6 +1,7 @@
 import { HttpClient } from "@redstone-finance/http-client";
 import { DeflateJson } from "@redstone-finance/internal-utils";
-import { POST_DATA_ROUTE, SSEPubSubClient } from "../src";
+import { POST_DATA_BATCH_ROUTE, SSEPubSubClient } from "../src";
+import { buildBatchBody } from "../src/light-gateway-clients/batch_framing";
 
 const GATEWAY_ADDRESS = "http://0.0.0.0:8000";
 const SESSION_ID = "mock_session_id";
@@ -63,10 +64,17 @@ describe("SSEPubSubClient", () => {
   it("should publish properly", async () => {
     await client.publish([{ topic: "topic1", data: 123 }]);
 
+    const expectedBody = buildBatchBody([
+      {
+        topicBytes: Buffer.from("topic1", "utf8"),
+        dataB64: Buffer.from(deflateJson.serialize(123).toString("base64"), "ascii"),
+      },
+    ]);
+
     expect(MOCK.postMock).toHaveBeenCalledWith(
-      `${GATEWAY_ADDRESS}/${POST_DATA_ROUTE}/topic1`,
-      deflateJson.serialize(123).toString("base64"),
-      { headers: { "Content-Type": "text/plain" } }
+      `${GATEWAY_ADDRESS}/${POST_DATA_BATCH_ROUTE}`,
+      expectedBody,
+      { headers: { "Content-Type": "application/octet-stream" } }
     );
   });
 
@@ -76,15 +84,21 @@ describe("SSEPubSubClient", () => {
       { topic: "topic2", data: 321 },
     ]);
 
+    const expectedBody = buildBatchBody([
+      {
+        topicBytes: Buffer.from("topic1", "utf8"),
+        dataB64: Buffer.from(deflateJson.serialize(123).toString("base64"), "ascii"),
+      },
+      {
+        topicBytes: Buffer.from("topic2", "utf8"),
+        dataB64: Buffer.from(deflateJson.serialize(321).toString("base64"), "ascii"),
+      },
+    ]);
+
     expect(MOCK.postMock).toHaveBeenCalledWith(
-      `${GATEWAY_ADDRESS}/${POST_DATA_ROUTE}/topic1`,
-      deflateJson.serialize(123).toString("base64"),
-      { headers: { "Content-Type": "text/plain" } }
-    );
-    expect(MOCK.postMock).toHaveBeenCalledWith(
-      `${GATEWAY_ADDRESS}/${POST_DATA_ROUTE}/topic2`,
-      deflateJson.serialize(321).toString("base64"),
-      { headers: { "Content-Type": "text/plain" } }
+      `${GATEWAY_ADDRESS}/${POST_DATA_BATCH_ROUTE}`,
+      expectedBody,
+      { headers: { "Content-Type": "application/octet-stream" } }
     );
   });
 
