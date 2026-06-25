@@ -57,10 +57,10 @@ describe("SSEPubSubClient", () => {
 
   beforeEach(async () => {
     client = client1 = new SSEPubSubClient(GATEWAY_ADDRESS);
-    client1.start();
+    await client1.start();
 
     client2 = new SSEPubSubClient(GATEWAY_ADDRESS);
-    client2.start();
+    await client2.start();
 
     // Wait for "connected" events
     const connected = () =>

@@ -1,44 +1,29 @@
-import { decode } from "@msgpack/msgpack";
 import { HttpClient } from "@redstone-finance/http-client";
 import { DeflateJson } from "@redstone-finance/internal-utils";
 import { POST_DATA_ROUTE, SSEPubSubClient } from "../src";
 
 const GATEWAY_ADDRESS = "http://0.0.0.0:8000";
 const SESSION_ID = "mock_session_id";
+const deflateJson = new DeflateJson();
+
+type PackageEvent = { lastEventId: string; data: string };
 
 class MockHttpClientAndEventSource {
-  batchCallbacks: ((data: unknown) => void)[] = [];
+  packageCallbacks: ((event: PackageEvent) => void)[] = [];
   postMock = jest.fn();
 
   init() {
-    this.batchCallbacks = [];
+    this.packageCallbacks = [];
     this.postMock.mockClear();
   }
 
-  post(urlSuffix: string, msg: unknown, config: { headers: Record<string, string> }) {
-    if (msg instanceof Object && "session_id" in msg) {
-      this.postMock(urlSuffix, msg, config);
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  get(_url: string) {
+    return Promise.resolve({ data: "v1" });
+  }
 
-      return Promise.resolve({ data: {} });
-    }
-
-    const data = decode(msg as Buffer) as [{ topic: string; data: Buffer }];
-    const dataDecoded = data.map((payload) => ({
-      topic: payload.topic,
-      data: Buffer.from(payload.data),
-    }));
-
-    for (const callback of this.batchCallbacks) {
-      callback({ data: JSON.stringify(dataDecoded) });
-    }
-
-    const deflateJson = new DeflateJson();
-    const dataRaw = data.map((payload) => ({
-      topic: payload.topic,
-      data: deflateJson.deserialize(payload.data),
-    }));
-
-    this.postMock(urlSuffix, dataRaw, config);
+  post(url: string, msg: unknown, config: { headers: Record<string, string> }) {
+    this.postMock(url, msg, config);
 
     return Promise.resolve({ data: {} });
   }
@@ -46,8 +31,8 @@ class MockHttpClientAndEventSource {
   addEventListener(event: string, callback: (data: unknown) => void) {
     if (event === "connected") {
       callback({ data: JSON.stringify({ session_id: SESSION_ID }) });
-    } else if (event === "batch") {
-      this.batchCallbacks.push(callback);
+    } else if (event === "package") {
+      this.packageCallbacks.push(callback);
     } else {
       throw new Error(`Unknown event type: ${event}`);
     }
@@ -65,10 +50,10 @@ jest.mock("eventsource", () => {
 describe("SSEPubSubClient", () => {
   let client: SSEPubSubClient;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     MOCK.init();
     client = new SSEPubSubClient(GATEWAY_ADDRESS, MOCK as unknown as HttpClient);
-    client.start();
+    await client.start();
   });
 
   it("should initialize session id", () => {
@@ -76,24 +61,31 @@ describe("SSEPubSubClient", () => {
   });
 
   it("should publish properly", async () => {
-    const data = [{ topic: "topic1", data: 123 }];
-    await client.publish(data);
+    await client.publish([{ topic: "topic1", data: 123 }]);
 
-    expect(MOCK.postMock).toHaveBeenCalledWith(`${GATEWAY_ADDRESS}/${POST_DATA_ROUTE}`, data, {
-      headers: { "Content-Type": "application/msgpack" },
-    });
+    expect(MOCK.postMock).toHaveBeenCalledWith(
+      `${GATEWAY_ADDRESS}/${POST_DATA_ROUTE}/topic1`,
+      deflateJson.serialize(123).toString("base64"),
+      { headers: { "Content-Type": "text/plain" } }
+    );
   });
 
   it("should publish properly multiple topics", async () => {
-    const data = [
+    await client.publish([
       { topic: "topic1", data: 123 },
       { topic: "topic2", data: 321 },
-    ];
-    await client.publish(data);
+    ]);
 
-    expect(MOCK.postMock).toHaveBeenCalledWith(`${GATEWAY_ADDRESS}/${POST_DATA_ROUTE}`, data, {
-      headers: { "Content-Type": "application/msgpack" },
-    });
+    expect(MOCK.postMock).toHaveBeenCalledWith(
+      `${GATEWAY_ADDRESS}/${POST_DATA_ROUTE}/topic1`,
+      deflateJson.serialize(123).toString("base64"),
+      { headers: { "Content-Type": "text/plain" } }
+    );
+    expect(MOCK.postMock).toHaveBeenCalledWith(
+      `${GATEWAY_ADDRESS}/${POST_DATA_ROUTE}/topic2`,
+      deflateJson.serialize(321).toString("base64"),
+      { headers: { "Content-Type": "text/plain" } }
+    );
   });
 
   it("should subscribe properly", async () => {
@@ -157,13 +149,20 @@ describe("SSEPubSubClient", () => {
     client.setOnMessageHandler(onMessage);
     await client.subscribe(["topic1", "topic2"]);
 
-    await client.publish([{ topic: "topic1", data: 123 }]);
+    MOCK.packageCallbacks[0]({
+      lastEventId: "topic1",
+      data: deflateJson.serialize(123).toString("base64"),
+    });
     expect(onMessage).toHaveBeenCalledWith("topic1", 123, null, expect.anything());
 
-    await client.publish([
-      { topic: "topic1", data: 123 },
-      { topic: "topic2", data: 321 },
-    ]);
+    MOCK.packageCallbacks[0]({
+      lastEventId: "topic1",
+      data: deflateJson.serialize(123).toString("base64"),
+    });
+    MOCK.packageCallbacks[0]({
+      lastEventId: "topic2",
+      data: deflateJson.serialize(321).toString("base64"),
+    });
     expect(onMessage).toHaveBeenCalledWith("topic1", 123, null, expect.anything());
     expect(onMessage).toHaveBeenCalledWith("topic2", 321, null, expect.anything());
   });
@@ -173,9 +172,7 @@ describe("SSEPubSubClient", () => {
     client.setOnMessageHandler(onMessage);
     await client.subscribe(["topic1"]);
 
-    MOCK.batchCallbacks[0]({
-      data: JSON.stringify([{ topic: "topic1", data: "invalid-base64-data" }]),
-    });
+    MOCK.packageCallbacks[0]({ lastEventId: "topic1", data: "invalid-base64-data" });
 
     expect(onMessage).toHaveBeenCalledWith(
       "topic1",
@@ -218,9 +215,7 @@ describe("SSEPubSubClient", () => {
     client.setOnMessageHandler(onMessage);
     await client.subscribe(["topic1"]);
 
-    MOCK.batchCallbacks[0]({
-      data: JSON.stringify([{ topic: "topic1", data: "invalid-base64-data" }]),
-    });
+    MOCK.packageCallbacks[0]({ lastEventId: "topic1", data: "invalid-base64-data" });
 
     expect(onMessage).toHaveBeenCalledTimes(1);
     expect(onMessage).toHaveBeenCalledWith(
