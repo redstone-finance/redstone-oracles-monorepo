@@ -10,6 +10,7 @@ import {
 } from "./routes";
 
 const CONNECTED_EVENT = "connected";
+const PACKAGE_EVENT = "package";
 const BATCH_EVENT = "batch";
 const CONTENT_TYPE_JSON = "application/json";
 
@@ -42,24 +43,51 @@ export class SSEPubSubClient implements PubSubClient {
     });
   }
 
-  start() {
+  async start() {
     this.logger.info("Starting SSE connection");
-    this.connect();
+    await this.connect();
   }
 
-  private connect() {
+  private async connect() {
+    const version = await this.common.getGatewayVersion();
+
+    if (version === "v1") {
+      this.connectV1();
+    } else {
+      this.connectLegacy();
+    }
+  }
+
+  private connectV1() {
     const url = this.common.getUrl(SUBSCRIBE_SSE_ROUTE);
 
-    this.logger.info("Establishing SSE connection", { url, topicCount: this.topics.size });
+    this.logger.info("Establishing SSE connection", {
+      url,
+      topicCount: this.topics.size,
+      version: "v1",
+    });
+
+    this.eventSource = new EventSource(url);
+    this.eventSource.addEventListener(CONNECTED_EVENT, (e) => this.handleConnected(e));
+    this.eventSource.addEventListener(PACKAGE_EVENT, (e) => this.handlePackage(e));
+    this.eventSource.onerror = (event) =>
+      this.logger.info("SSE connection error", { event, state: this.eventSource?.readyState });
+  }
+
+  private connectLegacy() {
+    const url = this.common.getUrl(SUBSCRIBE_SSE_ROUTE);
+
+    this.logger.info("Establishing SSE connection", {
+      url,
+      topicCount: this.topics.size,
+      version: "legacy",
+    });
 
     this.eventSource = new EventSource(url);
     this.eventSource.addEventListener(CONNECTED_EVENT, (e) => this.handleConnected(e));
     this.eventSource.addEventListener(BATCH_EVENT, (e) => this.handleBatch(e));
     this.eventSource.onerror = (event) =>
-      this.logger.info("SSE connection error", {
-        event,
-        state: this.eventSource?.readyState,
-      });
+      this.logger.info("SSE connection error", { event, state: this.eventSource?.readyState });
   }
 
   private handleConnected(event: MessageEvent) {
@@ -79,6 +107,12 @@ export class SSEPubSubClient implements PubSubClient {
     } catch (error) {
       this.logger.info("Failed to parse connected event", { error });
     }
+  }
+
+  private handlePackage(event: MessageEvent) {
+    this.logger.debug("Received package event");
+
+    this.processUpdate({ topic: event.lastEventId, data: event.data as string });
   }
 
   private handleBatch(event: MessageEvent) {
@@ -150,7 +184,7 @@ export class SSEPubSubClient implements PubSubClient {
 
     if (!this.sessionId) {
       this.logger.info("No active session, initiating connection");
-      this.connect();
+      await this.connect();
 
       return;
     }

@@ -3,18 +3,16 @@ import { HttpClient } from "@redstone-finance/http-client";
 import { DeflateJson } from "@redstone-finance/internal-utils";
 import { RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
 import { PubSubPayload } from "../PubSubClient";
-import { POST_DATA_ROUTE } from "./routes";
+import { POST_DATA_BATCH_ROUTE, POST_DATA_ROUTE, VERSION_ROUTE } from "./routes";
 
-export type SerializedPackage = {
-  topic: string;
-  data: Buffer;
-};
-
-const BASE64_ENCODING = "base64";
+const CONTENT_TYPE_TEXT_PLAIN = "text/plain";
 const CONTENT_TYPE_MSGPACK = "application/msgpack";
+
+export type GatewayVersion = "v1" | "legacy";
 
 export class ClientCommon {
   private readonly serializerDeserializer: DeflateJson = new DeflateJson();
+  private gatewayVersion?: GatewayVersion;
 
   constructor(
     private readonly httpClient: HttpClient,
@@ -29,8 +27,18 @@ export class ClientCommon {
       : this.lightGatewayAddress;
   }
 
-  static encodePackages(packages: SerializedPackage[]) {
-    return Buffer.from(encode(packages));
+  async getGatewayVersion(): Promise<GatewayVersion> {
+    if (!this.gatewayVersion) {
+      try {
+        const response = await this.httpClient.get<string>(this.getUrl(VERSION_ROUTE));
+
+        this.gatewayVersion = response.data === "v1" ? "v1" : "legacy";
+      } catch {
+        this.gatewayVersion = "legacy";
+      }
+    }
+
+    return this.gatewayVersion;
   }
 
   serializePayload(payload: PubSubPayload) {
@@ -41,25 +49,59 @@ export class ClientCommon {
   }
 
   deserializeData(base64Data: string) {
-    return this.serializerDeserializer.deserialize(Buffer.from(base64Data, BASE64_ENCODING));
+    return this.serializerDeserializer.deserialize(Buffer.from(base64Data, "base64"));
   }
 
   getUrl(route: string) {
     return `${this.lightGatewayAddress}/${route}`;
   }
 
-  getPublishUrl() {
-    return `${this.lightGatewayAddress}/${POST_DATA_ROUTE}`;
+  async publish(payloads: PubSubPayload[]) {
+    const version = await this.getGatewayVersion();
+
+    if (version === "legacy") {
+      return await this.publishLegacy(payloads);
+    }
+
+    await this.publishV1(payloads);
   }
 
-  async publish(payloads: PubSubPayload[]) {
-    const packages = payloads.map((payload) => this.serializePayload(payload));
-    const encoded = ClientCommon.encodePackages(packages);
+  private async publishV1(payloads: PubSubPayload[]) {
+    await Promise.all(
+      payloads.map(async (payload) => {
+        const { topic, data } = this.serializePayload(payload);
 
-    this.logger.debug("Publishing data", { byteLength: encoded.length, count: packages.length });
+        this.logger.debug("Publishing data", { byteLength: data.byteLength });
+
+        try {
+          await this.httpClient.post(
+            this.getUrl(`${POST_DATA_ROUTE}/${encodeURIComponent(topic)}`),
+            data.toString("base64"),
+            { headers: { "Content-Type": CONTENT_TYPE_TEXT_PLAIN } }
+          );
+        } catch (e) {
+          this.logger.error("Failed to publish data", {
+            error: RedstoneCommon.stringifyError(e),
+            topic,
+          });
+
+          throw e;
+        }
+      })
+    );
+  }
+
+  private async publishLegacy(payloads: PubSubPayload[]) {
+    const packages = payloads.map((payload) => this.serializePayload(payload));
+    const encoded = Buffer.from(encode(packages));
+
+    this.logger.debug("Publishing data (legacy)", {
+      byteLength: encoded.length,
+      count: packages.length,
+    });
 
     try {
-      await this.httpClient.post(this.getPublishUrl(), encoded, {
+      await this.httpClient.post(this.getUrl(POST_DATA_BATCH_ROUTE), encoded, {
         headers: { "Content-Type": CONTENT_TYPE_MSGPACK },
       });
     } catch (e) {
