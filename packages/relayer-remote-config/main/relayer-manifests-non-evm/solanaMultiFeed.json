@@ -133,13 +133,6 @@
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
     },
-    "CURR": {
-      "priceFeedAddress": "3749gbBexamKzeY9ivJ8vaVCZqkxWzrhrgqKxEffie5f",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 1800000
-      }
-    },
     "JupUSD": {
       "priceFeedAddress": "TJ1xyzZhUX8H8thjF5Uc9DANrSw5zfBNiUrCjw9DCmJ",
       "updateTriggersOverrides": {

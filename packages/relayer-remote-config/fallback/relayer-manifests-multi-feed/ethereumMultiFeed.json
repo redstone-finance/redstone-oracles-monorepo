@@ -367,14 +367,14 @@
     "DLF_FUNDAMENTAL": {
       "priceFeedAddress": "0xFFD1339908E0deBE2416E03df0843B896b8944Fe",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.015,
+        "deviationPercentage": 0.000001,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "DLF_PUBLICATION_TS": {
       "priceFeedAddress": "0x86F86Dae1851dC1E962529910B2732244C60AFA9",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.001,
+        "deviationPercentage": 0.000001,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
@@ -483,6 +483,27 @@
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "FGNX_EOD": {
+      "priceFeedAddress": "0x48ACab99130b3f319f2B272619E83985A3f2c4C4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "FGNXP_EOD": {
+      "priceFeedAddress": "0xa798aAAa41EBB8ea7e519924bbBF7c32C135e07c",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "CURR_EOD": {
+      "priceFeedAddress": "0xBd7C686c1c62E71c8bfD18FBd8005c70C4F866a5",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 43200000
       }
     }
   }
