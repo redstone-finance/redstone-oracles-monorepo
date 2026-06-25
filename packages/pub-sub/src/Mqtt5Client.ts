@@ -7,6 +7,7 @@ import {
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { auth, iot, mqtt5 } from "aws-iot-device-sdk-v2";
 import { randomUUID } from "crypto";
+import { deserializeAndDispatch } from "./deserialize-incoming-message";
 import { MqttConfigBuilder } from "./MqttConfigBuilder";
 import { PubSubClient, PubSubPayload, SubscribeCallback } from "./PubSubClient";
 import { DEFAULT_CONFIG, MqttPubSubClientConfig } from "./PubSubClientConfig";
@@ -147,23 +148,13 @@ export class Mqtt5Client implements PubSubClient {
 
     if (this._mqtt.listenerCount("messageReceived") === 0) {
       this._mqtt.on("messageReceived", ({ message }) => {
-        const topicName = message.topicName;
-        let deserializedData: unknown;
-        try {
-          deserializedData = getSerializerDeserializer(
-            message.contentType as ContentTypes
-          ).deserialize(Buffer.from(message.payload as ArrayBuffer));
-        } catch (e) {
-          this.onMessageCallback!(
-            topicName,
-            null,
-            `Error occurred when tried to parse message error=${RedstoneCommon.stringifyError(e)}`,
-            this
-          );
-
-          return;
-        }
-        this.onMessageCallback!(message.topicName, deserializedData, null, this);
+        deserializeAndDispatch(
+          message.topicName,
+          message.contentType as ContentTypes,
+          Buffer.from(message.payload as ArrayBuffer),
+          this.onMessageCallback,
+          this
+        );
       });
     }
   }
