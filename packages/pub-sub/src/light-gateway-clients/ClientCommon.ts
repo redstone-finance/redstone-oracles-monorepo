@@ -3,10 +3,11 @@ import { HttpClient } from "@redstone-finance/http-client";
 import { DeflateJson } from "@redstone-finance/internal-utils";
 import { RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
 import { PubSubPayload } from "../PubSubClient";
-import { POST_DATA_BATCH_ROUTE, POST_DATA_ROUTE, VERSION_ROUTE } from "./routes";
+import { buildBatchBody, lazyBatches } from "./batch_framing";
+import { POST_DATA_BATCH_ROUTE, VERSION_ROUTE } from "./routes";
 
-const CONTENT_TYPE_TEXT_PLAIN = "text/plain";
 const CONTENT_TYPE_MSGPACK = "application/msgpack";
+const CONTENT_TYPE_OCTET_STREAM = "application/octet-stream";
 
 export type GatewayVersion = "v1" | "legacy";
 
@@ -67,28 +68,33 @@ export class ClientCommon {
   }
 
   private async publishV1(payloads: PubSubPayload[]) {
-    await Promise.all(
-      payloads.map(async (payload) => {
-        const { topic, data } = this.serializePayload(payload);
+    const toFrame = (payload: PubSubPayload) => {
+      const { topic, data } = this.serializePayload(payload);
 
-        this.logger.debug("Publishing data", { byteLength: data.byteLength });
+      return {
+        topicBytes: Buffer.from(topic, "utf8"),
+        dataB64: Buffer.from(data.toString("base64"), "ascii"),
+      };
+    };
 
-        try {
-          await this.httpClient.post(
-            this.getUrl(`${POST_DATA_ROUTE}/${encodeURIComponent(topic)}`),
-            data.toString("base64"),
-            { headers: { "Content-Type": CONTENT_TYPE_TEXT_PLAIN } }
-          );
-        } catch (e) {
-          this.logger.error("Failed to publish data", {
-            error: RedstoneCommon.stringifyError(e),
-            topic,
-          });
+    for (const batch of lazyBatches(payloads, toFrame)) {
+      const body = buildBatchBody(batch);
 
-          throw e;
-        }
-      })
-    );
+      this.logger.debug("Publishing data", { byteLength: body.byteLength, count: batch.length });
+
+      try {
+        await this.httpClient.post(this.getUrl(POST_DATA_BATCH_ROUTE), body, {
+          headers: { "Content-Type": CONTENT_TYPE_OCTET_STREAM },
+        });
+      } catch (e) {
+        this.logger.error("Failed to publish data", {
+          error: RedstoneCommon.stringifyError(e),
+          count: batch.length,
+        });
+
+        throw e;
+      }
+    }
   }
 
   private async publishLegacy(payloads: PubSubPayload[]) {
