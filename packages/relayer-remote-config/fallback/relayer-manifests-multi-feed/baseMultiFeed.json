@@ -171,8 +171,8 @@
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
     },
-    "frxUSD": {
-      "priceFeedAddress": "0x4C89968338b75551243C99B452c84a01888282fD",
+    "fxUSD": {
+      "priceFeedAddress": "0x5e21f6530f656A38caE4F55500944753F662D184",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.2,
         "timeSinceLastUpdateInMilliseconds": 86400000
