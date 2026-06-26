@@ -49,8 +49,12 @@ export class ClientCommon {
     };
   }
 
-  deserializeData(base64Data: string) {
-    return this.serializerDeserializer.deserialize(Buffer.from(base64Data, "base64"));
+  deserializeData(data: string): unknown {
+    if (this.gatewayVersion === "legacy") {
+      return this.serializerDeserializer.deserialize(Buffer.from(data, "base64"));
+    }
+
+    return JSON.parse(data) as unknown;
   }
 
   getUrl(route: string) {
@@ -68,14 +72,10 @@ export class ClientCommon {
   }
 
   private async publishV1(payloads: PubSubPayload[]) {
-    const toFrame = (payload: PubSubPayload) => {
-      const { topic, data } = this.serializePayload(payload);
-
-      return {
-        topicBytes: Buffer.from(topic, "utf8"),
-        dataB64: Buffer.from(data.toString("base64"), "ascii"),
-      };
-    };
+    const toFrame = (payload: PubSubPayload) => ({
+      topicBytes: Buffer.from(payload.topic, "utf8"),
+      dataB64: Buffer.from(JSON.stringify(payload.data), "utf8"),
+    });
 
     for (const batch of lazyBatches(payloads, toFrame)) {
       const body = buildBatchBody(batch);
