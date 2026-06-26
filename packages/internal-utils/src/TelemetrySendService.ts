@@ -140,14 +140,14 @@ export class TelemetrySendService implements ITelemetrySendService {
       if (this.metrics.length === 0) {
         return;
       }
-      logger.info(`Sending batch with ${RedstoneCommon.getNS(this.metrics.length, "metric")}`);
+      logger.debug(`Sending batch with ${RedstoneCommon.getNS(this.metrics.length, "metric")}`);
 
       const writeApi = this.getWriteApi();
       writeApi.writePoints(this.metrics.map(telemetryPointToInfluxPoint));
       this.metrics = [];
 
       await writeApi.close();
-      logger.info(`Metrics sent`);
+      logger.debug(`Metrics sent`);
     } catch (error) {
       logger.error(`Failed saving metric: ${RedstoneCommon.stringifyError(error)}`);
     }
