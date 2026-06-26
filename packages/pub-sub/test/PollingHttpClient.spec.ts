@@ -1,5 +1,4 @@
 import { HttpClient } from "@redstone-finance/http-client";
-import { DeflateJson } from "@redstone-finance/internal-utils";
 import { GET_DATA_ROUTE, PollingHttpClient } from "../src";
 
 const GATEWAY_ADDRESS = "0.0.0.0:8000";
@@ -20,13 +19,12 @@ class MockHttpClient {
   post(urlSuffix: string, msg: unknown, config: { headers: Record<string, string> }) {
     if (urlSuffix.includes(GET_DATA_ROUTE)) {
       const topics = msg as string[];
-      const deflateJson = new DeflateJson();
       const response = topics.map((topic) => {
         const data = this.data.get(topic) || [];
 
         return {
           topic,
-          data: data.map((d) => Buffer.from(deflateJson.serialize(d)).toString("base64")),
+          data: data.map((d) => JSON.stringify(d)),
         };
       });
       this.postMock(urlSuffix, topics, config);

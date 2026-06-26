@@ -1,11 +1,9 @@
 import { HttpClient } from "@redstone-finance/http-client";
-import { DeflateJson } from "@redstone-finance/internal-utils";
 import { POST_DATA_BATCH_ROUTE, SSEPubSubClient } from "../src";
 import { buildBatchBody } from "../src/light-gateway-clients/batch_framing";
 
 const GATEWAY_ADDRESS = "http://0.0.0.0:8000";
 const SESSION_ID = "mock_session_id";
-const deflateJson = new DeflateJson();
 
 type PackageEvent = { lastEventId: string; data: string };
 
@@ -67,7 +65,7 @@ describe("SSEPubSubClient", () => {
     const expectedBody = buildBatchBody([
       {
         topicBytes: Buffer.from("topic1", "utf8"),
-        dataB64: Buffer.from(deflateJson.serialize(123).toString("base64"), "ascii"),
+        dataB64: Buffer.from(JSON.stringify(123), "utf8"),
       },
     ]);
 
@@ -87,11 +85,11 @@ describe("SSEPubSubClient", () => {
     const expectedBody = buildBatchBody([
       {
         topicBytes: Buffer.from("topic1", "utf8"),
-        dataB64: Buffer.from(deflateJson.serialize(123).toString("base64"), "ascii"),
+        dataB64: Buffer.from(JSON.stringify(123), "utf8"),
       },
       {
         topicBytes: Buffer.from("topic2", "utf8"),
-        dataB64: Buffer.from(deflateJson.serialize(321).toString("base64"), "ascii"),
+        dataB64: Buffer.from(JSON.stringify(321), "utf8"),
       },
     ]);
 
@@ -165,17 +163,17 @@ describe("SSEPubSubClient", () => {
 
     MOCK.packageCallbacks[0]({
       lastEventId: "topic1",
-      data: deflateJson.serialize(123).toString("base64"),
+      data: JSON.stringify(123),
     });
     expect(onMessage).toHaveBeenCalledWith("topic1", 123, null, expect.anything());
 
     MOCK.packageCallbacks[0]({
       lastEventId: "topic1",
-      data: deflateJson.serialize(123).toString("base64"),
+      data: JSON.stringify(123),
     });
     MOCK.packageCallbacks[0]({
       lastEventId: "topic2",
-      data: deflateJson.serialize(321).toString("base64"),
+      data: JSON.stringify(321),
     });
     expect(onMessage).toHaveBeenCalledWith("topic1", 123, null, expect.anything());
     expect(onMessage).toHaveBeenCalledWith("topic2", 321, null, expect.anything());
