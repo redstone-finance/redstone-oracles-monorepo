@@ -15,22 +15,34 @@ import { createMqtt5ClientFactory, PubSubClientFactory } from "./PubSubClientFac
 import { resolveSecretsFromSsm } from "./resolve-secrets-from-ssm";
 
 const logger = loggerFactory("create-multi-pub-sub-client");
+const DEFAULT_PUB_SUB_ENV = "PUB_SUB_CONFIGS";
 
 type MqttConfig = Extract<
   z.infer<typeof MultiPubSubEnvConfig>,
   { type: "mqttAWSV4Sig" | "mqttCert" | "mqttUnauthenticated" }
 >;
 
-export function createMultiPubSubClientFromEnv(envPath = "PUB_SUB_CONFIGS") {
+export type PubSubConfigs = z.infer<typeof MultiPubSubEnvConfigs>;
+
+export function readPubSubConfigs(envPath = DEFAULT_PUB_SUB_ENV) {
   const configs = RedstoneCommon.getFromEnv(envPath, MultiPubSubEnvConfigs.optional());
   if (!configs?.length) {
+    return undefined;
+  }
+
+  return configs;
+}
+
+export function createMultiPubSubClientFromEnv(envPath = DEFAULT_PUB_SUB_ENV) {
+  const configs = readPubSubConfigs(envPath);
+  if (!configs) {
     return undefined;
   }
 
   return createMultiPubSubClient(configs);
 }
 
-export async function createMultiPubSubClientFromEnvWithSsm(envPath = "PUB_SUB_CONFIGS") {
+export async function createMultiPubSubClientFromEnvWithSsm(envPath = DEFAULT_PUB_SUB_ENV) {
   const secrets = await resolveSecretsFromSsm(envPath);
   const configs = RedstoneCommon.getFromEnv(
     envPath,

@@ -1,4 +1,5 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import z from "zod";
 
 const logger = loggerFactory("ecs-metadata");
 
@@ -51,7 +52,10 @@ async function fetchTaskMetadata(): Promise<EcsTaskIdentity> {
  */
 export async function fetchEcsTaskIdentity(): Promise<EcsTaskIdentity> {
   try {
-    const metadataUri = process.env["ECS_CONTAINER_METADATA_URI_V4"];
+    const metadataUri = RedstoneCommon.getFromEnv(
+      "ECS_CONTAINER_METADATA_URI_V4",
+      z.string().default("local")
+    );
     if (metadataUri === "local") {
       return {
         serviceName: "local",
