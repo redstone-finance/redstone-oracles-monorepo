@@ -25,7 +25,7 @@ function reportError(
 export function deserializeAndDispatch(
   topicName: string,
   contentType: ContentTypes | undefined,
-  payload: Buffer,
+  payload: Buffer | Uint8Array,
   onMessage: SubscribeCallback | undefined,
   client: PubSubClient
 ) {
@@ -46,9 +46,13 @@ export function deserializeAndDispatch(
     return;
   }
 
+  const buf = Buffer.isBuffer(payload)
+    ? payload
+    : Buffer.from(payload.buffer, payload.byteOffset, payload.byteLength);
+
   if (ASYNC_DESERIALIZE) {
     serializer
-      .deserializeAsync(payload)
+      .deserializeAsync(buf)
       .then((data) => onMessage(topicName, data, null, client))
       .catch((e) => reportError(onMessage, client, topicName, e));
 
@@ -57,7 +61,7 @@ export function deserializeAndDispatch(
 
   let data: unknown;
   try {
-    data = serializer.deserialize(payload);
+    data = serializer.deserialize(buf);
   } catch (e) {
     reportError(onMessage, client, topicName, e);
 

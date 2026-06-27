@@ -110,9 +110,7 @@ export class SSEPubSubClient implements PubSubClient {
   }
 
   private handlePackage(event: MessageEvent) {
-    this.logger.debug("Received package event");
-
-    this.processUpdate({ topic: event.lastEventId, data: event.data as string });
+    this.processUpdate(event.lastEventId, event.data as string);
   }
 
   private handleBatch(event: MessageEvent) {
@@ -128,13 +126,13 @@ export class SSEPubSubClient implements PubSubClient {
     }
 
     for (const update of batch) {
-      this.processUpdate(update);
+      this.processUpdate(update.topic, update.data);
     }
   }
 
-  private processUpdate(update: Package) {
+  private processUpdate(topic: string, rawData: string) {
     if (!this.callback) {
-      this.logger.info("Received update but no callback registered", { topic: update.topic });
+      this.logger.info("Received update but no callback registered", { topic });
 
       return;
     }
@@ -142,15 +140,14 @@ export class SSEPubSubClient implements PubSubClient {
     let data: unknown;
 
     try {
-      data = this.common.deserializeData(update.data);
-      this.logger.debug("Processing update", { topic: update.topic, dataSize: update.data.length });
+      data = this.common.deserializeData(rawData);
     } catch (e) {
       this.logger.error("Failed to deserialize update", {
-        topic: update.topic,
+        topic,
         error: RedstoneCommon.stringifyError(e),
       });
       this.callback(
-        update.topic,
+        topic,
         null,
         `Error occurred when tried to parse message and call callback, error=${RedstoneCommon.stringifyError(e)}`,
         this
@@ -159,7 +156,7 @@ export class SSEPubSubClient implements PubSubClient {
       return;
     }
 
-    this.callback(update.topic, data, null, this);
+    this.callback(topic, data, null, this);
   }
 
   async publish(payloads: PubSubPayload[]) {
