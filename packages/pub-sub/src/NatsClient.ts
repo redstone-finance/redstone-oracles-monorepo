@@ -36,6 +36,29 @@ export function natsSubjectToMqttTopic(subject: string): string {
   return subject.split(".").join("/");
 }
 
+const mqttToNatsCache = new Map<string, string>();
+const natsToMqttCache = new Map<string, string>();
+
+export function mqttTopicToNatsSubjectCached(topic: string): string {
+  let cached = mqttToNatsCache.get(topic);
+  if (!cached) {
+    cached = mqttTopicToNatsSubject(topic);
+    mqttToNatsCache.set(topic, cached);
+  }
+
+  return cached;
+}
+
+function natsSubjectToMqttTopicCached(subject: string): string {
+  let cached = natsToMqttCache.get(subject);
+  if (!cached) {
+    cached = natsSubjectToMqttTopic(subject);
+    natsToMqttCache.set(subject, cached);
+  }
+
+  return cached;
+}
+
 export interface NatsClientConfig {
   /** NATS server host, e.g. "localhost:4222" or "nats://localhost:4222" */
   host: string;
@@ -151,11 +174,11 @@ export class NatsClient implements PubSubClient {
   async publish(payloads: PubSubPayload[], contentType: ContentTypes) {
     const nc = await this.getConnection();
     const serializer = getSerializerDeserializer(contentType);
+    const hdrs = natsHeaders();
+    hdrs.set(CONTENT_TYPE_HEADER, contentType);
     for (const payload of payloads) {
       const encodedMessage = serializer.serialize(payload.data);
-      const hdrs = natsHeaders();
-      hdrs.set(CONTENT_TYPE_HEADER, contentType);
-      nc.publish(mqttTopicToNatsSubject(payload.topic), encodedMessage, { headers: hdrs });
+      nc.publish(mqttTopicToNatsSubjectCached(payload.topic), encodedMessage, { headers: hdrs });
     }
   }
 
@@ -178,15 +201,15 @@ export class NatsClient implements PubSubClient {
         }
         const contentType = msg.headers?.get(CONTENT_TYPE_HEADER) as ContentTypes | undefined;
         deserializeAndDispatch(
-          natsSubjectToMqttTopic(msg.subject),
+          natsSubjectToMqttTopicCached(msg.subject),
           contentType,
-          Buffer.from(msg.data),
+          msg.data,
           this.onMessageCallback,
           this
         );
       };
 
-      const sub = nc.subscribe(mqttTopicToNatsSubject(topic), {
+      const sub = nc.subscribe(mqttTopicToNatsSubjectCached(topic), {
         callback,
       });
       this.subscriptions.set(topic, sub);
