@@ -2182,39 +2182,30 @@
       "rateFeed": false
     },
     "TENCENT": {
-      "source": ["ws-lseg", "ws-itick-stocks", "finhub_pepperstone_deferred"],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "ws-lseg",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "source": ["ws-lseg", "ws-itick-stocks"],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["ws-lseg"]
       },
       "denomination": "HKD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "XIAOMI": {
-      "source": ["ws-lseg", "ws-itick-stocks", "finhub_pepperstone_deferred"],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "ws-lseg",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "source": ["ws-lseg", "ws-itick-stocks"],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["ws-lseg"]
       },
       "denomination": "HKD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "POPMART": {
-      "source": ["ws-lseg", "ws-itick-stocks", "finhub_pepperstone_deferred"],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "ws-lseg",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "source": ["ws-lseg", "ws-itick-stocks"],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["ws-lseg"]
       },
       "denomination": "HKD",
       "rateFeed": false,
@@ -2222,12 +2213,9 @@
     },
     "MINIMAX": {
       "source": ["ws-lseg", "ws-itick-stocks"],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "ws-lseg",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["ws-lseg"]
       },
       "denomination": "HKD",
       "rateFeed": false,
@@ -2235,12 +2223,9 @@
     },
     "TSMC": {
       "source": ["ws-lseg", "ws-itick-stocks"],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "ws-lseg",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["ws-lseg"]
       },
       "denomination": "TWD",
       "rateFeed": false,
