@@ -2190,12 +2190,9 @@
     },
     "TENCENT": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "HKD",
       "rateFeed": false,
@@ -2205,12 +2202,9 @@
     },
     "XIAOMI": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "HKD",
       "rateFeed": false,
@@ -2220,12 +2214,9 @@
     },
     "POPMART": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "HKD",
       "rateFeed": false,
@@ -2235,12 +2226,9 @@
     },
     "MINIMAX": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "HKD",
       "rateFeed": false,
@@ -2250,12 +2238,9 @@
     },
     "TSMC": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "TWD",
       "rateFeed": false,
