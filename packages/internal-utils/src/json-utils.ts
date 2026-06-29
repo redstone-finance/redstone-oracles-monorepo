@@ -1,4 +1,5 @@
 import { readFileSync, writeFileSync } from "fs";
+import { parse, type ParseError } from "jsonc-parser";
 
 /**
  * Checks for duplicate keys in a JSON string at any nesting level.
@@ -76,6 +77,25 @@ export function checkForDuplicateKeys(jsonString: string) {
     }
   }
 }
+
+export const parseJsonc = <T = unknown>(content: string): T => {
+  const errors: ParseError[] = [];
+  const result = parse(content, errors, { allowTrailingComma: true }) as T;
+  if (errors.length > 0) {
+    throw new Error(`JSONC parse error: ${JSON.stringify(errors)}`);
+  }
+
+  return result;
+};
+
+export const readJsoncFile = <T = unknown>(filePath: string): T => {
+  const content = readFileSync(filePath, "utf-8");
+  try {
+    return parseJsonc<T>(content);
+  } catch (e) {
+    throw new Error(`File "${filePath}" does not contain valid JSONC`, { cause: e });
+  }
+};
 
 export const readJsonFile = <T = unknown>(path: string): T => {
   const content = readFileSync(path, "utf-8");
