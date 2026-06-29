@@ -87,21 +87,16 @@ async function fetchStaged(reqParams: DataPackagesRequestParams, targets: Gatewa
   if (targets.length === 0) {
     throw new Error(`Empty urls array provided. Cannot fetch data packages.`);
   }
-  if (reqParams.disableMultiPhaseFetching) {
+  if (reqParams.disableMultiPhaseFetching || targets.length === 1) {
     return await fetchWithLogger(reqParams, targets);
   }
-  // first try a single gateway for 1 sec or the provided timeout. If it fails, try all gateways with the provided timeout
+  // first try a single gateway for 1 sec. If it fails, try remaining gateways with the provided timeout
   try {
     const stageReqParams = { ...reqParams, singleGatewayTimeoutMs: FIRST_GATEWAY_WAIT_TIME_MS };
 
     return await fetchWithLogger(stageReqParams, [targets[0]]);
-  } catch (e) {
-    const stageTargets = targets.slice(1);
-    if (stageTargets.length === 0) {
-      throw e;
-    }
-
-    return await fetchWithLogger(reqParams, stageTargets);
+  } catch {
+    return await fetchWithLogger(reqParams, targets.slice(1));
   }
 }
 
