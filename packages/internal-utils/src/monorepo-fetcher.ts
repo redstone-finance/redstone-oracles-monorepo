@@ -1,4 +1,5 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
+import type { ResponseType } from "axios";
 import { z } from "zod";
 
 export const fetchFromMonorepo = async (filePath: string): Promise<string> => {
@@ -17,12 +18,17 @@ export const fetchFromMonorepo = async (filePath: string): Promise<string> => {
   return data;
 };
 
-export const fetchCacheWithAxios = async <T>(urls: string[], apikey?: string) => {
+export const fetchCacheWithAxios = async <T>(
+  urls: string[],
+  apikey?: string,
+  responseType?: ResponseType
+) => {
   for (const url of urls) {
     try {
       const response = await RedstoneCommon.axiosGetWithRetries<T>(url, {
         maxRetries: 2,
         headers: { apikey },
+        axiosRequestConfig: { responseType },
       });
 
       return response.data;
@@ -35,3 +41,6 @@ export const fetchCacheWithAxios = async <T>(urls: string[], apikey?: string) =>
     `failed to fetch from cache for ${JSON.stringify({ urls, hasApiKey: RedstoneCommon.isDefined(apikey) })}`
   );
 };
+
+export const fetchCacheWithAxiosText = async (urls: string[], apikey?: string) =>
+  await fetchCacheWithAxios<string>(urls, apikey, "text");
