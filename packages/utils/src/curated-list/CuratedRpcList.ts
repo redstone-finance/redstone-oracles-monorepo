@@ -141,7 +141,7 @@ export class CuratedRpcList {
       .map(([rpc]) => rpc);
 
     if (healthyProviders.length < this.config.minimalProvidersCount) {
-      this.logger.warn(`Not enough healthy providers, have to release one from quarantine`);
+      this.logger.debug(`Not enough healthy providers, have to release one from quarantine`);
 
       this.freeOneRpcFromQuarantine();
 
