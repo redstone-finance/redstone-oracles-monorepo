@@ -56,6 +56,23 @@ export const writeDownloadableS3Object = async (
   await getS3(region).putObject(params);
 };
 
+export const writeBinaryS3Object = async (
+  bucketName: string,
+  path: string,
+  body: Uint8Array,
+  contentType: string,
+  region?: string
+) => {
+  const params = {
+    Bucket: bucketName,
+    Key: path,
+    Body: body,
+    ContentType: contentType,
+  };
+
+  await getS3(region).putObject(params);
+};
+
 export const readS3Text = async (
   bucketName: string,
   bucketKey: string,
