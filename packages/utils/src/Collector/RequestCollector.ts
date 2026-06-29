@@ -144,7 +144,7 @@ export abstract class RequestCollector<Key, Result> {
         chunks.map((chunk) => {
           this.actualCalls++;
 
-          this.logger.info(`${this.label} calling for ${getNS(chunk.length, "key")}`);
+          this.logger.debug(`${this.label} calling for ${getNS(chunk.length, "key")}`);
 
           return this.fetchChunk(chunk);
         })
