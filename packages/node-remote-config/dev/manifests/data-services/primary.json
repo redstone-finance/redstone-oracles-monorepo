@@ -5938,6 +5938,34 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "TTV_BASE_USDC_FUNDAMENTAL": {
+      "source": [
+        "accountable-travessia"
+      ],
+      "denomination": "USDC",
+      "rateFeed": true
+    },
+    "TTV_MONAD_AUSD_FUNDAMENTAL": {
+      "source": [
+        "accountable-travessia"
+      ],
+      "denomination": "AUSD",
+      "rateFeed": true
+    },
+    "TTV_ETH_AUSD_FUNDAMENTAL": {
+      "source": [
+        "accountable-travessia"
+      ],
+      "denomination": "AUSD",
+      "rateFeed": true
+    },
+    "TTV_ETH_USDC_FUNDAMENTAL": {
+      "source": [
+        "accountable-travessia"
+      ],
+      "denomination": "USDC",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
