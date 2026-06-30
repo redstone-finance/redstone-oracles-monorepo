@@ -3020,28 +3020,28 @@
     },
     "stTON_FUNDAMENTAL": {
       "source": [
-        "ton-staked-deferred"
+        "ton-staked"
       ],
       "denomination": "TON",
       "rateFeed": true
     },
     "tsTON_FUNDAMENTAL": {
       "source": [
-        "ton-staked-deferred"
+        "ton-staked"
       ],
       "denomination": "TON",
       "rateFeed": true
     },
     "tsUSDe_FUNDAMENTAL": {
       "source": [
-        "ton-staked-deferred"
+        "ton-staked"
       ],
       "denomination": "USDe",
       "rateFeed": true
     },
     "bmTON_FUNDAMENTAL": {
       "source": [
-        "ton-staked-deferred"
+        "ton-staked"
       ],
       "denomination": "TON",
       "rateFeed": true
@@ -7867,7 +7867,7 @@
     },
     "URANIUM": {
       "source": [
-        "tezos-uranium-price-api-deferred"
+        "tezos-uranium-price-api"
       ],
       "denomination": "USD",
       "rateFeed": false
