@@ -8955,6 +8955,11 @@
       "source": ["non-usd-based"],
       "denomination": "USDT",
       "rateFeed": false
+    },
+    "BTCcx_FUNDAMENTAL": {
+      "source": ["accountable-btccx"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
