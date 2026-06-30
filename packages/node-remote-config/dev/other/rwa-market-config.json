@@ -90,12 +90,12 @@
   "CSPX.L": "Lme",
   "IB01.L": "Lme",
 
-  "TENCENT": "AlwaysOpen",
-  "XIAOMI": "AlwaysOpen",
-  "POPMART": "AlwaysOpen",
-  "MINIMAX": "AlwaysOpen",
+  "TENCENT": "Hkex",
+  "XIAOMI": "Hkex",
+  "POPMART": "Hkex",
+  "MINIMAX": "Hkex",
 
-  "TSMC": "AlwaysOpen",
+  "TSMC": "Twse",
 
   "EUR": "Forex",
   "EUR_FX": "Forex",
