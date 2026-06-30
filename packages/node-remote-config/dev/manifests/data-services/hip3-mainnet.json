@@ -2014,6 +2014,24 @@
         }
       }
     },
+    "IP": {
+      "source": [
+        "okx-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "coinbase-usd"
+      ],
+      "customWeightsForWeightedMedian": {
+        "okx-usdt": 3,
+        "bybit-usdt": 2,
+        "gate-usdt": 2
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "IP_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -2028,17 +2046,6 @@
         "ws-perp-okx-usdt": 2,
         "ws-perp-bybit-usdt": 2
       },
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ORACLE_IP": {
-      "source": ["ws-hyperliquid-perps-native", "ws-hydromancer-perps-native"],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-native": 10,
-        "ws-hydromancer-perps-native": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -2119,26 +2126,32 @@
       "rateFeed": false
     },
     "hyna:IP_MARK_0": {
-      "source": ["hip3-hyena-crypto-mainnet-fetcher"],
+      "source": ["hip3-hyena-crypto-spot-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:IP_MARK_1": {
-      "source": ["hip3-hyena-crypto-mainnet-fetcher"],
+      "source": ["hip3-hyena-crypto-spot-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:IP_EXT": {
-      "source": ["hip3-hyena-crypto-mainnet-fetcher"],
+      "source": ["alias"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:IP": {
-      "source": ["hip3-hyena-crypto-mainnet-fetcher"],
+      "source": ["hip3-hyena-crypto-spot-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
+      "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:IP-TWAP-60": {
+      "source": ["twap-local"],
       "denomination": "USD",
       "rateFeed": false
     },
