@@ -5306,7 +5306,6 @@
         "gate-usdt",
         "htx-usdt",
         "kraken-usd",
-        "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
@@ -5371,6 +5370,33 @@
       "source": ["accountable-travessia"],
       "denomination": "USDC",
       "rateFeed": true
+    },
+    "PAXG": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt-usdt",
+        "fluid-ethereum-xaut",
+        "uniswap-v2-ethereum-weth",
+        "uniswap-v3-ethereum-xaut-100",
+        "uniswap-v4-ethereum-xaut-500"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PAXG/USDT": {
+      "source": ["non-usd-based"],
+      "denomination": "USDT",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
