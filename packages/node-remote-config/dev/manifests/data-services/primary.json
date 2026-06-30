@@ -1994,7 +1994,7 @@
       "rateFeed": false
     },
     "stTON_FUNDAMENTAL": {
-      "source": ["ton-staked-deferred"],
+      "source": ["ton-staked"],
       "denomination": "TON",
       "rateFeed": true,
       "deviationCheck": {
@@ -2005,7 +2005,7 @@
       }
     },
     "tsTON_FUNDAMENTAL": {
-      "source": ["ton-staked-deferred"],
+      "source": ["ton-staked"],
       "denomination": "TON",
       "rateFeed": true,
       "deviationCheck": {
@@ -2016,7 +2016,7 @@
       }
     },
     "tsUSDe_FUNDAMENTAL": {
-      "source": ["ton-staked-deferred"],
+      "source": ["ton-staked"],
       "denomination": "USDe",
       "rateFeed": true,
       "deviationCheck": {
@@ -2027,7 +2027,7 @@
       }
     },
     "bmTON_FUNDAMENTAL": {
-      "source": ["ton-staked-deferred"],
+      "source": ["ton-staked"],
       "denomination": "TON",
       "rateFeed": true,
       "deviationCheck": {
@@ -5000,7 +5000,7 @@
       "rateFeed": true
     },
     "URANIUM": {
-      "source": ["tezos-uranium-price-api-deferred"],
+      "source": ["tezos-uranium-price-api"],
       "denomination": "USD",
       "rateFeed": false
     },
