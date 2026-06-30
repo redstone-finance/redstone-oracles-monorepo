@@ -5402,6 +5402,11 @@
       "source": ["accountable-btccx"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "trUSD_FUNDAMENTAL": {
+      "source": ["accountable-trusd"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
