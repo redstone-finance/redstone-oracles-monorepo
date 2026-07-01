@@ -8909,6 +8909,15 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "SECZ_EOD": {
+      "source": [
+        "financialmodelingprep-eod-deferred",
+        "polygon-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "TTV_BASE_USDC_FUNDAMENTAL": {
       "source": ["accountable-travessia"],
       "denomination": "USDC",
