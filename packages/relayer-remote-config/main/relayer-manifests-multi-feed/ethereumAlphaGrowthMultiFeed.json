@@ -1,0 +1,21 @@
+{
+  "chain": {
+    "name": "mainnet",
+    "id": 1
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "adapterContract": "0x5232974bCd5a3FFe41478736bB8B0e760130c800",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "PAXG/USDT": {
+      "priceFeedAddress": "0xD308867ED5a2c41Dc778f4CF34593764D09860E7"
+    },
+    "USDC/USDT": {
+      "priceFeedAddress": "0x3B3A683aDDD54D0bC0DcC7Fc46Fd0a66966c53b3"
+    }
+  }
+}
