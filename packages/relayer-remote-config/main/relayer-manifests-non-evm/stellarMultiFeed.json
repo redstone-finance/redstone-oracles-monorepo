@@ -137,6 +137,13 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "savUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "CB3ALO7UZWO7Y6V2FKSQI4GUJHQQATPSB4VOBHRJDJV7ZNUJWOOMDVXK",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
