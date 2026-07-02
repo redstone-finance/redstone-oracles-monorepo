@@ -505,6 +505,44 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "BTCcx_FUNDAMENTAL": {
+      "priceFeedAddress": "0x872575A4E371ABBF49b877a1dcAa7f63E8abc246"
+    },
+    "trUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0x33c6F75916Db4267e52209A8E6B270b22d983B53",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "ezETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x701e83Bd1B84D02c10587f0De9Dfad5A22419DF7",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 1,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "TTV_ETH_AUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0x53e4f7c85272dfac2caA82804cBDADce25079c81",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "TTV_ETH_USDC_FUNDAMENTAL": {
+      "priceFeedAddress": "0xE327A025eEC3aF8c4ffD4CDb984417f1Df9BA5A2",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "SECZ_EOD": {
+      "priceFeedAddress": "0x0db4889e9E786C4d5191bA92852742106be19a68",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
