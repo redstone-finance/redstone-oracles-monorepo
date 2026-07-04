@@ -9751,7 +9751,7 @@
       "source": [
         "accountable-btccx"
       ],
-      "denomination": "USD",
+      "denomination": "BTC",
       "rateFeed": true
     },
     "trUSD_FUNDAMENTAL": {
