@@ -357,6 +357,20 @@
         }
       }
     },
+    "etrUSD_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-upshift"
+      ],
+      "denomination": "trUSD",
+      "rateFeed": true
+    },
+    "etrUSD_FUNDAMENTAL/USD": {
+      "source": [
+        "usd-based"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "waEthWETH_FUNDAMENTAL": {
       "source": [
         "ethereum-evm-fetcher-aave-waeth"
