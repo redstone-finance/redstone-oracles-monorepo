@@ -4109,6 +4109,54 @@
         "crypto"
       ]
     },
+    "ORACLE_xyz:JP225": {
+      "source": [
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-xyz": 10,
+        "ws-hydromancer-perps-xyz": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "JPY",
+      "rateFeed": false
+    },
+    "MARK_xyz:JP225": {
+      "source": [
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-xyz": 10,
+        "ws-hydromancer-perps-xyz": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "JPY",
+      "rateFeed": false
+    },
+    "JP225_INDEX.BE": {
+      "source": [],
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "JP225_MARK.BE": {
+      "source": [],
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "ORDI_INDEX.BE": {
       "source": [
         "ws-extended-rfq"
