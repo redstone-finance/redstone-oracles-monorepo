@@ -45,7 +45,10 @@ export class ClientCommon {
   serializePayload(payload: PubSubPayload) {
     return {
       topic: payload.topic,
-      data: this.serializerDeserializer.serialize(payload.data),
+      data:
+        payload.prepared?.contentType === "deflate+json"
+          ? payload.prepared.serialized
+          : this.serializerDeserializer.serialize(payload.data),
     };
   }
 
@@ -74,7 +77,7 @@ export class ClientCommon {
   private async publishV1(payloads: PubSubPayload[]) {
     const toFrame = (payload: PubSubPayload) => ({
       topicBytes: Buffer.from(payload.topic, "utf8"),
-      dataB64: Buffer.from(JSON.stringify(payload.data), "utf8"),
+      dataB64: payload.prepared?.json ?? Buffer.from(JSON.stringify(payload.data), "utf8"),
     });
 
     for (const batch of lazyBatches(payloads, toFrame)) {

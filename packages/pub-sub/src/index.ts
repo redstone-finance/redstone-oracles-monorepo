@@ -9,6 +9,7 @@ export * from "./MultiPubSubClient";
 export * from "./MultiPubSubEnvConfigs";
 export * from "./NatsClient";
 export * from "./PooledMqttClient";
+export * from "./prepare-payloads";
 export * from "./PubSubClient";
 export * from "./PubSubClientConfig";
 export * from "./PubSubClientFactory";

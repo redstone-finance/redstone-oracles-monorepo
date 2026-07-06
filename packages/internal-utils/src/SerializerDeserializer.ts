@@ -17,6 +17,7 @@ export type ContentTypes = z.infer<typeof ContentTypesEnum>;
 
 interface SerializerDeserializer {
   serialize<T = unknown>(data: T): Buffer;
+  serializeRaw(json: string): Buffer;
   deserialize<T = unknown>(buffer: Buffer): T;
   serializeAsync<T = unknown>(data: T): Promise<Buffer>;
   deserializeAsync<T = unknown>(buffer: Buffer): Promise<T>;
@@ -30,6 +31,10 @@ const inflateAsync = promisify(inflate);
 export class GZipJson implements SerializerDeserializer {
   serialize<T = unknown>(data: T): Buffer {
     return gzipSync(JSON.stringify(data));
+  }
+
+  serializeRaw(json: string): Buffer {
+    return gzipSync(json);
   }
 
   deserialize<T = unknown>(buffer: Buffer): T {
@@ -51,6 +56,10 @@ export class GZipJson implements SerializerDeserializer {
 export class DeflateJson implements SerializerDeserializer {
   serialize<T = unknown>(data: T): Buffer {
     return deflateSync(JSON.stringify(data));
+  }
+
+  serializeRaw(json: string): Buffer {
+    return deflateSync(json);
   }
 
   deserialize<T = unknown>(buffer: Buffer): T {

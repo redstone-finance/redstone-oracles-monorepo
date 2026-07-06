@@ -177,7 +177,10 @@ export class NatsClient implements PubSubClient {
     const hdrs = natsHeaders();
     hdrs.set(CONTENT_TYPE_HEADER, contentType);
     for (const payload of payloads) {
-      const encodedMessage = serializer.serialize(payload.data);
+      const encodedMessage =
+        payload.prepared?.contentType === contentType
+          ? payload.prepared.serialized
+          : serializer.serialize(payload.data);
       nc.publish(mqttTopicToNatsSubjectCached(payload.topic), encodedMessage, { headers: hdrs });
     }
   }

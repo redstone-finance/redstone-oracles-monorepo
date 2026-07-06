@@ -12,11 +12,21 @@ export const ASYNC_DESERIALIZE = RedstoneCommon.getFromEnv(
   z.boolean().default(false)
 );
 
+export type PreparedPayload = {
+  /** utf8 bytes of JSON.stringify(data) */
+  json: Buffer;
+  /** compressed json, in the format described by contentType */
+  serialized: Buffer;
+  contentType: ContentTypes;
+};
+
 export type PubSubPayload = {
   /** valid topic @see topic.ts */
   topic: string;
   /** valid json object */
   data: unknown;
+  /** pre-serialized forms shared across clients, @see preparePayloads */
+  prepared?: PreparedPayload;
 };
 
 export type SubscribeCallback = (

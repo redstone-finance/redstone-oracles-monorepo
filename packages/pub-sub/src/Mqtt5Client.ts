@@ -119,7 +119,10 @@ export class Mqtt5Client implements PubSubClient {
       const serializer = getSerializerDeserializer(contentType);
 
       for (const payload of payloads) {
-        const encodedMessage = serializer.serialize(payload.data);
+        const encodedMessage =
+          payload.prepared?.contentType === contentType
+            ? payload.prepared.serialized
+            : serializer.serialize(payload.data);
 
         promises.push(
           this._mqtt.publish({
