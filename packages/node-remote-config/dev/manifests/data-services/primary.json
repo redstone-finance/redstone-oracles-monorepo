@@ -357,6 +357,13 @@
         }
       }
     },
+    "strUSD_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-tori"
+      ],
+      "denomination": "trUSD",
+      "rateFeed": true
+    },
     "etrUSD_FUNDAMENTAL": {
       "source": [
         "ethereum-evm-fetcher-upshift"
