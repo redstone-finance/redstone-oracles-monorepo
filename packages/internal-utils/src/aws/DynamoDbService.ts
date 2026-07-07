@@ -1,4 +1,4 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, DynamoDBClientConfig } from "@aws-sdk/client-dynamodb";
 import {
   BatchWriteCommand,
   DeleteCommand,
@@ -8,9 +8,16 @@ import {
   PutCommandInput,
   QueryCommand,
   QueryCommandInput,
+  UpdateCommand,
+  UpdateCommandInput,
 } from "@aws-sdk/lib-dynamodb";
 import { getDynamoDbClient } from "./aws-clients";
 import { currentAwsRegion } from "./region";
+
+export type DynamoDbClientOptions = {
+  timeoutMs?: number;
+  maxAttempts?: number;
+};
 
 export class DynamoDbService {
   protected readonly db;
@@ -19,14 +26,25 @@ export class DynamoDbService {
   public constructor(
     protected readonly tableName: string,
     region?: string,
-    endpoint?: string
+    endpoint?: string,
+    clientOptions?: DynamoDbClientOptions
   ) {
-    if (endpoint) {
+    if (endpoint || clientOptions) {
       region ??= currentAwsRegion();
-      this.dbClient = new DynamoDBClient({
-        region,
-        endpoint,
-      });
+      const config: DynamoDBClientConfig = { region };
+      if (endpoint) {
+        config.endpoint = endpoint;
+      }
+      if (clientOptions?.maxAttempts !== undefined) {
+        config.maxAttempts = clientOptions.maxAttempts;
+      }
+      if (clientOptions?.timeoutMs !== undefined) {
+        config.requestHandler = {
+          connectionTimeout: clientOptions.timeoutMs,
+          requestTimeout: clientOptions.timeoutMs,
+        };
+      }
+      this.dbClient = new DynamoDBClient(config);
     } else {
       this.dbClient = getDynamoDbClient(region);
     }
@@ -64,6 +82,19 @@ export class DynamoDbService {
         TableName: this.tableName,
         Item: item,
         ...opts,
+      })
+    );
+  }
+
+  public async update(
+    key: Record<string, unknown>,
+    input: Omit<UpdateCommandInput, "TableName" | "Key">
+  ) {
+    await this.db.send(
+      new UpdateCommand({
+        TableName: this.tableName,
+        Key: key,
+        ...input,
       })
     );
   }
