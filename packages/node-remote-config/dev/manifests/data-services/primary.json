@@ -6038,6 +6038,13 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "USDY_FUNDAMENTAL/USD": {
+      "source": [
+        "ethereum-evm-fetcher-ondo"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
