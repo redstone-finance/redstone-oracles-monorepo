@@ -1,24 +1,22 @@
-import { loggerFactory, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
+import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import {
   AccountInfo,
   Commitment,
-  ConfirmedSignatureInfo,
   ConfirmOptions,
   Connection,
   GetRecentPrioritizationFeesConfig,
+  GetVersionedTransactionConfig,
   Keypair,
   LAMPORTS_PER_SOL,
   PublicKey,
   sendAndConfirmTransaction,
   SendOptions,
+  SignaturesForAddressOptions,
   SystemProgram,
   Transaction,
   VersionedTransaction,
 } from "@solana/web3.js";
 import { SolanaConnectionBuilder } from "../SolanaConnectionBuilder";
-
-const TX_FETCHING_BATCH_SIZE = 1000;
-const txLogger = loggerFactory("solana-client-get-transactions");
 
 export const SOLANA_SLOT_TIME_INTERVAL_MS = 400;
 
@@ -175,60 +173,16 @@ export class SolanaClient {
     return new Date((timestamp || 0) * 1000);
   }
 
-  async getTransactions(fromSlot: number, toSlot: number, addresses: Set<string>) {
-    let fromSlotSignature: string | undefined, toSlotSignature: string | undefined;
-    try {
-      const [fromSlotSignatures, toSlotSignatures] = await Promise.all([
-        this.connection.getBlockSignatures(fromSlot),
-        this.connection.getBlockSignatures(toSlot),
-      ]);
-      fromSlotSignature = fromSlotSignatures.signatures[0];
-      toSlotSignature = toSlotSignatures.signatures[toSlotSignatures.signatures.length - 1];
-    } catch (error) {
-      txLogger.warn(
-        `Slot is missing, using latest ${TX_FETCHING_BATCH_SIZE} signatures; ${RedstoneCommon.stringifyError(error)}`
-      );
-    }
-
-    const perAddress = await Promise.all(
-      [...addresses].map((address) =>
-        this.getAllSignatureInfos(address, fromSlotSignature, toSlotSignature)
-      )
-    );
-
-    const filtered = perAddress.flat().filter((sig) => sig.slot >= fromSlot && sig.slot <= toSlot);
-
-    return await Promise.all(
-      filtered.map(async (sig) => {
-        const tx = await this.connection.getTransaction(sig.signature, {
-          maxSupportedTransactionVersion: 0,
-        });
-        if (!RedstoneCommon.isDefined(tx)) {
-          throw new Error(`Could not fetch transaction ${sig.signature} in slot ${sig.slot}`);
-        }
-
-        return tx;
-      })
-    );
+  async getSignaturesForAddress(address: PublicKey, options?: SignaturesForAddressOptions) {
+    return await this.connection.getSignaturesForAddress(address, options);
   }
 
-  private async getAllSignatureInfos(
-    address: string,
-    minTxSig?: string,
-    maxTxSig?: string
-  ): Promise<ConfirmedSignatureInfo[]> {
-    const result = await this.connection.getSignaturesForAddress(new PublicKey(address), {
-      limit: TX_FETCHING_BATCH_SIZE,
-      before: maxTxSig,
-      until: minTxSig,
-    });
+  async getBlockSignatures(slot: number) {
+    return await this.connection.getBlockSignatures(slot);
+  }
 
-    const oldest = result.at(-1);
-    if (result.length === TX_FETCHING_BATCH_SIZE && minTxSig && oldest) {
-      const previous = await this.getAllSignatureInfos(address, minTxSig, oldest.signature);
-      result.push(...previous);
-    }
-
-    return result;
+  async getTransaction(signature: string, rawConfig: GetVersionedTransactionConfig) {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- versioned config picks the non-deprecated overload at runtime
+    return await this.connection.getTransaction(signature, rawConfig);
   }
 }

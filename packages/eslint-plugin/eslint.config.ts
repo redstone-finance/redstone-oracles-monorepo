@@ -181,6 +181,7 @@ export default defineConfig([
   },
   globalIgnores([
     "**/artifacts",
+    "**/target",
     "**/typechain-types",
     "**/sdk-test-app",
     "**/dist",

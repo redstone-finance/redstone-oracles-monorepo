@@ -409,11 +409,16 @@ export class StellarClient implements IStellarCaller, LedgerEntriesCollectorDele
             }
       );
       allEvents.push(...events);
-      hasMoreEvents = events.length >= FETCHING_LIMIT;
+      const lastEventLedger = events.at(-1)?.ledger ?? 0;
+      hasMoreEvents = events.length >= FETCHING_LIMIT && lastEventLedger <= endLedger;
       currentCursor = cursor;
     } while (hasMoreEvents && RedstoneCommon.isDefined(currentCursor));
 
-    const uniqueHashes = [...new Set(allEvents.map((e) => e.txHash))];
+    const eventsInRange = allEvents.filter(
+      ({ ledger }) => ledger >= startLedger && ledger <= endLedger
+    );
+
+    const uniqueHashes = [...new Set(eventsInRange.map((e) => e.txHash))];
     const txEntries = await Promise.all(
       uniqueHashes.map(async (txHash) => {
         const tx = await this.server.getTransaction(txHash);
@@ -426,7 +431,7 @@ export class StellarClient implements IStellarCaller, LedgerEntriesCollectorDele
     );
     const txByHash = new Map(txEntries);
 
-    return allEvents.map((event) => ({ event, tx: txByHash.get(event.txHash)! }));
+    return eventsInRange.map((event) => ({ event, tx: txByHash.get(event.txHash)! }));
   }
 
   private async fixLedgerVersions(startLedger: number, endLedger: number) {
