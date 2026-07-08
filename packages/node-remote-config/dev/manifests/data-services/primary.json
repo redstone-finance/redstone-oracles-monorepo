@@ -672,36 +672,6 @@
       "denomination": "ETH",
       "rateFeed": false
     },
-    "pxETH": {
-      "source": [
-        "curve-ethereum-steth-multi-block",
-        "pancake-swap-ethereum-weth-100",
-        "uniswap-v3-ethereum-weth-100-multi-block"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "pxETH/ETH": {
-      "source": [
-        "non-usd-based"
-      ],
-      "denomination": "ETH",
-      "rateFeed": false
-    },
-    "apxETH": {
-      "source": [
-        "ethereum-evm-fetcher-redacted"
-      ],
-      "denomination": "USD",
-      "rateFeed": true
-    },
-    "apxETH/ETH": {
-      "source": [
-        "non-usd-based"
-      ],
-      "denomination": "ETH",
-      "rateFeed": false
-    },
     "eBTC/WBTC": {
       "source": [
         "ethereum-evm-fetcher-etherfi-rate-provider"
@@ -1275,24 +1245,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ETH+": {
-      "source": [
-        "curve-ethereum-eusd",
-        "curve-ethereum-rsr",
-        "curve-ethereum-weth",
-        "curve-ethereum-weth-2",
-        "uniswap-v3-ethereum-weth-500"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ETH+/ETH": {
-      "source": [
-        "non-usd-based"
-      ],
-      "denomination": "ETH",
-      "rateFeed": false
-    },
     "sDAI": {
       "source": [
         "ethereum-evm-fetcher-savings-dai"
@@ -1826,19 +1778,6 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "pumpBTC_FUNDAMENTAL": {
-      "source": [
-        "pump-btc"
-      ],
-      "denomination": "BTC",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 0.1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
     "pumpBTC": {
       "source": [
         "curve-ethereum-wbtc"
@@ -2040,13 +1979,6 @@
       ],
       "denomination": "BTC",
       "rateFeed": false
-    },
-    "ssETH_FUNDAMENTAL": {
-      "source": [
-        "ethereum-evm-fetcher-nucleus-rate-provider"
-      ],
-      "denomination": "ETH",
-      "rateFeed": true
     },
     "XRD": {
       "source": [
@@ -2775,13 +2707,6 @@
         }
       }
     },
-    "zkETH_FUNDAMENTAL": {
-      "source": [
-        "zksync-evm-fetcher-dinero-branded-eth"
-      ],
-      "denomination": "USD",
-      "rateFeed": true
-    },
     "FARTCOIN": {
       "source": [
         "bingx-usdt",
@@ -2915,13 +2840,6 @@
       },
       "denomination": "USD",
       "rateFeed": false
-    },
-    "beraETH_FUNDAMENTAL/USD": {
-      "source": [
-        "berachain-evm-fetcher-dinero-branded-eth"
-      ],
-      "denomination": "USD",
-      "rateFeed": true
     },
     "bfBTC_FUNDAMENTAL": {
       "source": [
@@ -3935,19 +3853,6 @@
         }
       }
     },
-    "stHYPE_LP_FUNDAMENTAL": {
-      "source": [
-        "hyperevm-evm-fetcher-valantis-lp"
-      ],
-      "denomination": "HYPE",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
     "wVLP_FUNDAMENTAL": {
       "source": [
         "hyperevm-evm-fetcher-hyperbeat-oracle"
@@ -4176,177 +4081,6 @@
       ],
       "denomination": "USD",
       "rateFeed": false
-    },
-    "PT_sUSDe_27NOV2025_ETH": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "sUSDe",
-      "localCacheTTL": "1d",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "PT_sUSDe_27NOV2025_ETH-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "sUSDe",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "PT_sUSDe_5FEB2026_ETH": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "sUSDe",
-      "localCacheTTL": "1d",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "PT_sUSDe_5FEB2026_ETH-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "sUSDe",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "PT_srUSDe_15JAN2026_ETH": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "srUSDe",
-      "localCacheTTL": "1d",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "PT_srUSDe_15JAN2026_ETH-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "srUSDe",
-      "rateFeed": true
-    },
-    "PT_cUSD_29JAN2026_ETH": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "cUSD",
-      "localCacheTTL": "1d",
-      "rateFeed": true
-    },
-    "PT_cUSD_29JAN2026_ETH-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "cUSD",
-      "rateFeed": true
-    },
-    "PT_sUSDe_15JAN2026_PLSM": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "sUSDe",
-      "localCacheTTL": "1d",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "PT_sUSDe_15JAN2026_PLSM-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "sUSDe",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "PT_kHYPE_13NOV2025_HL": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "kHYPE",
-      "localCacheTTL": "1d",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "PT_kHYPE_13NOV2025_HL-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "kHYPE",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "PT_iBGT_25DEC2025_BERA": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "iBGT",
-      "localCacheTTL": "1d",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "PT_iBGT_25DEC2025_BERA-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "iBGT",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      }
     },
     "SPKCC_NAV": {
       "source": [
