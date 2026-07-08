@@ -92,13 +92,6 @@
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
     },
-    "beraETH_FUNDAMENTAL/USD": {
-      "priceFeedAddress": "0xcA727511c9d542AAb9eF406d24E5bbbE4567c22d",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
     "BERA": {
       "priceFeedAddress": "0x29d2fEC890B037B2d34f061F9a50f76F85ddBcAE",
       "updateTriggersOverrides": {
@@ -139,13 +132,6 @@
       "updateTriggersOverrides": {
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 21600000
-      }
-    },
-    "PT_iBGT_25DEC2025_BERA-TWAP": {
-      "priceFeedAddress": "0xcc19318aeEc495aE6cC8857C6f8a36D49176cf51",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "IR": {
