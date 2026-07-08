@@ -7,13 +7,18 @@ import { consts } from "@redstone-finance/protocol";
 import { VersionedTransactionResponse } from "@solana/web3.js";
 import { hexlify } from "ethers/lib/utils";
 import { SolanaClient } from "./client/SolanaClient";
+import { SolanaTxScanner } from "./client/SolanaTxScanner";
 
 const COMPUTE_UNIT_LOG_REGEX = /consumed \d+ of (\d+) compute units/;
 const GAS_PRICE_FEE_NORM = 10 ** (18 - 9); // normalized to 18 digits, Lamports are in 9 digits
 
 export class SolanaTxLookup extends RangeScanTxLookup<VersionedTransactionResponse> {
-  constructor(private readonly client: SolanaClient) {
+  private readonly scanner: SolanaTxScanner;
+
+  constructor(client: SolanaClient) {
     super();
+
+    this.scanner = new SolanaTxScanner(client);
   }
 
   protected override async fetchItemsInRange(
@@ -21,7 +26,7 @@ export class SolanaTxLookup extends RangeScanTxLookup<VersionedTransactionRespon
     endBlock: number,
     adapters: Set<string>
   ) {
-    return await this.client.getTransactions(startBlock, endBlock, adapters);
+    return await this.scanner.fetchTransactionsInRange(startBlock, endBlock, adapters);
   }
 
   protected override normalizeMany(txs: VersionedTransactionResponse[]) {
