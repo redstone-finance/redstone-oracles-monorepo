@@ -1330,36 +1330,6 @@
       "denomination": "ETH",
       "rateFeed": false
     },
-    "pxETH": {
-      "source": [
-        "curve-ethereum-steth-multi-block",
-        "pancake-swap-ethereum-weth-100",
-        "uniswap-v3-ethereum-weth-100-multi-block"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "pxETH/ETH": {
-      "source": [
-        "non-usd-based"
-      ],
-      "denomination": "ETH",
-      "rateFeed": false
-    },
-    "apxETH": {
-      "source": [
-        "ethereum-evm-fetcher-redacted"
-      ],
-      "denomination": "USD",
-      "rateFeed": true
-    },
-    "apxETH/ETH": {
-      "source": [
-        "non-usd-based"
-      ],
-      "denomination": "ETH",
-      "rateFeed": false
-    },
     "eBTC/WBTC": {
       "source": [
         "ethereum-evm-fetcher-etherfi-rate-provider"
@@ -1654,24 +1624,6 @@
         "xt-usdt"
       ],
       "denomination": "USD",
-      "rateFeed": false
-    },
-    "ETH+": {
-      "source": [
-        "curve-ethereum-eusd",
-        "curve-ethereum-rsr",
-        "curve-ethereum-weth",
-        "curve-ethereum-weth-2",
-        "uniswap-v3-ethereum-weth-500"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ETH+/ETH": {
-      "source": [
-        "non-usd-based"
-      ],
-      "denomination": "ETH",
       "rateFeed": false
     },
     "sDAI": {
@@ -2218,13 +2170,6 @@
       },
       "denomination": "USD",
       "rateFeed": false
-    },
-    "pumpBTC_FUNDAMENTAL": {
-      "source": [
-        "pump-btc"
-      ],
-      "denomination": "BTC",
-      "rateFeed": true
     },
     "pumpBTC": {
       "source": [
@@ -2935,13 +2880,6 @@
       "denomination": "BTC",
       "rateFeed": false
     },
-    "ssETH_FUNDAMENTAL": {
-      "source": [
-        "ethereum-evm-fetcher-nucleus-rate-provider"
-      ],
-      "denomination": "ETH",
-      "rateFeed": true
-    },
     "AERO": {
       "source": [
         "bingx-usdt",
@@ -3171,13 +3109,6 @@
         "ethereum-evm-fetcher-veda"
       ],
       "denomination": "ETH",
-      "rateFeed": true
-    },
-    "zkETH_FUNDAMENTAL": {
-      "source": [
-        "zksync-evm-fetcher-dinero-branded-eth"
-      ],
-      "denomination": "USD",
       "rateFeed": true
     },
     "TRUMP": {
@@ -3666,13 +3597,6 @@
       ],
       "denomination": "USD",
       "rateFeed": false
-    },
-    "beraETH_FUNDAMENTAL/USD": {
-      "source": [
-        "berachain-evm-fetcher-dinero-branded-eth"
-      ],
-      "denomination": "USD",
-      "rateFeed": true
     },
     "bfBTC_FUNDAMENTAL": {
       "source": [
@@ -7971,13 +7895,6 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "stHYPE_LP_FUNDAMENTAL": {
-      "source": [
-        "hyperevm-evm-fetcher-valantis-lp"
-      ],
-      "denomination": "HYPE",
-      "rateFeed": true
-    },
     "wVLP_FUNDAMENTAL": {
       "source": [
         "hyperevm-evm-fetcher-hyperbeat-oracle"
@@ -8004,111 +7921,6 @@
         "accountable-yusd"
       ],
       "denomination": "USD",
-      "rateFeed": true
-    },
-    "PT_sUSDe_27NOV2025_ETH": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "sUSDe",
-      "localCacheTTL": "1d",
-      "rateFeed": true
-    },
-    "PT_sUSDe_27NOV2025_ETH-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "sUSDe",
-      "rateFeed": true
-    },
-    "PT_sUSDe_5FEB2026_ETH": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "sUSDe",
-      "localCacheTTL": "1d",
-      "rateFeed": true
-    },
-    "PT_sUSDe_5FEB2026_ETH-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "sUSDe",
-      "rateFeed": true
-    },
-    "PT_srUSDe_15JAN2026_ETH": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "srUSDe",
-      "localCacheTTL": "1d",
-      "rateFeed": true
-    },
-    "PT_srUSDe_15JAN2026_ETH-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "srUSDe",
-      "rateFeed": true
-    },
-    "PT_cUSD_29JAN2026_ETH": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "cUSD",
-      "localCacheTTL": "1d",
-      "rateFeed": true
-    },
-    "PT_cUSD_29JAN2026_ETH-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "cUSD",
-      "rateFeed": true
-    },
-    "PT_sUSDe_15JAN2026_PLSM": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "sUSDe",
-      "localCacheTTL": "1d",
-      "rateFeed": true
-    },
-    "PT_sUSDe_15JAN2026_PLSM-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "sUSDe",
-      "rateFeed": true
-    },
-    "PT_kHYPE_13NOV2025_HL": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "kHYPE",
-      "localCacheTTL": "1d",
-      "rateFeed": true
-    },
-    "PT_kHYPE_13NOV2025_HL-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "kHYPE",
-      "rateFeed": true
-    },
-    "PT_iBGT_25DEC2025_BERA": {
-      "source": [
-        "evm-fetcher-pendle"
-      ],
-      "denomination": "iBGT",
-      "localCacheTTL": "1d",
-      "rateFeed": true
-    },
-    "PT_iBGT_25DEC2025_BERA-TWAP": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "iBGT",
       "rateFeed": true
     },
     "USDT0": {

@@ -14,9 +14,6 @@
     "eUSD": {
       "priceFeedAddress": "0xa41107f9259bB835275eaCaAd8048307B80D7c00"
     },
-    "ETH+/ETH": {
-      "priceFeedAddress": "0xCfd39de761508A7aCb8C931b959127a1D9d0B3D4"
-    },
     "sUSDe_RATE_PROVIDER": {
       "priceFeedAddress": "0x3A236F67Fce401D87D7215695235e201966576E4",
       "updateTriggersOverrides": {
