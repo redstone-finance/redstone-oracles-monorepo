@@ -1948,7 +1948,6 @@
         "ws-spot-bitmart-usdt",
         "ws-spot-gate-usdt",
         "ws-spot-htx-usdt",
-        "meteora-solana-mainnet-wsol-deferred",
         "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
@@ -2858,21 +2857,6 @@
         "crypto"
       ]
     },
-    "FF": {
-      "source": [
-        "ws-spot-binance-usdt",
-        "ws-spot-bybit-usdt",
-        "ws-spot-kucoin-usdt",
-        "ws-spot-htx-usdt",
-        "ws-spot-bitget-usdt",
-        "ws-spot-bitmart-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
     "SAHARA": {
       "source": [
         "ws-spot-binance-usdt",
@@ -3572,20 +3556,6 @@
         "crypto"
       ]
     },
-    "GUA": {
-      "source": [
-        "binancealpha_deferred-usdt",
-        "mexc_deferred-usdt",
-        "lbank_deferred-usdt",
-        "ws-spot-gate-usdt",
-        "bingx_deferred-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
     "CGPT": {
       "source": [
         "ws-spot-binance-usdt",
@@ -3621,20 +3591,6 @@
         "ws-spot-gate-usdt",
         "ws-spot-xt-usdt",
         "lbank_deferred-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "ESPORTS": {
-      "source": [
-        "binancealpha_deferred-usdt",
-        "ws-spot-gate-usdt",
-        "lbank_deferred-usdt",
-        "mexc_deferred-usdt",
-        "bingx_deferred-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -4736,26 +4692,6 @@
         "crypto"
       ]
     },
-    "FF_INDEX.BE": {
-      "source": [
-        "ws-extended-rfq"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "FF_MARK.BE": {
-      "source": [
-        "ws-extended-rfq"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
     "SAHARA_INDEX.BE": {
       "source": [
         "ws-extended-rfq"
@@ -5724,26 +5660,6 @@
         "crypto"
       ]
     },
-    "GUA_INDEX.BE": {
-      "source": [
-        "ws-extended-rfq"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "GUA_MARK.BE": {
-      "source": [
-        "ws-extended-rfq"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
     "CGPT_INDEX.BE": {
       "source": [
         "ws-extended-rfq"
@@ -5795,26 +5711,6 @@
       ]
     },
     "ARC_MARK.BE": {
-      "source": [
-        "ws-extended-rfq"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "ESPORTS_INDEX.BE": {
-      "source": [
-        "ws-extended-rfq"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "ESPORTS_MARK.BE": {
       "source": [
         "ws-extended-rfq"
       ],
