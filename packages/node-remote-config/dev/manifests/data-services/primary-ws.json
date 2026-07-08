@@ -319,6 +319,21 @@
         "rwa"
       ]
     },
+    "SECZ_VIEW": {
+      "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 1.0,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "TSLA": {
       "source": [],
       "priceAggregator": "redstoneX",
