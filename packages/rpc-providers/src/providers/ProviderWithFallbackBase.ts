@@ -20,6 +20,12 @@ export abstract class ProviderWithFallbackBase implements Provider {
     fnName: string,
     ...args: unknown[]
   ): Promise<T>;
+
+  protected abstract executeWithFallbackRetryingEmpty<T = unknown>(
+    fnName: string,
+    throwOnEmpty: boolean,
+    ...args: unknown[]
+  ): Promise<T>;
   abstract on(eventName: EventType, listener: Listener): Provider;
   abstract once(eventName: EventType, listener: Listener): Provider;
   abstract emit(eventName: EventType, ...args: unknown[]): boolean;
@@ -97,8 +103,15 @@ export abstract class ProviderWithFallbackBase implements Provider {
     return this.executeWithFallback("getTransaction", ...args);
   }
 
-  getTransactionReceipt(...args: unknown[]): Promise<TransactionReceipt> {
-    return this.executeWithFallback("getTransactionReceipt", ...args);
+  getTransactionReceipt(
+    transactionHash: string | Promise<string>,
+    retryOnEmpty = false
+  ): Promise<TransactionReceipt> {
+    return this.executeWithFallbackRetryingEmpty(
+      "getTransactionReceipt",
+      retryOnEmpty,
+      transactionHash
+    );
   }
 
   getLogs(...args: unknown[]): Promise<Log[]> {

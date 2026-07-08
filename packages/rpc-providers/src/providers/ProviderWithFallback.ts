@@ -37,6 +37,8 @@ export const FALLBACK_DEFAULT_CONFIG: ProviderWithFallbackConfig = {
 
 type EthersError = Error & { code?: ErrorCode; reason?: string };
 
+type ProviderOperation<T> = (provider: Provider) => Promise<T>;
+
 export class ProviderWithFallback extends ProviderWithFallbackBase implements Provider {
   public providers: readonly Provider[];
   protected readonly providerWithFallbackConfig: ProviderWithFallbackConfig;
@@ -159,32 +161,57 @@ export class ProviderWithFallback extends ProviderWithFallbackBase implements Pr
     );
   }
 
-  protected override executeWithFallback<T = unknown>(
+  protected override executeWithFallback<T = unknown>(fnName: string, ...args: unknown[]) {
+    return this.executeOperationWithFallback<T>(
+      `${fnName} with ${JSON.stringify(args)}`,
+      (provider) => ProviderWithFallback.callProviderMethod<T>(provider, fnName, args)
+    );
+  }
+
+  protected override executeWithFallbackRetryingEmpty<T = unknown>(
     fnName: string,
+    throwOnEmpty: boolean,
     ...args: unknown[]
-  ): Promise<T> {
-    return RedstoneCommon.timeout<T>(
-      this.doExecuteWithFallback<T>(0, fnName, ...args),
+  ) {
+    return this.executeOperationWithFallback<T>(
+      `${fnName} with ${JSON.stringify(args)}`,
+      async (provider) => {
+        const result = await ProviderWithFallback.callProviderMethod<T>(provider, fnName, args);
+        if (throwOnEmpty && !RedstoneCommon.isDefined(result)) {
+          throw new Error(`${fnName} returned an empty result`);
+        }
+
+        return result;
+      }
+    );
+  }
+
+  private static callProviderMethod<T>(provider: Provider, fnName: string, args: unknown[]) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any -- generic dispatch by method name
+    return (provider as any)[fnName](...args) as Promise<T>;
+  }
+
+  private executeOperationWithFallback<T>(label: string, operation: ProviderOperation<T>) {
+    return RedstoneCommon.timeout(
+      this.doExecuteWithFallback<T>(0, label, operation),
       this.providerWithFallbackConfig.allProvidersOperationTimeout,
-      `executeWithFallback(${fnName}) timeout after ${this.providerWithFallbackConfig.allProvidersOperationTimeout}`
+      `executeWithFallback(${label}) timeout after ${this.providerWithFallbackConfig.allProvidersOperationTimeout}`
     );
   }
 
   private async doExecuteWithFallback<T = unknown>(
     alreadyRetriedCount: number,
-    fnName: string,
-    ...args: unknown[]
+    label: string,
+    operation: ProviderOperation<T>
   ): Promise<T> {
     const providerIndexForThisAttempt = this.providerIndex;
     try {
-      const providerName = this.extractProviderName(this.providerIndex);
       logger.debug(
-        `Executing ${fnName} with ${JSON.stringify(args)} on provider: ${providerName} (retry #${alreadyRetriedCount})`
+        `Executing ${label} on provider: ${this.extractProviderName(this.providerIndex)} (retry #${alreadyRetriedCount})`
       );
 
       return await RedstoneCommon.timeout(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument -- add reason here, please
-        (this.currentProvider as any)[fnName](...args),
+        operation(this.currentProvider),
         this.providerWithFallbackConfig.singleProviderOperationTimeout
       );
     } catch (error: unknown) {
@@ -194,7 +221,7 @@ export class ProviderWithFallback extends ProviderWithFallbackBase implements Pr
         providerIndexForThisAttempt
       );
 
-      return await this.doExecuteWithFallback(alreadyRetriedCount + 1, fnName, ...args);
+      return await this.doExecuteWithFallback(alreadyRetriedCount + 1, label, operation);
     }
   }
 

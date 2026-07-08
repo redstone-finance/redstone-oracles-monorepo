@@ -10,6 +10,7 @@ import { deployCounter } from "../helpers";
 chai.use(chaiAsPromised);
 
 const TEST_PRIV_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+const TX_HASH = "0x0000000000000000000000000000000000000000000000000000000000000001";
 
 describe("ProviderWithFallback", () => {
   const signer: Signer = new Wallet(TEST_PRIV_KEY);
@@ -75,6 +76,46 @@ describe("ProviderWithFallback", () => {
 
     expect(await fallbackProvider.getBlockNumber()).to.eq(10);
     expect(fallbackProvider.getCurrentProviderIndex()).to.eq(0);
+  });
+
+  it("should retry other providers on an empty receipt when retryOnEmpty is set", async () => {
+    const [firstStub, secondStub] = getStubProviders(2, "getTransactionReceipt");
+    const fallbackProvider = new ProviderWithFallback([
+      firstStub.stubProvider,
+      secondStub.stubProvider,
+    ]);
+    const receipt = { status: 1 } as providers.TransactionReceipt;
+    firstStub.spy.resolves(null);
+    secondStub.spy.resolves(receipt);
+
+    expect(await fallbackProvider.getTransactionReceipt(TX_HASH, true)).to.eq(receipt);
+    expect(fallbackProvider.getCurrentProviderIndex()).to.eq(1);
+  });
+
+  it("should throw when every provider returns an empty receipt", async () => {
+    const [firstStub, secondStub] = getStubProviders(2, "getTransactionReceipt");
+    const fallbackProvider = new ProviderWithFallback([
+      firstStub.stubProvider,
+      secondStub.stubProvider,
+    ]);
+    firstStub.spy.resolves(null);
+    secondStub.spy.resolves(null);
+
+    await expect(fallbackProvider.getTransactionReceipt(TX_HASH, true)).rejected;
+  });
+
+  it("should not retry other providers on an empty receipt without retryOnEmpty", async () => {
+    const [firstStub, secondStub] = getStubProviders(2, "getTransactionReceipt");
+    const fallbackProvider = new ProviderWithFallback([
+      firstStub.stubProvider,
+      secondStub.stubProvider,
+    ]);
+    firstStub.spy.resolves(null);
+    secondStub.spy.resolves({ status: 1 });
+
+    expect(await fallbackProvider.getTransactionReceipt(TX_HASH)).to.eq(null);
+    expect(fallbackProvider.getCurrentProviderIndex()).to.eq(0);
+    expect(secondStub.spy.notCalled).to.eq(true);
   });
 
   it("should propagate if both fails", async () => {
@@ -173,12 +214,15 @@ describe("ProviderWithFallback", () => {
   });
 });
 
-const getStubProviders = (count: number) => {
+const getStubProviders = (
+  count: number,
+  method: keyof providers.StaticJsonRpcProvider = "getBlockNumber"
+) => {
   const stubs = [];
 
   for (let i = 0; i < count; i++) {
     const stubProvider = new providers.StaticJsonRpcProvider();
-    const spy = sinon.stub(stubProvider, "getBlockNumber");
+    const spy = sinon.stub(stubProvider, method);
     stubs.push({ stubProvider, spy });
   }
 

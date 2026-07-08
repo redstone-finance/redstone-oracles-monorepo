@@ -25,6 +25,13 @@ const BLACKLISTED_FUNCTION_SIGNATURES = [
   "0xf7a57904", // MegaEth Transfer
 ];
 
+type ReceiptProvider = providers.Provider & {
+  getTransactionReceipt(
+    transactionHash: string,
+    retryOnEmpty?: boolean
+  ): Promise<TransactionReceipt>;
+};
+
 const logger = loggerFactory("evm-tx-lookup");
 
 export class EvmTxLookup extends RangeScanTxLookup<BlockWithTipPercentiles> {
@@ -159,11 +166,11 @@ function looksLikeRedStone(tx: TransactionResponse, addresses: TxLookupAddresses
   return normalizeRedStoneTxData(tx.data).endsWith(consts.REDSTONE_MARKER_HEX_PURE);
 }
 
-async function fetchReceiptsBatched(provider: providers.Provider, items: InterestingTx[]) {
+async function fetchReceiptsBatched(provider: ReceiptProvider, items: InterestingTx[]) {
   const promises = items.map(
     ({ tx }): (() => Promise<TransactionReceipt | null>) =>
       () =>
-        provider.getTransactionReceipt(tx.hash)
+        provider.getTransactionReceipt(tx.hash, true)
   );
 
   return await RedstoneCommon.batchPromises(
