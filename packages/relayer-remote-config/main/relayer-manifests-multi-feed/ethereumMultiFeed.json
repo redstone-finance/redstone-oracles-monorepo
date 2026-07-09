@@ -530,6 +530,27 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
+    },
+    "strUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0x7fdA577c085330E69df3179A2A5867751A9D0cAA",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "etrUSD_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x835Cfff06A60a16FD1880C3b0BEFac9968ABd659",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "BCAP_FUNDAMENTAL": {
+      "priceFeedAddress": "0x46f1B5F29A2DC1a730508a1B41a8B5B93E316eB2",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
