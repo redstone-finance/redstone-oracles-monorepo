@@ -58,4 +58,5 @@ void makeFeedTable([
   "NUSD_FUNDAMENTAL",
   "CURR",
   "JupUSD",
+  "STAC_FUNDAMENTAL",
 ]);

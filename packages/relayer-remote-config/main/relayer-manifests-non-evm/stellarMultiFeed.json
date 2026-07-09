@@ -144,6 +144,13 @@
         "deviationPercentage": 0.05,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "USDY_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "CAEUQPFSHHZ2EH4RKMU6S2NEOZVMDMZZ47RRN5FZCAPDME5OACBHEOXM",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
