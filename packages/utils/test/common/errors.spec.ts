@@ -1,4 +1,18 @@
-import { assertThenReturnOrFail } from "../../src/common";
+import { assertThenReturnOrFail, stringifyError } from "../../src/common";
+
+describe("stringifyError", () => {
+  it("returns string errors unchanged", () => {
+    const message = "Could not confirm transaction abc for BTC";
+
+    expect(stringifyError(message)).toBe(message);
+  });
+
+  it("is idempotent for already-stringified errors", () => {
+    const once = stringifyError(new Error("boom"));
+
+    expect(stringifyError(once)).toBe(once);
+  });
+});
 
 describe("assertThenReturnOrFail", () => {
   it("should return the value when there are no errors", () => {

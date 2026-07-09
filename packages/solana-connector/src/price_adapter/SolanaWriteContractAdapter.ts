@@ -21,7 +21,7 @@ export class SolanaWriteContractAdapter
     keypair: Keypair,
     config = DEFAULT_SOLANA_CONFIG
   ) {
-    const client = new SolanaClient(connection);
+    const client = SolanaClient.createMultiClient(connection);
     const provider = new AnchorReadonlyProvider(connection, client, keypair.publicKey);
     const contract = new PriceAdapterContract(address, provider, client);
 

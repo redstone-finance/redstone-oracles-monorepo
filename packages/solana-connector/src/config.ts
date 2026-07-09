@@ -1,22 +1,23 @@
-// default config results in maximum fee of 0.02 Sol
+export const MICRO_LAMPORTS_PER_LAMPORT = 1_000_000;
+
 export const DEFAULT_SOLANA_CONFIG: SolanaConfig = {
-  maxComputeUnits: 120_000,
-  maxPricePerComputeUnit: 10_000_000, // max price is 10M * 120k = 0.0012 SOL
+  maxPriorityFeePerTxInLamports: 60_000_000,
   basePricePerComputeUnit: 100_000,
-  gasMultiplier: 2,
-  maxTxAttempts: 8, // 2 ^ 8 =~ 10_000_000 / 100_000
-  expectedTxDeliveryTimeMs: 7_000,
+  gasMultiplier: 4,
+  maxTxAttempts: 7,
+  expectedTxDeliveryTimeMs: 4_000,
   useAggressiveGasOracle: true,
+  percentileOfPriorityFee: 80,
 };
 
 export interface SolanaConfig {
-  maxComputeUnits: number;
-  maxPricePerComputeUnit: number;
+  maxPriorityFeePerTxInLamports: number;
   basePricePerComputeUnit: number;
   gasMultiplier: number;
   maxTxAttempts: number;
   expectedTxDeliveryTimeMs: number;
   useAggressiveGasOracle: boolean;
+  percentileOfPriorityFee: number;
 }
 
 export function createSolanaConfig(args: {
@@ -26,24 +27,38 @@ export function createSolanaConfig(args: {
   maxTxSendAttempts?: number;
   expectedTxDeliveryTimeMs?: number;
   useAggressiveGasOracle?: boolean;
+  percentileOfPriorityFee?: number;
 }) {
   const gasMultiplier = args.gasMultiplier ?? DEFAULT_SOLANA_CONFIG.gasMultiplier;
   const maxTxAttempts = args.maxTxSendAttempts ?? DEFAULT_SOLANA_CONFIG.maxTxAttempts;
-  const maxComputeUnits = args.gasLimit ?? DEFAULT_SOLANA_CONFIG.maxComputeUnits;
+  const maxPriorityFeePerTxInLamports =
+    args.gasLimit ?? DEFAULT_SOLANA_CONFIG.maxPriorityFeePerTxInLamports;
   const expectedTxDeliveryTimeMs =
     args.expectedTxDeliveryTimeMs ?? DEFAULT_SOLANA_CONFIG.expectedTxDeliveryTimeMs;
   const useAggressiveGasOracle =
     args.useAggressiveGasOracle ?? DEFAULT_SOLANA_CONFIG.useAggressiveGasOracle;
   const basePricePerComputeUnit =
     args.basePricePerComputeUnit ?? DEFAULT_SOLANA_CONFIG.basePricePerComputeUnit;
+  const percentileOfPriorityFee =
+    args.percentileOfPriorityFee ?? DEFAULT_SOLANA_CONFIG.percentileOfPriorityFee;
 
   return {
     ...DEFAULT_SOLANA_CONFIG,
     gasMultiplier,
-    maxComputeUnits,
+    maxPriorityFeePerTxInLamports,
     basePricePerComputeUnit,
     maxTxAttempts,
     expectedTxDeliveryTimeMs,
     useAggressiveGasOracle,
+    percentileOfPriorityFee,
   };
+}
+
+export function maxPricePerComputeUnit(
+  { maxPriorityFeePerTxInLamports }: SolanaConfig,
+  computeUnits: number
+) {
+  return Math.floor(
+    (maxPriorityFeePerTxInLamports * MICRO_LAMPORTS_PER_LAMPORT) / Math.max(1, computeUnits)
+  );
 }
