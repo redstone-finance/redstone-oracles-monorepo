@@ -1,3 +1,4 @@
+import { MultiExecutor } from "@redstone-finance/utils";
 import { execSync } from "child_process";
 import { DEFAULT_SOLANA_CONFIG, SolanaWriteContractAdapter } from "../src";
 import { ConnectionStateScenario, LiteSVMConnection } from "./LiteSVMConnection";
@@ -15,10 +16,7 @@ function getSolanaPricesContractAdapter(trusted: "trusted" | "untrusted") {
     connection,
     programId.toBase58(),
     signer,
-    {
-      ...DEFAULT_SOLANA_CONFIG,
-      useAggressiveGasOracle: false,
-    }
+    DEFAULT_SOLANA_CONFIG
   );
 
   return {
@@ -68,7 +66,7 @@ describe("SolanaPricesContractAdapter tests", () => {
     ).rejects.toThrow("code: 1101");
   });
 
-  it("writePricesFromPayloadToContract can update feed price after 7 tx confirmation errors", async () => {
+  it("writePricesFromPayloadToContract can update feed price when only the last attempt is confirmed", async () => {
     const { priceAdapter, state } = getSolanaPricesContractAdapter("trusted");
     const { timestamp, provider, price } = testSample("default");
 
@@ -86,7 +84,7 @@ describe("SolanaPricesContractAdapter tests", () => {
     expect(data.lastDataPackageTimestampMS).toBe(timestamp);
   });
 
-  it("writePricesFromPayloadToContract can't update feed price after 8 failed submission attempts", async () => {
+  it("writePricesFromPayloadToContract can't update feed price when all submission attempts fail", async () => {
     const { priceAdapter, state } = getSolanaPricesContractAdapter("trusted");
     const { timestamp, provider } = testSample("default");
 
@@ -109,7 +107,9 @@ describe("SolanaPricesContractAdapter tests", () => {
 
     const fees = state.fees;
 
-    expect(fees).toStrictEqual([1, 2, 4, 8, 16, 32, 64, 128]);
+    expect(fees).toStrictEqual([
+      100_000, 400_000, 1_600_000, 6_400_000, 31_250_000, 125_000_000, 500_000_000,
+    ]);
   });
 
   it("writePricesFromPayloadToContract should bump fee upon network congestion errors", async () => {
@@ -119,10 +119,8 @@ describe("SolanaPricesContractAdapter tests", () => {
     state
       .setClock(timestamp)
       .thenDontSubmitAndErrorFor(DEFAULT_SOLANA_CONFIG.maxTxAttempts)
-      .thenSetRecentFee([1000])
-      .thenSetRecentFee([1100])
-      .thenSetRecentFee([1200])
-      .thenSetRecentFee([1000]);
+      .thenSetRecentFee([0, 0, 5_000_000])
+      .thenSetRecentFee([0, 6_000_000]);
 
     await expect(
       async () => await priceAdapter.writePricesFromPayloadToContract(provider)
@@ -130,7 +128,9 @@ describe("SolanaPricesContractAdapter tests", () => {
 
     const fees = state.fees;
 
-    expect(fees).toStrictEqual([1000, 2200, 4800, 8000, 16, 32, 64, 128]);
+    expect(fees).toStrictEqual([
+      100_000, 400_000, 5_000_000, 24_000_000, 31_250_000, 125_000_000, 500_000_000,
+    ]);
   });
 
   it("writePricesFromPayloadToContract cant update if there is less than required signers", async () => {
@@ -217,4 +217,47 @@ describe("SolanaPricesContractAdapter tests", () => {
     expect(data.lastValue).toBe(newPrice);
     expect(data.lastDataPackageTimestampMS).toBe(newTimestamp);
   });
+
+  it("fans reads out across all sub-connections of a multi-connection", async () => {
+    const { connections, adapter } = getMultiConnectionAdapter();
+    const spies = connections.map((connection) =>
+      jest.spyOn(connection, "getMultipleAccountsInfo")
+    );
+
+    await adapter.readContractData(["ETH", "BTC"]);
+
+    for (const spy of spies) {
+      expect(spy).toHaveBeenCalled();
+    }
+  });
+
+  it("races sendTransaction across all sub-connections of a multi-connection", async () => {
+    const { states, connections, adapter } = getMultiConnectionAdapter();
+    const { timestamp, provider } = testSample("default");
+    states.forEach((state) =>
+      state.setClock(timestamp).thenSubmit().thenTransactionStatus("confirmed")
+    );
+    const spies = connections.map((connection) => jest.spyOn(connection, "sendTransaction"));
+
+    await adapter.writePricesFromPayloadToContract(provider);
+
+    for (const spy of spies) {
+      expect(spy).toHaveBeenCalled();
+    }
+  });
 });
+
+function getMultiConnectionAdapter() {
+  const { svm, trustedSigner, programId } = setUpEnv();
+  const states = [new ConnectionStateScenario(svm), new ConnectionStateScenario(svm)];
+  const connections = states.map((state) => new LiteSVMConnection(state));
+  const multiConnection = MultiExecutor.create(connections, {}, MultiExecutor.DEFAULT_CONFIG);
+  const adapter = new SolanaWriteContractAdapter(
+    multiConnection,
+    programId.toBase58(),
+    trustedSigner,
+    DEFAULT_SOLANA_CONFIG
+  );
+
+  return { states, connections, adapter };
+}

@@ -31,9 +31,11 @@ export class SolanaClient {
         getSlot: SolanaConnectionBuilder.blockNumberConsensusExecutor,
         viewMethod: MultiExecutor.ExecutionMode.AGREEMENT,
         getBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
+        getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
         getSignatureStatus: MultiExecutor.ExecutionMode.AGREEMENT,
         getAccountInfo: MultiExecutor.ExecutionMode.AGREEMENT,
         getMultipleAccountsInfo: MultiExecutor.ExecutionMode.MULTI_AGREEMENT,
+        getRecentPrioritizationFees: MultiExecutor.ExecutionMode.RACE,
         sendTransaction: MultiExecutor.ExecutionMode.RACE,
       },
       {
