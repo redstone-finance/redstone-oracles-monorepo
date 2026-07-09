@@ -16,7 +16,10 @@ export class SolanaPriceFeedContractAdapter implements PriceFeedAdapter {
   }
 
   static fromConnectionAndAddress(connection: Connection, priceFeedAddress: string) {
-    return new SolanaPriceFeedContractAdapter(new SolanaClient(connection), priceFeedAddress);
+    return new SolanaPriceFeedContractAdapter(
+      SolanaClient.createMultiClient(connection),
+      priceFeedAddress
+    );
   }
 
   async getPriceAndTimestamp(slot?: number) {
