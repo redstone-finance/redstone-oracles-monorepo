@@ -15,4 +15,5 @@ export type PartialRelayerConfig = {
   maxTxSendAttempts?: number;
   expectedTxDeliveryTimeInMS?: number;
   fallbackOffsetInMilliseconds?: number;
+  percentileOfPriorityFee?: number | number[];
 };

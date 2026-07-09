@@ -120,6 +120,8 @@ export function stringifyError(e: unknown, noStack = false): string {
 
     if (error === undefined) {
       return "undefined";
+    } else if (typeof e === "string") {
+      return e;
     } else if (error instanceof AggregateError) {
       const errorMessages: string[] = error.errors.map((e) => stringifyError(e, noStack));
 

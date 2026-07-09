@@ -9,11 +9,12 @@ import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import {
   ComputeBudgetProgram,
   Keypair,
+  LAMPORTS_PER_SOL,
   TransactionInstruction,
   TransactionMessage,
   VersionedTransaction,
 } from "@solana/web3.js";
-import { SolanaConfig } from "../config";
+import { MICRO_LAMPORTS_PER_LAMPORT, SolanaConfig } from "../config";
 import { AggressiveSolanaGasOracle } from "../gas-oracles/AggressiveSolanaGasOracle";
 import { ISolanaGasOracle } from "../gas-oracles/ISolanaGasOracle";
 import { RegularSolanaGasOracle } from "../gas-oracles/RegularSolanaGasOracle";
@@ -23,6 +24,7 @@ import { getRecentBlockhash } from "./get-recent-blockhash";
 import { SOLANA_SLOT_TIME_INTERVAL_MS, SolanaClient } from "./SolanaClient";
 
 const MAX_FEED_COUNT_IN_UPDATE = 1;
+const COMPUTE_UNITS_PER_SIGNER = 40_000;
 
 export class SolanaContractUpdater implements ContractUpdater {
   private readonly logger = loggerFactory("solana-contract-updater");
@@ -36,8 +38,8 @@ export class SolanaContractUpdater implements ContractUpdater {
     private readonly contract: PriceAdapterContract
   ) {
     this.gasOracle = config.useAggressiveGasOracle
-      ? new AggressiveSolanaGasOracle(config)
-      : new RegularSolanaGasOracle(client, config);
+      ? new AggressiveSolanaGasOracle(client, config)
+      : new RegularSolanaGasOracle(config);
 
     this.txDeliveryMan = new MultiTxDeliveryMan(
       {
@@ -83,8 +85,9 @@ export class SolanaContractUpdater implements ContractUpdater {
     const ix = await FP.mapAsyncStringifyError(payload, (payload) =>
       this.contract.writePriceTx(this.keypair.publicKey, feedId, payload)
     );
+    const computeUnits = COMPUTE_UNITS_PER_SIGNER * paramsProvider.requestParams.uniqueSignersCount;
     const transactionHash = await FP.mapAsyncStringifyError(ix, (ix) =>
-      this.sendAndConfirm(feedId, ix, attempt)
+      this.sendAndConfirm(feedId, ix, attempt, computeUnits)
     );
 
     return FP.mapStringifyError(transactionHash, (transactionHash) => ({ transactionHash }));
@@ -93,9 +96,10 @@ export class SolanaContractUpdater implements ContractUpdater {
   private async sendAndConfirm(
     id: string,
     instruction: TransactionInstruction,
-    iterationIndex = 0
+    iterationIndex: number,
+    computeUnits: number
   ) {
-    const message = await this.wrapWithGas(instruction, iterationIndex);
+    const message = await this.wrapWithGas(instruction, iterationIndex, computeUnits);
     const tx = new VersionedTransaction(message.compileToV0Message());
 
     tx.sign([this.keypair]);
@@ -109,12 +113,12 @@ export class SolanaContractUpdater implements ContractUpdater {
     return signature;
   }
 
-  private async wrapWithGas(ix: TransactionInstruction, iteration: number) {
-    const computeUnits = this.config.maxComputeUnits;
+  private async wrapWithGas(ix: TransactionInstruction, iteration: number, computeUnits: number) {
     const writableKeys = ix.keys.filter((meta) => meta.isWritable).map((meta) => meta.pubkey);
     const priorityFeeUnitPriceCostInMicroLamports = await this.gasOracle.getPriorityFeePerUnit(
       iteration,
-      [this.keypair.publicKey, ...writableKeys]
+      [this.keypair.publicKey, ...writableKeys],
+      computeUnits
     );
 
     const computeUnitsInstruction = ComputeBudgetProgram.setComputeUnitLimit({
@@ -127,11 +131,13 @@ export class SolanaContractUpdater implements ContractUpdater {
 
     const instructions = [computeUnitsInstruction, setComputeUnitPriceInstruction, ix];
 
-    this.logger.debug(`Setting transaction compute units to ${computeUnits}`);
+    this.logger.trace(`Setting transaction compute units to ${computeUnits}`);
     if (priorityFeeUnitPriceCostInMicroLamports) {
-      this.logger.info(
-        `Additional cost of transaction: ${computeUnits * priorityFeeUnitPriceCostInMicroLamports} microLamports`
-      );
+      const additionalCostInSol =
+        (computeUnits * priorityFeeUnitPriceCostInMicroLamports) /
+        MICRO_LAMPORTS_PER_LAMPORT /
+        LAMPORTS_PER_SOL;
+      this.logger.info(`Additional cost of transaction: ${additionalCostInSol} SOL`);
     }
     const recentBlockhash = await getRecentBlockhash(this.client, "wrapWithGas");
 

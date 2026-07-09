@@ -13,6 +13,7 @@ import { setUpEnv } from "../setup-env";
 import { LiteSVMAgnosticTestsConnection } from "./TestConnection";
 
 const MS_IN_SECS = 1_000;
+const UNIQUE_SIGNERS_COUNT = 5;
 
 export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvironment {
   constructor(
@@ -31,16 +32,9 @@ export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvir
     payloadGenerator: (context: PushModelTestContext) => string,
     instructionsContext: PushModelTestContext[]
   ) {
-    const paramsProvider = new ContractParamsProviderMock(dataFeedIds, "", () => {
-      const currentTimeMs = RedstoneCommon.secsToMs(Number(this.svm.getClock().unixTimestamp));
-
-      const payload = payloadGenerator({
-        timestamp: currentTimeMs,
-        instructions: instructionsContext,
-      });
-
-      return Buffer.from(payload.replace("0x", ""));
-    });
+    const paramsProvider = this.makeParamsProvider(dataFeedIds, (timestamp) =>
+      payloadGenerator({ timestamp, instructions: instructionsContext })
+    );
 
     try {
       await this.adapter.writePricesFromPayloadToContract(paramsProvider);
@@ -80,12 +74,7 @@ export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvir
     dataFeedIds: string[],
     payloadGenerator: (timestamp: number) => string
   ): Promise<number[]> {
-    const paramsProvider = new ContractParamsProviderMock(dataFeedIds, "", () => {
-      const currentTimeMs = RedstoneCommon.secsToMs(Number(this.svm.getClock().unixTimestamp));
-      const payload = payloadGenerator(currentTimeMs);
-
-      return Buffer.from(payload.replace("0x", ""));
-    });
+    const paramsProvider = this.makeParamsProvider(dataFeedIds, payloadGenerator);
     await this.adapter.writePricesFromPayloadToContract(paramsProvider);
 
     return await this.read(dataFeedIds);
@@ -93,6 +82,19 @@ export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvir
 
   finish(): Promise<void> {
     return Promise.resolve();
+  }
+
+  private makeParamsProvider(dataFeedIds: string[], buildPayload: (timestamp: number) => string) {
+    return new ContractParamsProviderMock(
+      dataFeedIds,
+      "",
+      () => {
+        const currentTimeMs = RedstoneCommon.secsToMs(Number(this.svm.getClock().unixTimestamp));
+
+        return Buffer.from(buildPayload(currentTimeMs).replace("0x", ""));
+      },
+      UNIQUE_SIGNERS_COUNT
+    );
   }
 }
 export function getTestEnvFunction() {
@@ -116,7 +118,6 @@ export function getTestEnv() {
     createSolanaConfig({
       maxTxSendAttempts: 2,
       expectedTxDeliveryTimeMs: 100,
-      gasLimit: 200_000,
     })
   );
 

@@ -14,7 +14,7 @@ export class SolanaContractAdapter implements ContractAdapter {
   ) {}
 
   static fromConnectionAndAddress(connection: Connection, address: string) {
-    const client = new SolanaClient(connection);
+    const client = SolanaClient.createMultiClient(connection);
     const provider = new AnchorReadonlyProvider(connection, client);
     const contract = new PriceAdapterContract(address, provider, client);
 

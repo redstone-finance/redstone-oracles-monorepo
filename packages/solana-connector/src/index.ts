@@ -3,6 +3,7 @@ export * from "./client/get-recent-blockhash";
 export * from "./client/SolanaClient";
 export * from "./client/SolanaContractUpdater";
 export * from "./config";
+export * from "./gas-oracles/AggressiveSolanaGasOracle";
 export * from "./gas-oracles/ISolanaGasOracle";
 export * from "./gas-oracles/RegularSolanaGasOracle";
 export * from "./network-ids";
