@@ -1134,11 +1134,8 @@
       "currencySymbol": "SOL",
       "publicRpcUrls": [
         "https://api.mainnet-beta.solana.com",
-        "https://go.getblock.us/86aac42ad4484f3c813079afc201451c",
-        "https://solana-mainnet.gateway.tatum.io/",
-        "https://solana-rpc.publicnode.com",
-        "https://api.blockeden.xyz/solana/KeCh6p22EX5AeRHxMSmc",
-        "https://solana.drpc.org/"
+        "https://solana.leorpc.com/?api_key=FREE",
+        "https://solana-mainnet.gateway.tatum.io/"
       ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
