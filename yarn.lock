@@ -8782,6 +8782,7 @@ __metadata:
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/solana-connection": "workspace:*"
     "@redstone-finance/solana-connector": "workspace:*"
     "@redstone-finance/stellar-connector": "workspace:*"
     "@redstone-finance/sui-connector": "workspace:*"
@@ -9147,11 +9148,10 @@ __metadata:
     "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
-    "@redstone-finance/solana-connector": "workspace:*"
+    "@redstone-finance/solana-connection": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@redstone-finance/ws": "workspace:*"
-    "@solana/spl-token": "npm:^0.4.14"
-    "@solana/web3.js": "npm:^1.98.2"
+    "@solana/web3.js": "npm:^1.98.4"
     "@ton/core": "npm:^0.56.3"
     "@ton/crypto": "npm:^3.2.0"
     "@types/exchange-rates-api": "npm:^1.0.0"
@@ -10987,6 +10987,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/solana-connection@workspace:*, @redstone-finance/solana-connection@workspace:packages/solana-connection":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/solana-connection@workspace:packages/solana-connection"
+  dependencies:
+    "@redstone-finance/utils": "workspace:*"
+    "@solana/web3.js": "npm:^1.98.4"
+    lodash: "npm:^4.17.23"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/solana-connector@workspace:*, @redstone-finance/solana-connector@workspace:packages/solana-connector":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/solana-connector@workspace:packages/solana-connector"
@@ -11003,8 +11013,9 @@ __metadata:
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/solana-connection": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    "@solana/web3.js": "npm:^1.98.2"
+    "@solana/web3.js": "npm:^1.98.4"
     "@sqds/multisig": "npm:^2.1.3"
     "@types/bn.js": "npm:^5.1.0"
     "@types/chai": "npm:^4.3.4"
@@ -12558,7 +12569,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/spl-token@npm:^0.4.14, @solana/spl-token@npm:^0.4.6, @solana/spl-token@npm:^0.4.8":
+"@solana/spl-token@npm:^0.4.6, @solana/spl-token@npm:^0.4.8":
   version: 0.4.14
   resolution: "@solana/spl-token@npm:0.4.14"
   dependencies:
@@ -12573,7 +12584,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/web3.js@npm:^1.32.0, @solana/web3.js@npm:^1.56.2, @solana/web3.js@npm:^1.68.0, @solana/web3.js@npm:^1.69.0, @solana/web3.js@npm:^1.70.3, @solana/web3.js@npm:^1.91.6, @solana/web3.js@npm:^1.95.2, @solana/web3.js@npm:^1.95.3, @solana/web3.js@npm:^1.98.2":
+"@solana/web3.js@npm:^1.32.0, @solana/web3.js@npm:^1.56.2, @solana/web3.js@npm:^1.68.0, @solana/web3.js@npm:^1.69.0, @solana/web3.js@npm:^1.70.3, @solana/web3.js@npm:^1.91.6, @solana/web3.js@npm:^1.95.2, @solana/web3.js@npm:^1.95.3, @solana/web3.js@npm:^1.98.4":
   version: 1.98.4
   resolution: "@solana/web3.js@npm:1.98.4"
   dependencies:

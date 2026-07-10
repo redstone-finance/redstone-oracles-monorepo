@@ -1,12 +1,12 @@
 import { sampleRun } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { SolanaConnectionBuilder } from "@redstone-finance/solana-connection";
 import "dotenv/config";
 import { hexlify } from "ethers/lib/utils";
 import {
   readCluster,
   SolanaBlockchainService,
   SolanaClient,
-  SolanaConnectionBuilder,
   SolanaWriteContractAdapter,
 } from "../src";
 import { readProgramAddress } from "./consts";

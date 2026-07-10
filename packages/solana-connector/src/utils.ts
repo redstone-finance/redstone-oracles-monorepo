@@ -1,5 +1,5 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { Cluster, clusterApiUrl, Connection, Keypair } from "@solana/web3.js";
+import { Keypair } from "@solana/web3.js";
 import { utils } from "ethers";
 import { z } from "zod";
 
@@ -41,10 +41,6 @@ export function makeKeypair(privateKeyInput: number[] | string | Uint8Array) {
     // Using full secret key (which contains both private and public keys)
     return Keypair.fromSecretKey(privateKeyBuffer);
   }
-}
-
-export function connectToCluster(cluster?: Cluster) {
-  return new Connection(clusterApiUrl(cluster ?? readCluster()), "confirmed");
 }
 
 export function readCluster() {
