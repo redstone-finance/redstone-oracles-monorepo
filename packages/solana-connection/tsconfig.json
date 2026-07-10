@@ -1,0 +1,5 @@
+{
+  "extends": "@redstone-finance/typescript-config/tsconfig-common.json",
+  "include": ["src/**/*", "test/**/*", "jest.config.ts"],
+  "exclude": ["node_modules", "dist", "**/target"]
+}

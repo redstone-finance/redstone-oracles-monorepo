@@ -1,9 +1,10 @@
 import { fetchChainConfigs, getChainConfigByNetworkId } from "@redstone-finance/chain-configs";
+import { CLUSTER_NAMES } from "@redstone-finance/solana-connection";
 import { constructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import _ from "lodash";
 import z from "zod";
-import { CLUSTER_NAMES, readCluster } from "../src";
+import { readCluster } from "../src";
 import { readUrl } from "./utils";
 
 export async function getRpcUrls() {
