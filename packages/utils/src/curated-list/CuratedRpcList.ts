@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { assert, getFromEnv } from "../common";
+import { assert, getFromEnv, setUnrefInterval, TimerId } from "../common";
 import { loggerFactory, RedstoneLogger } from "../logger";
 import { weightedRandom } from "../math";
 import { NetworkId } from "../NetworkId";
@@ -54,8 +54,8 @@ export class CuratedRpcList {
   state: { [rpcIdentifier: RpcIdentifier]: Score } = {};
   logger: RedstoneLogger;
 
-  freeFromQuarantineTimer?: NodeJS.Timeout;
-  evaluationTimer?: NodeJS.Timeout;
+  freeFromQuarantineTimer?: TimerId;
+  evaluationTimer?: TimerId;
 
   constructor(config: CuratedRpcListConfig, networkId: NetworkId) {
     this.config = CuratedRpcListConfigSchema.parse(config);
@@ -87,10 +87,10 @@ export class CuratedRpcList {
       return;
     }
 
-    this.freeFromQuarantineTimer ??= setInterval(
+    this.freeFromQuarantineTimer ??= setUnrefInterval(
       () => this.freeOneRpcFromQuarantine(),
       this.config.resetQuarantineInterval
-    ).unref();
+    );
   }
 
   private updateEvaluationTimer() {
@@ -101,9 +101,9 @@ export class CuratedRpcList {
       return;
     }
 
-    this.evaluationTimer ??= setInterval(() => {
+    this.evaluationTimer ??= setUnrefInterval(() => {
       this.config.rpcIdentifiers.map((rpc) => this.evaluateRpcScore(rpc));
-    }, this.config.evaluationInterval).unref();
+    }, this.config.evaluationInterval);
   }
 
   scoreRpc(rpc: RpcIdentifier, score: ScoreReport) {
