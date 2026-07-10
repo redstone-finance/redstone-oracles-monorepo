@@ -1720,6 +1720,12 @@
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:XMR-TWAP-60": {
+      "source": ["twap-local"],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_hyna:XMR": {
@@ -2554,6 +2560,12 @@
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:BCH-TWAP-60": {
+      "source": ["twap-local"],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_hyna:BCH": {
@@ -2833,6 +2845,12 @@
     "hyna:LIGHTER": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
+      "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:LIGHTER-TWAP-60": {
+      "source": ["twap-local"],
       "denomination": "USD",
       "rateFeed": false
     },
