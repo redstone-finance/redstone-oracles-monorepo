@@ -1,3 +1,6 @@
+// In Deno (Goldsky) timers are the web API returning a number, which has no unref
+export type TimerId = NodeJS.Timeout | number;
+
 type TimeoutCallback<T> = (
   resolve: (value: T | PromiseLike<T>) => void,
   reject: (reason?: unknown) => void
@@ -56,6 +59,15 @@ export const timeoutWithCustomError = async <T>(
   } finally {
     clearTimeout(timer);
   }
+};
+
+export const setUnrefInterval = (callback: () => void, intervalMs: number) => {
+  const timer: TimerId = setInterval(callback, intervalMs);
+  if (typeof timer !== "number") {
+    timer.unref();
+  }
+
+  return timer;
 };
 
 export const sleep = (ms: number) =>
