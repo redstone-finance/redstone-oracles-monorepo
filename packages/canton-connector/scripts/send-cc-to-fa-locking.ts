@@ -7,8 +7,8 @@ import { makeDefaultClientWithValidator, readNetwork } from "./utils";
 async function main() {
   const network = readNetwork();
   const faLockingPartyId = z
-    .string({ message: `faLockingPartyId is not configured for network: ${network}` })
-    .parse(AllDefs[network].node.faLockingPartyId);
+    .string({ message: `primaryFaLockingPartyId is not configured for network: ${network}` })
+    .parse(AllDefs[network].node.primaryFaLockingPartyId);
   const amount = RedstoneCommon.getFromEnv("AMOUNT", z.coerce.number().positive());
 
   const { client, validatorClient } = makeDefaultClientWithValidator(true);
