@@ -16,6 +16,7 @@ export async function printTx<K extends AdapterKind = "base">(
   const client = new StellarClientBuilder()
     .withStellarNetwork(readNetwork())
     .withRpcUrl(readUrl())
+    .withMulticall()
     .build();
   const contract = new Contract(contractId);
   const adapter = (

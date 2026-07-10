@@ -40,9 +40,9 @@
     "get-stellar-address": "yarn global:ts-node ./scripts/get-stellar-address.ts",
     "instantiate-price-feed": "CONTRACT_NAME=redstone_price_feed yarn global:ts-node scripts/instantiate-price-feed.ts",
     "extend-instance-ttl": "yarn global:ts-node scripts/extend-instance-ttl.ts",
-    "sep-40-add-feed-tx": "yarn global:ts-node scripts/ledger/sep-40/add-feed-tx.ts",
-    "sep-40-remove-feed-tx": "yarn global:ts-node scripts/ledger/sep-40/remove-feed-tx.ts",
-    "sep-40-update-feed-tx": "yarn global:ts-node scripts/ledger/sep-40/update-feed-tx.ts",
+    "sep-40-add-feeds-tx": "yarn global:ts-node scripts/ledger/sep-40/add-feeds-tx.ts",
+    "sep-40-remove-feeds-tx": "yarn global:ts-node scripts/ledger/sep-40/remove-feeds-tx.ts",
+    "sep-40-update-feeds-tx": "yarn global:ts-node scripts/ledger/sep-40/update-feeds-tx.ts",
     "sep-40-set-resolution-tx": "yarn global:ts-node scripts/ledger/sep-40/set-resolution-tx.ts",
     "extend-sep-40-ttl": "yarn global:ts-node scripts/extend-sep-40-ttl.ts"
   },

@@ -4,14 +4,14 @@ import { printTx } from "../print-tx";
 
 const FEE_STROOPS = "1000";
 
-const FEED = "BTC";
+const FEEDS = ["BTC"];
 
-async function removeFeedTx(contractId = loadSep40Id()) {
+async function removeFeedsTx(contractId = loadSep40Id()) {
   await printTx(
     contractId,
-    (adapter) => adapter.removeFeedTx(MULTISIG_ADDRESS, FEED, FEE_STROOPS),
+    (adapter) => adapter.removeFeedsTx(MULTISIG_ADDRESS, FEEDS, FEE_STROOPS),
     "sep40"
   );
 }
 
-void removeFeedTx();
+void removeFeedsTx();
