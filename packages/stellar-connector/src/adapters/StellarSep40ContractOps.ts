@@ -1,4 +1,5 @@
-import { BASE_FEE, nativeToScVal } from "@stellar/stellar-sdk";
+import { BASE_FEE, nativeToScVal, xdr } from "@stellar/stellar-sdk";
+import { StellarInvocation } from "../client/IStellarCaller";
 import { FeedMapping, feedMappingToScVal } from "../sep-40-types";
 import { StellarContractOps } from "./StellarContractOps";
 
@@ -43,6 +44,43 @@ export class StellarSep40ContractOps extends StellarContractOps {
     );
   }
 
+  async addFeedsTx(
+    sender: string,
+    feedMappings: FeedMapping[],
+    fee = BASE_FEE,
+    timeout = TIMEOUT_SEC
+  ) {
+    return await this.multicallTx(
+      sender,
+      feedMappings.map((m) => this.invocation(FN_ADD_FEED, feedMappingToScVal(m))),
+      fee,
+      timeout
+    );
+  }
+
+  async removeFeedsTx(sender: string, feeds: string[], fee = BASE_FEE, timeout = TIMEOUT_SEC) {
+    return await this.multicallTx(
+      sender,
+      feeds.map((feed) => this.invocation(FN_REMOVE_FEED, nativeToScVal(feed, { type: "string" }))),
+      fee,
+      timeout
+    );
+  }
+
+  async updateFeedsTx(
+    sender: string,
+    feedMappings: FeedMapping[],
+    fee = BASE_FEE,
+    timeout = TIMEOUT_SEC
+  ) {
+    return await this.multicallTx(
+      sender,
+      feedMappings.map((m) => this.invocation(FN_UPDATE_FEED, feedMappingToScVal(m))),
+      fee,
+      timeout
+    );
+  }
+
   async setResolutionTx(sender: string, resolution: number, fee = BASE_FEE, timeout = TIMEOUT_SEC) {
     return await this.client.prepareTransaction(
       this.contract.call(FN_SET_RESOLUTION, nativeToScVal(resolution, { type: "u32" })),
@@ -78,5 +116,18 @@ export class StellarSep40ContractOps extends StellarContractOps {
 
   async extendEntriesTtl() {
     return await this.operationSender?.sendTransaction(this.contract.call(FN_EXTEND_ENTRIES_TTL));
+  }
+
+  private invocation(method: string, ...args: xdr.ScVal[]) {
+    return { contract: this.contract, method, args };
+  }
+
+  private async multicallTx(
+    sender: string,
+    invocations: StellarInvocation[],
+    fee = BASE_FEE,
+    timeout = TIMEOUT_SEC
+  ) {
+    return await this.client.prepareMulticallTransaction(invocations, sender, fee, timeout);
   }
 }

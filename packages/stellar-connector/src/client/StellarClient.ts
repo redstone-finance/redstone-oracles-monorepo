@@ -23,6 +23,7 @@ import { BlockNumberProvider } from "./BlockNumberProvider";
 import { HorizonClient } from "./HorizonClient";
 import { IStellarCaller, StellarInvocation } from "./IStellarCaller";
 import { LedgerEntriesCollector, LedgerEntriesCollectorDelegate } from "./LedgerEntriesCollector";
+import { StellarMulticall } from "./StellarMulticall";
 
 export const SECS_PER_LEDGER = 5;
 export const LEDGERS_PER_DAY = RedstoneCommon.hourToSecs(24) / SECS_PER_LEDGER;
@@ -60,7 +61,7 @@ export class StellarClient implements IStellarCaller, LedgerEntriesCollectorDele
   constructor(
     private readonly server: rpc.Server,
     private readonly horizon?: HorizonClient,
-    private readonly multicall?: IStellarCaller
+    private readonly multicall?: StellarMulticall
   ) {
     this.blockNumberProvider = new BlockNumberProvider(server);
   }
@@ -136,6 +137,24 @@ export class StellarClient implements IStellarCaller, LedgerEntriesCollectorDele
     const tx = await this.buildTransaction(operation, signer, fee, timeout, sorobanData);
 
     return await this.server.prepareTransaction(tx);
+  }
+
+  async prepareMulticallTransaction(
+    invocations: StellarInvocation[],
+    sender: string,
+    fee = BASE_FEE,
+    timeout = TRANSACTION_TIMEOUT_SEC
+  ) {
+    if (!this.multicall) {
+      throw new Error("Client is not configured with multicall");
+    }
+
+    return await this.prepareTransaction(
+      this.multicall.execOperation(sender, invocations),
+      sender,
+      fee,
+      timeout
+    );
   }
 
   async prepareSignedTransaction(

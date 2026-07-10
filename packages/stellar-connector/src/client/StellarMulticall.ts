@@ -51,15 +51,23 @@ export class StellarMulticall implements IStellarCaller, SimulationCollectorDele
     blockNumber?: number,
     transform = (retVal: unknown) => retVal as T
   ): Promise<T> {
-    const invocation = new InvocationV0({
-      ...baseInvocation,
-      contract: baseInvocation.contract.contractId(),
-      args: baseInvocation.args ?? [],
-    });
+    const invocation = StellarMulticall.toInvocationV0(baseInvocation);
 
     const result = await this.collectors.get(blockNumber).collect({ baseInvocation, invocation });
 
     return transform(result);
+  }
+
+  execOperation(sender: string, invocations: StellarInvocation[]) {
+    return this.router.exec(sender, invocations.map(StellarMulticall.toInvocationV0));
+  }
+
+  private static toInvocationV0(invocation: StellarInvocation) {
+    return new InvocationV0({
+      ...invocation,
+      contract: invocation.contract.contractId(),
+      args: invocation.args ?? [],
+    });
   }
 
   /// SimulationCollectorDelegate
