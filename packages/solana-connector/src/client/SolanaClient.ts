@@ -16,7 +16,6 @@ import {
   Transaction,
   VersionedTransaction,
 } from "@solana/web3.js";
-import { SolanaConnectionBuilder } from "../SolanaConnectionBuilder";
 
 export const SOLANA_SLOT_TIME_INTERVAL_MS = 400;
 
@@ -28,7 +27,7 @@ export class SolanaClient {
       connection,
       (conn) => new SolanaClient(conn),
       {
-        getSlot: SolanaConnectionBuilder.blockNumberConsensusExecutor,
+        getSlot: MultiExecutor.ClientBuilder.blockNumberConsensusExecutor,
         viewMethod: MultiExecutor.ExecutionMode.AGREEMENT,
         getBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
         getBalance: MultiExecutor.ExecutionMode.AGREEMENT,

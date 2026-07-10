@@ -1,8 +1,8 @@
 import { ChainTypeEnum, MultiExecutor } from "@redstone-finance/utils";
 import { Cluster, Commitment, Connection } from "@solana/web3.js";
+import { connectToCluster } from "./cluster";
 import { getSolanaChainId, getSolanaCluster } from "./network-ids";
 import { RedStoneConnection } from "./RedStoneConnection";
-import { connectToCluster } from "./utils";
 
 export class SolanaConnectionBuilder extends MultiExecutor.ClientBuilder<Connection> {
   protected override chainType = ChainTypeEnum.enum.solana;
