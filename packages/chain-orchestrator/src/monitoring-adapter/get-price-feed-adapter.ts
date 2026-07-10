@@ -4,10 +4,8 @@ import {
   readCantonPartyIds,
 } from "@redstone-finance/canton-connector";
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
-import {
-  SolanaConnectionBuilder,
-  SolanaPriceFeedContractAdapter,
-} from "@redstone-finance/solana-connector";
+import { SolanaConnectionBuilder } from "@redstone-finance/solana-connection";
+import { SolanaPriceFeedContractAdapter } from "@redstone-finance/solana-connector";
 import {
   PriceFeedStellarContractAdapter,
   Sep40PriceFeedStellarContractAdapter,

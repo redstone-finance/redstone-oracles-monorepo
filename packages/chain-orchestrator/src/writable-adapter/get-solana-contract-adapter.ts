@@ -1,7 +1,7 @@
+import { SolanaConnectionBuilder } from "@redstone-finance/solana-connection";
 import {
   createSolanaConfig,
   makeKeypair,
-  SolanaConnectionBuilder,
   SolanaWriteContractAdapter,
 } from "@redstone-finance/solana-connector";
 import { RedstoneCommon } from "@redstone-finance/utils";

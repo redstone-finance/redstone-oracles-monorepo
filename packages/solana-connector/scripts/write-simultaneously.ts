@@ -4,9 +4,10 @@ import {
   DataPackagesResponseCache,
   getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
+import { SolanaConnectionBuilder } from "@redstone-finance/solana-connection";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { hexlify } from "ethers/lib/utils";
-import { readCluster, SolanaConnectionBuilder, SolanaWriteContractAdapter } from "../src";
+import { readCluster, SolanaWriteContractAdapter } from "../src";
 import { readProgramAddress } from "./consts";
 import { getRpcUrls } from "./get-rpc-urls";
 import { readKeypair } from "./utils";

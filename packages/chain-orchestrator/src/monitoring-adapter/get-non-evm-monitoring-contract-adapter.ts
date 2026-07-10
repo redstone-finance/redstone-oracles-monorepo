@@ -6,7 +6,8 @@ import {
 } from "@redstone-finance/canton-connector";
 import { MoveClientBuilder, MovePricesContractAdapter } from "@redstone-finance/move-connector";
 import { AnyOnChainRelayerManifest } from "@redstone-finance/on-chain-relayer-common";
-import { SolanaConnectionBuilder, SolanaContractAdapter } from "@redstone-finance/solana-connector";
+import { SolanaConnectionBuilder } from "@redstone-finance/solana-connection";
+import { SolanaContractAdapter } from "@redstone-finance/solana-connector";
 import {
   Sep40StellarContractAdapter,
   StellarClientBuilder,

@@ -1,0 +1,32 @@
+{
+  "name": "@redstone-finance/solana-connection",
+  "version": "0.9.0",
+  "description": "Solana RPC connection layer for RedStone (read-only transport, no contract logic)",
+  "main": "dist/src/index.js",
+  "exports": "./dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "yarn global:ts-clean",
+    "build": "yarn global:tsc -p tsconfig.build.json",
+    "build:turbo": "yarn global:turbo build",
+    "typecheck": "yarn global:tsc --noEmit",
+    "typecheck:turbo": "yarn global:turbo typecheck",
+    "lint": "yarn global:eslint .",
+    "lint:fix": "yarn global:eslint --fix .",
+    "test": "yarn global:jest:cov",
+    "preversion": "yarn build",
+    "pack-package": "yarn build && cd dist && npm pack"
+  },
+  "dependencies": {
+    "@redstone-finance/utils": "workspace:*",
+    "@solana/web3.js": "^1.98.4",
+    "lodash": "^4.17.23"
+  },
+  "files": [
+    "dist/src/**/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

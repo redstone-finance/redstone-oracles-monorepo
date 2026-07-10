@@ -7,12 +7,12 @@ import {
 } from "@redstone-finance/canton-connector";
 import { MoveBlockchainService, MoveClientBuilder } from "@redstone-finance/move-connector";
 import { BlockchainServiceWithTxLookup } from "@redstone-finance/multichain-kit";
+import { SolanaConnectionBuilder } from "@redstone-finance/solana-connection";
 import {
   makeKeypair as makeSolanaKeypair,
   SolanaBlockchainService,
   SolanaBlockchainServiceWithTransfer,
   SolanaClient,
-  SolanaConnectionBuilder,
 } from "@redstone-finance/solana-connector";
 import {
   makeKeypair as makeStellarKeypair,
