@@ -33,7 +33,7 @@ const MAX_RETRIES = 3;
 export class CantonScanApiClient {
   private static logger = loggerFactory("canton-scan-api-client");
 
-  Defs: (typeof AllDefs)["devnet"];
+  Defs: (typeof AllDefs)[CantonNetwork];
   private migrationIdCache?: Promise<number>;
 
   constructor(
