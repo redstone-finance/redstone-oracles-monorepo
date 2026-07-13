@@ -35,7 +35,6 @@ export enum LogMonitoringType {
   // in parallel are trying to deliver data, this SHOULD happen only once when main was down and later
   // get back to life
   HIP3_FALLBACK_NONCE_DUPLICATED = "HIP3_FALLBACK_NONCE_DUPLICATED",
-  HIP3_ACTIVE_ASSET_MISSING = "HIP3_ACTIVE_ASSET_MISSING",
   AGGREGATOR_STALE_REBASE_FACTOR = "AGGREGATOR_STALE_REBASE_FACTOR",
   WORKER_TIMEOUT = "WORKER_TIMEOUT",
   NO_WORKERS_IN_POOL = "NO_WORKERS_IN_POOL",
