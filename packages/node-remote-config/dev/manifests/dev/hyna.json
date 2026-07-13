@@ -131,6 +131,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_hyna:LIGHTER": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:LIGHTER": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "hyna:LIGHTER_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],

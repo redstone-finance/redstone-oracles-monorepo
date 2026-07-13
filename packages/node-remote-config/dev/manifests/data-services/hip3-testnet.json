@@ -159,6 +159,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_rrrrr:BTC": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_rrrrr:BTC": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "rrrrr:BTC_MARK_0": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
@@ -272,6 +294,28 @@
     },
     "MID_rrrrr:ETH_EMA_150S": {
       "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_rrrrr:ETH": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_rrrrr:ETH": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -393,6 +437,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_rrrrr:HYPE": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_rrrrr:HYPE": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "rrrrr:HYPE_MARK_0": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
@@ -506,6 +572,28 @@
     },
     "MID_rrrrr:SOL_EMA_150S": {
       "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_rrrrr:SOL": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_rrrrr:SOL": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -627,6 +715,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_rrrrr:BASED": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_rrrrr:BASED": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "rrrrr:BASED_MARK_0": {
       "source": ["hip3-hyena-crypto-spot-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
@@ -740,6 +850,28 @@
     },
     "MID_hyna:BTC_EMA_150S": {
       "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_hyna:BTC": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:BTC": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -884,6 +1016,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_hyna:ETH": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:ETH": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "hyna:ETH_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
@@ -1020,6 +1174,28 @@
     },
     "MID_hyna:BNB_EMA_150S": {
       "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_hyna:BNB": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:BNB": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -1164,6 +1340,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_hyna:HYPE": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:HYPE": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "hyna:HYPE_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
@@ -1300,6 +1498,28 @@
     },
     "MID_hyna:SOL_EMA_150S": {
       "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_hyna:SOL": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:SOL": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -1444,6 +1664,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_hyna:XRP": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:XRP": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "hyna:XRP_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
@@ -1580,6 +1822,28 @@
     },
     "MID_hyna:1000PEPE_EMA_150S": {
       "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_hyna:1000PEPE": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:1000PEPE": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -1724,6 +1988,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_hyna:ZEC": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:ZEC": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "hyna:ZEC_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
@@ -1860,6 +2146,28 @@
     },
     "MID_hyna:FARTCOIN_EMA_150S": {
       "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_hyna:FARTCOIN": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:FARTCOIN": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -2004,6 +2312,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_hyna:LINK": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:LINK": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "hyna:LINK_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
@@ -2144,6 +2474,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_hyna:SUI": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:SUI": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "hyna:SUI_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
@@ -2279,6 +2631,28 @@
     },
     "MID_hyna:XMR_EMA_150S": {
       "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_hyna:XMR": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:XMR": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -2429,6 +2803,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_hyna:DOGE": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:DOGE": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "hyna:DOGE_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
@@ -2565,6 +2961,28 @@
     },
     "MID_hyna:XPL_EMA_150S": {
       "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_hyna:XPL": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:XPL": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -2709,6 +3127,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_hyna:ADA": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:ADA": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "hyna:ADA_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
@@ -2839,6 +3279,28 @@
     },
     "MID_hyna:PUMP_EMA_150S": {
       "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_hyna:PUMP": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:PUMP": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -2983,6 +3445,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_hyna:LTC": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:LTC": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "hyna:LTC_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
@@ -3119,6 +3603,28 @@
     },
     "MID_hyna:BCH_EMA_150S": {
       "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_hyna:BCH": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:BCH": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -3269,6 +3775,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_BUY_hyna:ENA": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:ENA": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "hyna:ENA_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
@@ -3405,6 +3933,28 @@
     },
     "MID_hyna:LIGHTER_EMA_150S": {
       "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_hyna:LIGHTER": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:LIGHTER": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -3560,6 +4110,28 @@
     },
     "MID_hyna:BASED_EMA_150S": {
       "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_hyna:BASED": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_hyna:BASED": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
