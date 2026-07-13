@@ -529,7 +529,8 @@
           "maxPercent": 1000000000,
           "maxDelayMilliseconds": 1000
         }
-      }
+      },
+      "types": ["snoozed"]
     },
     "BEST_BID_rrrrr:SOL": {
       "source": ["ws-hyperliquid-perps-rrrrr"],
