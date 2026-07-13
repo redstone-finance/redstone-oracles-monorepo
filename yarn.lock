@@ -9272,7 +9272,10 @@ __metadata:
   resolution: "@redstone-finance/hl-hip3@workspace:packages/hl-hip3"
   dependencies:
     "@msgpack/msgpack": "npm:^3.1.2"
+    "@redstone-finance/agents": "workspace:*"
     "@redstone-finance/http-client": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     decimal.js: "npm:^10.4.3"
