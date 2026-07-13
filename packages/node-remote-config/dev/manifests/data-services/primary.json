@@ -224,7 +224,6 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitget-usdt",
         "bybit-usdt",
         "gate-usdt",
         "mexc-usdt"
@@ -1967,7 +1966,6 @@
     },
     "LBTC": {
       "source": [
-        "mexc-usdt",
         "aerodrome-cl-base-cbbtc",
         "curve-ethereum-wbtc-2",
         "fluid-ethereum-wbtc",
@@ -2044,8 +2042,7 @@
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
-        "okx-usdt",
-        "xt-usdt"
+        "okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2182,7 +2179,6 @@
         "binance-usdc",
         "binance-usdt",
         "bingx-usdt",
-        "bitget-eur",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdc",
@@ -2734,7 +2730,6 @@
         "binance-usdc",
         "binance-usdt",
         "bingx-usdt",
-        "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdc",
@@ -2948,8 +2943,7 @@
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "okx-usdt",
-        "xt-usdt"
+        "okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4087,8 +4081,7 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "mexc-usdt",
-        "xt-usdt"
+        "mexc-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5045,7 +5038,6 @@
     },
     "DEGEN": {
       "source": [
-        "bitget-usdt",
         "bybit-usdt",
         "gate-usdt",
         "kucoin-usdt",
