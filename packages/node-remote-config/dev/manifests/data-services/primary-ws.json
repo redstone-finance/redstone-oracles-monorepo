@@ -324,7 +324,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "",
-        "maxAcceptableDeviation": 1.0,
+        "maxAcceptableDeviation": 1,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
@@ -2123,13 +2123,16 @@
     "USDT0": {
       "source": [
         "camelot-v3-arbitrumone-usdc-deferred",
+        "curve-arbitrumone-wbtc-deferred",
         "hyperliquid-api-fetcher-usdc-deferred",
         "hyperswap-hyperevm-whype-500-deferred",
         "kumbaya-megaeth-weth-3000-deferred",
+        "nest-hyperevm-usdc-deferred",
         "project-x-hyperevm-whype-500-deferred",
         "uniswap-v3-arbitrumone-usdc-100-deferred",
         "uniswap-v3-arbitrumone-wbtc-500-deferred",
         "uniswap-v3-arbitrumone-weth-500-deferred",
+        "uniswap-v4-arbitrumone-usdc-1-deferred",
         "uniswap-v4-unichain-eth-500-deferred"
       ],
       "deviationCheck": {
