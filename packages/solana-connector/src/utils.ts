@@ -7,8 +7,15 @@ export function hexToU8Array(hex: string): Uint8Array {
   return Uint8Array.from(Buffer.from(hex, "hex"));
 }
 
+const FEED_ID_BYTE_LENGTH = 32;
+
 export const makeFeedIdBytes = (feedId: string) => {
-  return Buffer.from(feedId.padEnd(32, "\0"));
+  const byteLength = Buffer.byteLength(feedId);
+  if (byteLength > FEED_ID_BYTE_LENGTH) {
+    throw new Error(`Feed id "${feedId}" is ${byteLength} bytes, exceeds ${FEED_ID_BYTE_LENGTH}`);
+  }
+
+  return Buffer.from(feedId.padEnd(FEED_ID_BYTE_LENGTH, "\0"));
 };
 
 export const makePriceSeed = () => {

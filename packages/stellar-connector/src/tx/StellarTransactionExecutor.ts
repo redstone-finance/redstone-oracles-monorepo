@@ -108,11 +108,15 @@ export class StellarTransactionExecutor {
   }
 
   private async logNetworkStats() {
-    const stats = await this.client.getNetworkStats(true);
+    try {
+      const stats = await this.client.getNetworkStats(true);
 
-    this.logger.info(
-      `Network utilization: ${stats?.ledger_capacity_usage} (ledger: ${stats?.last_ledger})`,
-      stats
-    );
+      this.logger.info(
+        `Network utilization: ${stats?.ledger_capacity_usage} (ledger: ${stats?.last_ledger})`,
+        stats
+      );
+    } catch (error) {
+      this.logger.warn(`Could not fetch network stats: ${RedstoneCommon.stringifyError(error)}`);
+    }
   }
 }

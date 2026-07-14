@@ -2,7 +2,10 @@ import { bcs } from "@mysten/sui/bcs";
 import type { SuiClientTypes } from "@mysten/sui/client";
 import { EventEntry, Events } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { SUI_PRICE_WRITE_EVENT_FRAGMENT, SUI_UPDATE_ERROR_EVENT_FRAGMENT } from "./SuiTxParsing";
+
+const logger = loggerFactory("sui-event-parsing");
 
 interface RawSuiEvent {
   type: string;
@@ -84,7 +87,9 @@ function parseSuiEvent(event: RawSuiEvent) {
     }
 
     return undefined;
-  } catch {
+  } catch (error) {
+    logger.warn(`Could not parse Sui event: ${RedstoneCommon.stringifyError(error)}`);
+
     return undefined;
   }
 }
