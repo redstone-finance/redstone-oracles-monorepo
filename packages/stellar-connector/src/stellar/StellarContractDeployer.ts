@@ -26,7 +26,12 @@ export class StellarContractDeployer {
       Operation.uploadContractWasm({ wasm: wasmBuffer })
     );
 
-    return (await this.client.getTransaction(hash, (returnValue) => returnValue.bytes())).value!;
+    const { value } = await this.client.getTransaction(hash, (returnValue) => returnValue.bytes());
+    if (!value) {
+      throw new Error(`Upload transaction ${hash} returned no wasm hash`);
+    }
+
+    return value;
   }
 
   async createContract(wasmHash: Buffer, constructorArgs?: xdr.ScVal[]) {
@@ -36,6 +41,11 @@ export class StellarContractDeployer {
       Operation.createCustomContract({ wasmHash, address, constructorArgs })
     );
 
-    return (await this.client.getTransaction(hash, Address.fromScVal)).value!;
+    const { value } = await this.client.getTransaction(hash, Address.fromScVal);
+    if (!value) {
+      throw new Error(`Create-contract transaction ${hash} returned no contract id`);
+    }
+
+    return value;
   }
 }

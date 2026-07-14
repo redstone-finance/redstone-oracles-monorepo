@@ -1,4 +1,7 @@
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { Address, rpc, scValToBigInt, scValToNative, StrKey, xdr } from "@stellar/stellar-sdk";
+
+const logger = loggerFactory("stellar-xdr-utils");
 
 const PRICE_KEY = xdr.ScVal.scvSymbol("price");
 const PACKAGE_TIMESTAMP_KEY = xdr.ScVal.scvSymbol("package_timestamp");
@@ -71,7 +74,11 @@ export function parsePriceDataFromContractData(result: rpc.Api.LedgerEntryResult
 export function maybeParsePriceDataFromContractData(result: rpc.Api.LedgerEntryResult) {
   try {
     return parsePriceDataFromContractData(result);
-  } catch {
+  } catch (error) {
+    logger.warn(
+      `Could not parse price data from contract entry: ${RedstoneCommon.stringifyError(error)}`
+    );
+
     return undefined;
   }
 }
