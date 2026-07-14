@@ -919,6 +919,20 @@ describe("request-data-packages", () => {
       expect(getAxiosCall(axiosGetSpy, 1).url).toContain("public-gw.test");
     });
 
+    it("should surface the authenticated gateway error instead of falling back when no public gateways are available (urls: [])", async () => {
+      const axiosGetSpy = jest.spyOn(axios, "get");
+      axiosGetSpy.mockRejectedValueOnce(new Error("auth gw 401 unauthorized"));
+
+      const error = await requestDataPackages({
+        ...getReqParams(),
+        authenticatedGateways: [{ url: "https://auth-gw.test", apiKey: "my-secret-key" }],
+        urls: [],
+      }).catch((e: unknown) => e);
+
+      expect(RedstoneCommon.stringifyError(error)).toContain("auth gw 401 unauthorized");
+      expect(axiosGetSpy).toHaveBeenCalledTimes(1);
+    });
+
     it("should try next authenticated gateway when first one fails", async () => {
       const axiosGetSpy = jest.spyOn(axios, "get");
       axiosGetSpy

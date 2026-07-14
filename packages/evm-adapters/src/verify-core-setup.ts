@@ -18,7 +18,7 @@ const unrecoverableErrorRegExp = /InsufficientNumberOfUniqueSigners/;
 
 export async function verifyCoreSetup<Contract extends ExampleBase>(
   checkName: string,
-  config: Omit<DataPackagesRequestParams, "dataPackagesIds" | "returnAllPackages">,
+  config: Omit<DataPackagesRequestParams, "dataPackagesIds">,
   dataFeedIds: string[],
   contract: Contract,
   call: (wrappedContract: Contract) => Promise<BigNumber[]>,
@@ -27,13 +27,15 @@ export async function verifyCoreSetup<Contract extends ExampleBase>(
   console.log(`Checking ${checkName}`);
 
   try {
-    const paramsProvider = new ContractParamsProvider({
-      ...config,
-      enableEnhancedLogs: true,
-      aggregateErrors: true,
-      dataPackagesIds: dataFeedIds,
-      ignoreMissingFeed: true,
-    });
+    const paramsProvider = ContractParamsProvider.forFeedIds(
+      {
+        ...config,
+        enableEnhancedLogs: true,
+        aggregateErrors: true,
+        ignoreMissingFeed: true,
+      },
+      dataFeedIds
+    );
     const {
       wrappedContract,
       packageResponse: { missingFeeds },

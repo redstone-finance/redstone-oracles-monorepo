@@ -55,6 +55,19 @@ export class ContractParamsProvider {
     );
   }
 
+  static forFeedIds(
+    requestParams: Omit<DataPackagesRequestParams, "dataPackagesIds">,
+    feedIds: string[],
+    cache?: DataPackagesResponseCache
+  ) {
+    return requestParams.returnAllPackages
+      ? new ContractParamsProvider({ ...requestParams, returnAllPackages: true }, cache, feedIds)
+      : new ContractParamsProvider(
+          { ...requestParams, dataPackagesIds: feedIds, returnAllPackages: undefined },
+          cache
+        );
+  }
+
   splitIntoFeedBatches(batchSize: number) {
     const feedIds = this.getDataFeedIds();
 
