@@ -1,3 +1,5 @@
+export const SAFE_NUMBER_BYTES_LENGTH = 8;
+
 export interface ISafeNumber {
   add(numberLike: NumberArg): ISafeNumber;
   sub(numberLike: NumberArg): ISafeNumber;
@@ -17,6 +19,8 @@ export interface ISafeNumber {
   assertPositive(): void;
   /** Convert number to string without loosing precision */
   toString(): string;
+  /** Serialize to a fixed-size little-endian byte representation */
+  toBytes(): Uint8Array;
   unsafeToNumber(): number;
   isSafeNumber(): boolean;
 }
