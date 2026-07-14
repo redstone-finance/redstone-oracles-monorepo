@@ -1,13 +1,11 @@
 import {
-  API_TYPE_JITO,
   getSolanaChainId,
   getSolanaCluster,
-  SolanaApi,
   SolanaConnectionBuilder,
 } from "@redstone-finance/solana-connection";
 import { ChainTypeEnum, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { Cluster } from "@solana/web3.js";
-import { JitoBundleClient } from "./client/JitoBundleClient";
+import { BundleClientBuilder, extractJitoHosts } from "./client/BundleClientBuilder";
 import { SolanaClient } from "./client/SolanaClient";
 
 const DEVNET_CLUSTER: Cluster = "devnet";
@@ -63,25 +61,21 @@ export class SolanaClientBuilder extends MultiExecutor.ClientBuilder<SolanaClien
 
   buildWithJito() {
     const client = this.build();
-    const hosts = this.jitoHosts();
 
-    return {
-      client,
-      jito: hosts.length > 0 && this.isJitoAvailable() ? new JitoBundleClient(hosts) : undefined,
-    };
-  }
+    if (
+      !RedstoneCommon.isDefined(this.chainId) ||
+      getSolanaCluster(this.chainId) === DEVNET_CLUSTER ||
+      extractJitoHosts(this.urls).length === 0
+    ) {
+      return { client, jito: undefined };
+    }
 
-  private isJitoAvailable() {
-    return (
-      RedstoneCommon.isDefined(this.chainId) && getSolanaCluster(this.chainId) !== DEVNET_CLUSTER
-    );
-  }
+    const jito = new BundleClientBuilder()
+      .withChainId(this.chainId)
+      .withRpcUrls(this.urls)
+      .withQuarantineEnabled(this.isQuarantineEnabled)
+      .build();
 
-  private jitoHosts() {
-    return (
-      RedstoneCommon.splitUrls(this.urls, SolanaApi.parseUrl)[API_TYPE_JITO]?.map(
-        (api) => api.host
-      ) ?? []
-    );
+    return { client, jito };
   }
 }
