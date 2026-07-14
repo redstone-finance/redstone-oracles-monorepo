@@ -1,5 +1,5 @@
 import { loggerFactory } from "../logger";
-import { ISafeNumber, NumberArg } from "./ISafeNumber";
+import { ISafeNumber, NumberArg, SAFE_NUMBER_BYTES_LENGTH } from "./ISafeNumber";
 
 export enum NumberValidationResult {
   isOk,
@@ -45,6 +45,11 @@ export class JsNativeSafeNumber implements ISafeNumber {
         )}`
       );
     }
+  }
+
+  static fromBytes(serializedSafeNumber: DataView): JsNativeSafeNumber {
+    // little-endian, matching setFloat64
+    return new JsNativeSafeNumber(serializedSafeNumber.getFloat64(0, true));
   }
 
   private _value: number;
@@ -124,6 +129,13 @@ export class JsNativeSafeNumber implements ISafeNumber {
     if (this._value <= 0) {
       throw new Error("Assert positive failed");
     }
+  }
+
+  toBytes(): Uint8Array {
+    const buf = new ArrayBuffer(SAFE_NUMBER_BYTES_LENGTH);
+    new DataView(buf).setFloat64(0, this._value, true);
+
+    return new Uint8Array(buf);
   }
 
   /** In the case of this implementation it is actually safe. */
