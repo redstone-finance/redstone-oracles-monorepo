@@ -197,6 +197,10 @@ export class SolanaContractUpdater implements ContractUpdater {
         const result = await this.client.getSignatureStatus(txSignature);
         if (result.error) {
           if (SolanaRustSdkErrroHandler.canSkipError(result.error)) {
+            this.logger.warn(
+              `Treating ${id} update as successful without an on-chain write; tx ${txSignature} was rejected with a skippable error (on-chain state already newer or equal)`
+            );
+
             return true;
           }
 

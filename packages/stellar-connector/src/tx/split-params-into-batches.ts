@@ -16,5 +16,5 @@ export function splitParamsIntoBatches(paramsProvider: ContractParamsProvider) {
 }
 
 function batchSizePerRequestParams(requestParams: DataPackagesRequestParams) {
-  return MAX_WRITE_PRICES_OPS / requestParams.uniqueSignersCount;
+  return Math.max(1, Math.floor(MAX_WRITE_PRICES_OPS / requestParams.uniqueSignersCount));
 }

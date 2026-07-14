@@ -133,12 +133,11 @@ export class SolanaClient {
   }
 
   async transfer(from: Keypair, toAddress: string, amountInSol: number) {
-    amountInSol *= LAMPORTS_PER_SOL;
     const transaction = new Transaction().add(
       SystemProgram.transfer({
         fromPubkey: from.publicKey,
         toPubkey: new PublicKey(toAddress),
-        lamports: amountInSol,
+        lamports: Math.round(amountInSol * LAMPORTS_PER_SOL),
       })
     );
 
