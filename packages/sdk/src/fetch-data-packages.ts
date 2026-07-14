@@ -65,6 +65,8 @@ type GatewayTarget = {
 
 async function fetchInStages(reqParams: DataPackagesRequestParams) {
   const authTargets = getAuthGatewayTargets(reqParams);
+  const publicTargets = getUrlsForDataServiceId(reqParams).map<GatewayTarget>((url) => ({ url }));
+
   if (authTargets.length) {
     logger.info(
       `Fetching data packages using ${RedstoneCommon.getNS(authTargets.length, "authenticated gateway")} for ${reqParams.dataServiceId}`
@@ -72,13 +74,14 @@ async function fetchInStages(reqParams: DataPackagesRequestParams) {
     try {
       return await fetchStaged(reqParams, authTargets);
     } catch (e) {
+      if (!publicTargets.length) {
+        throw e;
+      }
       logger.warn(
         `All authenticated gateways failed, falling back to public gateways. Error: ${RedstoneCommon.stringifyError(e)}`
       );
     }
   }
-
-  const publicTargets = getUrlsForDataServiceId(reqParams).map<GatewayTarget>((url) => ({ url }));
 
   return await fetchStaged(reqParams, publicTargets);
 }
