@@ -2,6 +2,7 @@ export * from "./BlockchainService";
 export * from "./BlockchainServiceWithTransfer";
 export * from "./ContractAdapter";
 export * from "./ContractUpdater";
+export * from "./FallbackMultiTxDeliveryMan";
 export * from "./MultiTxDeliveryMan";
 export * from "./PriceFeedAdapter";
 export * from "./sample-run";

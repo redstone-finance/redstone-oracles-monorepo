@@ -1,6 +1,6 @@
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { Connection, PublicKey } from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 import { SolanaClient } from "../client/SolanaClient";
 import { bigIntFromBeBytes } from "../utils";
 import { decodePriceData } from "./PriceData";
@@ -15,11 +15,8 @@ export class SolanaPriceFeedContractAdapter implements PriceFeedAdapter {
     this.priceAccount = new PublicKey(priceFeedAddress);
   }
 
-  static fromConnectionAndAddress(connection: Connection, priceFeedAddress: string) {
-    return new SolanaPriceFeedContractAdapter(
-      SolanaClient.createMultiClient(connection),
-      priceFeedAddress
-    );
+  static fromClientAndAddress(client: SolanaClient, priceFeedAddress: string) {
+    return new SolanaPriceFeedContractAdapter(client, priceFeedAddress);
   }
 
   async getPriceAndTimestamp(slot?: number) {

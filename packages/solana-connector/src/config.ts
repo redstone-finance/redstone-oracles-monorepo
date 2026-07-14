@@ -8,6 +8,8 @@ export const DEFAULT_SOLANA_CONFIG: SolanaConfig = {
   expectedTxDeliveryTimeMs: 4_000,
   useAggressiveGasOracle: true,
   percentileOfPriorityFee: 80,
+  canSendViaJito: false,
+  alternativeSenderMaxAttempts: 1,
 };
 
 export interface SolanaConfig {
@@ -18,6 +20,8 @@ export interface SolanaConfig {
   expectedTxDeliveryTimeMs: number;
   useAggressiveGasOracle: boolean;
   percentileOfPriorityFee: number;
+  canSendViaJito: boolean;
+  alternativeSenderMaxAttempts: number;
 }
 
 export function createSolanaConfig(args: {
@@ -28,6 +32,8 @@ export function createSolanaConfig(args: {
   expectedTxDeliveryTimeMs?: number;
   useAggressiveGasOracle?: boolean;
   percentileOfPriorityFee?: number;
+  canSendViaJito?: boolean;
+  alternativeSenderMaxAttempts?: number;
 }) {
   const gasMultiplier = args.gasMultiplier ?? DEFAULT_SOLANA_CONFIG.gasMultiplier;
   const maxTxAttempts = args.maxTxSendAttempts ?? DEFAULT_SOLANA_CONFIG.maxTxAttempts;
@@ -41,6 +47,9 @@ export function createSolanaConfig(args: {
     args.basePricePerComputeUnit ?? DEFAULT_SOLANA_CONFIG.basePricePerComputeUnit;
   const percentileOfPriorityFee =
     args.percentileOfPriorityFee ?? DEFAULT_SOLANA_CONFIG.percentileOfPriorityFee;
+  const canSendViaJito = args.canSendViaJito ?? DEFAULT_SOLANA_CONFIG.canSendViaJito;
+  const alternativeSenderMaxAttempts =
+    args.alternativeSenderMaxAttempts ?? DEFAULT_SOLANA_CONFIG.alternativeSenderMaxAttempts;
 
   return {
     ...DEFAULT_SOLANA_CONFIG,
@@ -51,6 +60,8 @@ export function createSolanaConfig(args: {
     expectedTxDeliveryTimeMs,
     useAggressiveGasOracle,
     percentileOfPriorityFee,
+    canSendViaJito,
+    alternativeSenderMaxAttempts,
   };
 }
 

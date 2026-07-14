@@ -1,9 +1,24 @@
 import { MultiExecutor } from "@redstone-finance/utils";
 import { execSync } from "child_process";
-import { DEFAULT_SOLANA_CONFIG, SolanaWriteContractAdapter } from "../src";
+import {
+  DEFAULT_SOLANA_CONFIG,
+  makeSolanaUpdater,
+  SolanaClient,
+  SolanaWriteContractAdapter,
+} from "../src";
 import { ConnectionStateScenario, LiteSVMConnection } from "./LiteSVMConnection";
 import { setUpEnv } from "./setup-env";
 import { testSample } from "./test-data";
+
+const MULTI_CONNECTION_METHOD_CONFIG = {
+  getMultipleAccountsInfo: MultiExecutor.ExecutionMode.MULTI_AGREEMENT,
+  sendTransaction: MultiExecutor.ExecutionMode.RACE,
+};
+
+const MULTI_CONNECTION_EXECUTOR_CONFIG = {
+  ...MultiExecutor.DEFAULT_CONFIG,
+  multiAgreementShouldResolveUnagreedToUndefined: true,
+};
 
 function getSolanaPricesContractAdapter(trusted: "trusted" | "untrusted") {
   const { svm, trustedSigner, untrustedSigner, programId } = setUpEnv();
@@ -12,12 +27,9 @@ function getSolanaPricesContractAdapter(trusted: "trusted" | "untrusted") {
   const state = new ConnectionStateScenario(svm);
   const connection = new LiteSVMConnection(state);
 
-  const writePriceAdapter = new SolanaWriteContractAdapter(
-    connection,
-    programId.toBase58(),
-    signer,
-    DEFAULT_SOLANA_CONFIG
-  );
+  const client = new SolanaClient(connection);
+  const updater = makeSolanaUpdater({ client }, programId.toBase58(), signer);
+  const writePriceAdapter = new SolanaWriteContractAdapter(client, updater);
 
   return {
     svm,
@@ -27,11 +39,11 @@ function getSolanaPricesContractAdapter(trusted: "trusted" | "untrusted") {
   };
 }
 
-describe("SolanaPricesContractAdapter tests", () => {
-  beforeAll(() => {
-    execSync("make build -C solana", { stdio: "inherit" });
-  });
+beforeAll(() => {
+  execSync("make build -C solana", { stdio: "inherit" });
+});
 
+describe("SolanaPricesContractAdapter tests", () => {
   it("getUniqueSignerThreshold", async () => {
     const { priceAdapter } = getSolanaPricesContractAdapter("trusted");
 
@@ -227,7 +239,7 @@ describe("SolanaPricesContractAdapter tests", () => {
     await adapter.readContractData(["ETH", "BTC"]);
 
     for (const spy of spies) {
-      expect(spy).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledTimes(1);
     }
   });
 
@@ -251,13 +263,13 @@ function getMultiConnectionAdapter() {
   const { svm, trustedSigner, programId } = setUpEnv();
   const states = [new ConnectionStateScenario(svm), new ConnectionStateScenario(svm)];
   const connections = states.map((state) => new LiteSVMConnection(state));
-  const multiConnection = MultiExecutor.create(connections, {}, MultiExecutor.DEFAULT_CONFIG);
-  const adapter = new SolanaWriteContractAdapter(
-    multiConnection,
-    programId.toBase58(),
-    trustedSigner,
-    DEFAULT_SOLANA_CONFIG
+  const client = MultiExecutor.create(
+    connections.map((connection) => new SolanaClient(connection)),
+    MULTI_CONNECTION_METHOD_CONFIG,
+    MULTI_CONNECTION_EXECUTOR_CONFIG
   );
+  const updater = makeSolanaUpdater({ client }, programId.toBase58(), trustedSigner);
+  const adapter = new SolanaWriteContractAdapter(client, updater);
 
   return { states, connections, adapter };
 }

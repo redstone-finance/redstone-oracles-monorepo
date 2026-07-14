@@ -1118,7 +1118,12 @@
       "name": "Solana Testnet",
       "networkId": "solana/2",
       "currencySymbol": "SOL",
-      "publicRpcUrls": ["https://api.testnet.solana.com"],
+      "publicRpcUrls": [
+        "https://api.testnet.solana.com",
+        "https://testnet.block-engine.jito.wtf#type=jito",
+        "https://dallas.testnet.block-engine.jito.wtf#type=jito",
+        "https://ny.testnet.block-engine.jito.wtf#type=jito"
+      ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "",
@@ -1135,7 +1140,16 @@
       "publicRpcUrls": [
         "https://api.mainnet-beta.solana.com",
         "https://solana.leorpc.com/?api_key=FREE",
-        "https://solana-mainnet.gateway.tatum.io/"
+        "https://solana-mainnet.gateway.tatum.io/",
+        "https://mainnet.block-engine.jito.wtf#type=jito",
+        "https://frankfurt.mainnet.block-engine.jito.wtf#type=jito",
+        "https://amsterdam.mainnet.block-engine.jito.wtf#type=jito",
+        "https://london.mainnet.block-engine.jito.wtf#type=jito",
+        "https://dublin.mainnet.block-engine.jito.wtf#type=jito",
+        "https://ny.mainnet.block-engine.jito.wtf#type=jito",
+        "https://slc.mainnet.block-engine.jito.wtf#type=jito",
+        "https://tokyo.mainnet.block-engine.jito.wtf#type=jito",
+        "https://singapore.mainnet.block-engine.jito.wtf#type=jito"
       ],
       "avgBlockTimeMs": 1000,
       "multicall3": {

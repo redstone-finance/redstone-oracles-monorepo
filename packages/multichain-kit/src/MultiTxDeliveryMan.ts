@@ -1,6 +1,6 @@
 import { ContractParamsProvider, DataPackagesRequestParams } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { ContractUpdater } from "./ContractUpdater";
+import { ContractUpdateContext, ContractUpdater } from "./ContractUpdater";
 import { TxDeliveryMan, TxDeliveryManConfig } from "./TxDeliveryMan";
 
 const DEFAULT_MAX_PARALLEL_TX_COUNT = 100;
@@ -20,21 +20,18 @@ export class MultiTxDeliveryMan extends TxDeliveryMan {
 
   override async updateContract(
     updater: ContractUpdater,
-    multiParamsProvider: ContractParamsProvider
+    multiParamsProvider: ContractParamsProvider,
+    context: ContractUpdateContext = { updateStartTimeMs: Date.now() }
   ) {
     const paramsProviders = multiParamsProvider.splitIntoFeedBatches(
       this.multiConfig.batchSizePerRequestParams(multiParamsProvider.requestParams)
     );
     if (paramsProviders.length === 1) {
-      return await super.updateContract(updater, multiParamsProvider);
+      return await this.deliverBatch(updater, multiParamsProvider, context);
     }
 
     const executors = paramsProviders.map(
-      (paramsProvider) => async () =>
-        await new TxDeliveryMan(
-          this.multiConfig,
-          `tx-delivery-man-${paramsProvider.getDataFeedIds().join("-")}`
-        ).updateContract(updater, paramsProvider)
+      (paramsProvider) => async () => await this.deliverBatch(updater, paramsProvider, context)
     );
 
     const results = await RedstoneCommon.batchPromises(
@@ -45,5 +42,16 @@ export class MultiTxDeliveryMan extends TxDeliveryMan {
     );
 
     return results.at(-1)!;
+  }
+
+  protected async deliverBatch(
+    updater: ContractUpdater,
+    paramsProvider: ContractParamsProvider,
+    context: ContractUpdateContext
+  ) {
+    return await new TxDeliveryMan(
+      this.multiConfig,
+      `tx-delivery-man-${paramsProvider.getDataFeedIds().join("-")}`
+    ).updateContract(updater, paramsProvider, context);
   }
 }

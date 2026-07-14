@@ -4,10 +4,14 @@ import {
   DataPackagesResponseCache,
   getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
-import { SolanaConnectionBuilder } from "@redstone-finance/solana-connection";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { hexlify } from "ethers/lib/utils";
-import { readCluster, SolanaWriteContractAdapter } from "../src";
+import {
+  makeSolanaUpdater,
+  readCluster,
+  SolanaClientBuilder,
+  SolanaWriteContractAdapter,
+} from "../src";
 import { readProgramAddress } from "./consts";
 import { getRpcUrls } from "./get-rpc-urls";
 import { readKeypair } from "./utils";
@@ -25,7 +29,8 @@ export async function writeSimultaneously() {
   const keypair = readKeypair();
   console.log("Public key:", hexlify(keypair.publicKey.toBytes()));
   const rpcUrls = await getRpcUrls();
-  const connection = new SolanaConnectionBuilder().withRpcUrls(rpcUrls).build();
+  const { client, jito } = new SolanaClientBuilder().withRpcUrls(rpcUrls).buildWithJito();
+  const updater = makeSolanaUpdater({ client, jito }, readProgramAddress(readCluster()), keypair);
 
   const requestParams: DataPackagesRequestParams = {
     dataPackagesIds: ["ETH"],
@@ -35,11 +40,7 @@ export async function writeSimultaneously() {
     enableEnhancedLogs: true,
   };
 
-  const adapter = new SolanaWriteContractAdapter(
-    connection,
-    readProgramAddress(readCluster()),
-    keypair
-  );
+  const adapter = new SolanaWriteContractAdapter(client, updater);
 
   const paramsProvider = await prepareParamsProviderWithData(requestParams);
   await RedstoneCommon.sleep(10000);

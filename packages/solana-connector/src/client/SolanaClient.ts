@@ -14,37 +14,14 @@ import {
   SignaturesForAddressOptions,
   SystemProgram,
   Transaction,
+  TransactionMessage,
   VersionedTransaction,
 } from "@solana/web3.js";
 
 export const SOLANA_SLOT_TIME_INTERVAL_MS = 400;
 
 export class SolanaClient {
-  constructor(private readonly connection: Connection) {}
-
-  static createMultiClient(connection: Connection) {
-    return MultiExecutor.createForSubInstances(
-      connection,
-      (conn) => new SolanaClient(conn),
-      {
-        getSlot: MultiExecutor.ClientBuilder.blockNumberConsensusExecutor,
-        viewMethod: MultiExecutor.ExecutionMode.AGREEMENT,
-        getBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
-        getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
-        getSignatureStatus: MultiExecutor.ExecutionMode.AGREEMENT,
-        getAccountInfo: MultiExecutor.ExecutionMode.AGREEMENT,
-        getMultipleAccountsInfo: MultiExecutor.ExecutionMode.MULTI_AGREEMENT,
-        getRecentPrioritizationFees: MultiExecutor.ExecutionMode.RACE,
-        sendTransaction: MultiExecutor.ExecutionMode.RACE,
-      },
-      {
-        ...MultiExecutor.DEFAULT_CONFIG,
-        singleExecutionTimeoutMs: MultiExecutor.SINGLE_EXECUTION_TIMEOUT_MS,
-        allExecutionsTimeoutMs: MultiExecutor.ALL_EXECUTIONS_TIMEOUT_MS,
-        multiAgreementShouldResolveUnagreedToUndefined: true,
-      }
-    );
-  }
+  constructor(readonly connection: Connection) {}
 
   async getAccountInfo<T>(
     address: PublicKey,
@@ -166,6 +143,26 @@ export class SolanaClient {
     );
 
     await sendAndConfirmTransaction(this.connection, transaction, [from]);
+  }
+
+  static buildTransferTransaction(
+    from: Keypair,
+    to: PublicKey,
+    lamports: number,
+    recentBlockhash: string
+  ) {
+    const message = new TransactionMessage({
+      payerKey: from.publicKey,
+      recentBlockhash,
+      instructions: [
+        SystemProgram.transfer({ fromPubkey: from.publicKey, toPubkey: to, lamports }),
+      ],
+    }).compileToV0Message();
+
+    const transaction = new VersionedTransaction(message);
+    transaction.sign([from]);
+
+    return transaction;
   }
 
   async getTimeForBlock(slot: number): Promise<Date> {
