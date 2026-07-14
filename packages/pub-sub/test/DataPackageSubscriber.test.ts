@@ -260,6 +260,29 @@ describe("subscribe-data-packages", () => {
   });
 
   describe("single package validation", () => {
+    it("rejects a far-future timestamp and does not let it block later packages", async () => {
+      const { pubSub, callback } = await singleSignerSetUp();
+
+      // 10 min ahead - beyond MAX_PACKAGE_STALENESS (2 min); must be rejected so
+      // it neither advances lastPublishedState nor lingers as a future-keyed entry.
+      await publishToPubSub(pubSub, {
+        signer: MOCK_WALLET_1,
+        value: 12,
+        timestamp: Date.now() + 10 * 60 * 1000,
+        dataPackageId: "ETH",
+      });
+      expect(callback).not.toHaveBeenCalled();
+
+      // A normal current-timestamp package still publishes (feed not blocked)
+      await publishToPubSub(pubSub, {
+        signer: MOCK_WALLET_1,
+        value: 13,
+        timestamp: Date.now(),
+        dataPackageId: "ETH",
+      });
+      expect(callback).toHaveBeenCalledTimes(1);
+    });
+
     it("should aggregate prices for single data feed id, one signer", async () => {
       const { pubSub, callback } = await singleSignerSetUp();
 
@@ -609,6 +632,61 @@ describe("subscribe-data-packages", () => {
       expect(callback).toHaveBeenCalledWith({
         ETH: [firstPackage, secondPackage],
       });
+    });
+
+    it("does not crash the process when a scheduled (delayed) publish throws", async () => {
+      const pubSub = createMockPubSubClient();
+      const subscriber = new DataPackageSubscriber(
+        pubSub,
+        createMockParams({
+          dataPackageIds: ["ETH", "BTC"],
+          authorizedSigners: [MOCK_WALLET_1.address, MOCK_WALLET_2.address],
+          uniqueSignersCount: 2,
+          minimalOffChainSignersCount: 2,
+          ignoreMissingFeeds: true,
+        })
+      );
+
+      const errorLogger = jest.fn();
+      subscriber.logger = {
+        error: errorLogger,
+        info: () => {},
+        warn: () => {},
+        debug: () => {},
+      } as unknown as RedstoneLogger;
+
+      const throwingCallback = jest.fn(() => {
+        throw new Error("consumer boom");
+      });
+      await subscriber.subscribe(throwingCallback);
+      const packageTimestamp = Date.now();
+
+      // Two ETH packages satisfy minimalOffChainSignersCount but not all feeds,
+      // so publish is deferred to the setTimeout path rather than run inline.
+      await publishToPubSub(pubSub, {
+        dataPackageId: "ETH",
+        value: 12,
+        timestamp: packageTimestamp,
+        signer: MOCK_WALLET_1,
+      });
+      await publishToPubSub(pubSub, {
+        dataPackageId: "ETH",
+        value: 13,
+        timestamp: packageTimestamp,
+        signer: MOCK_WALLET_2,
+      });
+
+      // Firing the scheduled publish must not let the throw escape the timer
+      expect(() =>
+        jest.advanceTimersByTime(
+          subscriber.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied + 1
+        )
+      ).not.toThrow();
+
+      expect(throwingCallback).toHaveBeenCalledTimes(1);
+      expect(errorLogger).toHaveBeenCalledWith(
+        expect.stringContaining("Failed to process new package")
+      );
     });
 
     it("should add subsequent packages to the storage instance", async () => {

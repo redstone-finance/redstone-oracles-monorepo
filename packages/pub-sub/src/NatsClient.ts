@@ -234,7 +234,11 @@ export class NatsClient implements PubSubClient {
   }
 
   stop() {
-    void this.nc?.drain();
+    void this.nc
+      ?.drain()
+      .catch((e) =>
+        this.logger.debug("NATS drain failed", { error: RedstoneCommon.stringifyError(e) })
+      );
   }
 
   private watchStatus(nc: NatsConnection) {

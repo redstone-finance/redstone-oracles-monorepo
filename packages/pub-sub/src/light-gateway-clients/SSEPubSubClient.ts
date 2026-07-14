@@ -99,10 +99,13 @@ export class SSEPubSubClient implements PubSubClient {
 
       this.logger.info("Connected to stream", { sessionId: this.sessionId });
 
-      const topicsToSubscribe = Array.from(this.topics.keys());
-      this.topics = new Set();
-      void this.subscribe(topicsToSubscribe).catch((e) =>
-        this.logger.error(`Subscribe failed: ${RedstoneCommon.stringifyError(e)}`)
+      // Re-establish all subscriptions on the new session. We intentionally do
+      // NOT clear this.topics first: if the POST fails transiently the topic set
+      // must stay intact so the next `connected` event retries. Clearing up front
+      // (as before) would permanently drop every subscription on a single blip.
+      const topicsToResubscribe = Array.from(this.topics.keys());
+      void this.resubscribeToTopics(topicsToResubscribe).catch((e) =>
+        this.logger.error(`Re-subscribe on connect failed: ${RedstoneCommon.stringifyError(e)}`)
       );
     } catch (error) {
       this.logger.info("Failed to parse connected event", { error });
@@ -193,13 +196,7 @@ export class SSEPubSubClient implements PubSubClient {
       });
 
       try {
-        await this.httpClient.post(
-          this.common.getUrl(SUBSCRIBE_TO_TOPICS_ROUTE),
-          { session_id: this.sessionId, topics: newTopics },
-          { headers: { "Content-Type": CONTENT_TYPE_JSON } }
-        );
-
-        this.logger.info("Subscribed to topics successfully", { topics: newTopics });
+        await this.postSubscribeToTopics(newTopics);
       } catch (e) {
         this.logger.error("Subscription failed, rolling back", {
           topics: newTopics,
@@ -218,6 +215,29 @@ export class SSEPubSubClient implements PubSubClient {
     } else {
       this.logger.debug("No new topics to subscribe", { requestedTopics: topics });
     }
+  }
+
+  /**
+   * Re-subscribes all currently-tracked topics to the (new) session on connect.
+   * Unlike {@link subscribe}, it does not diff against this.topics or roll it
+   * back on failure - the topic set is preserved so a transient failure is
+   * retried on the next `connected` event instead of being lost forever.
+   */
+  private async resubscribeToTopics(topics: string[]) {
+    if (topics.length === 0) {
+      return;
+    }
+    await this.postSubscribeToTopics(topics);
+  }
+
+  private async postSubscribeToTopics(topics: string[]) {
+    await this.httpClient.post(
+      this.common.getUrl(SUBSCRIBE_TO_TOPICS_ROUTE),
+      { session_id: this.sessionId, topics },
+      { headers: { "Content-Type": CONTENT_TYPE_JSON } }
+    );
+
+    this.logger.info("Subscribed to topics successfully", { topics });
   }
 
   async unsubscribe(topics: string[]) {

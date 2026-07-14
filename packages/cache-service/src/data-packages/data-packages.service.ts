@@ -108,21 +108,6 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
     ttl: config.dataPackagesTTL,
   });
 
-  getLatestDataPackagesWithCache = RedstoneCommon.memoize({
-    functionToMemoize: async (
-      dataServiceId: string,
-      hideMetadata?: boolean,
-      allowExternalSigners?: boolean
-    ) =>
-      await DataPackagesService.getDataPackagesFromDbByTimestampOrLatest(
-        dataServiceId,
-        undefined,
-        hideMetadata,
-        allowExternalSigners
-      ),
-    ttl: config.dataPackagesTTL,
-  });
-
   private getLatestDataPackagesForFeedsFilterWithCache = RedstoneCommon.memoize({
     functionToMemoize: async (
       dataServiceId: string,
@@ -158,7 +143,7 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
     hideMetadata?: boolean,
     allowExternalSigners?: boolean
   ): Promise<DataPackagesResponse> {
-    return await DataPackagesService.getDataPackagesFromDbByTimestampOrLatest(
+    return await DataPackagesService.getDataPackagesFromDbByTimestamp(
       dataServiceId,
       timestamp,
       hideMetadata,
@@ -222,12 +207,9 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
     return !!oracleRegistryState.dataServices[dataServiceId];
   }
 
-  /**
-   * Packages might have different timestamps if timestamp not passed
-   * */
-  static async getDataPackagesFromDbByTimestampOrLatest(
+  static async getDataPackagesFromDbByTimestamp(
     dataServiceId: string,
-    timestamp?: number,
+    timestamp: number,
     hideMetadata: boolean = false,
     allowExternalSigners: boolean = false
   ): Promise<DataPackagesResponse> {
@@ -238,11 +220,7 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
         {
           $match: {
             dataServiceId,
-            timestampMilliseconds: timestamp
-              ? new Date(timestamp)
-              : {
-                  $gte: new Date(Date.now() - config.maxAllowedTimestampDelay),
-                },
+            timestampMilliseconds: new Date(timestamp),
           },
         },
         {
@@ -258,9 +236,6 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
             dataPackageId: { $first: "$dataPackageId" },
             isSignatureValid: { $first: "$isSignatureValid" },
           },
-        },
-        {
-          $sort: { timestampMilliseconds: -1 },
         },
       ]);
 

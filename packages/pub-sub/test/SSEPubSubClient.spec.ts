@@ -217,6 +217,39 @@ describe("SSEPubSubClient", () => {
     );
   });
 
+  it("retains subscriptions and retries when re-subscribe on reconnect fails transiently", async () => {
+    const flushPromises = () => new Promise((resolve) => setImmediate(resolve));
+    const connectedEvent = {
+      data: JSON.stringify({ session_id: SESSION_ID }),
+    } as unknown as MessageEvent;
+
+    client.setOnMessageHandler(() => {});
+    await client.subscribe(["topic1", "topic2"]);
+    expect(client["topics"]).toEqual(new Set(["topic1", "topic2"]));
+
+    // Reconnect #1: the re-subscribe POST fails transiently
+    MOCK.postMock.mockClear();
+    MOCK.postMock.mockImplementationOnce(() => {
+      throw new Error("transient network error");
+    });
+    client["handleConnected"](connectedEvent);
+    await flushPromises();
+
+    // Topic set must survive the failed re-subscribe (previously it was wiped)
+    expect(client["topics"]).toEqual(new Set(["topic1", "topic2"]));
+
+    // Reconnect #2: succeeds and must re-POST the retained topics, not []
+    MOCK.postMock.mockClear();
+    client["handleConnected"](connectedEvent);
+    await flushPromises();
+
+    expect(MOCK.postMock).toHaveBeenCalledWith(
+      `${GATEWAY_ADDRESS}/subscribe_to_topics`,
+      { session_id: SESSION_ID, topics: ["topic1", "topic2"] },
+      { headers: { "Content-Type": "application/json" } }
+    );
+  });
+
   it("should not call callback when deserialization fails", async () => {
     const onMessage = jest.fn((_, data) => {
       if (data) {

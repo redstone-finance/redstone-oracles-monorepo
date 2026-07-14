@@ -68,22 +68,6 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
     );
   }
 
-  @Get("latest-not-aligned-by-time/:DATA_SERVICE_ID")
-  @Header("Cache-Control", "max-age=5")
-  async getMostRecent(
-    @Param("DATA_SERVICE_ID") dataServiceId: string,
-    @Req() req: Request
-  ): Promise<DataPackagesResponse> {
-    BaseDataPackagesController.validateAllFeedsAccess(req);
-    await BaseDataPackagesController.validateDataServiceId(dataServiceId);
-
-    return await this.dataPackagesService.getLatestDataPackagesWithCache(
-      dataServiceId,
-      true,
-      this.allowExternalSigners
-    );
-  }
-
   @Get("historical/:DATA_SERVICE_ID/:TIMESTAMP")
   @Header("Cache-Control", "max-age=5")
   async getDataPackagesByTimestamp(

@@ -33,8 +33,6 @@ import {
 import { createTestDB as createAndConnectToTestDb, dropTestDatabase } from "../common/test-db";
 import { signByMockSigner } from "../common/test-utils";
 
-type WithSigner = { signerAddress: string };
-
 jest.mock("@redstone-finance/sdk", () => ({
   __esModule: true,
   ...jest.requireActual<object>("@redstone-finance/sdk"),
@@ -234,28 +232,6 @@ describe("Data packages (e2e)", () => {
 
           expect(await DataPackage.countDocuments()).toEqual(initialDpCount);
         });
-      });
-
-      it("/data-packages/latest (GET) return same result as /data-packages/latest (GET), when same number of dataPackages", async () => {
-        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
-        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
-        const responseLatest = await request(httpServer)
-          .get(`${version}/data-packages/latest/mock-data-service-1`)
-          .expect(200);
-
-        const responseMostRecent = await request(httpServer)
-          .get(`${version}/data-packages/latest-not-aligned-by-time/mock-data-service-1`)
-          .expect(200);
-
-        expect(
-          responseLatest.body[ALL_FEEDS_KEY].sort((a: WithSigner, b: WithSigner) =>
-            a.signerAddress.localeCompare(b.signerAddress)
-          )
-        ).toEqual(
-          responseMostRecent.body[ALL_FEEDS_KEY].sort((a: WithSigner, b: WithSigner) =>
-            a.signerAddress.localeCompare(b.signerAddress)
-          )
-        );
       });
 
       it("/data-packages/latest (GET) return package which contain more data-packages (in this case older one) ", async () => {
@@ -772,28 +748,6 @@ describe("Data packages (e2e)", () => {
       expect(response.body.BTC).toHaveLength(1);
       expect(response.body.BTC[0].signerAddress).toBe("0xExternalSigner");
     });
-
-    it("v2 API latest-not-aligned-by-time endpoint should allow external signers", async () => {
-      const mockDataPackage = mockDataPackages[0];
-      const externalSignerPackage = {
-        ...mockDataPackage,
-        timestampMilliseconds: Date.now(),
-        isSignatureValid: true,
-        dataFeedId: "BTC",
-        dataPackageId: "BTC",
-        dataServiceId: "mock-data-service-1",
-        signerAddress: "0xExternalSigner",
-      };
-
-      await DataPackage.insertMany([externalSignerPackage]);
-
-      const response = await request(httpServer)
-        .get(`/v2/data-packages/latest-not-aligned-by-time/mock-data-service-1`)
-        .expect(200);
-
-      expect(response.body.BTC).toHaveLength(1);
-      expect(response.body.BTC[0].signerAddress).toBe("0xExternalSigner");
-    });
   });
 
   describe("latest-by-data-feeds endpoint", () => {
@@ -1149,14 +1103,6 @@ describe("Data packages (e2e)", () => {
         await request(httpServer).get(`/data-packages/latest/mock-data-service-1`).expect(200);
       });
 
-      it("latest-not-aligned-by-time should not require API key", async () => {
-        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
-        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
-        await request(httpServer)
-          .get(`/data-packages/latest-not-aligned-by-time/mock-data-service-1`)
-          .expect(200);
-      });
-
       it("latest-by-data-feeds should not require API key", async () => {
         const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
         jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
@@ -1195,23 +1141,6 @@ describe("Data packages (e2e)", () => {
         jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
         await request(httpServer)
           .get(`/data-packages/latest/mock-data-service-1`)
-          .set("x-api-key", VALID_API_KEY)
-          .expect(200);
-      });
-
-      it("latest-not-aligned-by-time should return 403 without API key", async () => {
-        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
-        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
-        await request(httpServer)
-          .get(`/data-packages/latest-not-aligned-by-time/mock-data-service-1`)
-          .expect(403);
-      });
-
-      it("latest-not-aligned-by-time should return 200 with valid API key", async () => {
-        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
-        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
-        await request(httpServer)
-          .get(`/data-packages/latest-not-aligned-by-time/mock-data-service-1`)
           .set("x-api-key", VALID_API_KEY)
           .expect(200);
       });

@@ -72,6 +72,53 @@ describe("RedstoneProvider", () => {
       );
     });
 
+    it("should not corrupt DATA fields (calldata, addresses) in the message", async () => {
+      const postStub = sinon.stub(httpClient, "post").resolves({
+        data: {
+          jsonrpc: "2.0",
+          id: 1,
+          result: "0x",
+        },
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {} as any,
+      });
+
+      // calldata with a leading zero nibble (getReserves() selector) and an
+      // address starting with a zero byte - both must be forwarded verbatim
+      const calldata = "0x0902f1ac";
+      const to = "0x00c0ffee254729296a45a3885639ac7e10f9d54979";
+
+      await redstoneProvider.send<string>("eth_call", [{ to, data: calldata }, "latest"]);
+
+      const sentBody = postStub.firstCall.args[1] as any;
+      expect(sentBody.params[0].data).to.equal(calldata);
+      expect(sentBody.params[0].to).to.equal(to);
+    });
+
+    it("should not corrupt a raw signed transaction", async () => {
+      const postStub = sinon.stub(httpClient, "post").resolves({
+        data: {
+          jsonrpc: "2.0",
+          id: 1,
+          result: "0x",
+        },
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {} as any,
+      });
+
+      // EIP-1559 raw tx: type byte 0x02 -> stripping leading zeros would break it
+      const rawTx = "0x02f8710183...";
+
+      await redstoneProvider.send<string>("eth_sendRawTransaction", [rawTx]);
+
+      const sentBody = postStub.firstCall.args[1] as any;
+      expect(sentBody.params[0]).to.equal(rawTx);
+    });
+
     it("should throw error when response id does not match", async () => {
       sinon.stub(httpClient, "post").resolves({
         data: {
@@ -288,6 +335,32 @@ describe("RedstoneEthers5Provider", () => {
         expect(result).to.equal(testCase.expected);
         sendStub.restore();
       }
+    });
+  });
+
+  describe("call param encoding", () => {
+    it("encodes quantities minimally (no leading zeros) and preserves calldata", async () => {
+      ethers5Provider = new RedstoneEthers5Provider(redstoneProvider, {
+        name: "localhost",
+        chainId: 1337,
+      });
+      const sendStub = sinon.stub(redstoneProvider, "send").resolves("0x");
+
+      const calldata = "0x0902f1ac"; // leading zero nibble, must be preserved exactly
+
+      await ethers5Provider.call({
+        to: "0x1111111111111111111111111111111111111111",
+        data: calldata,
+        value: 1024, // 0x400, NOT the zero-padded 0x0400
+        gasLimit: 21000, // 0x5208
+      });
+
+      const [method, params] = sendStub.firstCall.args as [string, any[]];
+      expect(method).to.equal("eth_call");
+      const callParams = params[0];
+      expect(callParams.data).to.equal(calldata);
+      expect(callParams.value).to.equal("0x400");
+      expect(callParams.gas).to.equal("0x5208");
     });
   });
 

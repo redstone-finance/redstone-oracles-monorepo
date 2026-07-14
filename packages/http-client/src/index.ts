@@ -92,7 +92,13 @@ export class HttpClient {
       axiosRetry(this.axiosInstance, {
         retries: httpClientOptions.retryOptions.retries,
         retryCondition: (axiosError: AxiosError) =>
-          isRetryableError(axiosError) || isNetworkError(axiosError),
+          isRetryableError(axiosError) ||
+          isNetworkError(axiosError) ||
+          // axios-retry's helpers exclude client-side timeouts: axios rejects
+          // them with ECONNABORTED (or ETIMEDOUT), so retry them explicitly -
+          // otherwise a latency spike fails after one attempt, defeating retries.
+          axiosError.code === "ECONNABORTED" ||
+          axiosError.code === "ETIMEDOUT",
         retryDelay: (retryCount: number) =>
           Math.pow(httpClientOptions.retryOptions?.backOffBase ?? 1, retryCount) *
           httpClientOptions.retryOptions!.delayMs,

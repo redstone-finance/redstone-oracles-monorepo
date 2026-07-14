@@ -278,6 +278,20 @@ export class DataPackageSubscriber {
       return;
     }
 
+    // Reject timestamps too far in the future. Without an upper bound a single
+    // far-future package would advance lastPublishedState past the wall clock,
+    // blocking the feed until time catches up, and its future-keyed entry is
+    // never evicted by cleanStalePackages (which only prunes the past). Mirror
+    // the staleness window as the symmetric tolerance.
+    const maxAcceptableTimestamp = Date.now() + MAX_PACKAGE_STALENESS;
+    if (packageTimestamp > maxAcceptableTimestamp) {
+      this.logger.debug(
+        `Package from ${dataPackageId} rejected: timestamp=${packageTimestamp} is too far in the future (max=${maxAcceptableTimestamp})`
+      );
+
+      return;
+    }
+
     const packageSigner = signedDataPackage.getSignerAddress();
 
     //authorized signer
@@ -351,7 +365,16 @@ export class DataPackageSubscriber {
       );
       this.scheduledPublishes.add(key, Date.now());
       setTimeout(() => {
-        this.publish(packageTimestamp);
+        // Unlike the direct publish() calls above, this runs outside
+        // internalCallback's try/catch; a synchronous throw here would surface
+        // as an uncaughtException and terminate the process.
+        try {
+          this.publish(packageTimestamp);
+        } catch (e) {
+          this.logger.error(
+            `Failed to process new package error=${RedstoneCommon.stringifyError(e)}`
+          );
+        }
       }, this.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied);
     }
   }
