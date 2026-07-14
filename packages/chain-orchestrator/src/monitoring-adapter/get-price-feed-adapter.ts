@@ -4,8 +4,10 @@ import {
   readCantonPartyIds,
 } from "@redstone-finance/canton-connector";
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
-import { SolanaConnectionBuilder } from "@redstone-finance/solana-connection";
-import { SolanaPriceFeedContractAdapter } from "@redstone-finance/solana-connector";
+import {
+  SolanaClientBuilder,
+  SolanaPriceFeedContractAdapter,
+} from "@redstone-finance/solana-connector";
 import {
   PriceFeedStellarContractAdapter,
   Sep40PriceFeedStellarContractAdapter,
@@ -67,13 +69,13 @@ export async function getPriceFeedAdapter(
       );
     }
     case ChainTypeEnum.enum.solana: {
-      const connection = new SolanaConnectionBuilder()
+      const client = new SolanaClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .withRedStoneConnection()
         .build();
 
-      return SolanaPriceFeedContractAdapter.fromConnectionAndAddress(connection, address);
+      return SolanaPriceFeedContractAdapter.fromClientAndAddress(client, address);
     }
     case ChainTypeEnum.enum.radix:
     case ChainTypeEnum.enum.fuel:

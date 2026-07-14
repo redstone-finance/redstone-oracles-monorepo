@@ -1,7 +1,8 @@
-import { SolanaConnectionBuilder } from "@redstone-finance/solana-connection";
 import {
   createSolanaConfig,
   makeKeypair,
+  makeSolanaUpdater,
+  SolanaClientBuilder,
   SolanaWriteContractAdapter,
 } from "@redstone-finance/solana-connector";
 import { RedstoneCommon } from "@redstone-finance/utils";
@@ -33,14 +34,24 @@ export const getSolanaContractAdapter = (relayerConfig: PartialRelayerConfig) =>
       "SOLANA_USE_AGGRESSIVE_GAS_ORACLE",
       z.boolean().default(true)
     ),
+    canSendViaJito: RedstoneCommon.getFromEnv(
+      "SOLANA_CAN_SEND_VIA_JITO",
+      z.boolean().default(false)
+    ),
   });
   const keypair = makeKeypair(privateKey);
-  const connection = new SolanaConnectionBuilder()
+  const { client, jito } = new SolanaClientBuilder()
     .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
     .withQuarantineEnabled()
     .withRedStoneConnection()
-    .build();
+    .buildWithJito();
+  const updater = makeSolanaUpdater(
+    { client, jito },
+    adapterContractAddress,
+    keypair,
+    solanaConfig
+  );
 
-  return new SolanaWriteContractAdapter(connection, adapterContractAddress, keypair, solanaConfig);
+  return new SolanaWriteContractAdapter(client, updater);
 };

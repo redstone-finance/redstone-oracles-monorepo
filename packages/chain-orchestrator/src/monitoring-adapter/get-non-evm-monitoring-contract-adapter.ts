@@ -6,8 +6,7 @@ import {
 } from "@redstone-finance/canton-connector";
 import { MoveClientBuilder, MovePricesContractAdapter } from "@redstone-finance/move-connector";
 import { AnyOnChainRelayerManifest } from "@redstone-finance/on-chain-relayer-common";
-import { SolanaConnectionBuilder } from "@redstone-finance/solana-connection";
-import { SolanaContractAdapter } from "@redstone-finance/solana-connector";
+import { SolanaClientBuilder, SolanaContractAdapter } from "@redstone-finance/solana-connector";
 import {
   Sep40StellarContractAdapter,
   StellarClientBuilder,
@@ -52,16 +51,13 @@ export async function getNonEvmMonitoringContractAdapter(
 }
 
 function getSolanaContractAdapter(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {
-  const connection = new SolanaConnectionBuilder()
+  const client = new SolanaClientBuilder()
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .withRedStoneConnection()
     .build();
 
-  return SolanaContractAdapter.fromConnectionAndAddress(
-    connection,
-    relayerManifest.adapterContract
-  );
+  return SolanaContractAdapter.fromClientAndAddress(client, relayerManifest.adapterContract);
 }
 
 function getSuiContractAdapter(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {

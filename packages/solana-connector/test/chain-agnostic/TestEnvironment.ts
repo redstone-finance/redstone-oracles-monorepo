@@ -8,7 +8,12 @@ import { ContractParamsProviderMock, getLastRoundDetails } from "@redstone-finan
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { execSync } from "child_process";
 import { LiteSVM } from "litesvm";
-import { createSolanaConfig, SolanaWriteContractAdapter } from "../../src";
+import {
+  createSolanaConfig,
+  makeSolanaUpdater,
+  SolanaClient,
+  SolanaWriteContractAdapter,
+} from "../../src";
 import { setUpEnv } from "../setup-env";
 import { LiteSVMAgnosticTestsConnection } from "./TestConnection";
 
@@ -111,15 +116,10 @@ export function getTestEnv() {
   svm.setClock(clock);
 
   const connection = new LiteSVMAgnosticTestsConnection(svm);
-  const connector = new SolanaWriteContractAdapter(
-    connection,
-    programId.toBase58(),
-    trustedSigner,
-    createSolanaConfig({
-      maxTxSendAttempts: 2,
-      expectedTxDeliveryTimeMs: 100,
-    })
-  );
+  const client = new SolanaClient(connection);
+  const config = createSolanaConfig({ maxTxSendAttempts: 2, expectedTxDeliveryTimeMs: 100 });
+  const updater = makeSolanaUpdater({ client }, programId.toBase58(), trustedSigner, config);
+  const connector = new SolanaWriteContractAdapter(client, updater);
 
   return Promise.resolve(new SolanaTestEnvironment(connector, svm));
 }

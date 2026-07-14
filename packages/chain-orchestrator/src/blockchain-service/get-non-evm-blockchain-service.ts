@@ -7,12 +7,11 @@ import {
 } from "@redstone-finance/canton-connector";
 import { MoveBlockchainService, MoveClientBuilder } from "@redstone-finance/move-connector";
 import { BlockchainServiceWithTxLookup } from "@redstone-finance/multichain-kit";
-import { SolanaConnectionBuilder } from "@redstone-finance/solana-connection";
 import {
   makeKeypair as makeSolanaKeypair,
   SolanaBlockchainService,
   SolanaBlockchainServiceWithTransfer,
-  SolanaClient,
+  SolanaClientBuilder,
 } from "@redstone-finance/solana-connector";
 import {
   makeKeypair as makeStellarKeypair,
@@ -58,13 +57,13 @@ export async function getNonEvmBlockchainService(
       return MoveBlockchainService.getInstance(chainType, moveClient);
     }
     case ChainTypeEnum.enum.solana: {
-      const connection = new SolanaConnectionBuilder()
+      const client = new SolanaClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .withRedStoneConnection()
         .build();
 
-      return new SolanaBlockchainService(new SolanaClient(connection));
+      return new SolanaBlockchainService(client);
     }
     case ChainTypeEnum.enum.stellar: {
       const client = new StellarClientBuilder()
@@ -123,13 +122,13 @@ export async function getNonEvmBlockchainServiceWithTransfer(
       return MoveBlockchainService.getInstance(chainType, moveClient, privateKey);
     }
     case ChainTypeEnum.enum.solana: {
-      const connection = new SolanaConnectionBuilder()
+      const client = new SolanaClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();
       const keypair = makeSolanaKeypair(privateKey.value);
 
-      return new SolanaBlockchainServiceWithTransfer(new SolanaClient(connection), keypair);
+      return new SolanaBlockchainServiceWithTransfer(client, keypair);
     }
     case ChainTypeEnum.enum.stellar: {
       const client = new StellarClientBuilder()

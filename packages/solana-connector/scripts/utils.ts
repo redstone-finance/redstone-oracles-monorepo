@@ -20,7 +20,11 @@ export function readKeypair() {
 }
 
 export function readUrl() {
-  return RedstoneCommon.getFromEnv("URL", z.url());
+  return readUrls()[0];
+}
+
+export function readUrls() {
+  return RedstoneCommon.getFromEnv("RPC_URLS", z.url().array());
 }
 
 export function readDeployDir() {

@@ -5,11 +5,11 @@ import "dotenv/config";
 import _ from "lodash";
 import z from "zod";
 import { readCluster } from "../src";
-import { readUrl } from "./utils";
+import { readUrls } from "./utils";
 
 export async function getRpcUrls() {
   if (RedstoneCommon.getFromEnv("OVERRIDE_URLS_BY_ENV", z.boolean().default(false))) {
-    return [readUrl()];
+    return readUrls();
   }
 
   return getChainConfigByNetworkId(
