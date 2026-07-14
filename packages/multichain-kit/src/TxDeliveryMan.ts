@@ -1,6 +1,6 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP, loggerFactory, RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
-import { ContractUpdater } from "./ContractUpdater";
+import { ContractUpdateContext, ContractUpdater } from "./ContractUpdater";
 
 export type TxDeliveryManUpdateStatus<T = unknown> = FP.Result<
   { transactionHash: string } & T,
@@ -30,11 +30,9 @@ export class TxDeliveryMan<TxResultExt = unknown> {
 
   async updateContract(
     updater: ContractUpdater<TxResultExt>,
-    paramsProvider: ContractParamsProvider
+    paramsProvider: ContractParamsProvider,
+    context: ContractUpdateContext = { updateStartTimeMs: Date.now() }
   ): Promise<TxDeliveryManUpdateStatus<TxResultExt>> {
-    const updateStartTimeMs = Date.now();
-    const context = { updateStartTimeMs };
-
     return await this.submit((attempt) => updater.update(paramsProvider, context, attempt));
   }
 

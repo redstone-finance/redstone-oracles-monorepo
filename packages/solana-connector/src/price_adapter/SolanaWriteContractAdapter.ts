@@ -1,39 +1,25 @@
 import { WriteContractAdapter } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP } from "@redstone-finance/utils";
-import { Connection, Keypair } from "@solana/web3.js";
-import { AnchorReadonlyProvider } from "../client/AnchorReadonlyProvider";
 import { SolanaClient } from "../client/SolanaClient";
 import { SolanaContractUpdater } from "../client/SolanaContractUpdater";
-import { DEFAULT_SOLANA_CONFIG } from "../config";
-import { PriceAdapterContract } from "./PriceAdapterContract";
 import { SolanaContractAdapter } from "./SolanaPricesContractAdapter";
 
 export class SolanaWriteContractAdapter
   extends SolanaContractAdapter
   implements WriteContractAdapter
 {
-  private readonly updater: SolanaContractUpdater;
-
   constructor(
-    connection: Connection,
-    address: string,
-    keypair: Keypair,
-    config = DEFAULT_SOLANA_CONFIG
+    client: SolanaClient,
+    private readonly updater: SolanaContractUpdater
   ) {
-    const client = SolanaClient.createMultiClient(connection);
-    const provider = new AnchorReadonlyProvider(connection, client, keypair.publicKey);
-    const contract = new PriceAdapterContract(address, provider, client);
-
-    super(contract, client);
-
-    this.updater = new SolanaContractUpdater(client, config, keypair, contract);
+    super(updater.getContract(), client);
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
     const res = await this.updater.writePrices(paramsProvider);
 
-    return FP.unwrapSuccess(res).transactionHash;
+    return FP.unwrapSuccess(FP.mapErr(res, (errors) => new AggregateError(errors))).transactionHash;
   }
 
   async transfer(toAddress: string, amountInSol: number) {

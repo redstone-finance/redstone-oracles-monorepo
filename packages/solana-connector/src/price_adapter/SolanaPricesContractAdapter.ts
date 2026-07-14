@@ -1,7 +1,6 @@
 import { ContractAdapter } from "@redstone-finance/multichain-kit";
 import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { Connection } from "@solana/web3.js";
 import { AnchorReadonlyProvider } from "../client/AnchorReadonlyProvider";
 import { SolanaClient } from "../client/SolanaClient";
 import { bigIntFromBeBytes } from "../utils";
@@ -13,9 +12,8 @@ export class SolanaContractAdapter implements ContractAdapter {
     protected readonly client: SolanaClient
   ) {}
 
-  static fromConnectionAndAddress(connection: Connection, address: string) {
-    const client = SolanaClient.createMultiClient(connection);
-    const provider = new AnchorReadonlyProvider(connection, client);
+  static fromClientAndAddress(client: SolanaClient, address: string) {
+    const provider = new AnchorReadonlyProvider(client);
     const contract = new PriceAdapterContract(address, provider, client);
 
     return new SolanaContractAdapter(contract, client);

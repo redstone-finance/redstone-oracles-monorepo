@@ -30,6 +30,8 @@ export class RedStoneConnection
   extends Connection
   implements GetAccountsInfoRequestCollectorDelegate, GetTransactionsRequestCollectorDelegate
 {
+  private static instances: { [url: string]: RedStoneConnection | undefined } = {};
+
   private logger = loggerFactory("redstone-solana-connection");
   private readonly getAccountsInfoRequestCollectors = new Collector.CollectorRegistry(
     getCommitmentOrConfigKey,
@@ -41,6 +43,10 @@ export class RedStoneConnection
   );
   private getEpochInfoPromise?: Promise<EpochInfo>;
   private getSlotPromise?: Promise<number>;
+
+  static instanceForUrl(url: string, commitmentOrConfig?: Commitment | ConnectionConfig) {
+    return (RedStoneConnection.instances[url] ??= new RedStoneConnection(url, commitmentOrConfig));
+  }
 
   constructor(endpoint: string, commitmentOrConfig?: Commitment | ConnectionConfig) {
     super(endpoint, commitmentOrConfig);

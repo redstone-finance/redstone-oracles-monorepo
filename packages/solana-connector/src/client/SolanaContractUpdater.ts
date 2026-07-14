@@ -22,12 +22,12 @@ import { PriceAdapterContract } from "../price_adapter/PriceAdapterContract";
 import { SolanaRustSdkErrroHandler } from "../price_adapter/SolanaRustSdkErrorHandler";
 import { getRecentBlockhash } from "./get-recent-blockhash";
 import { SOLANA_SLOT_TIME_INTERVAL_MS, SolanaClient } from "./SolanaClient";
+import { SolanaTxSender } from "./SolanaTxSender";
 
-const MAX_FEED_COUNT_IN_UPDATE = 1;
 const COMPUTE_UNITS_PER_SIGNER = 40_000;
 
 export class SolanaContractUpdater implements ContractUpdater {
-  private readonly logger = loggerFactory("solana-contract-updater");
+  protected readonly logger = loggerFactory("solana-contract-updater");
   private readonly gasOracle: ISolanaGasOracle;
   private readonly txDeliveryMan: TxDeliveryMan;
 
@@ -35,32 +35,40 @@ export class SolanaContractUpdater implements ContractUpdater {
     private readonly client: SolanaClient,
     private readonly config: SolanaConfig,
     private readonly keypair: Keypair,
-    private readonly contract: PriceAdapterContract
+    private readonly contract: PriceAdapterContract,
+    private readonly sender: SolanaTxSender,
+    txDeliveryManOverride?: TxDeliveryMan
   ) {
     this.gasOracle = config.useAggressiveGasOracle
       ? new AggressiveSolanaGasOracle(client, config)
       : new RegularSolanaGasOracle(config);
 
-    this.txDeliveryMan = new MultiTxDeliveryMan(
-      {
-        expectedTxDeliveryTimeInMs: config.expectedTxDeliveryTimeMs,
-        maxTxSendAttempts: config.maxTxAttempts,
-        batchSizePerRequestParams: () => MAX_FEED_COUNT_IN_UPDATE,
-      },
-      "solana-contract-tx-delivery-man"
-    );
+    this.txDeliveryMan =
+      txDeliveryManOverride ??
+      new MultiTxDeliveryMan(
+        {
+          expectedTxDeliveryTimeInMs: config.expectedTxDeliveryTimeMs,
+          maxTxSendAttempts: config.maxTxAttempts,
+          batchSizePerRequestParams: () => this.sender.maxFeeds,
+        },
+        "solana-contract-tx-delivery-man"
+      );
   }
 
-  public getPublicKey() {
+  getPublicKey() {
     return this.keypair.publicKey;
   }
 
-  public getKeypair() {
+  getKeypair() {
     return this.keypair;
   }
 
-  async writePrices(paramsProvider: ContractParamsProvider) {
-    return await this.txDeliveryMan.updateContract(this, paramsProvider);
+  getContract() {
+    return this.contract;
+  }
+
+  async writePrices(paramsProvider: ContractParamsProvider, context?: ContractUpdateContext) {
+    return await this.txDeliveryMan.updateContract(this, paramsProvider, context);
   }
 
   async update(
@@ -68,52 +76,88 @@ export class SolanaContractUpdater implements ContractUpdater {
     context: ContractUpdateContext,
     attempt: number
   ) {
-    const feedCount = paramsProvider.getDataFeedIds().length;
-
-    if (feedCount !== MAX_FEED_COUNT_IN_UPDATE) {
-      return FP.err(`solana updater expects single feed in update call, got ${feedCount}`);
-    }
-    const feedId = paramsProvider.getDataFeedIds()[0];
-    const payload = await FP.tryAwait(
-      paramsProvider.getPayloadHex(false, {
-        withUnsignedMetadata: true,
-        metadataTimestamp: context.updateStartTimeMs,
-        componentName: "solana-connector",
-      })
-    );
-
-    const ix = await FP.mapAsyncStringifyError(payload, (payload) =>
-      this.contract.writePriceTx(this.keypair.publicKey, feedId, payload)
-    );
-    const computeUnits = COMPUTE_UNITS_PER_SIGNER * paramsProvider.requestParams.uniqueSignersCount;
-    const transactionHash = await FP.mapAsyncStringifyError(ix, (ix) =>
-      this.sendAndConfirm(feedId, ix, attempt, computeUnits)
-    );
-
-    return FP.mapStringifyError(transactionHash, (transactionHash) => ({ transactionHash }));
+    return await this.deliver(paramsProvider, context, attempt);
   }
 
-  private async sendAndConfirm(
-    id: string,
-    instruction: TransactionInstruction,
-    iterationIndex: number,
-    computeUnits: number
+  protected async deliver(
+    paramsProvider: ContractParamsProvider,
+    context: ContractUpdateContext,
+    attempt = 0
   ) {
-    const message = await this.wrapWithGas(instruction, iterationIndex, computeUnits);
-    const tx = new VersionedTransaction(message.compileToV0Message());
+    return await FP.tryCallAsyncStringifyError(async () => {
+      const transactions = await this.buildFeedTransactions(paramsProvider, context, attempt);
+      const signature = await this.sender.send(transactions);
 
+      await this.waitForTransaction(signature, paramsProvider.getDataFeedIds().join(","));
+
+      return { transactionHash: signature };
+    });
+  }
+
+  private payloadMetadata(context: ContractUpdateContext) {
+    return {
+      withUnsignedMetadata: true,
+      metadataTimestamp: context.updateStartTimeMs,
+      componentName: "solana-connector",
+    };
+  }
+
+  private async buildFeedTransactions(
+    paramsProvider: ContractParamsProvider,
+    context: ContractUpdateContext,
+    attempt: number
+  ) {
+    const [splitPayloads, recentBlockhash] = await Promise.all([
+      paramsProvider.prepareSplitPayloads(this.payloadMetadata(context)),
+      getRecentBlockhash(this.client, "solana-write"),
+    ]);
+    const { payloads } = ContractParamsProvider.extractMissingValues(splitPayloads, this.logger);
+    const feedPayloads = Object.entries(payloads);
+    if (feedPayloads.length === 0) {
+      throw new Error("No feeds to write");
+    }
+
+    const uniqueSignerCount = paramsProvider.requestParams.uniqueSignersCount;
+
+    return await Promise.all(
+      feedPayloads.map(([feedId, payload]) =>
+        this.buildFeedTx(feedId, payload, uniqueSignerCount, attempt, recentBlockhash)
+      )
+    );
+  }
+
+  private async buildFeedTx(
+    feedId: string,
+    payload: string,
+    uniqueSignerCount: number,
+    attempt: number,
+    recentBlockhash: string
+  ) {
+    const priceInstruction = await this.contract.writePriceTx(
+      this.keypair.publicKey,
+      feedId,
+      payload
+    );
+    const computeUnits = COMPUTE_UNITS_PER_SIGNER * uniqueSignerCount;
+
+    const message = await this.wrapWithGas(
+      priceInstruction,
+      attempt,
+      computeUnits,
+      recentBlockhash
+    );
+    const tx = new VersionedTransaction(message.compileToV0Message());
     tx.sign([this.keypair]);
 
-    const signature = await this.client.sendTransaction(tx, {
-      skipPreflight: true,
-    });
-
-    await this.waitForTransaction(signature, id);
-
-    return signature;
+    return tx;
   }
 
-  private async wrapWithGas(ix: TransactionInstruction, iteration: number, computeUnits: number) {
+  private async wrapWithGas(
+    ix: TransactionInstruction,
+    iteration: number,
+    computeUnits: number,
+    recentBlockhash: string
+  ) {
     const writableKeys = ix.keys.filter((meta) => meta.isWritable).map((meta) => meta.pubkey);
     const priorityFeeUnitPriceCostInMicroLamports = await this.gasOracle.getPriorityFeePerUnit(
       iteration,
@@ -139,7 +183,6 @@ export class SolanaContractUpdater implements ContractUpdater {
         LAMPORTS_PER_SOL;
       this.logger.info(`Additional cost of transaction: ${additionalCostInSol} SOL`);
     }
-    const recentBlockhash = await getRecentBlockhash(this.client, "wrapWithGas");
 
     return new TransactionMessage({
       payerKey: this.keypair.publicKey,

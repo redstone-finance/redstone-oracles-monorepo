@@ -13,11 +13,14 @@ import { SolanaClient } from "./SolanaClient";
 import { getRecentBlockhash } from "./get-recent-blockhash";
 
 export class AnchorReadonlyProvider implements Provider {
+  readonly connection: Connection;
+
   constructor(
-    readonly connection: Connection,
     private readonly client: SolanaClient,
     readonly publicKey?: PublicKey
-  ) {}
+  ) {
+    this.connection = client.connection;
+  }
 
   async simulate(
     tx: Transaction | VersionedTransaction,

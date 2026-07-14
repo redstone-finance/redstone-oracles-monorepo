@@ -3,12 +3,11 @@ import { Cluster, Commitment, Connection } from "@solana/web3.js";
 import { connectToCluster } from "./cluster";
 import { getSolanaChainId, getSolanaCluster } from "./network-ids";
 import { RedStoneConnection } from "./RedStoneConnection";
+import { API_TYPE_JITO, SolanaApi } from "./SolanaApi";
 
 export class SolanaConnectionBuilder extends MultiExecutor.ClientBuilder<Connection> {
   protected override chainType = ChainTypeEnum.enum.solana;
   private shouldUseRedStoneConnection = false;
-
-  private static connectionInstances: { [p: string]: RedStoneConnection | undefined } = {};
 
   withCluster(cluster: Cluster) {
     return this.withChainId(getSolanaChainId(cluster));
@@ -25,7 +24,7 @@ export class SolanaConnectionBuilder extends MultiExecutor.ClientBuilder<Connect
       throw new Error("Network not set");
     }
 
-    if (!this.urls.length) {
+    if (!this.getEligibleUrls().length) {
       return connectToCluster(getSolanaCluster(this.chainId));
     }
 
@@ -36,6 +35,10 @@ export class SolanaConnectionBuilder extends MultiExecutor.ClientBuilder<Connect
     });
   }
 
+  protected override getEligibleUrls() {
+    return this.urls.filter((url) => SolanaApi.parseUrl(url).type !== API_TYPE_JITO);
+  }
+
   private makeConnection(url: string) {
     const commitmentOrConfig = {
       commitment: "confirmed" as Commitment,
@@ -43,12 +46,7 @@ export class SolanaConnectionBuilder extends MultiExecutor.ClientBuilder<Connect
     };
 
     if (this.shouldUseRedStoneConnection) {
-      SolanaConnectionBuilder.connectionInstances[url] ??= new RedStoneConnection(
-        url,
-        commitmentOrConfig
-      );
-
-      return SolanaConnectionBuilder.connectionInstances[url];
+      return RedStoneConnection.instanceForUrl(url, commitmentOrConfig);
     }
 
     return new Connection(url, commitmentOrConfig);
