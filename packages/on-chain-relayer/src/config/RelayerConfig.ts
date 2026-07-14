@@ -108,4 +108,5 @@ export type OnChainRelayerEnv = {
   iterationHealthCheckPeriodInS?: number;
   disableMultiPhaseFetching?: boolean;
   authenticatedGateways?: { url: string; apiKey: string }[];
+  disablePublicGateways?: boolean;
 };

@@ -30,6 +30,7 @@ export function makeDataPackagesRequestParams(
     disableMultiPhaseFetching,
     updateTriggers,
     authenticatedGateways,
+    disablePublicGateways,
   } = relayerConfig;
 
   let signers: string[] = authorizedSigners ?? [];
@@ -49,7 +50,7 @@ export function makeDataPackagesRequestParams(
     dataServiceId,
     uniqueSignersCount: uniqueSignerThreshold,
     dataPackagesIds: dataPackagesNames?.length ? [...dataPackagesNames, ...baseFeeds] : baseFeeds,
-    urls: cacheServiceUrls,
+    urls: disablePublicGateways ? [] : cacheServiceUrls,
     maxTimestampDeviationMS: RedstoneCommon.minToMs(3),
     authorizedSigners: signers,
     ignoreMissingFeed: canIgnoreMissingFeeds(relayerConfig),

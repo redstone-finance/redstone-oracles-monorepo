@@ -315,6 +315,10 @@ export const readManifestAndEnv = () => {
       "AUTHENTICATED_GATEWAYS",
       z.array(RedstoneCommon.AuthenticatedGatewaySchema).nonempty().optional()
     ),
+    disablePublicGateways: RedstoneCommon.getFromEnv(
+      "DISABLE_PUBLIC_GATEWAYS",
+      z.boolean().default(false)
+    ),
   };
 
   return { manifest, env };
