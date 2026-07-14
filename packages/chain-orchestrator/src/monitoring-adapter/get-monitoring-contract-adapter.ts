@@ -25,7 +25,12 @@ export async function getMonitoringContractAdapter(
       opts.env
     );
 
-    return await getNonEvmMonitoringContractAdapter(relayerManifest, rpcUrls, opts.withRounds);
+    return await getNonEvmMonitoringContractAdapter(
+      relayerManifest.chain.id,
+      relayerManifest,
+      rpcUrls,
+      opts.withRounds
+    );
   }
 
   return await getEvmMonitoringContractAdapter(relayerManifest, opts);

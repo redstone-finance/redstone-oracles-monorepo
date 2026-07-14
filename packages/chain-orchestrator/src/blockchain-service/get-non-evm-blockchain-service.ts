@@ -27,17 +27,17 @@ import {
 } from "@redstone-finance/sui-connector";
 import {
   ChainTypeEnum,
-  deconstructNetworkId,
-  NetworkId,
+  deconstructNonEvmNetworkId,
+  NonEvmNetworkId,
   RedstoneCommon,
 } from "@redstone-finance/utils";
 import { getCantonAuth } from "../utils";
 
 export async function getNonEvmBlockchainService(
-  networkId: NetworkId,
+  networkId: NonEvmNetworkId,
   rpcUrls: string[]
 ): Promise<BlockchainServiceWithTxLookup> {
-  const { chainType } = deconstructNetworkId(networkId);
+  const { chainType } = deconstructNonEvmNetworkId(networkId);
   switch (chainType) {
     case ChainTypeEnum.enum.sui: {
       const suiClient = new SuiClientBuilder()
@@ -75,7 +75,7 @@ export async function getNonEvmBlockchainService(
       return new StellarBlockchainService(client);
     }
     case ChainTypeEnum.enum.canton: {
-      const chainId = deconstructNetworkId(networkId).chainId;
+      const chainId = deconstructNonEvmNetworkId(networkId).chainId;
       const auth = await getCantonAuth(chainId);
       const client = new CantonClientBuilder()
         .withRpcUrls(rpcUrls)
@@ -87,21 +87,18 @@ export async function getNonEvmBlockchainService(
     }
     case ChainTypeEnum.enum.fuel:
     case ChainTypeEnum.enum.radix:
-    case ChainTypeEnum.enum.evm:
-      throw new Error(
-        `Evm networkId ${networkId} got passed to non-evm blockchain service builder.`
-      );
+      throw new Error(`getNonEvmBlockchainService is not supported for ${chainType}`);
     default:
       return RedstoneCommon.throwUnsupportedParamError(chainType);
   }
 }
 
 export async function getNonEvmBlockchainServiceWithTransfer(
-  networkId: NetworkId,
+  networkId: NonEvmNetworkId,
   rpcUrls: string[],
   privateKey: RedstoneCommon.PrivateKey
 ) {
-  const { chainType } = deconstructNetworkId(networkId);
+  const { chainType } = deconstructNonEvmNetworkId(networkId);
   switch (chainType) {
     case ChainTypeEnum.enum.sui: {
       const suiClient = new SuiClientBuilder()
@@ -141,7 +138,7 @@ export async function getNonEvmBlockchainServiceWithTransfer(
       return new StellarBlockchainServiceWithTransfer(client, keypair);
     }
     case ChainTypeEnum.enum.canton: {
-      const { chainId } = deconstructNetworkId(networkId);
+      const { chainId } = deconstructNonEvmNetworkId(networkId);
       const network = chainIdToNetwork(chainId);
       const auth = await getCantonAuth(chainId);
       if (!auth) {
@@ -163,11 +160,7 @@ export async function getNonEvmBlockchainServiceWithTransfer(
     }
     case ChainTypeEnum.enum.fuel:
     case ChainTypeEnum.enum.radix:
-      throw new Error(`Not supported for ${chainType}`);
-    case ChainTypeEnum.enum.evm:
-      throw new Error(
-        `Evm networkId ${networkId} got passed to non-evm blockchain service builder.`
-      );
+      throw new Error(`getNonEvmBlockchainServiceWithTransfer is not supported for ${chainType}`);
     default:
       return RedstoneCommon.throwUnsupportedParamError(chainType);
   }

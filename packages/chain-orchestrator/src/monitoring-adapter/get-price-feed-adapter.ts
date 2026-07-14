@@ -15,20 +15,20 @@ import {
 } from "@redstone-finance/stellar-connector";
 import {
   ChainTypeEnum,
-  deconstructNetworkId,
-  NetworkId,
+  deconstructNonEvmNetworkId,
+  NonEvmNetworkId,
   RedstoneCommon,
 } from "@redstone-finance/utils";
 import { getCantonAuth } from "../utils";
 
 export async function getPriceFeedAdapter(
-  networkId: NetworkId,
+  networkId: NonEvmNetworkId,
   address: string,
   rpcUrls: string[],
   feedId?: string,
   withRounds?: boolean
 ): Promise<PriceFeedAdapter> {
-  const { chainType } = deconstructNetworkId(networkId);
+  const { chainType } = deconstructNonEvmNetworkId(networkId);
 
   switch (chainType) {
     case ChainTypeEnum.enum.stellar: {
@@ -53,7 +53,7 @@ export async function getPriceFeedAdapter(
         throw new Error("Canton needs feed name for price-feed");
       }
 
-      const chainId = deconstructNetworkId(networkId).chainId;
+      const chainId = deconstructNonEvmNetworkId(networkId).chainId;
       const auth = await getCantonAuth(chainId);
       const client = new CantonClientBuilder()
         .withNetworkId(networkId)
@@ -82,7 +82,6 @@ export async function getPriceFeedAdapter(
     case ChainTypeEnum.enum.sui:
     case ChainTypeEnum.enum.aptos:
     case ChainTypeEnum.enum.movement:
-    case ChainTypeEnum.enum.evm:
       throw new Error(`${networkId} is not supported for getPriceFeedAdapter`);
     default:
       return RedstoneCommon.throwUnsupportedParamError(chainType);

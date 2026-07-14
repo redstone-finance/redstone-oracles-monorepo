@@ -29,6 +29,7 @@ export const NetworkIdSchema = z.union([
     .transform(([str, num]) => `${str}/${num}` as const),
 ]);
 export type NetworkId = z.infer<typeof NetworkIdSchema>;
+export type NonEvmNetworkId = Exclude<NetworkId, number>;
 
 export function isEvmNetworkId(networkId: NetworkId): networkId is number {
   return typeof networkId === "number";
@@ -40,9 +41,7 @@ export function isEvmChainType(
   return !chainType || chainType === ChainTypeEnum.enum.evm;
 }
 
-export function isNonEvmNetworkId(
-  networkId: NetworkId
-): networkId is `${NonEvmChainType}/${number}` {
+export function isNonEvmNetworkId(networkId: NetworkId): networkId is NonEvmNetworkId {
   return !isEvmNetworkId(networkId);
 }
 
@@ -65,6 +64,10 @@ export function deconstructNetworkId(networkId: NetworkId): {
     };
   }
 
+  return deconstructNonEvmNetworkId(networkId);
+}
+
+export function deconstructNonEvmNetworkId(networkId: NonEvmNetworkId) {
   const [chainTypeStr, chainIdStr] = networkId.split("/");
 
   const chainType = NonEvmChainTypeEnum.parse(chainTypeStr);

@@ -1,6 +1,6 @@
 import { EvmPriceFeedContractAdapter } from "@redstone-finance/evm-adapters";
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
-import { isEvmNetworkId, NetworkId } from "@redstone-finance/utils";
+import { isEvmNetworkId, NetworkId, NonEvmNetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import {
   fetchParsedRpcUrlsFromSsmByNetworkIdMemoized,
@@ -40,7 +40,7 @@ async function getEvmPriceFeedAdapterCreator(
 }
 
 async function getNonEvmPriceFeedAdapterCreator(
-  networkId: NetworkId,
+  networkId: NonEvmNetworkId,
   env: MonitoringEnv,
   overrideRpcUrls?: string[]
 ): Promise<PriceFeedAdapterCreator> {
