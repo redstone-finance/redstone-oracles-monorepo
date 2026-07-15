@@ -10,7 +10,7 @@
     }
   },
   "defaultSource": ["coingecko"],
-  "defaultBroadcasters": ["redstone-packages", "influx"],
+  "defaultBroadcasters": ["redstone-packages", "influx", "s3"],
   "tokens": {
     "ETH": {
       "source": [
