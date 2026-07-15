@@ -10,7 +10,7 @@
       "maxDelayMilliseconds": 120000
     }
   },
-  "defaultBroadcasters": ["redstone-packages", "influx"],
+  "defaultBroadcasters": ["redstone-packages", "influx", "s3"],
   "tokens": {
     "bench_ETH_CLE": {
       "source": ["puffer-oracle"]

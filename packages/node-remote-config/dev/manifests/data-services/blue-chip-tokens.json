@@ -4,7 +4,8 @@
   "defaultSource": [],
   "defaultBroadcasters": [
     "redstone-packages",
-    "influx"
+    "influx",
+    "s3"
   ],
   "sourceTimeout": 7000,
   "minValidSourcesPercentage": 1,

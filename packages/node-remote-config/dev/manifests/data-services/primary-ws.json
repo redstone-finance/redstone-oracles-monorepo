@@ -4,7 +4,8 @@
   "defaultSource": [],
   "defaultBroadcasters": [
     "redstone-packages",
-    "influx"
+    "influx",
+    "s3"
   ],
   "sourceTimeout": 300,
   "minValidSourcesPercentage": 1,
@@ -2266,7 +2267,8 @@
         }
       },
       "broadcasters": [
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2288,7 +2290,8 @@
         "upperClampPercent": 0.1
       },
       "broadcasters": [
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2307,7 +2310,8 @@
         "ethereum-evm-fetcher-brix-deferred"
       ],
       "broadcasters": [
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "iTRY",
       "rateFeed": true,
@@ -2320,7 +2324,8 @@
         "usd-based-deferred"
       ],
       "broadcasters": [
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "USD",
       "rateFeed": true,
@@ -4094,7 +4099,8 @@
       },
       "priceAggregator": "constantWeightMedian",
       "broadcasters": [
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "JPY",
       "rateFeed": false
@@ -4110,7 +4116,8 @@
       },
       "priceAggregator": "constantWeightMedian",
       "broadcasters": [
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "JPY",
       "rateFeed": false

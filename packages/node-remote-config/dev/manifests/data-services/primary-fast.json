@@ -4,7 +4,8 @@
   "defaultSource": [],
   "defaultBroadcasters": [
     "redstone-packages",
-    "influx"
+    "influx",
+    "s3"
   ],
   "sourceTimeout": 2000,
   "minValidSourcesPercentage": 1,
@@ -178,7 +179,8 @@
     "EUR": {
       "source": [],
       "broadcasters": [
-        "influx"
+        "influx",
+        "s3"
       ]
     },
     "MEGA": {
