@@ -6,7 +6,8 @@
   ],
   "defaultBroadcasters": [
     "redstone-packages",
-    "influx"
+    "influx",
+    "s3"
   ],
   "sourceTimeout": 8000,
   "deviationCheck": {
