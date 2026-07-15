@@ -10478,6 +10478,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/merger@workspace:packages/merger"
   dependencies:
+    "@aws-sdk/client-cloudwatch-logs": "npm:^3.696.0"
     "@aws-sdk/client-dynamodb": "npm:^3.696.0"
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@aws-sdk/lib-dynamodb": "npm:^3.696.0"
