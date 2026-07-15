@@ -13,7 +13,8 @@
   },
   "defaultBroadcasters": [
     "redstone-packages",
-    "influx"
+    "influx",
+    "s3"
   ],
   "tokens": {
     "NG": {
