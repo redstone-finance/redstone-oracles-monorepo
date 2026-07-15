@@ -219,6 +219,32 @@ export class RedstoneProvider {
     public readonly url: string
   ) {}
 
+  private static stripLeadingZerosFromValue<T>(value: T): T {
+    if (typeof value === "string" && value.length > 3) {
+      return stripLeadingZeros(value) as T;
+    }
+
+    if (Array.isArray(value)) {
+      const result = [];
+      for (const item of value) {
+        result.push(RedstoneProvider.stripLeadingZerosFromValue(item));
+      }
+
+      return result as T;
+    }
+
+    if (value && typeof value === "object") {
+      const result: Record<string, unknown> = {};
+      for (const [key, val] of Object.entries(value)) {
+        result[key] = RedstoneProvider.stripLeadingZerosFromValue(val);
+      }
+
+      return result as T;
+    }
+
+    return value;
+  }
+
   async send<T>(method: string, params: unknown[], config: AxiosRequestConfig = {}): Promise<T> {
     const newId = this.id + (1 % Number.MAX_SAFE_INTEGER);
 
@@ -230,7 +256,13 @@ export class RedstoneProvider {
     };
     this.id = newId;
 
-    const response = await this.httpClient.post<EthereumRpcResponse<T>>(this.url, message, config);
+    const sanitizedMessage = RedstoneProvider.stripLeadingZerosFromValue(message);
+
+    const response = await this.httpClient.post<EthereumRpcResponse<T>>(
+      this.url,
+      sanitizedMessage,
+      config
+    );
 
     if (RedstoneCommon.isDefined(response.data.error)) {
       throw new Ethers5LikeError(
@@ -905,6 +937,14 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
   }
 }
 
+function stripLeadingZeros(hexString: string): string {
+  if (!hexString.startsWith("0x")) {
+    return hexString;
+  }
+
+  return hexValue(hexString);
+}
+
 async function resolveBlockTag(
   blockTag?: ethers.providers.BlockTag | Promise<ethers.providers.BlockTag>
 ) {
@@ -931,11 +971,14 @@ function bigNumberishToHex(bigNumberish: BigNumberish | undefined | null): strin
   if (!RedstoneCommon.isDefined(bigNumberish)) {
     return undefined;
   }
+  if (typeof bigNumberish === "string" && bigNumberish.startsWith("0x")) {
+    return bigNumberish;
+  }
+  if (typeof bigNumberish === "number") {
+    return "0x" + bigNumberish.toString(16);
+  }
 
-  // JSON-RPC QUANTITY values must be minimal hex with no leading zeros (e.g.
-  // "0x400", "0x0"); hexValue produces exactly that, unlike BigNumber.toHexString
-  // which zero-pads to an even length ("0x0400") and gets rejected by strict nodes.
-  return hexValue(BigNumber.from(bigNumberish));
+  return BigNumber.from(bigNumberish).toHexString();
 }
 
 function bytesLikeToHex(bytesLike: BytesLike | undefined): string | undefined {
