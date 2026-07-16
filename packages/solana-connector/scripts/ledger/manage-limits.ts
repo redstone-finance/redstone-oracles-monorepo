@@ -8,8 +8,8 @@ import { makeSolana } from "./ledger-utils";
 import { SquadsMultisig } from "./multi-sig-utils";
 
 const NTT_ID = "NTtmvKU9dYM3hvKJq4tnrAkSRCqb82R6uTGkLUqY66K";
-const INBOUD_LIMIT = 10000000001;
-const OUTBOUD_LIMIT = 10000000231;
+const INBOUND_LIMIT = 10000000001;
+const OUTBOUND_LIMIT = 10000000231;
 
 async function main(nttId: string, inboundLimit: number, outboundLimit: number) {
   const connection = makeConnection();
@@ -70,4 +70,4 @@ async function main(nttId: string, inboundLimit: number, outboundLimit: number) 
   console.log(await connection.sendTransaction(tx));
 }
 
-void main(NTT_ID, INBOUD_LIMIT, OUTBOUD_LIMIT);
+void main(NTT_ID, INBOUND_LIMIT, OUTBOUND_LIMIT);
