@@ -22,6 +22,7 @@ async function main() {
   const { client, jito } = new SolanaClientBuilder()
     .withCluster(readCluster())
     .withRpcUrls(rpcUrls)
+    .withRedStoneConnection()
     .buildWithJito();
 
   const paramsProvider = new ContractParamsProvider({

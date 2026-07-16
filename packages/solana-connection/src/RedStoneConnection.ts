@@ -1,16 +1,19 @@
 import { Collector, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import {
+  BlockhashWithExpiryBlockHeight,
   Commitment,
   Connection,
   ConnectionConfig,
   EpochInfo,
   GetAccountInfoConfig,
   GetEpochInfoConfig,
+  GetLatestBlockhashConfig,
   GetMultipleAccountsConfig,
   GetSlotConfig,
   GetTransactionConfig,
   GetVersionedTransactionConfig,
   PublicKey,
+  SignatureStatusConfig,
   TransactionResponse,
   VersionedTransactionResponse,
 } from "@solana/web3.js";
@@ -21,6 +24,11 @@ import {
   getCommitmentOrConfigKey,
 } from "./GetAccountsInfoRequestCollector";
 import {
+  getSignatureStatusConfigKey,
+  GetSignatureStatusesRequestCollector,
+  GetSignatureStatusesRequestCollectorDelegate,
+} from "./GetSignatureStatusesRequestCollector";
+import {
   getTransactionConfigKey,
   GetTransactionsRequestCollector,
   GetTransactionsRequestCollectorDelegate,
@@ -28,7 +36,10 @@ import {
 
 export class RedStoneConnection
   extends Connection
-  implements GetAccountsInfoRequestCollectorDelegate, GetTransactionsRequestCollectorDelegate
+  implements
+    GetAccountsInfoRequestCollectorDelegate,
+    GetTransactionsRequestCollectorDelegate,
+    GetSignatureStatusesRequestCollectorDelegate
 {
   private static instances: { [url: string]: RedStoneConnection | undefined } = {};
 
@@ -41,8 +52,13 @@ export class RedStoneConnection
     getTransactionConfigKey,
     this.createTransactionsCollector.bind(this)
   );
+  private readonly getSignatureStatusesRequestCollectors = new Collector.CollectorRegistry(
+    getSignatureStatusConfigKey,
+    this.createSignatureStatusesCollector.bind(this)
+  );
   private getEpochInfoPromise?: Promise<EpochInfo>;
   private getSlotPromise?: Promise<number>;
+  private getLatestBlockhashPromise?: Promise<BlockhashWithExpiryBlockHeight>;
 
   static instanceForUrl(url: string, commitmentOrConfig?: Commitment | ConnectionConfig) {
     return (RedStoneConnection.instances[url] ??= new RedStoneConnection(url, commitmentOrConfig));
@@ -131,6 +147,24 @@ export class RedStoneConnection
     }
   }
 
+  override async getLatestBlockhash(commitmentOrConfig?: Commitment | GetLatestBlockhashConfig) {
+    if (commitmentOrConfig) {
+      return await super.getLatestBlockhash(commitmentOrConfig);
+    }
+
+    this.getLatestBlockhashPromise ??= super.getLatestBlockhash(commitmentOrConfig);
+
+    try {
+      return await this.getLatestBlockhashPromise;
+    } finally {
+      this.getLatestBlockhashPromise = undefined;
+    }
+  }
+
+  override async getSignatureStatus(signature: string, config?: SignatureStatusConfig) {
+    return await this.getSignatureStatusesRequestCollectors.get(config).collect(signature);
+  }
+
   private createCollector(commitmentOrConfig?: CollectableCommitmentOrConfig) {
     const collector = new GetAccountsInfoRequestCollector(commitmentOrConfig);
     collector.delegate = new WeakRef(this);
@@ -140,6 +174,13 @@ export class RedStoneConnection
 
   private createTransactionsCollector(config: GetVersionedTransactionConfig) {
     const collector = new GetTransactionsRequestCollector(config);
+    collector.delegate = new WeakRef(this);
+
+    return collector;
+  }
+
+  private createSignatureStatusesCollector(config?: SignatureStatusConfig) {
+    const collector = new GetSignatureStatusesRequestCollector(config);
     collector.delegate = new WeakRef(this);
 
     return collector;
@@ -174,5 +215,12 @@ export class RedStoneConnection
   ) {
     // eslint-disable-next-line @typescript-eslint/no-deprecated -- versioned config picks the non-deprecated overload at runtime
     return super.getTransaction(signature, config);
+  }
+
+  getSignatureStatusesRequestCollectorGetSignatureStatuses(
+    signatures: string[],
+    config?: SignatureStatusConfig
+  ) {
+    return super.getSignatureStatuses(signatures, config);
   }
 }

@@ -1,9 +1,7 @@
 import type { CoreClient, SuiClientTypes } from "@mysten/sui/client";
 import { Collector } from "@redstone-finance/utils";
 
-export type GetObjectsCollectorResult = NonNullable<
-  Awaited<ReturnType<CoreClient["getObjects"]>>["objects"]
->[number];
+export type GetObjectsCollectorResult = SuiClientTypes.Object | Error;
 
 const SUI_MULTI_GET_OBJECTS_MAX = 50;
 const DEFAULT_COLLECTING_INTERVAL_MS = 100;

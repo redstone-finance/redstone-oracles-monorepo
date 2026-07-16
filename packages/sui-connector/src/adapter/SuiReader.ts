@@ -1,3 +1,4 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import type { SuiClient } from "../client/SuiClient";
 
 const LIMIT = 50;
@@ -9,8 +10,8 @@ export class SuiReader {
     return await this.client.getObject(input.objectId);
   }
 
-  async fetchAllDynamicFieldContents(parentId: string) {
-    const results = [];
+  async fetchAllDynamicFieldObjects(parentId: string) {
+    const fieldIds = [];
     let cursor: string | undefined;
 
     do {
@@ -19,15 +20,19 @@ export class SuiReader {
         limit: LIMIT,
         cursor,
       });
-
-      const pageValues = await Promise.all(
-        page.dynamicFields.map((field) => this.client.getDynamicFieldValue(parentId, field.name))
+      fieldIds.push(
+        ...page.dynamicFields.map(dynamicFieldObjectId).filter(RedstoneCommon.isDefined)
       );
-      results.push(...pageValues);
 
       cursor = page.hasNextPage ? (page.cursor ?? undefined) : undefined;
     } while (cursor);
 
-    return results;
+    return await this.client.getObjects(fieldIds);
   }
+}
+
+function dynamicFieldObjectId(field: { fieldId: string }) {
+  const { fieldId, objectId } = field as { fieldId?: string; objectId?: string };
+
+  return fieldId ?? objectId;
 }
