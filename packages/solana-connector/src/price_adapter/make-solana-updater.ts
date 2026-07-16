@@ -1,8 +1,8 @@
 import { FallbackMultiTxDeliveryMan } from "@redstone-finance/multichain-kit";
 import { Keypair } from "@solana/web3.js";
 import { AnchorReadonlyProvider } from "../client/AnchorReadonlyProvider";
-import { JitoBundleClient } from "../client/JitoBundleClient";
-import { JitoBundleSender } from "../client/JitoBundleSender";
+import { JitoBundleClient } from "../client/jito/JitoBundleClient";
+import { JitoBundleSender } from "../client/jito/JitoBundleSender";
 import { RpcSender } from "../client/RpcSender";
 import { SolanaClient } from "../client/SolanaClient";
 import { SolanaContractUpdater } from "../client/SolanaContractUpdater";
