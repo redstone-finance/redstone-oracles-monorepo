@@ -9407,6 +9407,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-all-relayers-manifests@workspace:packages/lambda/lambda-all-relayers-manifests"
   dependencies:
+    "@aws-sdk/client-s3": "npm:^3.696.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
