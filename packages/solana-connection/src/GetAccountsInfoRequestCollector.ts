@@ -46,14 +46,14 @@ export class GetAccountsInfoRequestCollector extends Collector.RequestCollector<
       throw new Error("Connection not set - delegate is empty");
     }
 
-    try {
-      return await connection.getAccountsInfoRequestCollectorGetMultipleAccountsInfo(
-        publicKeys,
-        this.commitmentOrConfig
-      );
-    } finally {
-      connection.getAccountsInfoRequestCollectorDispose?.(this.commitmentOrConfig);
-    }
+    return await connection.getAccountsInfoRequestCollectorGetMultipleAccountsInfo(
+      publicKeys,
+      this.commitmentOrConfig
+    );
+  }
+
+  protected override onIdle() {
+    this.delegate?.deref()?.getAccountsInfoRequestCollectorDispose?.(this.commitmentOrConfig);
   }
 }
 
