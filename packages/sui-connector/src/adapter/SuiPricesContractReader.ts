@@ -2,7 +2,12 @@ import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { SuiClient } from "../client/SuiClient";
 import { SuiReader } from "./SuiReader";
-import { PriceAdapterDataContent, PriceAdapterDataJsonContent, PriceDataBcs } from "./types";
+import {
+  PriceAdapterDataContent,
+  PriceAdapterDataJsonContent,
+  PriceDataFieldBcs,
+  PriceDataFieldJsonContent,
+} from "./types";
 
 export class SuiPricesContractReader {
   constructor(
@@ -60,8 +65,12 @@ export class SuiPricesContractReader {
   }
 
   private async getPriceDataContent(pricesTableId: string, _blockNumber?: number) {
-    const contents = await this.suiReader.fetchAllDynamicFieldContents(pricesTableId);
+    const objects = await this.suiReader.fetchAllDynamicFieldObjects(pricesTableId);
 
-    return contents.map((data) => PriceDataBcs.parse(data.dynamicField.value.bcs));
+    return objects.map((object) =>
+      RedstoneCommon.isDefined(object.content)
+        ? PriceDataFieldBcs.parse(object.content).value
+        : PriceDataFieldJsonContent.parse(object.json).value
+    );
   }
 }
