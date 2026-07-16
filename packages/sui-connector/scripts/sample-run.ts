@@ -1,6 +1,6 @@
 import { sampleRun } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { RedstoneCommon, RpcTelemetry } from "@redstone-finance/utils";
 import "dotenv/config";
 import {
   makeSuiKeypair,
@@ -110,7 +110,11 @@ async function main() {
     ignoreMissingFeed: true,
   });
 
-  const suiClient = new SuiClientBuilder().withSuiNetwork(network).withRpcUrls(rpcUrls).build();
+  const suiClient = new SuiClientBuilder()
+    .withSuiNetwork(network)
+    .withRpcUrls(rpcUrls)
+    .withTelemetry(RpcTelemetry.logRpcMetric)
+    .build();
 
   const adapter = new SuiWriteContractAdapter(suiClient, makeSuiKeypair(), readSuiConfig(network));
 

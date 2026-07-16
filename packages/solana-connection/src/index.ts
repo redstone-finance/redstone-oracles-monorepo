@@ -5,3 +5,4 @@ export * from "./network-ids";
 export * from "./RedStoneConnection";
 export * from "./SolanaApi";
 export * from "./SolanaConnectionBuilder";
+export * from "./SolanaRpcOpNormalizer";

@@ -1,17 +1,21 @@
 import {
+  API_TYPE_JITO,
   getSolanaChainId,
   getSolanaCluster,
+  SolanaApi,
   SolanaConnectionBuilder,
+  SolanaRpcOpNormalizer,
 } from "@redstone-finance/solana-connection";
 import { ChainTypeEnum, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { Cluster } from "@solana/web3.js";
-import { BundleClientBuilder, extractJitoHosts } from "./client/BundleClientBuilder";
+import { JitoBundleClientBuilder } from "./client/jito/JitoBundleClientBuilder";
 import { SolanaClient } from "./client/SolanaClient";
 
 const DEVNET_CLUSTER: Cluster = "devnet";
 
 export class SolanaClientBuilder extends MultiExecutor.ClientBuilder<SolanaClient> {
   protected override chainType = ChainTypeEnum.enum.solana;
+  protected override telemetryOpNormalizer = new SolanaRpcOpNormalizer();
   private shouldUseRedStoneConnection = false;
 
   withCluster(cluster: Cluster) {
@@ -22,6 +26,10 @@ export class SolanaClientBuilder extends MultiExecutor.ClientBuilder<SolanaClien
     this.shouldUseRedStoneConnection = enabled;
 
     return this;
+  }
+
+  protected override getEligibleUrls() {
+    return this.urls.filter((url) => SolanaApi.parseUrl(url).type !== API_TYPE_JITO);
   }
 
   build() {
@@ -36,7 +44,7 @@ export class SolanaClientBuilder extends MultiExecutor.ClientBuilder<SolanaClien
       .withRedStoneConnection(this.shouldUseRedStoneConnection)
       .build();
 
-    return MultiExecutor.createForSubInstances(
+    return this.makeMultiExecutorForSubInstances(
       connection,
       (conn) => new SolanaClient(conn),
       {
@@ -65,17 +73,20 @@ export class SolanaClientBuilder extends MultiExecutor.ClientBuilder<SolanaClien
     if (
       !RedstoneCommon.isDefined(this.chainId) ||
       getSolanaCluster(this.chainId) === DEVNET_CLUSTER ||
-      extractJitoHosts(this.urls).length === 0
+      JitoBundleClientBuilder.extractJitoHosts(this.urls).length === 0
     ) {
-      return { client, jito: undefined };
+      return { client };
     }
 
-    const jito = new BundleClientBuilder()
+    const jitoBuilder = new JitoBundleClientBuilder()
       .withChainId(this.chainId)
       .withRpcUrls(this.urls)
-      .withQuarantineEnabled(this.isQuarantineEnabled)
-      .build();
+      .withQuarantineEnabled(this.isQuarantineEnabled);
 
-    return { client, jito };
+    if (this.telemetryReporter) {
+      jitoBuilder.withTelemetry(this.telemetryReporter);
+    }
+
+    return { client, jito: jitoBuilder.build() };
   }
 }

@@ -102,7 +102,7 @@ export class MultiExecutorFactory<T extends object> {
         if (method.constructor.name === "AsyncFunction" || method.toString().includes("Promise")) {
           return async function (...args: unknown[]): Promise<unknown> {
             const functions = that.instances.map((instance, index) =>
-              MultiExecutorFactory.makeFnBox(method.name, that.config, index, instance, key, args)
+              MultiExecutorFactory.makeFnBox(String(key), that.config, index, instance, key, args)
             );
 
             return await that.performExecuting(key, functions);

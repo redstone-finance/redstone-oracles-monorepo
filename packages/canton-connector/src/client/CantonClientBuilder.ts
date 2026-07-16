@@ -9,6 +9,7 @@ import {
   TokenProvider,
 } from "./CantonApi";
 import { CantonClient, JsonCantonApi } from "./CantonClient";
+import { CantonRpcOpNormalizer } from "./CantonRpcOpNormalizer";
 import { ScanCantonApi } from "./CantonScanApiClient";
 import { CantonTransferService } from "./CantonTransferService";
 import { CantonValidatorClient, ValidatorCantonApi } from "./CantonValidatorClient";
@@ -20,6 +21,7 @@ const ALL_EXECUTIONS_TIMEOUT_MS = 45_000;
 
 export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClient> {
   protected override chainType = ChainTypeEnum.enum.canton;
+  protected override telemetryOpNormalizer = new CantonRpcOpNormalizer();
   private tokenProviders: Record<string, TokenProvider | undefined> = {};
   private defaultClientId?: string;
   private walletClientId?: string;

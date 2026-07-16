@@ -4,11 +4,13 @@ import { getStellarChainId, NETWORK_NAMES, StellarNetwork } from "../stellar/net
 import { HorizonClient } from "./HorizonClient";
 import { StellarClient } from "./StellarClient";
 import { StellarMulticall } from "./StellarMulticall";
+import { StellarRpcOpNormalizer } from "./StellarRpcOpNormalizer";
 
 export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarClient> {
   private static instances: { [p: string]: StellarClient | undefined } = {};
 
   protected override chainType = ChainTypeEnum.enum.stellar;
+  protected override telemetryOpNormalizer = new StellarRpcOpNormalizer();
   private horizonUrl?: string;
   private isWithMulticall = false;
 

@@ -1,8 +1,8 @@
 import { utils } from "@coral-xyz/anchor";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { Keypair, VersionedTransaction } from "@solana/web3.js";
+import { SolanaTxSender } from "../SolanaTxSender";
 import { JitoBundleClient } from "./JitoBundleClient";
-import { SolanaTxSender } from "./SolanaTxSender";
 
 const MAX_FEEDS_PER_BUNDLE = 4;
 

@@ -7,9 +7,11 @@ import { GrpcSuiClient } from "./GrpcSuiClient";
 import { LegacySuiClient } from "./LegacySuiClient";
 import { API_TYPE_GRAPHQL, API_TYPE_GRPC, SuiApi } from "./SuiApi";
 import { SUB_INSTANCE_MODES, SuiClient } from "./SuiClient";
+import { SuiRpcOpNormalizer } from "./SuiRpcOpNormalizer";
 
 export class SuiClientBuilder extends MultiExecutor.ClientBuilder<SuiClient> {
   protected override chainType = ChainTypeEnum.enum.sui;
+  protected override telemetryOpNormalizer = new SuiRpcOpNormalizer();
 
   withSuiNetwork(network: SuiNetworkName) {
     return this.withChainId(getSuiChainId(network));

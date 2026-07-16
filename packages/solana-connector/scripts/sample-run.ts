@@ -1,6 +1,6 @@
 import { sampleRun } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { RedstoneCommon, RpcTelemetry } from "@redstone-finance/utils";
 import "dotenv/config";
 import { hexlify } from "ethers/lib/utils";
 import {
@@ -22,6 +22,7 @@ async function main() {
   const { client, jito } = new SolanaClientBuilder()
     .withCluster(readCluster())
     .withRpcUrls(rpcUrls)
+    .withTelemetry(RpcTelemetry.logRpcMetric)
     .withRedStoneConnection()
     .buildWithJito();
 
