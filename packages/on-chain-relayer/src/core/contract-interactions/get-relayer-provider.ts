@@ -1,5 +1,5 @@
 import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finance/chain-configs";
-import { getTelemetrySendService, TelemetryPoint } from "@redstone-finance/internal-utils";
+import { getRelayerMetricReporter } from "@redstone-finance/chain-orchestrator";
 import { MegaProviderBuilder, ProviderDecorators } from "@redstone-finance/rpc-providers";
 import { isEvmNetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
@@ -9,13 +9,10 @@ import { isRelayerTelemetryEnabled } from "../../config/relayer-telemetry";
 let cachedProvider: providers.Provider | undefined;
 
 const ACCEPTABLE_BLOCK_DIFF_IN_MS = 10_000;
-const electBlock = (blockNumbers: number[], _: number, chainId: number): number => {
+const makeElectBlock = (acceptableBlockDiff: number) => (blockNumbers: number[]) => {
   const sortedBlockNumber = [...blockNumbers].sort((a, b) => b - a);
   const firstBlockNumber = sortedBlockNumber.at(-1)!;
   const secondBlockNumber = sortedBlockNumber.at(-2);
-
-  const { avgBlockTimeMs } = getChainConfigByNetworkId(getLocalChainConfigs(), chainId);
-  const acceptableBlockDiff = Math.ceil(ACCEPTABLE_BLOCK_DIFF_IN_MS / avgBlockTimeMs);
 
   if (!secondBlockNumber) {
     return firstBlockNumber;
@@ -36,17 +33,8 @@ export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
     throw new Error(`Non-evm networkId ${networkId} passed to evm relayer provider`);
   }
 
-  const telemetrySendService = getTelemetrySendService(
-    relayerConfig.telemetryUrl,
-    relayerConfig.telemetryAuthorizationToken
-  );
-
-  const sendMetric = (metric: TelemetryPoint) => {
-    metric.tag("relayer-network-id", relayerConfig.networkId.toString());
-    metric.tag("relayer-adapter-address", relayerConfig.adapterContractAddress);
-    metric.tag("relayer-fallback-offset", relayerConfig.fallbackOffsetInMilliseconds.toString());
-    telemetrySendService.queueToSendMetric(metric);
-  };
+  const { avgBlockTimeMs } = getChainConfigByNetworkId(getLocalChainConfigs(), networkId);
+  const acceptableBlockDiff = Math.ceil(ACCEPTABLE_BLOCK_DIFF_IN_MS / avgBlockTimeMs);
 
   cachedProvider = new MegaProviderBuilder({
     rpcUrls,
@@ -57,7 +45,8 @@ export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
     blockNumberCacheOpts: { isCacheEnabled: false, ttl: 0 },
   })
     .addDecorator(
-      (factory) => ProviderDecorators.SendMetricDecorator(factory, sendMetric),
+      (factory) =>
+        ProviderDecorators.SendMetricDecorator(factory, getRelayerMetricReporter(relayerConfig)),
       isRelayerTelemetryEnabled(relayerConfig)
     )
     .agreement(
@@ -65,7 +54,7 @@ export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
         singleProviderOperationTimeout: relayerConfig.singleProviderOperationTimeout,
         allProvidersOperationTimeout: relayerConfig.allProvidersOperationTimeout,
         getBlockNumberTimeoutMS: relayerConfig.getBlockNumberTimeout,
-        electBlockFn: electBlock,
+        electBlockFn: makeElectBlock(acceptableBlockDiff),
         ignoreAgreementOnInsufficientResponses: true,
       },
       rpcUrls.length > 1

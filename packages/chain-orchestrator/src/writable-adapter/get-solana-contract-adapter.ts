@@ -8,6 +8,7 @@ import {
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 import { PartialRelayerConfig } from "./partial-relayer-config";
+import { getRelayerRpcMetricReporter } from "./rpc-metric-reporter";
 
 export const getSolanaContractAdapter = (relayerConfig: PartialRelayerConfig) => {
   const {
@@ -44,6 +45,7 @@ export const getSolanaContractAdapter = (relayerConfig: PartialRelayerConfig) =>
     .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
     .withQuarantineEnabled()
+    .withTelemetry(getRelayerRpcMetricReporter(relayerConfig))
     .withRedStoneConnection()
     .buildWithJito();
   const updater = makeSolanaUpdater(

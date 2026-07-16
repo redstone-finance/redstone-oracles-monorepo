@@ -1,7 +1,7 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Keypair, PublicKey, VersionedTransaction } from "@solana/web3.js";
+import { SolanaClient } from "../SolanaClient";
 import { JitoBlockEngine } from "./JitoBlockEngine";
-import { SolanaClient } from "./SolanaClient";
 
 const JITO_TIP_LAMPORTS = 10_000;
 const JITO_TIP_JITTER_LAMPORTS = 1_000;

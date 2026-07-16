@@ -16,4 +16,6 @@ export type PartialRelayerConfig = {
   expectedTxDeliveryTimeInMS?: number;
   fallbackOffsetInMilliseconds?: number;
   percentileOfPriorityFee?: number | number[];
+  telemetryUrl?: string;
+  telemetryAuthorizationToken?: string;
 };

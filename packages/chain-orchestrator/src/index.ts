@@ -9,3 +9,4 @@ export * from "./provider/chain-provider";
 export * from "./provider/CurrencyTokenBalanceProvider";
 export * from "./provider/get-provider";
 export * from "./writable-adapter/get-writable-non-evm-contract-adapter";
+export * from "./writable-adapter/rpc-metric-reporter";

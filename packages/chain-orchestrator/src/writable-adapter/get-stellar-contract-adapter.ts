@@ -7,6 +7,7 @@ import {
 } from "@redstone-finance/stellar-connector";
 import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { PartialRelayerConfig } from "./partial-relayer-config";
+import { getRelayerRpcMetricReporter } from "./rpc-metric-reporter";
 
 const HORIZON_URL_MAINNET = "https://horizon.stellar.org";
 const HORIZON_URL_TESTNET = "https://horizon-testnet.stellar.org";
@@ -43,6 +44,7 @@ export const getStellarContractAdapter = (relayerConfig: PartialRelayerConfig) =
     .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
     .withQuarantineEnabled()
+    .withTelemetry(getRelayerRpcMetricReporter(relayerConfig))
     .withHorizonUrl(horizonUrl)
     .withMulticall()
     .build();

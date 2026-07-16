@@ -1,6 +1,6 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
-import { TelemetryPoint } from "@redstone-finance/internal-utils";
-import { sanitizeLogMessage } from "@redstone-finance/utils";
+import { createTelemetryPoint, TelemetryPoint } from "@redstone-finance/internal-utils";
+import { RpcTelemetry } from "@redstone-finance/utils";
 import { BigNumber, providers } from "ethers";
 import { Deferrable } from "ethers/lib/utils";
 import { getProviderNetworkInfo, ReportMetricFn } from "../common";
@@ -22,7 +22,13 @@ export function CallMetricDecorator(
         reportMetric,
         (duration, isFailure, result) => {
           isFailure = isFailure || result === "0x";
-          const point = createTelemetryPoint("call", chainId, url, isFailure, duration);
+          const point = createTelemetryPoint(
+            RpcTelemetry.RPC_OP.CALL,
+            chainId,
+            url,
+            isFailure,
+            duration
+          );
 
           return point;
         }
@@ -48,8 +54,14 @@ export function GetBlockNumberMetricDecorator(
         () => oldGetBlockNumber(),
         reportMetric,
         (duration, isFailure, result) => {
-          const point = createTelemetryPoint("blockNumber", chainId, url, isFailure, duration);
-          point.floatField("blockNumber", isFailure ? 0 : Number(result));
+          const point = createTelemetryPoint(
+            RpcTelemetry.RPC_OP.BLOCK_NUMBER,
+            chainId,
+            url,
+            isFailure,
+            duration
+          );
+          point.floatField(RpcTelemetry.RPC_OP.BLOCK_NUMBER, isFailure ? 0 : Number(result));
 
           return point;
         }
@@ -145,19 +157,4 @@ async function timeMethod<T>(
     const duration = performance.now() - start;
     reportMetric(pointCreator(duration, isFailure, result));
   }
-}
-
-function createTelemetryPoint(
-  op: string,
-  chainId: number,
-  url: string,
-  isFailure: boolean,
-  duration: number
-): TelemetryPoint {
-  return new TelemetryPoint("rpc_provider")
-    .tag("op", op)
-    .tag("chainId", chainId.toString())
-    .tag("url", sanitizeLogMessage(url))
-    .tag("isFailure", isFailure.toString())
-    .floatField("duration", duration);
 }

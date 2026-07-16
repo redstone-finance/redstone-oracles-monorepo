@@ -5,6 +5,7 @@ import {
   SuiWriteContractAdapter,
 } from "@redstone-finance/sui-connector";
 import { PartialRelayerConfig } from "./partial-relayer-config";
+import { getRelayerRpcMetricReporter } from "./rpc-metric-reporter";
 
 export const getSuiContractAdapter = (relayerConfig: PartialRelayerConfig) => {
   const {
@@ -26,6 +27,7 @@ export const getSuiContractAdapter = (relayerConfig: PartialRelayerConfig) => {
     .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
     .withQuarantineEnabled()
+    .withTelemetry(getRelayerRpcMetricReporter(relayerConfig))
     .build();
 
   const config = makeSuiConfig({

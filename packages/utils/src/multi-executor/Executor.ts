@@ -26,25 +26,28 @@ export abstract class Executor<R> {
       throw new Error(`${prefix} tried to execute quarantined function... ${suffix}`);
     }
 
+    const start = performance.now();
     try {
       const result = await timeoutOrResult(func.fn(), timeoutMs, "timed out");
-      logger.trace(`${message("returns")}: ${stringify(result)}${suffix}`);
-      func.delegate?.didSucceed?.(func, result);
+      const durationMs = performance.now() - start;
+      logger.trace(`${message("returns", durationMs)}: ${stringify(result)}${suffix}`);
+      func.delegate?.didSucceed?.(func, result, durationMs);
 
       return result;
     } catch (error) {
-      logger.warn(`${message("failed")}: ${stringifyError(error)}${suffix}`, error);
-      func.delegate?.didFail?.(func, error);
+      const durationMs = performance.now() - start;
+      logger.warn(`${message("failed", durationMs)}: ${stringifyError(error)}${suffix}`, error);
+      func.delegate?.didFail?.(func, error, durationMs);
 
       throw error;
     }
   }
 
   private static makeLogData<R>(func: FnBox<R>) {
-    const date = Date.now();
     const prefix = `[${func.name}] Promise #${func.index}`;
-    const message = (result: string) => `${prefix} ${result} in ${Date.now() - date} [ms]`;
     const suffix = func.description ? ` (${func.description})` : "";
+    const message = (result: string, durationMs: number) =>
+      `${prefix} ${result} in ${durationMs.toFixed(1)} [ms]`;
 
     return { prefix, message, suffix };
   }

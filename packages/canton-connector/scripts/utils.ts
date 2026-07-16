@@ -1,5 +1,5 @@
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { RedstoneCommon, RpcTelemetry } from "@redstone-finance/utils";
 import "dotenv/config";
 import { execSync } from "node:child_process";
 import { z } from "zod";
@@ -89,6 +89,7 @@ export function makeDefaultClientWithValidator(
     .withDefaultAuth(keycloakOptions)
     .withRpcUrls(readRpcUrls())
     .withQuarantineEnabled()
+    .withTelemetry(RpcTelemetry.logRpcMetric)
     .withTransferService();
 
   const validatorClient = builder.buildValidatorClient();

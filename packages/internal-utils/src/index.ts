@@ -26,6 +26,7 @@ export * from "./monorepo-fetcher";
 export * from "./outlier-detection";
 export * from "./pager-duty";
 export * from "./resolve-manifest-with-expiration-updates";
+export * from "./rpc-telemetry-point";
 export * from "./SerializerDeserializer";
 export * from "./signer-addresses-fetcher";
 export * from "./TelemetrySendService";

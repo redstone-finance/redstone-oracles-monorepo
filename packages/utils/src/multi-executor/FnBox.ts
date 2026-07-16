@@ -9,7 +9,7 @@ export type FnBox<R> = {
 };
 
 export interface FnDelegate {
-  didFail?: <R>(fnBox: FnBox<R>, error: unknown) => void;
-  didSucceed?: <R>(fnBox: FnBox<R>, result: R) => void;
+  didFail?: <R>(fnBox: FnBox<R>, error: unknown, durationMs: number) => void;
+  didSucceed?: <R>(fnBox: FnBox<R>, result: R, durationMs: number) => void;
   isQuarantined?: <R>(fnBox: FnBox<R>) => boolean;
 }

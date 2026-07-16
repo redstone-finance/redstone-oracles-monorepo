@@ -8,6 +8,7 @@ import {
 } from "@redstone-finance/canton-connector";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { PartialRelayerConfig } from "./partial-relayer-config";
+import { getRelayerRpcMetricReporter } from "./rpc-metric-reporter";
 
 export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) => {
   const {
@@ -27,6 +28,7 @@ export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) =>
     .withNetworkId(networkId)
     .withDefaultAuth(privateKey)
     .withQuarantineEnabled()
+    .withTelemetry(getRelayerRpcMetricReporter(relayerConfig))
     .build();
 
   const { viewerPartyId, updaterPartyId } = readCantonPartyIds();
