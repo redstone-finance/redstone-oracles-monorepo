@@ -1411,6 +1411,40 @@
         "rwa"
       ]
     },
+    "USA100_D_RATE.Y": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "ratio",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 600000
+        }
+      }
+    },
+    "USA500_D_RATE.Y": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "ratio",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 600000
+        }
+      }
+    },
     "USA100.T": {
       "source": [],
       "priceAggregator": "redstoneX",
@@ -4120,6 +4154,38 @@
         "s3"
       ],
       "denomination": "JPY",
+      "rateFeed": false
+    },
+    "ORACLE_xyz:XYZ100": {
+      "source": [
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-xyz": 10,
+        "ws-hydromancer-perps-xyz": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_xyz:SP500": {
+      "source": [
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-xyz": 10,
+        "ws-hydromancer-perps-xyz": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
       "rateFeed": false
     },
     "JP225_INDEX.BE": {
