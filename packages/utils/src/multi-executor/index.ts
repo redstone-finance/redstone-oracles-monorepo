@@ -1,6 +1,7 @@
 export * from "./AgreementExecutor";
 export * from "./CeilMedianConsensusExecutor";
 export * from "./ClientBuilder";
+export * from "./CompositeFnDelegate";
 export * from "./config";
 export * from "./ConsensusExecutor";
 export * from "./Executor";

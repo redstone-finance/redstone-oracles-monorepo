@@ -4,9 +4,11 @@ import { connectToCluster } from "./cluster";
 import { getSolanaChainId, getSolanaCluster } from "./network-ids";
 import { RedStoneConnection } from "./RedStoneConnection";
 import { API_TYPE_JITO, SolanaApi } from "./SolanaApi";
+import { SolanaRpcOpNormalizer } from "./SolanaRpcOpNormalizer";
 
 export class SolanaConnectionBuilder extends MultiExecutor.ClientBuilder<Connection> {
   protected override chainType = ChainTypeEnum.enum.solana;
+  protected override telemetryOpNormalizer = new SolanaRpcOpNormalizer();
   private shouldUseRedStoneConnection = false;
 
   withCluster(cluster: Cluster) {

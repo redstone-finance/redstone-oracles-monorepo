@@ -1,5 +1,6 @@
 import { sampleRun } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { RpcTelemetry } from "@redstone-finance/utils";
 import {
   makeKeypair,
   PriceFeedStellarContractAdapter,
@@ -20,6 +21,7 @@ async function main() {
     .withStellarNetwork(network)
     .withRpcUrls(await getRpcUrls(network))
     .withMulticall()
+    .withTelemetry(RpcTelemetry.logRpcMetric)
     .build();
   const adapter = new StellarWriteContractAdapter(client, adapterId, keypair);
 
