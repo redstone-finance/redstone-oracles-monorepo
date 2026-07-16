@@ -59,19 +59,31 @@ export function makePartyId(partyName: string) {
 }
 
 export function makeDefaultClient() {
+  return makeDefaultClientWithValidator(false, makeKeycloakParams()).client;
+}
+
+export function makeDefaultScriptClient() {
   return makeDefaultClientWithValidator().client;
 }
 
-export function makeDefaultClientWithValidator(mustValidatorClientBeDefined: true): {
+export function makeDefaultClientWithValidator(
+  mustValidatorClientBeDefined: true,
+  keycloakOptions?: KeycloakTokenProviderOptions | string
+): {
   client: CantonClient;
   validatorClient: CantonValidatorClient;
 };
-export function makeDefaultClientWithValidator(mustValidatorClientBeDefined?: false): {
+export function makeDefaultClientWithValidator(
+  mustValidatorClientBeDefined?: false,
+  keycloakOptions?: KeycloakTokenProviderOptions | string
+): {
   client: CantonClient;
   validatorClient?: CantonValidatorClient;
 };
-export function makeDefaultClientWithValidator(mustValidatorClientBeDefined = false) {
-  const keycloakOptions = makeScriptKeycloakOptions();
+export function makeDefaultClientWithValidator(
+  mustValidatorClientBeDefined = false,
+  keycloakOptions: KeycloakTokenProviderOptions | string = makeScriptKeycloakOptions()
+) {
   const builder = new CantonClientBuilder()
     .withChainId(networkToChainId(readNetwork()))
     .withDefaultAuth(keycloakOptions)

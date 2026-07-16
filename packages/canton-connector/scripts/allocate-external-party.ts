@@ -2,7 +2,7 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import { createPublicKey, sign } from "node:crypto";
 import { z } from "zod";
 import { makeEd25519PrivateKey } from "../src/utils/ed25519";
-import { makeDefaultClient, readZrodelkoPrivateKeyHex } from "./utils";
+import { makeDefaultScriptClient, readZrodelkoPrivateKeyHex } from "./utils";
 
 const PUBLIC_KEY_FORMAT = "CRYPTO_KEY_FORMAT_DER_X509_SUBJECT_PUBLIC_KEY_INFO";
 const PUBLIC_KEY_SPEC = "SIGNING_KEY_SPEC_EC_CURVE25519";
@@ -10,7 +10,7 @@ const SIGNATURE_FORMAT = "SIGNATURE_FORMAT_CONCAT";
 const SIGNING_ALGORITHM = "SIGNING_ALGORITHM_SPEC_ED25519";
 
 async function main() {
-  const client = makeDefaultClient();
+  const client = makeDefaultScriptClient();
   const partyHint = RedstoneCommon.getFromEnv("PARTY_HINT", z.string().default("zrodelko"));
 
   const [privateKeyHex, synchronizer] = await Promise.all([

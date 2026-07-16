@@ -993,8 +993,7 @@
       "publicRpcUrls": [
         "https://fullnode.testnet.sui.io:443#type=grpc",
         "https://graphql.testnet.sui.io/graphql#type=graphql",
-        "https://sui-testnet.gateway.tatum.io/",
-        "https://sui-testnet.api.onfinality.io/public"
+        "https://sui-testnet.gateway.tatum.io/"
       ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
