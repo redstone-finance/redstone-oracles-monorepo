@@ -146,6 +146,13 @@
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "SECZ_EOD": {
+      "priceFeedAddress": "DjDd8qqL2FPFsiQyshnVL7SkSE9crq2xee4amBQmQbRB",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }

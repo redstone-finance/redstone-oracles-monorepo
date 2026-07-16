@@ -63,6 +63,20 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "BUIDL_FUNDAMENTAL": {
+      "priceFeedAddress": "0xBf3bA2b090188B40eF83145Be0e9F30C6ca63689",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "BUIDL_DAILY_INTEREST_ACCRUAL": {
+      "priceFeedAddress": "0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
