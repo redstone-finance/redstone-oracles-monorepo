@@ -71,7 +71,7 @@
     "@types/jest": "^30",
     "@types/node": "^24.12.0",
     "depcheck": "^1.4.7",
-    "esbuild": "^0.25.12",
+    "esbuild": "^0.28",
     "eslint": "^10.5.0",
     "javascript-obfuscator": "^4.1.0",
     "jest": "^30",
@@ -79,7 +79,7 @@
     "lerna": "^9",
     "lockfile-lint": "^4.14.1",
     "madge": "^8.0.0",
-    "markdownlint-cli2": "^0.18.1",
+    "markdownlint-cli2": "^0.23",
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.3.0",
     "prettier-plugin-solidity": "^2.1.0",
@@ -100,6 +100,8 @@
     "axios": "^1.15.2",
     "form-data@npm:4.0.0": "^4.0.6",
     "elliptic": "^6.6.1",
+    "js-yaml@npm:4.1.0": "^4.1.1",
+    "js-yaml@npm:4.1.1": "^4.1.1",
     "minimatch@npm:5.0.1": "^5",
     "minimatch@npm:9.0.3": "^9",
     "node-datachannel": "0.25.0",
@@ -121,6 +123,9 @@
       "built": true
     },
     "deno-bin": {
+      "built": true
+    },
+    "esbuild": {
       "built": true
     },
     "mongodb-memory-server": {
