@@ -1638,13 +1638,10 @@
     },
     "TON": {
       "source": [
-        "binance-usdc",
         "binance-usdt",
         "bitget-eur",
         "bitget-usdt",
         "bitmart-usdt",
-        "bitrue-usdc",
-        "bitrue-usdt",
         "bitstamp-usd",
         "bybit-usdc",
         "bybit-usdt",
@@ -3610,7 +3607,6 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
-        "bitrue-usdt",
         "bybit-usdt",
         "coinbase-usd",
         "gate-usdt",
@@ -9291,8 +9287,7 @@
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "uniswap-v3-ethereum-usdc-100",
-        "uniswap-v4-ethereum-usdc-9888"
+        "uniswap-v3-ethereum-usdc-100"
       ],
       "denomination": "USD",
       "rateFeed": false
