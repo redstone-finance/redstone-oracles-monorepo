@@ -7,7 +7,7 @@
 Major refactoring of reward system, interface segregation, and access control improvements.
 
 | Area | Change type |
-|------|------------|
+| ------ | ------------ |
 | Reward system | Extracted from PricePillFactory into dedicated RewardFactory |
 | Interfaces | New `IRedStoneRewardFactory`, viewer verification added across all interfaces |
 | Adapter | `IRedStoneCore` implemented, reward state management, admin choices |
@@ -20,7 +20,7 @@ Major refactoring of reward system, interface segregation, and access control im
 ## New files
 
 | File | Description |
-|------|-------------|
+| ------ | ------------- |
 | `interface/src/IRedStoneRewardFactory.daml` | New interface for batched reward creation with `CreateRewards` choice |
 | `reward_factory/src/RedStoneRewardFactory.daml` | Template implementing `IRedStoneRewardFactory` via `FeaturedAppRight` |
 | `reward_factory/src/RewardConfig.daml` | Reward weight calculation (`3/4` per pill) |
@@ -29,7 +29,7 @@ Major refactoring of reward system, interface segregation, and access control im
 ## Renamed files (adapter internal reorganization)
 
 | Old path | New path |
-|----------|----------|
+| ---------- | ---------- |
 | `adapter/src/Events.daml` | `adapter/src/Internal/Events.daml` |
 | `adapter/src/PillRecord.daml` | `adapter/src/Internal/PillRecord.daml` |
 | `adapter/src/ProcessPayload.daml` | `adapter/src/Internal/ProcessPayload.daml` |

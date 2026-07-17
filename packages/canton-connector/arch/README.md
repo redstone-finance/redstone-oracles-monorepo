@@ -173,7 +173,7 @@ New RewardState{accumulatedPillCount=0, lastCreateTimestamp}
 ## 6. Access control
 
 | Operation | Who can call | Verification |
-|-----------|--------------|--------------|
+| ----------- | -------------- | -------------- |
 | WritePrices | updaters | `iRedStoneAdapter_VerifyUpdater` |
 | WritePricesConsuming | updaters | `caller elem updaters` (double) |
 | ReadPrices / ReadPriceData | viewers + updaters | `iRedStoneAdapter_VerifyViewer` |
@@ -192,7 +192,7 @@ New RewardState{accumulatedPillCount=0, lastCreateTimestamp}
 ### 6.1 Signatories
 
 | Template | Signatories | Consequences |
-|----------|-------------|--------------|
+| ---------- | ------------- | -------------- |
 | RedStoneAdapter | owner | Single-party control |
 | RedStoneCore | owner, beneficiary | Requires both to create |
 | RedStonePricePill | owner | Single-party control |
@@ -219,7 +219,7 @@ New RewardState{accumulatedPillCount=0, lastCreateTimestamp}
 ## 8. Configuration constants
 
 | Constant | Value | Location |
-|----------|-------|----------|
+| ---------- | ------- | ---------- |
 | signerCountThreshold | 3 | Config.daml |
 | maxAllowedPackageTimestampDelayMs | 180,000 (3 min) | RedStone.Config |
 | maxAllowedPackageTimestampAheadMs | 60,000 (1 min) | RedStone.Config |
