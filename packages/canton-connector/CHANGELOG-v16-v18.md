@@ -6,14 +6,14 @@
 
 Traffic-weighted reward calculation, write-prices context object, pill demotion timestamps, and assorted internal refactors.
 
-| Area | Change type |
-|------|------------|
-| WritePrices API | `additionalPillViewers` parameter wrapped into `WritePricesContext`, with new `paidTrafficCost` field |
-| Reward calculation | Pill-count weighting → traffic-cost weighting (`reward_factor` derived from `one_mb_price`) |
-| Reward state | `RewardState.accumulatedPillCount` → `RewardState.paidTrafficCost` |
-| Pill archival | Demotion-based: `PillRecord.demotedTimestamp` decides eligibility, not write timestamp |
-| Adapter | `WriteContext` carries `paidTrafficCost`; `iRedStoneAdapter_WritePricesImpl` takes `Optional WritePricesContext` |
-| Package version | v16 → v18 (single line for all packages) |
+| Area               | Change type                                                                                                      |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| WritePrices API    | `additionalPillViewers` parameter wrapped into `WritePricesContext`, with new `paidTrafficCost` field            |
+| Reward calculation | Pill-count weighting → traffic-cost weighting (`reward_factor` derived from `one_mb_price`)                      |
+| Reward state       | `RewardState.accumulatedPillCount` → `RewardState.paidTrafficCost`                                               |
+| Pill archival      | Demotion-based: `PillRecord.demotedTimestamp` decides eligibility, not write timestamp                           |
+| Adapter            | `WriteContext` carries `paidTrafficCost`; `iRedStoneAdapter_WritePricesImpl` takes `Optional WritePricesContext` |
+| Package version    | v16 → v18 (single line for all packages)                                                                         |
 
 > v17 was an internal WIP — packages briefly bumped to v17 across PRs #10610, #10753, #10776, #10886, #10913, #9991, #10894 before being consolidated into v18 here.
 
@@ -21,21 +21,21 @@ Traffic-weighted reward calculation, write-prices context object, pill demotion 
 
 ## New files
 
-| File                                                       | Description |
-|------------------------------------------------------------|-------------|
+| File                                                       | Description                                                                                                                                                   |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `interface/src/WritePricesContext.daml`                    | New `WritePricesContext` record bundling `additionalPillViewers : Optional [Party]` and `paidTrafficCost : Optional Int`; `empty_write_prices_context` helper |
-| `test/src/Helpers/Setup.daml`                              | Reusable `allocateTestParties` and `setUpAdapter` for new test suites |
-| `test/src/PartialNewData.daml`                             | Test for partial-new-data path (only some feeds new) |
-| `test/src/PillArchival.daml`                               | Test for demotion-based pill archival |
-| `test/src/RewardsBatching.daml`                            | Test for traffic-weighted reward batching across writes |
-| `scripts/buy-traffic.sh`                                   | Helper script for purchasing traffic on testnets |
-| `scripts/traffic.mk`                                       | Makefile fragment exposing `buy-traffic` and traffic-status targets |
-| `sdk-tests/src/RedStone/Tests/Suites/ConfigErrors.daml`    | New error-path suite for config validation |
-| `sdk-tests/src/RedStone/Tests/Suites/DerErrors.daml`       | DER decoding error cases |
-| `sdk-tests/src/RedStone/Tests/Suites/MatrixInput.daml`     | Matrix-input building tests (replaces inline cases) |
-| `sdk-tests/src/RedStone/Tests/Suites/ProcessorErrors.daml` | Processor error-path coverage |
-| `sdk-tests/src/RedStone/Tests/Suites/U256Errors.daml`      | U256 overflow / invalid-input cases |
-| `sdk-tests/src/RedStone/Tests/Suites/VerifyErrors.daml`    | Signature/timestamp verification error cases |
+| `test/src/Helpers/Setup.daml`                              | Reusable `allocateTestParties` and `setUpAdapter` for new test suites                                                                                         |
+| `test/src/PartialNewData.daml`                             | Test for partial-new-data path (only some feeds new)                                                                                                          |
+| `test/src/PillArchival.daml`                               | Test for demotion-based pill archival                                                                                                                         |
+| `test/src/RewardsBatching.daml`                            | Test for traffic-weighted reward batching across writes                                                                                                       |
+| `scripts/buy-traffic.sh`                                   | Helper script for purchasing traffic on testnets                                                                                                              |
+| `scripts/traffic.mk`                                       | Makefile fragment exposing `buy-traffic` and traffic-status targets                                                                                           |
+| `sdk-tests/src/RedStone/Tests/Suites/ConfigErrors.daml`    | New error-path suite for config validation                                                                                                                    |
+| `sdk-tests/src/RedStone/Tests/Suites/DerErrors.daml`       | DER decoding error cases                                                                                                                                      |
+| `sdk-tests/src/RedStone/Tests/Suites/MatrixInput.daml`     | Matrix-input building tests (replaces inline cases)                                                                                                           |
+| `sdk-tests/src/RedStone/Tests/Suites/ProcessorErrors.daml` | Processor error-path coverage                                                                                                                                 |
+| `sdk-tests/src/RedStone/Tests/Suites/U256Errors.daml`      | U256 overflow / invalid-input cases                                                                                                                           |
+| `sdk-tests/src/RedStone/Tests/Suites/VerifyErrors.daml`    | Signature/timestamp verification error cases                                                                                                                  |
 
 ---
 
@@ -295,7 +295,7 @@ Also: idiomatic cleanup `return` → `pure` across `iRedStoneAdapter_*Impl` bodi
    in (newest :: previous :: toKeep, toArchive)
 ```
 
-**Why the change**: previously a pill was archivable as soon as `pill_keep_ms` elapsed since its `writeTimestamp`. With infrequent updates, that meant a pill that became "old" (3rd-or-later in its feed list) but never had a successor could be archived prematurely. Now the clock starts when the pill is *demoted* (pushed beyond position #2 by a newer one) — `demotedTimestamp` is stamped on first demotion, then `pill_keep_ms` runs from there.
+**Why the change**: previously a pill was archivable as soon as `pill_keep_ms` elapsed since its `writeTimestamp`. With infrequent updates, that meant a pill that became "old" (3rd-or-later in its feed list) but never had a successor could be archived prematurely. Now the clock starts when the pill is _demoted_ (pushed beyond position #2 by a newer one) — `demotedTimestamp` is stamped on first demotion, then `pill_keep_ms` runs from there.
 
 ---
 
@@ -322,21 +322,21 @@ Across adapter and tests: `return x` → `pure x` (DAML's `return` is just `pure
 
 ## Package version changes
 
-| Package | Before | After |
-|---------|--------|-------|
-| `redstone-types` | v16-0.4.0 | **v18-0.4.0** |
-| `redstone-common` | v16-0.4.0 | **v18-0.4.0** |
-| `redstone-featured` | v16-0.4.0 | **v18-0.4.0** |
-| `redstone-price-pill` | v16-0.4.0 | **v18-0.4.0** |
-| `redstone-price-feed` | v16-0.4.0 | **v18-0.4.0** |
-| `redstone-sdk` | v16-0.4.2 | **v18-0.4.0** |
-| `redstone-sdk-tests` | v16-0.4.2 | **v18-0.4.0** |
-| `redstone-interface` | v17-0.4.0 (was v16) | **v18-0.4.0** |
-| `redstone-adapter` | v17-0.4.2 (was v16) | **v18-0.4.0** |
-| `redstone-core` | v17-0.4.1 (was v16) | **v18-0.4.0** |
-| `redstone-factory` | v17-0.4.0 (was v16) | **v18-0.4.0** |
+| Package                   | Before              | After         |
+| ------------------------- | ------------------- | ------------- |
+| `redstone-types`          | v16-0.4.0           | **v18-0.4.0** |
+| `redstone-common`         | v16-0.4.0           | **v18-0.4.0** |
+| `redstone-featured`       | v16-0.4.0           | **v18-0.4.0** |
+| `redstone-price-pill`     | v16-0.4.0           | **v18-0.4.0** |
+| `redstone-price-feed`     | v16-0.4.0           | **v18-0.4.0** |
+| `redstone-sdk`            | v16-0.4.2           | **v18-0.4.0** |
+| `redstone-sdk-tests`      | v16-0.4.2           | **v18-0.4.0** |
+| `redstone-interface`      | v17-0.4.0 (was v16) | **v18-0.4.0** |
+| `redstone-adapter`        | v17-0.4.2 (was v16) | **v18-0.4.0** |
+| `redstone-core`           | v17-0.4.1 (was v16) | **v18-0.4.0** |
+| `redstone-factory`        | v17-0.4.0 (was v16) | **v18-0.4.0** |
 | `redstone-reward-factory` | v17-0.4.6 (was v16) | **v18-0.4.0** |
-| `redstone-test` | v17-0.4.0 (was v16) | **v18-0.4.0** |
+| `redstone-test`           | v17-0.4.0 (was v16) | **v18-0.4.0** |
 
 All `daml.yaml` files now share `name: redstone-*-v18` and `version: 0.4.0`. All `data-dependencies` references updated. `Makefile`, `deploy.mk`, `test/src/Input.daml`, `scripts/sample-run.ts`, `scripts/core-client-sample.ts`, `tests/test-helpers.ts`, and `src/canton-defs.json` (devnet + localnet sections) updated to match.
 

@@ -1,18 +1,12 @@
-# *RedStone Oracles* Casper connector
+# _RedStone Oracles_ Casper connector
 
-## Stage 1 - in-depth analysis from the point of view of *RedStone Oracles* protocol
+## Stage 1 - in-depth analysis from the point of view of _RedStone Oracles_ protocol
 
 <!-- TOC -->
-- [*RedStone Oracles* Casper connector](#redstone-oracles-casper-connector)
-  - [Stage 1 - in-depth analysis from the point of view of *RedStone Oracles* protocol](#stage-1---in-depth-analysis-from-the-point-of-view-of-redstone-oracles-protocol)
-    - [Available data types and language features](#available-data-types-and-language-features)
-    - [Available cryptographic functions](#available-cryptographic-functions)
-    - [The gas cost structure](#the-gas-cost-structure)
-      - [The mainnet chainspec extract[^1]](#the-mainnet-chainspec-extract1)
-      - [Gas cost comparison](#gas-cost-comparison)
-    - [The best way of attaching *RedStone Oracles* payload](#the-best-way-of-attaching-redstone-oracles-payload)
-    - [Available timestamp details in the context of transaction](#available-timestamp-details-in-the-context-of-transaction)
-<!-- TOC -->
+
+- [_RedStone Oracles_ Casper connector](#redstone-oracles-casper-connector)
+  - [Stage 1 - in-depth analysis from the point of view of _RedStone Oracles_ protocol](#stage-1---in-depth-analysis-from-the-point-of-view-of-redstone-oracles-protocol) - [Available data types and language features](#available-data-types-and-language-features) - [Available cryptographic functions](#available-cryptographic-functions) - [The gas cost structure](#the-gas-cost-structure) - [The mainnet chainspec extract[^1]](#the-mainnet-chainspec-extract1) - [Gas cost comparison](#gas-cost-comparison) - [The best way of attaching _RedStone Oracles_ payload](#the-best-way-of-attaching-redstone-oracles-payload) - [Available timestamp details in the context of transaction](#available-timestamp-details-in-the-context-of-transaction)
+  <!-- TOC -->
 
 ### Available data types and language features
 
@@ -26,18 +20,18 @@ user-defined types.
 
 The list of types is:
 
-* Primitive types (Boolean, integer and float, Textual)
-* Sequence types (Tuple, Array, Slice)
-* User-defined types (Struct, Enum, Union)
-* Function types (Functions, Closures)
-* Pointer types (References, Raw pointers, Function pointers)
-* Trait types (Traits and Impls)
+- Primitive types (Boolean, integer and float, Textual)
+- Sequence types (Tuple, Array, Slice)
+- User-defined types (Struct, Enum, Union)
+- Function types (Functions, Closures)
+- Pointer types (References, Raw pointers, Function pointers)
+- Trait types (Traits and Impls)
 
 There are also two important crates that are dependencies for developing libraries/smart-contracts for the Casper
 network:
 
-* `casper-types` - types shared by many casper crates for use on the Casper network.
-* `casper-contracts` - a library for developing Casper network smart contracts.
+- `casper-types` - types shared by many casper crates for use on the Casper network.
+- `casper-contracts` - a library for developing Casper network smart contracts.
 
 The `casper-types` crate provides also implementations of the `U256` and `U128` types, which are composed of 4 and
 2 `u64` parts, respectively. These implementations ensure overflow-free computations on RedStone Oracles objects and
@@ -57,9 +51,9 @@ Keccak-based hash functions.
 
 The following crates have been checked and tested for recovering keys based on the secp256k1 algorithm:
 
-* `secp256k1` - a wrapper around `libsecp256k1`, a C-language library, implementing various cryptographic functions
+- `secp256k1` - a wrapper around `libsecp256k1`, a C-language library, implementing various cryptographic functions
   using the SECG curve secp256k1.
-* `k256` - a secp256k1 elliptic curve library written in pure Rust with support for ECDSA
+- `k256` - a secp256k1 elliptic curve library written in pure Rust with support for ECDSA
   signing/verification/public-key recovery.
 
 However, although `k256` is used as a dependency for the `casper-types` crate, its runtime cost is higher than that
@@ -76,13 +70,12 @@ The current price of **1 CSPR**, as of May 2022 to January 2024, is estimated to
 
 #### The mainnet chainspec extract[^1]
 
-
 | Operations       | cost<br/>(in motes) | comment / examples                                      |
 | :--------------- | :-----------------: | ------------------------------------------------------- |
 | Wasm             |      200 - 400      | bit, add, mul, div, const, conversion                   |
 | Control flow     |         440         | block, loop, if, elese, end, return, drop               |
-| Branch           |       35,000       | loop until, loop if, br_table (per label)               |
-| Contract         |   4,500 - 23,000   | new_uref, call_contract, add/remove associated key, ret |
+| Branch           |       35,000        | loop until, loop if, br_table (per label)               |
+| Contract         |   4,500 - 23,000    | new_uref, call_contract, add/remove associated key, ret |
 | Environment      |      200 - 760      | get_blocktime, get_named_arg, get_caller, is_valid_uref |
 | Grow memory cost |       240,000       | per page (64 kB)                                        |
 
@@ -90,7 +83,6 @@ There is also gas fee charged per byte stored in global state: 630,000 motes **p
 $0.03)**
 
 #### Gas cost comparison
-
 
 | Operations                               | using`secp256k1` lib | using`k256` lib    |
 | ---------------------------------------- | -------------------- | ------------------ |
@@ -100,12 +92,12 @@ $0.03)**
 | Updating contract: 2 feeds x 3 signers   | 46.2 CSPR =~ $2.31   | 90.5 CSPR =~ $4.53 |
 
 As the numbers indicate, the most heavy operation is the recovery of secp256k1 curve keys, given their signature and
-data. The total cost is nearly linear and depends on the number of packages included in the *RedStone Oracles* payload,
+data. The total cost is nearly linear and depends on the number of packages included in the _RedStone Oracles_ payload,
 amounting to approximately **7.5 CSPR (~$0.4) per package**, when using `secp256k1` library, which is the cheaper one.
 
-### The best way of attaching *RedStone Oracles* payload
+### The best way of attaching _RedStone Oracles_ payload
 
-The *RedStone Oracles* payload is defined as a list of bytes, and it can be transferred to the chain as is.
+The _RedStone Oracles_ payload is defined as a list of bytes, and it can be transferred to the chain as is.
 However, there are some limitations regarding data length when using the CLI or the `casper-js-sdk` TypeScript library.
 The total length of serialized session code runtime arguments is limited to 1024 bytes.
 In practice, since other parameters also need to be passed, this means that the maximum number of data packages

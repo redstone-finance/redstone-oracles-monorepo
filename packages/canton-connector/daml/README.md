@@ -188,7 +188,7 @@ and contains a snapshot of price data for a single feed.
 Each `RedStonePricePill` contract contains:
 
 | Field | Type | Description |
-|-------|------|-------------|
+| ------- | ------ | ------------- |
 | `value` | `Numeric 8` | The aggregated price value |
 | `timestamp` | `Int` | Data timestamp (ms since epoch) |
 | `writeTimestamp` | `Int` | When the pill was written to the ledger (ms) |
