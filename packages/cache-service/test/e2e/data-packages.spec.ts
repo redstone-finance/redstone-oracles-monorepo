@@ -1205,4 +1205,36 @@ describe("Data packages (e2e)", () => {
       });
     });
   });
+
+  describe("feedsExcludedFromDb", () => {
+    afterEach(() => {
+      config.feedsExcludedFromDb = [];
+    });
+
+    it("bulk endpoint should drop feeds matching a `*XYZ` (endsWith) pattern and persist the rest", async () => {
+      config.feedsExcludedFromDb = ["*ETH"];
+
+      const excludedPackage = produceMockDataPackage(
+        [new DataPoint("TEST_ETH", Buffer.from("1000", "utf-8"))],
+        "TEST_ETH"
+      );
+      const keptPackage = produceMockDataPackage(
+        [new DataPoint("TEST_TOKEN", Buffer.from("2000", "utf-8"))],
+        "TEST_TOKEN"
+      );
+      const dataPackagesToSend = [excludedPackage, keptPackage];
+      const requestSignature = signByMockSigner(dataPackagesToSend);
+
+      await postBulk(
+        DO_NOT_COMPRESS_TYPE,
+        "/v2",
+        httpServer,
+        { requestSignature, dataPackages: dataPackagesToSend },
+        201
+      );
+
+      expect(await DataPackage.countDocuments({ dataPackageId: "TEST_ETH" })).toBe(0);
+      expect(await DataPackage.countDocuments({ dataPackageId: "TEST_TOKEN" })).toBe(1);
+    });
+  });
 });

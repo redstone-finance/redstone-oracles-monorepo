@@ -27,6 +27,7 @@ import {
   DataPackageDocumentAggregated,
   DataPackageDocumentMostRecentAggregated,
 } from "./data-packages.model";
+import { isFeedExcluded } from "./feed-exclusion";
 
 @Injectable()
 export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
@@ -474,13 +475,18 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
 
     const dataServiceId = getDataServiceIdForSigner(oracleRegistryState, signerAddress);
 
-    const dataPackagesForSaving = receivedDataPackages.map((receivedDataPackage) =>
-      DataPackagesService.prepareDataPackageForSaving(
-        receivedDataPackage,
-        signerAddress,
-        dataServiceId
+    const dataPackagesForSaving = receivedDataPackages
+      .filter(
+        (receivedDataPackage) =>
+          !isFeedExcluded(receivedDataPackage.dataPackageId, config.feedsExcludedFromDb)
       )
-    );
+      .map((receivedDataPackage) =>
+        DataPackagesService.prepareDataPackageForSaving(
+          receivedDataPackage,
+          signerAddress,
+          dataServiceId
+        )
+      );
 
     return dataPackagesForSaving;
   }

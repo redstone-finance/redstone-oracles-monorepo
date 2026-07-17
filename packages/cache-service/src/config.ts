@@ -21,6 +21,8 @@ interface CacheServiceConfig {
   influxUrl?: string;
   influxToken?: string;
   env: string;
+  // feed ids (dataPackageId) excluded from persisting; supports `*XYZ` (endsWith) and `XYZ*` (startsWith)
+  feedsExcludedFromDb: string[];
 }
 
 const DEFAULT_APP_PORT = 3000;
@@ -78,6 +80,10 @@ const config: CacheServiceConfig = {
   influxUrl: RedstoneCommon.getFromEnv("INFLUX_BROADCASTER_URL", z.string().optional()),
   influxToken: RedstoneCommon.getFromEnv("INFLUX_BROADCASTER_AUTH_TOKEN", z.string().optional()),
   env: RedstoneCommon.getFromEnv("ENV", z.string().optional().default("dev")),
+  feedsExcludedFromDb: RedstoneCommon.getFromEnv(
+    "FEEDS_EXCLUDED_FROM_DB",
+    z.array(z.string()).default([])
+  ),
 };
 
 export default config;
