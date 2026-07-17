@@ -16,7 +16,6 @@ import {
   RedstoneCommon,
 } from "@redstone-finance/utils";
 import { expect } from "chai";
-import { describe, test } from "mocha";
 import { z } from "zod";
 
 const INTEGRATIONS_NOT_FOR_TESTING = [
@@ -67,7 +66,7 @@ if (process.env.RUN_NONDETERMINISTIC_TESTS) {
     for (const [name, manifest] of enabled) {
       const networkId = manifest.chain.id;
 
-      test(name, async () => {
+      it(name, async () => {
         const priceFeedCreator = await getPriceFeedCreatorFor(networkId);
         const { manifestFeedsWithAddresses } = getRelayerManifestFeedsWithAddresses(manifest);
         const results = await Promise.all(

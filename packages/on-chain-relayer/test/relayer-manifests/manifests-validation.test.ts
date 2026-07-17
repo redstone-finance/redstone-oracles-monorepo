@@ -4,7 +4,6 @@ import {
   OnChainRelayerManifestSchemaStrict,
 } from "@redstone-finance/on-chain-relayer-common";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { describe, test } from "mocha";
 
 const RELAYERS_DATA = {
   classic: {
@@ -39,7 +38,7 @@ function tryParseManifests(type: keyof typeof RELAYERS_DATA) {
 
 describe("Relayer Manifests Validation", () => {
   Object.keys(RELAYERS_DATA).forEach((type) => {
-    test(`Each ${type} relayer manifest should parse correctly`, () => {
+    it(`Each ${type} relayer manifest should parse correctly`, () => {
       tryParseManifests(type as keyof typeof RELAYERS_DATA);
     });
   });

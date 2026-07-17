@@ -1,10 +1,9 @@
 import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finance/chain-configs";
 import { ManifestReading } from "@redstone-finance/on-chain-relayer-common";
 import type { NetworkId } from "@redstone-finance/utils";
-import { describe, test } from "mocha";
 
 describe("Chain config presence", () => {
-  test("There should be a chain config for each chain used in relayer manifests", () => {
+  it("There should be a chain config for each chain used in relayer manifests", () => {
     const networkIds: Set<NetworkId> = new Set();
 
     const classicManifests = ManifestReading.readClassicManifests();
