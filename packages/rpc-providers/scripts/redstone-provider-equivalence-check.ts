@@ -10,7 +10,7 @@ import {
   RedstoneProvider,
 } from "../src/providers/RedstoneProvider";
 import { Counter } from "../typechain-types";
-import {HARDHAT_CHAIN_ID} from "../src";
+import { HARDHAT_CHAIN_ID } from "@redstone-finance/utils";
 
 // HOW TO RUN
 // npx hardhat node &

@@ -1,9 +1,5 @@
 import { AdapterType, UpdateTriggers } from "@redstone-finance/on-chain-relayer-common";
-import {
-  NewestBlockType,
-  RewardsPerBlockAggregationAlgorithm,
-} from "@redstone-finance/rpc-providers";
-import { NetworkId } from "@redstone-finance/utils";
+import { NetworkId, Tx } from "@redstone-finance/utils";
 
 export type RelayerConfig = OnChainRelayerEnv & ManifestConfig;
 
@@ -85,7 +81,7 @@ export type OnChainRelayerEnv = {
   percentileOfPriorityFee?: number | number[];
   isEIP1559V2Estimator?: boolean;
   numberOfBlocksForFeeHistory?: number;
-  newestBlockForFeeHistory?: NewestBlockType;
+  newestBlockForFeeHistory?: Tx.NewestBlockType;
   isPausedUntil?: Date;
   feedsSplit?: string[][];
   splitAllFeeds?: boolean;
@@ -99,7 +95,7 @@ export type OnChainRelayerEnv = {
   telemetryBatchSendingIntervalMs?: number;
   getSingleNonceTimeoutMs?: number;
   minAggregatedRewardsPerBlockForPercentile?: number;
-  rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm;
+  rewardsPerBlockAggregationAlgorithm: Tx.RewardsPerBlockAggregationAlgorithm;
   disableMultiPointPackages?: boolean;
   useGlobalDataPackagesResponseStorage?: boolean;
   dataPackagesResponseStorageLatestTtlMs?: number;

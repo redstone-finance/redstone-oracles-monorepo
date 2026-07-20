@@ -1,18 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/unbound-method */
 import { ErrorCode } from "@ethersproject/logger";
+import { Tx } from "@redstone-finance/utils";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { BigNumber, BytesLike, Transaction, ethers } from "ethers";
 import hardhat from "hardhat";
 import _ from "lodash";
 import Sinon from "sinon";
-import {
-  RewardsPerBlockAggregationAlgorithm,
-  TxDelivery,
-  TxDeliveryOpts,
-  convertToTxDeliveryCall,
-} from "../../src";
+import { TxDelivery, TxDeliveryOpts, convertToTxDeliveryCall } from "../../src";
 import { CHAIN_ID_TO_GAS_ORACLE } from "../../src/tx-delivery-man/CustomGasOracles";
 import { TxNonceCoordinator } from "../../src/tx-delivery-man/TxNonceCoordinator";
 import { Counter } from "../../typechain-types";
@@ -69,7 +65,7 @@ describe("TxDelivery", () => {
           multiplier: 1.125,
           gasLimitMultiplier: 1.1,
           percentileOfPriorityFee: 50, // Use single percentile so multiplier is applied from attempt 1
-          rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
+          rewardsPerBlockAggregationAlgorithm: Tx.RewardsPerBlockAggregationAlgorithm.Max,
           ...opts,
         },
         counter.signer,
@@ -98,7 +94,7 @@ describe("TxDelivery", () => {
           expectedDeliveryTimeMs: 20,
           gasLimit: 210000,
           percentileOfPriorityFee: 50, // Use single percentile so multiplier is applied from attempt 1
-          rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
+          rewardsPerBlockAggregationAlgorithm: Tx.RewardsPerBlockAggregationAlgorithm.Max,
         },
         counter.signer,
         provider,
@@ -126,7 +122,7 @@ describe("TxDelivery", () => {
           expectedDeliveryTimeMs: 20,
           gasLimit: 210000,
           percentileOfPriorityFee: 50, // Use single percentile so multiplier is applied from attempt 1
-          rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
+          rewardsPerBlockAggregationAlgorithm: Tx.RewardsPerBlockAggregationAlgorithm.Max,
         },
         counter.signer,
         provider,

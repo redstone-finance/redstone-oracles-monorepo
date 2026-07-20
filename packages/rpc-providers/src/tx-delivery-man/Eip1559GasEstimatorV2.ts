@@ -3,16 +3,11 @@ import {
   getChainConfigByNetworkId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
-import { MathUtils, RedstoneCommon } from "@redstone-finance/utils";
+import { MathUtils, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { getProviderNetworkId } from "../common";
 import { GasEstimator } from "./GasEstimator";
-import {
-  RewardsPerBlockAggregationAlgorithm,
-  unsafeBnToNumber,
-  type Eip1559Fee,
-  type TxDeliveryOptsValidated,
-} from "./common";
+import { unsafeBnToNumber, type Eip1559Fee, type TxDeliveryOptsValidated } from "./common";
 
 type FeeHistoryResponse = { reward: string[] };
 
@@ -139,9 +134,9 @@ export class Eip1559GasEstimatorV2 implements GasEstimator<Eip1559Fee> {
 
   private aggregateRewards(rewards: number[]): number {
     switch (this.opts.rewardsPerBlockAggregationAlgorithm) {
-      case RewardsPerBlockAggregationAlgorithm.Max:
+      case Tx.RewardsPerBlockAggregationAlgorithm.Max:
         return Math.max(...rewards);
-      case RewardsPerBlockAggregationAlgorithm.Median:
+      case Tx.RewardsPerBlockAggregationAlgorithm.Median:
         return Math.ceil(MathUtils.getMedian(rewards));
       default: {
         return RedstoneCommon.throwUnsupportedParamError(

@@ -31,6 +31,8 @@ export const NetworkIdSchema = z.union([
 export type NetworkId = z.infer<typeof NetworkIdSchema>;
 export type NonEvmNetworkId = Exclude<NetworkId, number>;
 
+export const HARDHAT_CHAIN_ID = 31337;
+
 export function isEvmNetworkId(networkId: NetworkId): networkId is number {
   return typeof networkId === "number";
 }

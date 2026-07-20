@@ -1,13 +1,9 @@
+import { Tx } from "@redstone-finance/utils";
 import { expect } from "chai";
 import { BigNumber } from "ethers";
 import hardhat from "hardhat";
 import Sinon from "sinon";
-import {
-  DEFAULT_TX_DELIVERY_OPTS,
-  RewardsPerBlockAggregationAlgorithm,
-  TxDeliveryOpts,
-  type Eip1559Fee,
-} from "../../src";
+import { DEFAULT_TX_DELIVERY_OPTS, TxDeliveryOpts, type Eip1559Fee } from "../../src";
 import { Eip1559GasEstimatorV2 } from "../../src/tx-delivery-man/Eip1559GasEstimatorV2";
 import {
   HardhatProviderMocker,
@@ -244,7 +240,7 @@ describe("Eip1559GasEstimatorV2", () => {
             name: "MAX aggregation with moderate values",
             baseFee: 150,
             rewards: [["0x10", "0x28"], ["0x1E"]], // [16, 40, 30]
-            aggregation: RewardsPerBlockAggregationAlgorithm.Max,
+            aggregation: Tx.RewardsPerBlockAggregationAlgorithm.Max,
             expectedPriority: 40, // max([16, 40, 30])
             expectedMax: 340, // 150*2 + 40
           },
@@ -252,7 +248,7 @@ describe("Eip1559GasEstimatorV2", () => {
             name: "MEDIAN aggregation with varied values",
             baseFee: 300,
             rewards: [["0x5", "0x32"], ["0x14"]], // [5, 50, 20]
-            aggregation: RewardsPerBlockAggregationAlgorithm.Median,
+            aggregation: Tx.RewardsPerBlockAggregationAlgorithm.Median,
             expectedPriority: 20, // median([5, 50, 20]) = ceil(20)
             expectedMax: 620, // 300*2 + 20
           },
@@ -260,7 +256,7 @@ describe("Eip1559GasEstimatorV2", () => {
             name: "MAX aggregation with low values",
             baseFee: 89,
             rewards: [["0x7"]], // [7]
-            aggregation: RewardsPerBlockAggregationAlgorithm.Max,
+            aggregation: Tx.RewardsPerBlockAggregationAlgorithm.Max,
             expectedPriority: 7,
             expectedMax: 185, // 89*2 + 7
           },
@@ -268,7 +264,7 @@ describe("Eip1559GasEstimatorV2", () => {
             name: "MEDIAN aggregation with high baseFee",
             baseFee: 450,
             rewards: [["0xA", "0x64"], ["0x32"]], // [10, 100, 50]
-            aggregation: RewardsPerBlockAggregationAlgorithm.Median,
+            aggregation: Tx.RewardsPerBlockAggregationAlgorithm.Median,
             expectedPriority: 50, // median([10, 100, 50]) = ceil(50)
             expectedMax: 950, // 450*2 + 50
           },
@@ -308,7 +304,7 @@ describe("Eip1559GasEstimatorV2", () => {
 
       it("should throw error for unsupported aggregation algorithm", async () => {
         const estimator = createEip1559Estimator({
-          rewardsPerBlockAggregationAlgorithm: "INVALID" as RewardsPerBlockAggregationAlgorithm,
+          rewardsPerBlockAggregationAlgorithm: "INVALID" as Tx.RewardsPerBlockAggregationAlgorithm,
         });
 
         const providerMock = createBasicProviderMock(100, "0x5");

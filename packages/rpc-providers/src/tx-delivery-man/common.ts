@@ -1,6 +1,6 @@
 import type { ChainConfigs } from "@redstone-finance/chain-configs";
+import { Tx } from "@redstone-finance/utils";
 import type { BigNumber } from "ethers";
-import { z } from "zod";
 
 export type AuctionModelFee = {
   gasPrice: number;
@@ -31,14 +31,6 @@ export type DeliveryManTx = {
       type: 0;
     } & AuctionModelFee)
 );
-
-export const NewestBlockTypeEnum = z.enum(["latest", "pending"]);
-export type NewestBlockType = z.infer<typeof NewestBlockTypeEnum>;
-
-export enum RewardsPerBlockAggregationAlgorithm {
-  Max = "max",
-  Median = "median",
-}
 
 export type TxDeliveryOpts = {
   /**
@@ -112,7 +104,7 @@ export type TxDeliveryOpts = {
   /**
    * Block to start fetching the fee history data from
    */
-  newestBlockForFeeHistory?: NewestBlockType;
+  newestBlockForFeeHistory?: Tx.NewestBlockType;
 
   /**
    * Should be set to true if chain doesn't support EIP1559
@@ -150,7 +142,7 @@ export type TxDeliveryOpts = {
   minAggregatedRewardsPerBlockForPercentile?: number;
 
   // Algorithm to aggregate rewards from last blocks
-  rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm;
+  rewardsPerBlockAggregationAlgorithm: Tx.RewardsPerBlockAggregationAlgorithm;
 
   // optional ChainConfigs object to use instead of local version
   chainConfigs?: ChainConfigs;

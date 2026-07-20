@@ -6,7 +6,6 @@ import _ from "lodash";
 import { AuctionModelGasEstimator } from "./AuctionModelGasEstimator";
 import { AuctionModelGasEstimatorV2 } from "./AuctionModelGasEstimatorV2";
 import {
-  RewardsPerBlockAggregationAlgorithm,
   type DeliveryManTx,
   type FeeStructure,
   type TxDeliveryOpts,
@@ -44,7 +43,7 @@ export const DEFAULT_TX_DELIVERY_OPTS = {
   gasLimitMultiplier: 1.2,
   percentileOfPriorityFee: 50,
   isEIP1559V2Estimator: false,
-  rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
+  rewardsPerBlockAggregationAlgorithm: Tx.RewardsPerBlockAggregationAlgorithm.Max,
   twoDimensionalFees: false,
   gasOracleTimeout: 5_000,
   forceDisableCustomGasOracle: false,

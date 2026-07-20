@@ -1,13 +1,11 @@
 import { BlockTag } from "@ethersproject/abstract-provider";
 import { TelemetryPoint } from "@redstone-finance/internal-utils";
-import { MathUtils, NetworkId } from "@redstone-finance/utils";
+import { HARDHAT_CHAIN_ID, MathUtils, NetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { RedstoneEthers5Provider } from "./providers/RedstoneProvider";
 
 export type ReportMetricFn = (message: TelemetryPoint) => void;
 export type ContractCallOverrides = { blockTag: BlockTag };
-
-export const HARDHAT_CHAIN_ID = 31337;
 
 /** Assumes that if blockTag is string the it is hex string */
 export const convertBlockTagToNumber = (blockTag: BlockTag): number =>

@@ -1,18 +1,19 @@
-import { loggerFactory, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
+import {
+  HARDHAT_CHAIN_ID,
+  loggerFactory,
+  MultiExecutor,
+  RedstoneCommon,
+  Tx,
+} from "@redstone-finance/utils";
 import { providers } from "ethers";
-import { getProviderNetworkInfo, HARDHAT_CHAIN_ID } from "../common";
+import { getProviderNetworkInfo } from "../common";
 import { ProviderExecutor, ProviderWithIdentifier } from "../ProviderExecutor";
 import { TxDeliveryOpts } from "./common";
 
-export type SupportedBlockTag = (typeof SUPPORTED_BLOCK_TAGS)[number];
 type ProviderWithAddress = ProviderWithIdentifier & { address: string };
 
 const TIMEOUT_ACTIVATION_MS = RedstoneCommon.minToMs(1);
 const MIN_PROVIDERS_FOR_AGREEMENT = 3;
-
-export const LATEST_BLOCK_TAG = "latest";
-export const PENDING_BLOCK_TAG = "pending";
-const SUPPORTED_BLOCK_TAGS = [LATEST_BLOCK_TAG, PENDING_BLOCK_TAG] as const;
 
 export class NonceFetcher {
   private readonly logger = loggerFactory("nonce-fetcher");
@@ -25,14 +26,8 @@ export class NonceFetcher {
     private readonly providers: readonly providers.Provider[],
     private opts: Pick<TxDeliveryOpts, "getSingleNonceTimeoutMs">
   ) {
-    [this.latestChainNonceExecutor, this.pendingChainNonceExecutor] = SUPPORTED_BLOCK_TAGS.map(
-      (blockTag) =>
-        new ProviderExecutor(
-          `getTransactionCount(${blockTag})`,
-          ({ provider, address }) => NonceFetcher.getTransactionCount(provider, address, blockTag),
-          this.logger
-        )
-    );
+    this.latestChainNonceExecutor = this.createNonceExecutor(Tx.NewestBlockTypeEnum.enum.latest);
+    this.pendingChainNonceExecutor = this.createNonceExecutor(Tx.NewestBlockTypeEnum.enum.pending);
 
     this.fnDelegate = MultiExecutor.QuarantinedListFnDelegate.getCachedConfig(
       this.providers.map(NonceFetcher.getProviderNetworkInfo).map((info) => info.url),
@@ -51,7 +46,15 @@ export class NonceFetcher {
     }
   }
 
-  async fetchNonceFromChain(address: string, blockTag: SupportedBlockTag) {
+  private createNonceExecutor(blockTag: Tx.NewestBlockType) {
+    return new ProviderExecutor<number, ProviderWithAddress>(
+      `getTransactionCount(${blockTag})`,
+      ({ provider, address }) => NonceFetcher.getTransactionCount(provider, address, blockTag),
+      this.logger
+    );
+  }
+
+  async fetchNonceFromChain(address: string, blockTag: Tx.NewestBlockType) {
     const consensusExecutor = this.getConsensusExecutor(this.getTransactionCountTimeoutMs);
     const providerExecutor = this.getProviderExecutor(blockTag);
 
@@ -91,11 +94,11 @@ export class NonceFetcher {
         );
   }
 
-  private getProviderExecutor(blockTag: SupportedBlockTag) {
+  private getProviderExecutor(blockTag: Tx.NewestBlockType) {
     switch (blockTag) {
-      case LATEST_BLOCK_TAG:
+      case Tx.NewestBlockTypeEnum.enum.latest:
         return this.latestChainNonceExecutor;
-      case PENDING_BLOCK_TAG:
+      case Tx.NewestBlockTypeEnum.enum.pending:
         return this.pendingChainNonceExecutor;
     }
   }
@@ -103,7 +106,7 @@ export class NonceFetcher {
   private static async getTransactionCount(
     p: providers.Provider,
     address: string,
-    blockTag: SupportedBlockTag
+    blockTag: Tx.NewestBlockType
   ) {
     const count = await p.getTransactionCount(address, blockTag);
 

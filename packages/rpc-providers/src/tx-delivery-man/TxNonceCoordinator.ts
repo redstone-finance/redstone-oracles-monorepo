@@ -1,12 +1,7 @@
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { TxDeliveryOpts } from "./common";
-import {
-  LATEST_BLOCK_TAG,
-  NonceFetcher,
-  PENDING_BLOCK_TAG,
-  SupportedBlockTag,
-} from "./NonceFetcher";
+import { NonceFetcher } from "./NonceFetcher";
 import type { TxDeliverySigner } from "./TxDelivery";
 
 const logger = loggerFactory("TxNonceCoordinator");
@@ -90,7 +85,7 @@ export class TxNonceCoordinator {
   }
 
   async getNextNonceFromChain(): Promise<number> {
-    return await this.getChainNonce(LATEST_BLOCK_TAG);
+    return await this.getChainNonce(Tx.NewestBlockTypeEnum.enum.latest);
   }
 
   registerPendingTx(nonce: number, txHash: string, nonceAttempt: number) {
@@ -271,8 +266,8 @@ export class TxNonceCoordinator {
 
   private async alignWithChain() {
     const [pendingChainNonce, latestChainNonce] = await Promise.all([
-      this.getChainNonce(PENDING_BLOCK_TAG),
-      this.getChainNonce(LATEST_BLOCK_TAG),
+      this.getChainNonce(Tx.NewestBlockTypeEnum.enum.pending),
+      this.getChainNonce(Tx.NewestBlockTypeEnum.enum.latest),
     ]);
     if (this.lastUsedNonce === undefined || pendingChainNonce - 1 > this.lastUsedNonce) {
       this.lastUsedNonce = pendingChainNonce - 1;
@@ -287,7 +282,7 @@ export class TxNonceCoordinator {
     }
   }
 
-  private async getChainNonce(blockTag: SupportedBlockTag) {
+  private async getChainNonce(blockTag: Tx.NewestBlockType) {
     const address = await this.getAddress();
 
     return await this.nonceFetcher.fetchNonceFromChain(address, blockTag);

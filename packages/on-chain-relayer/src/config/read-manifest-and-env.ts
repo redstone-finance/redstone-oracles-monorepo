@@ -1,11 +1,7 @@
 import { readJsonFile, terminateWithRemoteConfigError } from "@redstone-finance/internal-utils";
 import { AnyOnChainRelayerManifestSchema } from "@redstone-finance/on-chain-relayer-common";
 import { RedstoneRemoteConfig } from "@redstone-finance/remote-config";
-import {
-  NewestBlockTypeEnum,
-  RewardsPerBlockAggregationAlgorithm,
-} from "@redstone-finance/rpc-providers";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { RedstoneCommon, Tx } from "@redstone-finance/utils";
 import "dotenv/config";
 import { z } from "zod";
 import { OnChainRelayerEnv, PubSubDataProcessingStrategyType } from "./RelayerConfig";
@@ -238,7 +234,7 @@ export const readManifestAndEnv = () => {
     ),
     newestBlockForFeeHistory: RedstoneCommon.getFromEnv(
       "NEWEST_BLOCK_FOR_FEE_HISTORY",
-      NewestBlockTypeEnum.optional()
+      Tx.NewestBlockTypeEnum.optional()
     ),
     isPausedUntil: RedstoneCommon.getFromEnv(
       "IS_PAUSED_UNTIL",
@@ -285,7 +281,9 @@ export const readManifestAndEnv = () => {
     ),
     rewardsPerBlockAggregationAlgorithm: RedstoneCommon.getFromEnv(
       "REWARDS_PER_BLOCK_AGGREGATION_ALGORITHM",
-      z.enum(RewardsPerBlockAggregationAlgorithm).default(RewardsPerBlockAggregationAlgorithm.Max)
+      z
+        .enum(Tx.RewardsPerBlockAggregationAlgorithm)
+        .default(Tx.RewardsPerBlockAggregationAlgorithm.Max)
     ),
     disableMultiPointPackages: RedstoneCommon.getFromEnv(
       "DISABLE_MULTI_POINT_PACKAGES",

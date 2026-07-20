@@ -1,15 +1,16 @@
-import { time } from "@nomicfoundation/hardhat-network-helpers";
-import { DataPackage, INumericDataPoint, NumericDataPoint } from "@redstone-finance/protocol";
 import {
-  HARDHAT_CHAIN_ID,
-  RewardsPerBlockAggregationAlgorithm,
-} from "@redstone-finance/rpc-providers";
+  consts,
+  DataPackage,
+  INumericDataPoint,
+  NumericDataPoint,
+} from "@redstone-finance/protocol";
 import {
   calculateHistoricalPackagesTimestamp,
   ContractParamsProvider,
   DataPackagesResponse,
   DataPackagesResponseCache,
 } from "@redstone-finance/sdk";
+import { HARDHAT_CHAIN_ID, Tx } from "@redstone-finance/utils";
 import { formatBytes32String } from "ethers/lib/utils";
 import { RelayerConfig } from "../src";
 
@@ -37,7 +38,7 @@ export const mockConfig = (overrideMockConfig: Partial<RelayerConfig> = {}) => {
     dataServiceId: "redstone-main-demo",
     dataFeeds: ["ETH", "BTC"],
     gasLimit: 1000000,
-    rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
+    rewardsPerBlockAggregationAlgorithm: Tx.RewardsPerBlockAggregationAlgorithm.Max,
     updateConditions: {
       ETH: ["time", "value-deviation"],
       BTC: ["time", "value-deviation"],
@@ -110,12 +111,12 @@ const mockWallets = [
   },
 ];
 
-export const getDataPackagesResponse = async (
+export const getDataPackagesResponse = (
   dataPoints: INumericDataPoint[] = DEFAULT_DATA_POINTS,
   isHistorical = false,
   overrideMockedTime?: number
 ) => {
-  const currentTime = overrideMockedTime ?? (await time.latest()) * 1000;
+  const currentTime = overrideMockedTime ?? Date.now();
   const timestampMilliseconds = isHistorical
     ? calculateHistoricalPackagesTimestamp(10000, currentTime)!
     : currentTime;
@@ -138,14 +139,14 @@ export const getDataPackagesResponse = async (
     }
   }
 
-  return signedDataPackages;
+  return Promise.resolve(signedDataPackages);
 };
 
-export const getMultiPointDataPackagesResponse = async (
+export const getMultiPointDataPackagesResponse = (
   dataPackageId = MULTI_POINT_DATA_PACKAGE_ID,
   dataPoints: INumericDataPoint[] = DEFAULT_DATA_POINTS
 ) => {
-  const timestampMilliseconds = (await time.latest()) * 1000;
+  const timestampMilliseconds = Date.now();
 
   const signedDataPackages: DataPackagesResponse = {};
 
@@ -164,7 +165,7 @@ export const getMultiPointDataPackagesResponse = async (
     signedDataPackages[dataPackageId].push(signedDataPackage);
   }
 
-  return signedDataPackages;
+  return Promise.resolve(signedDataPackages);
 };
 
 export const dateStrToMilliseconds = (str: string) => new Date(str).getTime();
@@ -175,3 +176,8 @@ export const originalDateNow = Date.now;
 export const restoreOriginalSystemTime = () => {
   Date.now = originalDateNow;
 };
+
+export const createNumberFromContract = (
+  price: number,
+  decimals = consts.DEFAULT_NUM_VALUE_DECIMALS
+) => BigInt(Math.round(price * 10 ** decimals));

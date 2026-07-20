@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
+import { Tx } from "@redstone-finance/utils";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { ethers } from "ethers";
@@ -6,7 +7,6 @@ import hardhat from "hardhat";
 import Sinon from "sinon";
 import {
   ProviderWithFallback,
-  RewardsPerBlockAggregationAlgorithm,
   TxDeliveryMan,
   TxDeliveryManSupportedProviders,
   TxDeliveryOpts,
@@ -49,7 +49,7 @@ describe("TxDeliveryMan", () => {
       new TxDeliveryMan(provider, counter.signer, {
         expectedDeliveryTimeMs: 20,
         gasLimit: 210000,
-        rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
+        rewardsPerBlockAggregationAlgorithm: Tx.RewardsPerBlockAggregationAlgorithm.Max,
         ...opts,
       });
 
