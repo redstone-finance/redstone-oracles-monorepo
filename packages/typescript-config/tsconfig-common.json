@@ -29,6 +29,6 @@
     "strict": true,
     "target": "es2022",
     "lib": ["ES2025"],
-    "types": ["node", "jest"]
+    "types": ["node", "jest", "mocha"]
   }
 }
