@@ -330,31 +330,10 @@
     "APR": {
       "priceFeedAddress": "0xE5c1A89887C572c3C345EFE2BBBe797AC5B22461"
     },
-    "MSUSD_FUNDAMENTAL": {
-      "priceFeedAddress": "0xdC3FE501c1842953b85f5208dA69dc84Ff71A311",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.25,
-        "timeSinceLastUpdateInMilliseconds": 43200000
-      }
-    },
-    "MSY_FUNDAMENTAL/USD": {
-      "priceFeedAddress": "0xcB62f468B5724B7748293fc78E42C3DA840a8338",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.25,
-        "timeSinceLastUpdateInMilliseconds": 43200000
-      }
-    },
     "syzUSD_FUNDAMENTAL/USD": {
       "priceFeedAddress": "0x354D1E7D9CF90841DFA252547881DB96af2AaE3e",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.05,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
-    "STRC": {
-      "priceFeedAddress": "0x04Ef0593aEFBC9D6fA28fd386A8bE0E5eb34F70b",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
@@ -381,12 +360,6 @@
     },
     "weETH/ETH": {
       "priceFeedAddress": "0x8751F736E94F6CD167e8C5B97E245680FbD9CC36"
-    },
-    "muBOND_FUNDAMENTAL": {
-      "priceFeedAddress": "0x636Eca78f6B46A69Ab233ef513C1fB4703e32A7b"
-    },
-    "AZND_FUNDAMENTAL": {
-      "priceFeedAddress": "0xc8A09cb2692724752352899f73f81ebE5Ef06Bad"
     },
     "SolvBTC_FUNDAMENTAL": {
       "priceFeedAddress": "0x8D89d6c114193154f111D7C83299D285C9cC5BBC",
