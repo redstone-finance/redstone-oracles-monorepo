@@ -1,19 +1,19 @@
-import { RedstoneEvmContract } from "@redstone-finance/evm-adapters";
 import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
-import { RelayerConfig } from "../../config/RelayerConfig";
-import { updateUsingOevAuction } from "../../custom-integrations/fastlane/update-using-oev-auction";
-import { RelayerTxDeliveryManContext } from "../RelayerTxDeliveryManContext";
+import { EvmTxDeliveryManContext } from "../EvmTxDeliveryManContext";
+import { RedstoneEvmContract } from "../facade/evm/RedstoneEvmContract";
+import { OevConfig } from "./oev-config";
+import { updateUsingOevAuction } from "./update-using-oev-auction";
 
-export class OevTxDeliveryMan implements Tx.ITxDeliveryMan<RelayerTxDeliveryManContext> {
+export class OevTxDeliveryMan implements Tx.ITxDeliveryMan<EvmTxDeliveryManContext> {
   private readonly logger = loggerFactory("updatePrices/oev");
 
   constructor(
     private readonly fallbackDeliveryMan: Tx.ITxDeliveryMan,
     private readonly adapterContract: RedstoneEvmContract,
-    private readonly relayerConfig: RelayerConfig
+    private readonly config: OevConfig
   ) {}
 
-  async deliver(txDeliveryCall: Tx.TxDeliveryCall, context: RelayerTxDeliveryManContext) {
+  async deliver(txDeliveryCall: Tx.TxDeliveryCall, context: EvmTxDeliveryManContext) {
     try {
       await this.updateUsingOevAuction(txDeliveryCall);
       this.logger.log("Update using oev auction has finished. Proceeding with a standard update");
@@ -38,11 +38,11 @@ export class OevTxDeliveryMan implements Tx.ITxDeliveryMan<RelayerTxDeliveryManC
 
   private async updateUsingOevAuction(txDeliveryCall: Tx.TxDeliveryCall) {
     const updateUsingOevAuctionPromise = updateUsingOevAuction(
-      this.relayerConfig,
+      this.config,
       txDeliveryCall.data,
       this.adapterContract
     );
-    const timeout = this.relayerConfig.oevTotalTimeout;
+    const timeout = this.config.oevTotalTimeout;
 
     await RedstoneCommon.timeout(
       updateUsingOevAuctionPromise,

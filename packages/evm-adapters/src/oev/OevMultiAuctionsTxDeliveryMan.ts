@@ -1,24 +1,21 @@
-import { MultiFeedAdapterWithoutRounds } from "@redstone-finance/evm-adapters";
-import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
-import { ContractParamsProvider, DataPackagesResponse } from "@redstone-finance/sdk";
+import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
-import { utils } from "ethers";
-import { RelayerConfig } from "../../config/RelayerConfig";
-import { updateUsingOevAuction } from "../../custom-integrations/fastlane/update-using-oev-auction";
-import { RelayerTxDeliveryManContext } from "../RelayerTxDeliveryManContext";
+import { MultiFeedAdapterWithoutRounds } from "../../typechain-types";
+import { MultiFeedEvmContractAdapter } from "../core/contract-interactions/MultiFeedEvmContractAdapter";
+import { EvmTxDeliveryManContext } from "../EvmTxDeliveryManContext";
+import { OevConfig } from "./oev-config";
+import { updateUsingOevAuction } from "./update-using-oev-auction";
 
-export class OevMultiAuctionsTxDeliveryMan
-  implements Tx.ITxDeliveryMan<RelayerTxDeliveryManContext>
-{
+export class OevMultiAuctionsTxDeliveryMan implements Tx.ITxDeliveryMan<EvmTxDeliveryManContext> {
   private readonly logger = loggerFactory("updatePrices/oev");
 
   constructor(
     private readonly fallbackDeliveryMan: Tx.ITxDeliveryMan,
     private readonly adapterContract: MultiFeedAdapterWithoutRounds,
-    private readonly relayerConfig: RelayerConfig
+    private readonly config: OevConfig
   ) {}
 
-  async deliver(txDeliveryCall: Tx.TxDeliveryCall, context: RelayerTxDeliveryManContext) {
+  async deliver(txDeliveryCall: Tx.TxDeliveryCall, context: EvmTxDeliveryManContext) {
     try {
       const start = Date.now();
       this.logger.log(`OEV Auctions start`);
@@ -49,7 +46,7 @@ export class OevMultiAuctionsTxDeliveryMan
 
   private async onOevAuctionsFailureCallback(
     txDeliveryCall: Tx.TxDeliveryCall,
-    context: RelayerTxDeliveryManContext
+    context: EvmTxDeliveryManContext
   ) {
     if (context.canOmitFallbackAfterFailing) {
       this.logger.log("OEV Auctions, skipping fallback as update was optional");
@@ -74,17 +71,16 @@ export class OevMultiAuctionsTxDeliveryMan
 
       this.logger.log(`OEV Auction ${feedId} update, values`, values);
 
-      const updateUsingOevAuctionPromise = this.makeSingleFeedUpdateTx(
-        feedId,
-        dataPackages,
+      const updateUsingOevAuctionPromise = MultiFeedEvmContractAdapter.makeUpdateTxWithDataPackages(
+        this.adapterContract,
+        { [feedId]: dataPackages[feedId] },
+        [feedId],
         metadataTimestamp
-      ).then((tx) =>
-        updateUsingOevAuction(this.relayerConfig, tx.data, this.adapterContract, feedId)
-      );
+      ).then((tx) => updateUsingOevAuction(this.config, tx.data, this.adapterContract, feedId));
       auctionPromises.push(updateUsingOevAuctionPromise);
     }
 
-    const timeout = this.relayerConfig.oevTotalTimeout;
+    const timeout = this.config.oevTotalTimeout;
 
     const results = await RedstoneCommon.timeout(
       Promise.allSettled(auctionPromises),
@@ -106,24 +102,5 @@ export class OevMultiAuctionsTxDeliveryMan
     }
 
     return { values, errors };
-  }
-
-  async makeSingleFeedUpdateTx(
-    feedId: string,
-    dataPackages: DataPackagesResponse,
-    metadataTimestamp: number
-  ): Promise<Tx.TxDeliveryCall> {
-    const feedAsBytes32 = utils.formatBytes32String(feedId);
-    const dataPackagesWrapper = new DataPackagesWrapper<MultiFeedAdapterWithoutRounds>({
-      feedId: dataPackages[feedId],
-    });
-    dataPackagesWrapper.setMetadataTimestamp(metadataTimestamp);
-    const wrappedContract = dataPackagesWrapper.overwriteEthersContract(this.adapterContract);
-
-    const txCall = Tx.convertToTxDeliveryCall(
-      await wrappedContract.populateTransaction["updateDataFeedsValuesPartial"]([feedAsBytes32])
-    );
-
-    return txCall;
   }
 }

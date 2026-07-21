@@ -3,6 +3,8 @@ import {
   getEvmContract,
   getEvmContractAdapter,
   MultiFeedAdapterWithoutRounds,
+  OevMultiAuctionsTxDeliveryMan,
+  OevTxDeliveryMan,
   RedstoneEvmContract,
 } from "@redstone-finance/evm-adapters";
 import { TxDeliveryManSupportedProviders } from "@redstone-finance/rpc-providers";
@@ -12,8 +14,6 @@ import { Signer, Wallet } from "ethers";
 import { isOevRelayerConfig } from "../../config/config-checks";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { getRelayerProvider } from "../../core/contract-interactions/get-relayer-provider";
-import { OevMultiAuctionsTxDeliveryMan } from "../../core/contract-interactions/OevMultiAuctionsTxDeliveryMan";
-import { OevTxDeliveryMan } from "../../core/contract-interactions/OevTxDeliveryMan";
 import { getTxDeliveryMan } from "../../core/TxDeliveryManSingleton";
 import { ContractFacade } from "../ContractFacade";
 import { MemoryTxDeliveryMan } from "../MemoryTxDeliveryMan";
@@ -47,7 +47,7 @@ function makeTxDeliveryMan(
   );
 
   if (relayerConfig.dryRunWithMemory) {
-    txDeliveryMan = new MemoryTxDeliveryMan(relayerConfig);
+    txDeliveryMan = new MemoryTxDeliveryMan(relayerConfig.expectedTxDeliveryTimeInMS);
   }
 
   if (isOevRelayerConfig(relayerConfig)) {

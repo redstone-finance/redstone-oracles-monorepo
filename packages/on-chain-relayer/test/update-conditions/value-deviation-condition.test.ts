@@ -1,9 +1,8 @@
-import { createNumberFromContract } from "@redstone-finance/evm-adapters";
 import { ValuesForDataFeeds } from "@redstone-finance/sdk";
 import { expect } from "chai";
 import { RelayerConfig } from "../../src";
 import { checkValueDeviationCondition } from "../../src/core/update-conditions/check-value-deviation-condition";
-import { getDataPackagesResponse, mockConfig } from "../helpers";
+import { createNumberFromContract, getDataPackagesResponse, mockConfig } from "../helpers";
 
 describe("check-value-deviation-condition", () => {
   let relayerConfig: RelayerConfig;

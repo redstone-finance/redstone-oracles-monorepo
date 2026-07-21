@@ -1,15 +1,12 @@
-import { JsonRpcProvider } from "@ethersproject/providers";
+import { Tx } from "@redstone-finance/utils";
+import { ethers } from "hardhat";
 import {
   checkDataValues,
   deployMultiFeedAdapterWithoutRoundsMock,
   deployPriceFeedsAdapterWithoutRoundsMock,
   performWritePricesTests,
-} from "@redstone-finance/evm-adapters";
-import { ProviderWithAgreement } from "@redstone-finance/rpc-providers";
-import chai from "chai";
-import chaiAsPromised from "chai-as-promised";
-import { ethers } from "hardhat";
-import { getTxDeliveryMan } from "../../src/core/TxDeliveryManSingleton";
+  RedstoneEvmContract,
+} from "../../src";
 import {
   BTC_PRICE,
   btcDataFeed,
@@ -17,34 +14,32 @@ import {
   ContractParamsProviderMockMulti,
   ETH_PRICE,
   ethDataFeed,
-  mockConfig,
-} from "../helpers";
-import { server } from "./mock-server";
-
-chai.use(chaiAsPromised);
+} from "./params-provider-mock";
 
 const defaultFeedEntries = [
   { feedId: btcDataFeed, price: BTC_PRICE },
   { feedId: ethDataFeed, price: ETH_PRICE },
 ];
-describe("write-prices", () => {
-  const provider = new ProviderWithAgreement([ethers.provider, ethers.provider]);
 
-  afterEach(() => {
-    server.resetHandlers();
-  });
+const txDeliveryManCreator = (adapterContract: RedstoneEvmContract): Tx.ITxDeliveryMan => ({
+  deliver: async (txDeliveryCall) => {
+    const tx = await adapterContract.signer.sendTransaction({
+      to: txDeliveryCall.to,
+      data: txDeliveryCall.data,
+    });
+    await tx.wait();
+  },
+});
+
+describe("write-prices", () => {
+  const provider = ethers.provider;
 
   it("should update price in multi-feed adapter", async () => {
     const adapterContract = await performWritePricesTests(
       provider,
       { adapterContractType: "multi-feed" },
       deployMultiFeedAdapterWithoutRoundsMock,
-      (adapterContract) =>
-        getTxDeliveryMan(
-          mockConfig(),
-          adapterContract.signer,
-          adapterContract.provider as JsonRpcProvider
-        ),
+      txDeliveryManCreator,
       new ContractParamsProviderMock()
     );
 
@@ -56,12 +51,7 @@ describe("write-prices", () => {
       provider,
       { adapterContractType: "multi-feed" },
       deployMultiFeedAdapterWithoutRoundsMock,
-      (adapterContract) =>
-        getTxDeliveryMan(
-          mockConfig(),
-          adapterContract.signer,
-          adapterContract.provider as JsonRpcProvider
-        ),
+      txDeliveryManCreator,
       new ContractParamsProviderMockMulti()
     );
 
@@ -73,16 +63,10 @@ describe("write-prices", () => {
       provider,
       { adapterContractType: "price-feeds" },
       deployPriceFeedsAdapterWithoutRoundsMock,
-      (adapterContract) =>
-        getTxDeliveryMan(
-          mockConfig(),
-          adapterContract.signer,
-          adapterContract.provider as JsonRpcProvider
-        ),
+      txDeliveryManCreator,
       new ContractParamsProviderMock()
     );
 
-    // to price-feeds are written only the feedIds available in contract
     await checkDataValues(adapterContract, [{ feedId: btcDataFeed, price: BTC_PRICE }]);
   });
 });

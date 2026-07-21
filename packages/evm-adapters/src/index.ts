@@ -29,11 +29,11 @@ export {
   deployMultiFeedAdapterWithoutRoundsMock,
   deployPriceFeedsAdapterWithoutRoundsMock,
 } from "./helpers";
-export {
-  checkDataValues,
-  createNumberFromContract,
-  performWritePricesTests,
-} from "./perform-write-prices.tests";
+export { type OevConfig } from "./oev/oev-config";
+export { OevMultiAuctionsTxDeliveryMan } from "./oev/OevMultiAuctionsTxDeliveryMan";
+export { OevTxDeliveryMan } from "./oev/OevTxDeliveryMan";
+export { updateUsingOevAuction } from "./oev/update-using-oev-auction";
+export { checkDataValues, performWritePricesTests } from "./perform-write-prices.tests";
 export { getExampleBaseContract, verifyCoreSetup } from "./verify-core-setup";
 export {
   PriceFeedsAdapterWithRoundsOneSignerMockArtifact,

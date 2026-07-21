@@ -1,16 +1,14 @@
+import { consts } from "@redstone-finance/protocol";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { expect } from "chai";
-import { BigNumber, ethers, Wallet } from "ethers";
+import { ethers, Wallet } from "ethers";
 import { EvmAdapterType } from "./facade/evm/get-evm-contract";
 import { getEvmContractAdapter } from "./facade/evm/get-evm-contract-adapter";
 import { RedstoneEvmContract } from "./facade/evm/RedstoneEvmContract";
 
 export const TEST_PRIVATE_KEY =
   "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
-
-export const createNumberFromContract = (number: number, decimals = 8) =>
-  BigNumber.from(number * 10 ** decimals).toBigInt();
 
 export async function performWritePricesTests(
   provider: ethers.providers.Provider,
@@ -34,6 +32,9 @@ export async function performWritePricesTests(
 
   return adapterContract;
 }
+
+const createNumberFromContract = (price: number) =>
+  BigInt(Math.round(price * 10 ** consts.DEFAULT_NUM_VALUE_DECIMALS));
 
 export async function checkDataValues(
   adapterContract: RedstoneEvmContract,

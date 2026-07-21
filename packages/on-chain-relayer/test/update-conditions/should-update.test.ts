@@ -1,9 +1,8 @@
-import { createNumberFromContract } from "@redstone-finance/evm-adapters";
 import { ValuesForDataFeeds } from "@redstone-finance/sdk";
 import { expect } from "chai";
 import { RelayerConfig } from "../../src";
 import { shouldUpdate } from "../../src/price-feeds/should-update";
-import { getDataPackagesResponse, mockConfig } from "../helpers";
+import { createNumberFromContract, getDataPackagesResponse, mockConfig } from "../helpers";
 
 describe("should-update", () => {
   let relayerConfig: RelayerConfig;

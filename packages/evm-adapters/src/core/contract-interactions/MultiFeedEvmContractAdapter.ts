@@ -1,4 +1,9 @@
-import { ContractParamsProvider, UpdatePricesOptions } from "@redstone-finance/sdk";
+import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
+import {
+  ContractParamsProvider,
+  DataPackagesResponse,
+  UpdatePricesOptions,
+} from "@redstone-finance/sdk";
 import { loggerFactory, Tx } from "@redstone-finance/utils";
 import { utils } from "ethers";
 import { MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
@@ -19,22 +24,37 @@ export class MultiFeedEvmContractAdapter extends MultiFeedEvmContractAdapterBase
     paramsProvider: ContractParamsProvider,
     metadataTimestamp: number
   ): Promise<Tx.TxDeliveryCall> {
-    const {
-      wrappedContract,
-      packageResponse: { feedsFromResponse, missingFeeds, requestedFeedIds },
-    } = await MultiFeedEvmContractAdapter.wrapContract(
-      this.adapterContract,
-      paramsProvider,
-      metadataTimestamp
-    );
+    const { dataPackages, feedsFromResponse, missingFeeds, requestedFeedIds } =
+      await paramsProvider.requestDataPackagesWithFeedsInfo();
     MultiFeedEvmContractAdapter.logResponseFeeds(missingFeeds, feedsFromResponse, requestedFeedIds);
 
-    const dataFeedsAsBytes32 = feedsFromResponse.map(utils.formatBytes32String);
-    const txCall = Tx.convertToTxDeliveryCall(
-      await wrappedContract.populateTransaction["updateDataFeedsValuesPartial"](dataFeedsAsBytes32)
+    return await MultiFeedEvmContractAdapter.makeUpdateTxWithDataPackages(
+      this.adapterContract,
+      dataPackages,
+      feedsFromResponse,
+      metadataTimestamp
     );
+  }
 
-    return txCall;
+  static async makeUpdateTxWithDataPackages(
+    contract: MultiFeedAdapterWithoutRounds,
+    dataPackages: DataPackagesResponse,
+    feedIds: string[],
+    metadataTimestamp?: number
+  ) {
+    const dataPackagesWrapper = new DataPackagesWrapper<MultiFeedAdapterWithoutRounds>(
+      dataPackages
+    );
+    if (metadataTimestamp) {
+      dataPackagesWrapper.setMetadataTimestamp(metadataTimestamp);
+    }
+    const wrappedContract = dataPackagesWrapper.overwriteEthersContract(contract);
+
+    return Tx.convertToTxDeliveryCall(
+      await wrappedContract.populateTransaction["updateDataFeedsValuesPartial"](
+        feedIds.map(utils.formatBytes32String)
+      )
+    );
   }
 
   protected override getBaseIterationTxParamsProvider(

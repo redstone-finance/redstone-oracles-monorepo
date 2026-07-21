@@ -1,27 +1,23 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
-import { RedstoneEvmContract } from "@redstone-finance/evm-adapters";
 import { isEvmNetworkId, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
 import { randomUUID } from "crypto";
 import { providers, Signer, Transaction } from "ethers";
 import { parseTransaction } from "ethers/lib/utils";
-import { RelayerConfig } from "../../config/RelayerConfig";
+import { RedstoneEvmContract } from "../facade/evm/RedstoneEvmContract";
+import { OevConfig } from "./oev-config";
 
 const logger = loggerFactory("update-using-oev-auction");
 
 export const updateUsingOevAuction = async (
-  relayerConfig: RelayerConfig,
+  config: OevConfig,
   txDeliveryCalldata: string,
   adapterContract: RedstoneEvmContract,
   customAuctionId = ""
 ) => {
   const loggerPref = `OEV Auction ${customAuctionId}`;
   const start = Date.now();
-  const auctionResponse = await runOevAuction(
-    relayerConfig,
-    adapterContract.signer,
-    txDeliveryCalldata
-  );
+  const auctionResponse = await runOevAuction(config, adapterContract.signer, txDeliveryCalldata);
   const auctionFinished = Date.now();
   logger.info(
     `${loggerPref} finished in ${auctionFinished - start}ms with response`,
@@ -44,10 +40,10 @@ export const updateUsingOevAuction = async (
   }
 
   const verificationTimeout =
-    relayerConfig.oevAuctionVerificationTimeout ?? 1.5 * relayerConfig.getBlockNumberTimeout;
+    config.oevAuctionVerificationTimeout ?? 1.5 * config.getBlockNumberTimeout;
 
   const verificationPromises = result.map((tx) =>
-    verifyFastlaneResponse(adapterContract.provider as providers.JsonRpcProvider, tx, relayerConfig)
+    verifyFastlaneResponse(adapterContract.provider as providers.JsonRpcProvider, tx, config)
   );
 
   await RedstoneCommon.timeout(
@@ -74,13 +70,9 @@ type OevAuctionResponse = {
   };
 };
 
-const runOevAuction = async (
-  relayerConfig: RelayerConfig,
-  signer: Signer,
-  txDeliveryCalldata: string
-) => {
-  const oevAuctionUrl = relayerConfig.oevAuctionUrl!;
-  const { adapterContractAddress, networkId, oevAuctionApiKey } = relayerConfig;
+const runOevAuction = async (config: OevConfig, signer: Signer, txDeliveryCalldata: string) => {
+  const oevAuctionUrl = config.oevAuctionUrl!;
+  const { adapterContractAddress, networkId, oevAuctionApiKey } = config;
   if (!isEvmNetworkId(networkId)) {
     throw new Error("Non-evm networkId is not supported in fastlane.");
   }
@@ -106,7 +98,7 @@ const runOevAuction = async (
 
   try {
     const response = await axios.post<OevAuctionResponse>(oevAuctionUrl, body, {
-      timeout: relayerConfig.oevResolveAuctionTimeout,
+      timeout: config.oevResolveAuctionTimeout,
       headers: {
         ...(oevAuctionApiKey && { "x-api-key": oevAuctionApiKey }),
       },
@@ -122,11 +114,7 @@ const runOevAuction = async (
   }
 };
 
-const verifyFastlaneResponse = async (
-  provider: JsonRpcProvider,
-  tx: string,
-  relayerConfig: RelayerConfig
-) => {
+const verifyFastlaneResponse = async (provider: JsonRpcProvider, tx: string, config: OevConfig) => {
   const decodedTx = parseTransaction(tx);
   logger.log(`Decoded transaction from FastLane: ${JSON.stringify(decodedTx)}`);
   void tryToPropagateTransaction(provider, tx);
@@ -137,7 +125,7 @@ const verifyFastlaneResponse = async (
       throw error;
     }
   );
-  const checkGasPricePromise = verifyGasPrice(relayerConfig, provider, decodedTx).catch((error) => {
+  const checkGasPricePromise = verifyGasPrice(config, provider, decodedTx).catch((error) => {
     logger.log(`Failed to verify gas price: ${RedstoneCommon.stringifyError(error)}`);
 
     throw error;
@@ -170,11 +158,11 @@ const waitForTransactionMint = async (
 };
 
 const verifyGasPrice = async (
-  relayerConfig: RelayerConfig,
+  config: OevConfig,
   provider: JsonRpcProvider,
   decodedTx: Transaction
 ) => {
-  if (relayerConfig.oevVerifyGasPriceDisabled) {
+  if (config.oevVerifyGasPriceDisabled) {
     return await Promise.resolve();
   } else {
     const gasPrice = await provider.getGasPrice();
