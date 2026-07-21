@@ -101,11 +101,11 @@
       "networkId": 137,
       "currencySymbol": "POL",
       "publicRpcUrls": [
-        "https://polygon-public.nodies.app",
         "https://polygon.gateway.tenderly.co",
         "https://polygon.api.onfinality.io/public",
         "https://1rpc.io/matic",
-        "https://rpc-mainnet.matic.quiknode.pro"
+        "https://rpc-mainnet.matic.quiknode.pro",
+        "https://polygon-public.nodies.app"
       ],
       "avgBlockTimeMs": 2000,
       "multicall3": {
