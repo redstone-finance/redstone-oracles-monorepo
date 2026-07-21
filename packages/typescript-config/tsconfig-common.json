@@ -30,8 +30,5 @@
     "target": "es2022",
     "lib": ["ES2025"],
     "types": ["node", "jest"]
-  },
-  "ts-node": {
-    "files": true
   }
 }
