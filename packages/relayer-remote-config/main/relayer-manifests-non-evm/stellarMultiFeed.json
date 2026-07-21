@@ -165,6 +165,20 @@
         "deviationPercentage": 0.05,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "SolvBTC.BBN_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "CDJ26SW7PDQPKFWMPECFWTLXIMLZRBKHII563RAJMLVUEAUFIP6GCPGE",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "SolvBTC_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "CAQY3PREVJLM4Y3HK5SKWMHY5E4ULJO6B4VYQ7AK5IUQX6JC57IVIO7O",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
