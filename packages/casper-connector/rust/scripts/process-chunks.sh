@@ -6,7 +6,7 @@ total_size=$(wc -c <"$file")
 total_chunks=$(((total_size + chunk_size - 1) / chunk_size))
 
 # shellcheck disable=SC2002
-hash=$(cat "$file" | ts-node "./scripts/blake2b.ts")
+hash=$(cat "$file" | tsx "./scripts/blake2b.ts")
 
 get_cspr_value() {
   local chunk_index=$1

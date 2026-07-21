@@ -17,7 +17,7 @@
     "test": "hardhat test",
     "build-esm": "yarn clean && yarn build && esbuild test-browser-compatibility/test-script.js --outfile=test-browser-compatibility/browser-bundle.js --format=esm --bundle=true",
     "run-in-browser": "yarn build-esm && http-server test-browser-compatibility",
-    "test-browser-compatibility": "yarn build-esm && yarn global:ts-node test-browser-compatibility.ts",
+    "test-browser-compatibility": "yarn build-esm && yarn global:tsx test-browser-compatibility.ts",
     "benchmark": "hardhat test benchmarks/run-benchmarks.ts",
     "preversion": "yarn build"
   },
