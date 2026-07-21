@@ -401,6 +401,17 @@ describe("ProviderWithAgreement", () => {
           () => clock.tick(100_000)
         );
       });
+
+      it("reject a block whose timestamp is already stale on the first observation", async () => {
+        await expect(
+          testGetBlockNumber(
+            [[100, 100, 100]],
+            [100],
+            () => {},
+            () => Math.floor((Date.now() - 10 * 60 * 1_000) / 1000)
+          )
+        ).rejectedWith(/All providers failed to fetch 'getBlockNumber'/);
+      });
     });
   });
 });
@@ -408,13 +419,17 @@ describe("ProviderWithAgreement", () => {
 const testGetBlockNumber = async (
   providerResponsesPerRound: (number | "error")[][],
   expectedResults: number[],
-  clockTick = () => {}
+  clockTick = () => {},
+  blockTimestampSec: () => number = () => Math.floor(Date.now() / 1000)
 ) => {
   const mockProviders: providers.StaticJsonRpcProvider[] = [];
 
   for (let i = 0; i < providerResponsesPerRound[0].length; i++) {
     const mockProvider = new providers.StaticJsonRpcProvider(`http://${i}.mock`);
     const stubOperation = sinon.stub(mockProvider, "getBlockNumber");
+    sinon
+      .stub(mockProvider, "getBlock")
+      .callsFake(() => Promise.resolve({ timestamp: blockTimestampSec() } as never));
 
     for (let j = 0; j < providerResponsesPerRound.length; j++) {
       const response = providerResponsesPerRound[j][i];

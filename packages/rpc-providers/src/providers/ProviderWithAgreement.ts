@@ -192,23 +192,54 @@ export class ProviderWithAgreement extends ProviderWithFallback {
     });
 
     this.assertValidBlockNumber(blockNumber, providerWithIdentifier.identifier);
-    this.updateLastBlockNumber(blockNumber, providerWithIdentifier.identifier);
+    await this.updateLastBlockNumber(blockNumber, providerWithIdentifier);
     this.updateScore(providerWithIdentifier.identifier, false);
 
     return blockNumber;
   }
 
-  private updateLastBlockNumber(blockNumber: number, identifier: string) {
-    this.lastBlockNumberForProvider[identifier] ??= {
-      blockNumber,
-      changedAt: Date.now(),
-    };
+  private async updateLastBlockNumber(
+    blockNumber: number,
+    { provider, identifier }: ProviderWithIdentifier
+  ) {
+    const prevBlockResult = this.lastBlockNumberForProvider[identifier];
 
-    if (this.lastBlockNumberForProvider[identifier].blockNumber !== blockNumber) {
+    if (!RedstoneCommon.isDefined(prevBlockResult)) {
+      // First run; no history so setting `changedAt` to Date.now() would make the block
+      // pass the staleness check for MAX_BLOCK_STALENESS mins, even if the network is down
+      this.lastBlockNumberForProvider[identifier] = {
+        blockNumber,
+        changedAt: await this.getBlockTimestampMs(provider, blockNumber),
+      };
+
+      return;
+    }
+
+    if (prevBlockResult.blockNumber !== blockNumber) {
       this.lastBlockNumberForProvider[identifier] = {
         blockNumber,
         changedAt: Date.now(),
       };
+    }
+  }
+
+  private async getBlockTimestampMs(
+    provider: providers.Provider,
+    blockNumber: number
+  ): Promise<number> {
+    try {
+      const block = await RedstoneCommon.timeout(
+        provider.getBlock(blockNumber),
+        this.agreementConfig.getBlockNumberTimeoutMS
+      );
+
+      return RedstoneCommon.secsToMs(block.timestamp);
+    } catch (e) {
+      this.logger.warn(
+        `Failed to fetch block timestamp for staleness anchor, falling back to now: ${sanitizeLogMessage(String(e))}`
+      );
+
+      return Date.now();
     }
   }
 
