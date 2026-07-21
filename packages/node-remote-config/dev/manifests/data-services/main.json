@@ -9526,6 +9526,13 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "XAUm_FUNDAMENTAL/USD": {
+      "source": [
+        "matrixdock"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
