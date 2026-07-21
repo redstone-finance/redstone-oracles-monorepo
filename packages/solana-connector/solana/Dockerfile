@@ -35,7 +35,7 @@ ENV CC=clang \
 RUN <<EOF
     curl --proto '=https' --tlsv1.2 -fsSL https://deb.nodesource.com/setup_24.x | bash
     apt-get install -y --no-install-recommends nodejs
-    npm install -g ts-node@10.9.2
+    npm install -g tsx@4.23.0
     npm cache clean --force
     rm -rf /var/lib/apt/lists/* /root/.npm
 EOF

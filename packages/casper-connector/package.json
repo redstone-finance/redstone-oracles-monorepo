@@ -14,7 +14,7 @@
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "test": "yarn global:jest:cov",
-    "sample-run": "yarn global:ts-node test/e2e/sample-run.ts",
+    "sample-run": "yarn global:tsx test/e2e/sample-run.ts",
     "preversion": "yarn build",
     "pack-package": "yarn build && cd dist && npm pack"
   },

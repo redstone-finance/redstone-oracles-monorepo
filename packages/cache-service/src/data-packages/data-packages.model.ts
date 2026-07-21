@@ -42,22 +42,22 @@ export class CachedDataPackage {
   })
   timestampMilliseconds!: number;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   signature!: string;
 
-  @Prop({ required: true })
+  @Prop({ type: Boolean, required: true })
   isSignatureValid!: boolean;
 
   @Prop({ type: Types.Mixed, required: true })
   dataPoints!: DataPointPlainObj[];
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   dataServiceId!: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   signerAddress!: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   dataPackageId!: string;
 }
 

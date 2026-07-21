@@ -12,7 +12,7 @@
     "build:turbo": "yarn global:turbo build",
     "typecheck": "yarn global:tsc --noEmit",
     "typecheck:turbo": "yarn global:turbo typecheck",
-    "sample-run": "yarn global:ts-node test/sample-run.ts",
+    "sample-run": "yarn global:tsx test/sample-run.ts",
     "preversion": "yarn build",
     "pack-package": "yarn build && cd dist && npm pack",
     "lint": "yarn global:eslint .",

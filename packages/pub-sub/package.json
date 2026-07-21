@@ -19,7 +19,7 @@
     "test:integration": "yarn global:jest --testTimeout=90000 integration_tests",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
-    "run-sse-client-test": "yarn global:ts-node ./scripts/run-with-light-gateway"
+    "run-sse-client-test": "yarn global:tsx ./scripts/run-with-light-gateway"
   },
   "dependencies": {
     "@msgpack/msgpack": "^3.1.2",

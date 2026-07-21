@@ -7,7 +7,6 @@
   "exports": "./dist/index.js",
   "license": "MIT",
   "scripts": {
-    "run-ts": "yarn global:ts-node",
     "build": "yarn global:tsc -p tsconfig.build.json",
     "build:turbo": "yarn global:turbo build",
     "typecheck": "yarn global:tsc --noEmit",

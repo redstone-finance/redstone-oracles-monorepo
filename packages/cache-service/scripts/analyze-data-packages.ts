@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import config from "../src/config";
 import { formatTime, groupDataPackagesByField, queryDataPackages } from "./common";
 
-// USAGE: yarn run-ts scripts/analyze-data-packages.ts
+// USAGE: yarn global:tsx scripts/analyze-data-packages.ts
 
 const START_TIMESTAMP = Date.now() - 3 * 60 * 1000;
 const END_TIMESTAMP = Date.now();

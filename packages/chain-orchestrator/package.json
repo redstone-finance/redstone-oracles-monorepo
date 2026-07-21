@@ -6,7 +6,6 @@
   "types": "dist/src/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "run-ts": "yarn global:ts-node",
     "clean": "yarn global:ts-clean",
     "build": "yarn global:tsc -p tsconfig.build.json",
     "build:turbo": "yarn global:turbo build",

@@ -15,7 +15,7 @@ import { HARDHAT_CHAIN_ID } from "@redstone-finance/utils";
 // HOW TO RUN
 // npx hardhat node &
 // wait
-// ts-node scripts/redstone-provider-equivalence-check.ts
+// tsx scripts/redstone-provider-equivalence-check.ts
 
 const RPC_URL_ETH = "http://localhost:8545";
 const TEST_WALLET = new Wallet(

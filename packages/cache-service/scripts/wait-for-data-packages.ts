@@ -5,7 +5,7 @@ import "./set-required-missing-env-vars";
 import mongoose from "mongoose";
 import { DataPackage } from "../src/data-packages/data-packages.model";
 
-// USAGE: yarn run-ts scripts/wait-for-data-packages.ts <expected-count> <data-package-id> <mongo-url>
+// USAGE: yarn global:tsx scripts/wait-for-data-packages.ts <expected-count> <data-package-id> <mongo-url>
 // Note: This script is used by tests in `integration` package
 
 const INTERVAL_MILLISECONDS = 5000;

@@ -52,10 +52,10 @@ COPY --from=dependency-cache /root/.move /root/.move
 RUN ARCH=$(uname -m) && \
     if [ "$ARCH" = "x86_64" ]; then NODE_ARCH="x64"; elif [ "$ARCH" = "aarch64" ]; then NODE_ARCH="arm64"; else NODE_ARCH="$ARCH"; fi && \
     curl -fsSL https://nodejs.org/dist/v24.14.0/node-v24.14.0-linux-${NODE_ARCH}.tar.xz | tar -xJ -C /usr/local --strip-components=1 \
-    && npm install -g ts-node
+    && npm install -g tsx@4.23.0
 
 RUN corepack enable \
-    && corepack prepare yarn@4.5.0 --activate
+    && corepack prepare yarn@4.11.0 --activate
 
 ENV PATH="/usr/local/bin:${PATH}"
 

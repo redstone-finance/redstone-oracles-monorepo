@@ -17,7 +17,7 @@
     "compile-price-feed": "npx func-js contracts/price_feed.fc --boc contracts/price_feed.cell",
     "compile-single-feed-man": "npx func-js contracts/single_feed_man.fc --boc contracts/single_feed_man.cell",
     "compile-sample-consumer": "npx func-js contracts/sample_consumer.fc --boc contracts/sample_consumer.cell",
-    "deploy-price-manager": "yarn run-script  deployPriceManager",
+    "deploy-price-manager": "yarn run-script deployPriceManager",
     "deploy-price-feed": "yarn run-script deployPriceFeed",
     "deploy-single-feed-man": "yarn run-script deploySingleFeedMan",
     "deploy-sample-consumers": "yarn run-script deploySampleConsumers",

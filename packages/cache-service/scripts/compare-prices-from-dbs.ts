@@ -11,7 +11,7 @@ import {
 
 mongoose.set("strictQuery", false);
 
-// USAGE: yarn run-ts scripts/compare-prices-from-dbs.ts
+// USAGE: yarn global:tsx scripts/compare-prices-from-dbs.ts
 
 interface TimestampIntervals {
   startTimestamp: number;

@@ -20,7 +20,7 @@
     "lint:markdown:fix": "yarn lint:markdown --fix",
     "lint:yarn-lock": "lockfile-lint --path yarn.lock --allowed-hosts npm yarn github.com --allowed-schemes \"https:\" \"git+https:\" \"npm:\" \"workspace:\" \"patch:\"",
     "lint:circular-deps": "madge --extensions ts -c --circular .",
-    "test:all": "turbo run test  --filter=!@redstone-finance/fuel-connector --filter=!@redstone-finance/solana-connector --filter=!@redstone-finance/sui-connector --filter=!@redstone-finance/lambda-all-relayers-manifests",
+    "test:all": "turbo run test --filter=!@redstone-finance/fuel-connector --filter=!@redstone-finance/solana-connector --filter=!@redstone-finance/sui-connector --filter=!@redstone-finance/lambda-all-relayers-manifests",
     "version:all": "lerna version --no-push --no-git-tag-version",
     "publish:all": "lerna publish from-git",
     "syncpack:fix-mismatches": "syncpack fix-mismatches --types !local",
@@ -30,8 +30,8 @@
     "global:jest:cov": "cd $INIT_CWD && jest --json --coverage --testLocationInResults --outputFile=coverage/report.json",
     "global:prettier": "cd $INIT_CWD && prettier",
     "global:rollup": "cd $INIT_CWD && rollup",
-    "global:ts-node": "cd $INIT_CWD && ts-node",
-    "global:ecs-env-runner": "yarn global:ts-node --swc packages/ecs-env-runner/src/cli.ts --cwd $INIT_CWD ",
+    "global:tsx": "cd $INIT_CWD && tsx",
+    "global:ecs-env-runner": "yarn global:tsx packages/ecs-env-runner/src/cli.ts --cwd $INIT_CWD ",
     "global:tsc": "cd $INIT_CWD && tsc",
     "global:lambda-key": "echo $PACKAGE_NAME.$(git log -1 --format=%h --abbrev=8).zip",
     "global:lambda-build": "cd $INIT_CWD && tsc -p tsconfig.build.json && esbuild $INDEX_PATH --bundle --minify --platform=node --target=es2022 --alias:jsonc-parser=jsonc-parser/lib/esm/main.js --outfile=lambda-dist/index.js ${ESBUILD_EXTRA:-} && yarn global:lambda-add-node-remote-config && yarn global:lambda-add-monitoring-manifests && yarn global:lambda-add-aws-crt && yarn global:lambda-add-secp256k1",
@@ -52,8 +52,8 @@
     "global:ts-hardhat-clean": "cd $INIT_CWD && yarn global:ts-clean && rm -rf artifacts cache typechain-types",
     "global:depcheck": "cd $INIT_CWD && depcheck",
     "depcheck:all": "yarn workspaces foreach --all run global:depcheck",
-    "generate-paths-to-include-in-public-repo": "yarn global:ts-node scripts/generate-paths-to-include-in-public-repo.ts",
-    "validate-paths-to-include-in-public-repo": "yarn global:ts-node scripts/validate-paths-to-include-in-public-repo.ts"
+    "generate-paths-to-include-in-public-repo": "yarn global:tsx scripts/generate-paths-to-include-in-public-repo.ts",
+    "validate-paths-to-include-in-public-repo": "yarn global:tsx scripts/validate-paths-to-include-in-public-repo.ts"
   },
   "keywords": [],
   "author": "hatskier <Suvorovalex1997@gmail.com> (https://hatskier.com/)",
@@ -89,6 +89,7 @@
     "syncpack": "^11.2.1",
     "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
+    "tsx": "^4.23",
     "turbo": "^2.9",
     "typescript": "^6"
   },
