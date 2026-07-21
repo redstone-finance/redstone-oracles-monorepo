@@ -1,0 +1,126 @@
+{
+  "interval": 1000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 8000,
+  "minValidSourcesPercentage": 1,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 1000000000,
+      "maxDelayMilliseconds": 1000
+    }
+  },
+  "defaultBroadcasters": ["redstone-packages", "influx"],
+  "tokens": {
+    "USDT": {
+      "source": ["kraken-usd"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XMR": {
+      "source": [
+        "ws-spot-bitmart-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["crypto"]
+    },
+    "ORACLE_hyna:XMR": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:XMR": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:XMR": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:XMR_EMA_HALF_5M": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_hyna:XMR": {
+      "source": ["ws-hyperliquid-perps-hyna"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_hyna:XMR_EMA_HALF_5M": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_hyna:XMR_EMA_HALF_5D": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XMR_MARK_0": {
+      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XMR_MARK_1": {
+      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XMR_EXT": {
+      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XMR": {
+      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:XMR": {
+      "source": ["ws-hyperliquid-perps-hyna"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    }
+  }
+}
