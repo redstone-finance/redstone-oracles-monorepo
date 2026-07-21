@@ -5780,6 +5780,20 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "deJTRSY_FUNDAMENTAL/USD": {
+      "source": [
+        "ethereum-evm-fetcher-centrifuge"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "deJAAA_FUNDAMENTAL/USD": {
+      "source": [
+        "ethereum-evm-fetcher-centrifuge"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
