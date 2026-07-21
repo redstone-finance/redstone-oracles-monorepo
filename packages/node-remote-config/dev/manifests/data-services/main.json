@@ -1119,22 +1119,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "USDC.USDT": {
-      "source": [
-        "non-usd-based"
-      ],
-      "decimals": 14,
-      "denomination": "USDT",
-      "rateFeed": false
-    },
-    "USDC.DAI": {
-      "source": [
-        "non-usd-based"
-      ],
-      "decimals": 14,
-      "denomination": "DAI",
-      "rateFeed": false
-    },
     "ARB": {
       "source": [
         "binance-usdc",
@@ -7179,42 +7163,6 @@
       "denomination": "BTC",
       "rateFeed": true
     },
-    "iBERA": {
-      "source": [
-        "kodiak-berachain-wbera-500",
-        "kodiak-berachain-ibgt-3000"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "iBGT": {
-      "source": [
-        "kodiak-berachain-wbera-3000",
-        "bulla-berachain-wbera"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "iBGT/BERA": {
-      "source": [
-        "non-usd-based"
-      ],
-      "denomination": "BERA",
-      "localCacheTTL": "60m",
-      "rateFeed": false
-    },
-    "iBGT/BERA-TWAP-60": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "BERA",
-      "valueCapConfig": {
-        "lower": {
-          "value": 0.99
-        }
-      },
-      "rateFeed": false
-    },
     "PROMPT": {
       "source": [
         "bingx-usdt",
@@ -7448,15 +7396,6 @@
         "non-usd-based"
       ],
       "denomination": "HYPE",
-      "rateFeed": false
-    },
-    "AO": {
-      "source": [
-        "bybit-usdt",
-        "mexc-usdt",
-        "gate-usdt"
-      ],
-      "denomination": "USD",
       "rateFeed": false
     },
     "SPK": {
@@ -8338,25 +8277,11 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "muBOND_FUNDAMENTAL": {
-      "source": [
-        "accountable-mubond"
-      ],
-      "denomination": "USD",
-      "rateFeed": true
-    },
     "aprMON_FUNDAMENTAL": {
       "source": [
         "monad-evm-fetcher-aprmon"
       ],
       "denomination": "MON",
-      "rateFeed": true
-    },
-    "AZND_FUNDAMENTAL": {
-      "source": [
-        "accountable-aznd"
-      ],
-      "denomination": "USD",
       "rateFeed": true
     },
     "earnAUSD_FUNDAMENTAL": {
@@ -8424,20 +8349,6 @@
     "CMC20_FUNDAMENTAL": {
       "source": [
         "bnb-evm-fetcher-reserve"
-      ],
-      "denomination": "USD",
-      "rateFeed": true
-    },
-    "MSUSD_FUNDAMENTAL": {
-      "source": [
-        "accountable-msusd"
-      ],
-      "denomination": "USD",
-      "rateFeed": true
-    },
-    "MSY_FUNDAMENTAL/USD": {
-      "source": [
-        "ethereum-evm-fetcher-main-st"
       ],
       "denomination": "USD",
       "rateFeed": true

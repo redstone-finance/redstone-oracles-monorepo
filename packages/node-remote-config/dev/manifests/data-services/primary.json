@@ -482,33 +482,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "USDC.USDT": {
-      "source": [
-        "non-usd-based"
-      ],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      },
-      "denomination": "USDT",
-      "rateFeed": false
-    },
-    "USDC.DAI": {
-      "source": [
-        "non-usd-based"
-      ],
-      "decimals": 14,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      },
-      "denomination": "DAI",
-      "rateFeed": false
-    },
     "TRX": {
       "source": [
         "binance-usdc",
@@ -3042,42 +3015,6 @@
       "denomination": "ETH",
       "rateFeed": true
     },
-    "iBERA": {
-      "source": [
-        "kodiak-berachain-wbera-500",
-        "kodiak-berachain-ibgt-3000"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "iBGT": {
-      "source": [
-        "kodiak-berachain-wbera-3000",
-        "bulla-berachain-wbera"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "iBGT/BERA": {
-      "source": [
-        "non-usd-based"
-      ],
-      "denomination": "BERA",
-      "localCacheTTL": "60m",
-      "rateFeed": false
-    },
-    "iBGT/BERA-TWAP-60": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "BERA",
-      "valueCapConfig": {
-        "lower": {
-          "value": 0.99
-        }
-      },
-      "rateFeed": false
-    },
     "PROMPT": {
       "source": [
         "bingx-usdt",
@@ -3277,15 +3214,6 @@
           "maxDelayMilliseconds": 120000
         }
       }
-    },
-    "AO": {
-      "source": [
-        "bybit-usdt",
-        "mexc-usdt",
-        "gate-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
     },
     "DOGE": {
       "source": [
@@ -4249,19 +4177,6 @@
         }
       }
     },
-    "muBOND_FUNDAMENTAL": {
-      "source": [
-        "accountable-mubond"
-      ],
-      "denomination": "USD",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
     "aprMON_FUNDAMENTAL": {
       "source": [
         "monad-evm-fetcher-aprmon"
@@ -4271,19 +4186,6 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "AZND_FUNDAMENTAL": {
-      "source": [
-        "accountable-aznd"
-      ],
-      "denomination": "USD",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 0.1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4502,32 +4404,6 @@
       ],
       "denomination": "USD",
       "rateFeed": true
-    },
-    "MSUSD_FUNDAMENTAL": {
-      "source": [
-        "accountable-msusd"
-      ],
-      "denomination": "USD",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 0.1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "MSY_FUNDAMENTAL/USD": {
-      "source": [
-        "ethereum-evm-fetcher-main-st"
-      ],
-      "denomination": "USD",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
     },
     "HYPE/USDC": {
       "source": [

@@ -11,9 +11,6 @@
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "pufETH": {
-      "priceFeedAddress": "0xC49F0Dd98F38C525A7ce15E73E60675456F3a161"
-    },
     "STONE": {
       "priceFeedAddress": "0xd9a66Ff1D660aD943F48e9c606D09eA672f312E8"
     },

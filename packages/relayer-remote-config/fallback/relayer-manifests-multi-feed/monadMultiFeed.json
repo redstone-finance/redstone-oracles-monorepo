@@ -119,16 +119,6 @@
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
     },
-    "muBOND_FUNDAMENTAL": {
-      "priceFeedAddress": "0x61669df14B681010A5cfaefc4688Cf9e079ddE5D",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
-    "AZND_FUNDAMENTAL": {
-      "priceFeedAddress": "0x63Bb491346fCC8695244D811F0c3501E6C2e8d25"
-    },
     "earnAUSD_FUNDAMENTAL": {
       "priceFeedAddress": "0xD1136a8C1E5a8Ff204d6875b51158b5Ef1858f60"
     },
