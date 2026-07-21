@@ -15,7 +15,7 @@
     "typecheck:turbo": "yarn global:turbo typecheck",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
-    "sample-run": "yarn global:ts-node scripts/sample-run.ts"
+    "sample-run": "yarn global:tsx scripts/sample-run.ts"
   },
   "dependencies": {
     "@ethersproject/abi": "^5.6.3",
