@@ -4222,6 +4222,106 @@
           "maxDelayMilliseconds": 1000
         }
       }
+    },
+
+    "AMAT": {
+      "source": ["alltick-stocks-api-deferred"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_xyz:AMAT": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-xyz": 10,
+        "ws-hydromancer-perps-xyz": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_xyz:AMAT": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-xyz": 10,
+        "ws-hydromancer-perps-xyz": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_xyz:AMAT": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-xyz": 10,
+        "ws-hydromancer-perps-xyz": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_xyz:AMAT_EMA_HALF_5M": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_xyz:AMAT": {
+      "source": ["ws-hyperliquid-perps-xyz"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_xyz:AMAT_EMA_HALF_5M": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_xyz:AMAT_EMA_HALF_5D": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "xyz:AMAT_MARK_0": {
+      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "xyz:AMAT_MARK_1": {
+      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "xyz:AMAT_EXT": {
+      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "xyz:AMAT": {
+      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_xyz:AMAT": {
+      "source": ["ws-hyperliquid-perps-xyz"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
     }
   }
 }
