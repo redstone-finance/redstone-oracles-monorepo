@@ -106,32 +106,11 @@
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
     },
-    "iBERA": {
-      "priceFeedAddress": "0xC9e11c60e24BEF478cC999fA9fA2d89cC098A86e",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 3600000
-      }
-    },
-    "iBGT": {
-      "priceFeedAddress": "0x243507C8C114618d7C8AD94b51118dB7b4e32ECe",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 3600000
-      }
-    },
     "PYUSD": {
       "priceFeedAddress": "0x4cEC96A68cb9A979621b104F3C94884be1a66da0",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
-    "iBGT/BERA-TWAP-60": {
-      "priceFeedAddress": "0x9ED559c2Ad1562aE8e919691A84A3320f547B248",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 21600000
       }
     },
     "IR": {
