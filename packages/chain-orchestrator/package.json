@@ -25,14 +25,11 @@
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/on-chain-relayer-common": "workspace:*",
     "@redstone-finance/rpc-providers": "workspace:*",
-    "@redstone-finance/sdk": "workspace:*",
-    "@redstone-finance/solana-connection": "workspace:*",
     "@redstone-finance/solana-connector": "workspace:*",
     "@redstone-finance/stellar-connector": "workspace:*",
     "@redstone-finance/sui-connector": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "ethers": "^5.7.2",
-    "lodash": "^4.17.23",
     "zod": "^4.1.12"
   },
   "files": [

@@ -1,4 +1,5 @@
 import { ChainTypeEnum, deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
+import { forceGetBlockProvider } from "../provider/chain-provider";
 import { getCantonContractAdapter } from "./get-canton-contract-adapter";
 import { getMoveContractAdapter } from "./get-move-contract-adapter";
 import { getSolanaContractAdapter } from "./get-solana-contract-adapter";
@@ -6,7 +7,14 @@ import { getStellarContractAdapter } from "./get-stellar-contract-adapter";
 import { getSuiContractAdapter } from "./get-sui-contract-adapter";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export function getWritableNonEvmContractAdapter(relayerConfig: PartialRelayerConfig) {
+export async function getWritableNonEvmContractAdapter(relayerConfig: PartialRelayerConfig) {
+  const blockProvider = await forceGetBlockProvider(relayerConfig.networkId, relayerConfig.rpcUrls);
+  const adapter = getNonEvmContractAdapter(relayerConfig);
+
+  return { adapter, blockProvider };
+}
+
+function getNonEvmContractAdapter(relayerConfig: PartialRelayerConfig) {
   const { chainType } = deconstructNetworkId(relayerConfig.networkId);
 
   switch (chainType) {

@@ -1,14 +1,19 @@
 import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finance/chain-configs";
-import { getRelayerMetricReporter } from "@redstone-finance/chain-orchestrator";
 import { MegaProviderBuilder, ProviderDecorators } from "@redstone-finance/rpc-providers";
 import { isEvmNetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
-import { RelayerConfig } from "../../config/RelayerConfig";
-import { isRelayerTelemetryEnabled } from "../../config/relayer-telemetry";
+import { EvmRelayerConfig } from "./partial-relayer-config";
+import { getRelayerMetricReporter } from "./rpc-metric-reporter";
 
 let cachedProvider: providers.Provider | undefined;
 
 const ACCEPTABLE_BLOCK_DIFF_IN_MS = 10_000;
+
+const isTelemetryEnabled = (config: EvmRelayerConfig) =>
+  !!config.telemetryAuthorizationToken &&
+  !!config.telemetryUrl &&
+  !!config.telemetryBatchSendingIntervalMs;
+
 const makeElectBlock = (acceptableBlockDiff: number) => (blockNumbers: number[]) => {
   const sortedBlockNumber = [...blockNumbers].sort((a, b) => b - a);
   const firstBlockNumber = sortedBlockNumber.at(-1)!;
@@ -23,7 +28,7 @@ const makeElectBlock = (acceptableBlockDiff: number) => (blockNumbers: number[])
   }
 };
 
-export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
+export const getRelayerProvider = (relayerConfig: EvmRelayerConfig) => {
   if (cachedProvider) {
     return cachedProvider;
   }
@@ -47,7 +52,7 @@ export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
     .addDecorator(
       (factory) =>
         ProviderDecorators.SendMetricDecorator(factory, getRelayerMetricReporter(relayerConfig)),
-      isRelayerTelemetryEnabled(relayerConfig)
+      isTelemetryEnabled(relayerConfig)
     )
     .agreement(
       {

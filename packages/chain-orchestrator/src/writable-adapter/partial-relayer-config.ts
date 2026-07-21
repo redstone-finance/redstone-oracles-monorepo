@@ -1,5 +1,6 @@
+import { OevConfig } from "@redstone-finance/evm-adapters";
 import { AdapterType } from "@redstone-finance/on-chain-relayer-common";
-import { NetworkId } from "@redstone-finance/utils";
+import { NetworkId, Tx } from "@redstone-finance/utils";
 
 export type PartialRelayerConfig = {
   networkId: NetworkId;
@@ -19,3 +20,30 @@ export type PartialRelayerConfig = {
   telemetryUrl?: string;
   telemetryAuthorizationToken?: string;
 };
+
+type EvmTxDeliveryConfig = {
+  expectedTxDeliveryTimeInMS: number;
+  singleProviderOperationTimeout: number;
+  allProvidersOperationTimeout?: number;
+  getBlockNumberTimeout: number;
+  useMulticallProvider?: boolean;
+  ethersPollingIntervalInMs?: number;
+  telemetryBatchSendingIntervalMs?: number;
+  twoDimensionalFees?: boolean;
+  isAuctionModel?: boolean;
+  isAuctionModelV2?: boolean;
+  disableCustomGasOracle?: boolean;
+  numberOfBlocksForFeeHistory?: number;
+  newestBlockForFeeHistory?: Tx.NewestBlockType;
+  fastBroadcastMode?: boolean;
+  txNonceStaleThresholdMs?: number;
+  minTxDeliveryTimeMs?: number;
+  splitWaitingForTxRetries?: number;
+  getSingleNonceTimeoutMs?: number;
+  minAggregatedRewardsPerBlockForPercentile?: number;
+  rewardsPerBlockAggregationAlgorithm: Tx.RewardsPerBlockAggregationAlgorithm;
+  auctionModelGasMultipliers?: number[];
+  oevMultiAuctions?: boolean;
+};
+
+export type EvmRelayerConfig = PartialRelayerConfig & EvmTxDeliveryConfig & OevConfig;

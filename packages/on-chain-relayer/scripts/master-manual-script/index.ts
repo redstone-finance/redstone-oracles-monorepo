@@ -1,11 +1,13 @@
+import {
+  clearCachedRelayerProvider,
+  clearCachedTxDeliveryMan,
+} from "@redstone-finance/chain-orchestrator";
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import { AdapterType, ManifestReading } from "@redstone-finance/on-chain-relayer-common";
 import { NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 import { runIteration } from "../../src";
 import { config, ConsciouslyInvoked } from "../../src/config/config";
-import { clearCachedRelayerProvider } from "../../src/core/contract-interactions/get-relayer-provider";
-import { clearCachedTxDeliveryMan } from "../../src/core/TxDeliveryManSingleton";
 import { getContractFacade } from "../../src/facade/get-contract-facade";
 import { relayerNameToManualKeyArn } from "./relayer-name-to-manual-key";
 

@@ -3,11 +3,11 @@ import {
   TxDeliveryManSupportedProviders,
   TxDeliverySigner,
 } from "@redstone-finance/rpc-providers";
-import { RelayerConfig } from "../config/RelayerConfig";
+import { EvmRelayerConfig } from "./partial-relayer-config";
 
 let deliveryMan: TxDeliveryMan | undefined = undefined;
 export const getTxDeliveryMan = (
-  relayerConfig: RelayerConfig,
+  relayerConfig: EvmRelayerConfig,
   signer: TxDeliverySigner,
   provider: TxDeliveryManSupportedProviders
 ) => {
