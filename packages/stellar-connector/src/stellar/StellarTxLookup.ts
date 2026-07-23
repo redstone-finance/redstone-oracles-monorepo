@@ -1,3 +1,4 @@
+import { hexlify } from "@ethersproject/bytes";
 import {
   MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE,
   NormalizedContractTx,
@@ -6,7 +7,6 @@ import {
 } from "@redstone-finance/multichain-kit";
 import { consts } from "@redstone-finance/protocol";
 import { Address, rpc, xdr } from "@stellar/stellar-sdk";
-import { hexlify } from "ethers/lib/utils";
 import { StellarClient } from "../client/StellarClient";
 
 export class StellarTxLookup extends RangeScanTxLookup<rpc.Api.TransactionInfo> {

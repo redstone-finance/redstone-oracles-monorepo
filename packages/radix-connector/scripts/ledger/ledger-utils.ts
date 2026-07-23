@@ -1,3 +1,4 @@
+import { hexlify } from "@ethersproject/bytes";
 import Aptos from "@ledgerhq/hw-app-aptos";
 import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
 import {
@@ -8,7 +9,6 @@ import {
   SignatureWithPublicKey,
   TransactionBuilderIntentSignaturesStep,
 } from "@radixdlt/radix-engine-toolkit";
-import { hexlify } from "ethers/lib/utils";
 import { IRadixSigner } from "../../src";
 
 export class LedgerSigner implements IRadixSigner {

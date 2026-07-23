@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import { ICasperConnection } from "../../src/casper/ICasperConnection";
 import {
   ENTRY_POINT_GET_PRICE_AND_TIMESTAMP,

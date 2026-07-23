@@ -1,5 +1,5 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import { expect } from "chai";
-import { BigNumber } from "ethers";
 import { ethers } from "hardhat";
 import { SampleRedstoneDefaultsLib } from "../../typechain-types";
 import { getBlockTimestampMilliseconds } from "../tests-common";

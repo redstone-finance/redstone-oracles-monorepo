@@ -1,5 +1,5 @@
 import { splitSignature } from "@ethersproject/bytes";
-import { ethers } from "ethers";
+import { Wallet } from "ethers";
 import { UniversalSigner } from "../src";
 
 const PRIVATE_KEY_FOR_TESTS = "0x1111111111111111111111111111111111111111111111111111111111111111";
@@ -26,7 +26,7 @@ describe("UniversalSigner", () => {
       PRIVATE_KEY_FOR_TESTS
     );
     const recoveredSigner = UniversalSigner.recoverSigner(stringifiableData, signature);
-    expect(recoveredSigner).toBe(new ethers.Wallet(PRIVATE_KEY_FOR_TESTS).address);
+    expect(recoveredSigner).toBe(new Wallet(PRIVATE_KEY_FOR_TESTS).address);
   });
 
   test("Should not verify incorrectly signed data", () => {
@@ -38,11 +38,11 @@ describe("UniversalSigner", () => {
       [...stringifiableData, { hoho: 100 }],
       signature
     );
-    expect(recoveredSigner).not.toBe(new ethers.Wallet(PRIVATE_KEY_FOR_TESTS).address);
+    expect(recoveredSigner).not.toBe(new Wallet(PRIVATE_KEY_FOR_TESTS).address);
   });
 
   test("Should sign with Ethereum Hash Message", async () => {
-    const wallet = new ethers.Wallet(PRIVATE_KEY_FOR_TESTS);
+    const wallet = new Wallet(PRIVATE_KEY_FOR_TESTS);
     const testMessage = "test-message";
     const signature = await UniversalSigner.signWithEthereumHashMessage(wallet, testMessage);
     expect(signature).toBe(TEST_MESSAGE_SIGNATURE);
@@ -54,7 +54,7 @@ describe("UniversalSigner", () => {
       testMessage,
       TEST_MESSAGE_SIGNATURE
     );
-    expect(recoveredAddress).toBe(new ethers.Wallet(PRIVATE_KEY_FOR_TESTS).address);
+    expect(recoveredAddress).toBe(new Wallet(PRIVATE_KEY_FOR_TESTS).address);
   });
 
   test("Should properly verify base signatures", () => {
@@ -105,7 +105,7 @@ describe("UniversalSigner", () => {
       PRIVATE_KEY_FOR_TESTS
     );
     const recoveredSigner = UniversalSigner.recoverSigner(stringifiableData, signature);
-    expect(recoveredSigner).toBe(new ethers.Wallet(PRIVATE_KEY_FOR_TESTS).address);
+    expect(recoveredSigner).toBe(new Wallet(PRIVATE_KEY_FOR_TESTS).address);
 
     expect(() =>
       UniversalSigner.recoverSigner(stringifiableData, fixSignatureForMalleability(signature))

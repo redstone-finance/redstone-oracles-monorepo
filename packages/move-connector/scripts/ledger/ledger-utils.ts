@@ -6,9 +6,9 @@ import {
   Ed25519Signature,
   generateSigningMessageForTransaction,
 } from "@aptos-labs/ts-sdk";
+import { hexlify } from "@ethersproject/bytes";
 import Aptos from "@ledgerhq/hw-app-aptos";
 import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
-import { hexlify } from "ethers/lib/utils";
 
 export type AptosLedger = Aptos;
 

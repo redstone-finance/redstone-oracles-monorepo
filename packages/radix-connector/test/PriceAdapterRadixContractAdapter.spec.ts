@@ -1,6 +1,6 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import { NetworkId } from "@radixdlt/radix-engine-toolkit";
 import { ContractParamsProviderMock } from "@redstone-finance/sdk";
-import { BigNumber } from "ethers";
 import {
   PriceAdapterRadixContractAdapter,
   PriceAdapterRadixContractConnector,

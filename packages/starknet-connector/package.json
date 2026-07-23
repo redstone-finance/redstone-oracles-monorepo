@@ -19,12 +19,12 @@
     "lint:fix": "yarn global:eslint --fix ."
   },
   "dependencies": {
+    "@ethersproject/bignumber": "^5.7.0",
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/multichain-kit-legacy": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "dotenv": "^16.0.3",
-    "ethers": "^5.7.2",
     "starknet": "^6.6.6",
     "zod": "^4.1.12"
   },

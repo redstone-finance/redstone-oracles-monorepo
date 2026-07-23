@@ -1,7 +1,7 @@
 import { DataPackage } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
-import { ethers } from "ethers";
+import { Wallet } from "ethers";
 import {
   DataPackagesRequestParams,
   DataPackagesResponseStorage,
@@ -21,7 +21,7 @@ import {
 import { server } from "./mocks/server";
 
 const TEST_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
-const MOCK_WALLET = new ethers.Wallet(TEST_PRIVATE_KEY);
+const MOCK_WALLET = new Wallet(TEST_PRIVATE_KEY);
 
 const getReqParams = (urls?: string[]): DataPackagesRequestParams => {
   return {
@@ -533,7 +533,7 @@ describe("request-data-packages", () => {
       dataPackageId: "BTC",
     }).sign(MOCK_WALLET.privateKey);
 
-    const mockWallet2 = ethers.Wallet.createRandom();
+    const mockWallet2 = Wallet.createRandom();
     const signedDataPackageByNOTAuthorizedSigner = DataPackage.fromObj({
       dataPoints: [{ dataFeedId: "BTC", value: 30000 }],
       timestampMilliseconds: 1654353400000,

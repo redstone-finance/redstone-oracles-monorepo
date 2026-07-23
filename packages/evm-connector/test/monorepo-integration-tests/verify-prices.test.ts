@@ -1,6 +1,6 @@
+import { BigNumber } from "@ethersproject/bignumber";
+import { formatBytes32String } from "@ethersproject/strings";
 import { expect } from "chai";
-import { BigNumber } from "ethers";
-import { formatBytes32String } from "ethers/lib/utils";
 import { ethers } from "hardhat";
 import { MOCK_SIGNERS, WrapperBuilder } from "../../src/index";
 import { SampleForLocalhostMockTest } from "../../typechain-types";

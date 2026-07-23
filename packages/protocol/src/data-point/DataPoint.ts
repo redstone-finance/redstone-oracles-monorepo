@@ -1,4 +1,5 @@
-import { base64, concat } from "ethers/lib/utils";
+import * as base64 from "@ethersproject/base64";
+import { concat } from "@ethersproject/bytes";
 import { Serializable } from "../common/Serializable";
 import { ConvertibleToBytes32, convertStringToBytes32 } from "../common/utils";
 import type { INumericDataPoint } from "./NumericDataPoint";
