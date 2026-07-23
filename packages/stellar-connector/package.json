@@ -43,6 +43,7 @@
     "sep-40-add-feeds-tx": "yarn global:tsx scripts/ledger/sep-40/add-feeds-tx.ts",
     "sep-40-remove-feeds-tx": "yarn global:tsx scripts/ledger/sep-40/remove-feeds-tx.ts",
     "sep-40-update-feeds-tx": "yarn global:tsx scripts/ledger/sep-40/update-feeds-tx.ts",
+    "sep-40-replace-feed-id-tx": "yarn global:tsx scripts/ledger/sep-40/replace-feed-id-tx.ts",
     "sep-40-set-resolution-tx": "yarn global:tsx scripts/ledger/sep-40/set-resolution-tx.ts",
     "extend-sep-40-ttl": "yarn global:tsx scripts/extend-sep-40-ttl.ts"
   },
