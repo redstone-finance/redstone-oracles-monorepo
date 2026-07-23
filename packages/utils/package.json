@@ -17,8 +17,13 @@
     "lint:fix": "yarn global:eslint --fix ."
   },
   "dependencies": {
+    "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/bytes": "^5.6.1",
+    "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/logger": "^5.7.0",
     "@ethersproject/providers": "^5.6.8",
+    "@ethersproject/sha2": "^5.7.0",
+    "@ethersproject/units": "^5.7.0",
     "@types/lodash": "^4.14.195",
     "axios": "^1.15.2",
     "consola": "^3.4.2",

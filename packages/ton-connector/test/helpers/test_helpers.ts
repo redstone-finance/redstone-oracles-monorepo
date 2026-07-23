@@ -1,3 +1,5 @@
+import { BigNumber } from "@ethersproject/bignumber";
+import { arrayify, hexlify } from "@ethersproject/bytes";
 import { RedstonePayload } from "@redstone-finance/protocol";
 import {
   ContractParamsProvider,
@@ -6,8 +8,6 @@ import {
 } from "@redstone-finance/sdk";
 import { MathUtils, RedstoneCommon } from "@redstone-finance/utils";
 import { compile } from "@ton/blueprint";
-import { BigNumber } from "ethers";
-import { arrayify, hexlify } from "ethers/lib/utils";
 import fs from "fs";
 import path from "path";
 import { createTestNetwork } from "./sandbox_helpers";

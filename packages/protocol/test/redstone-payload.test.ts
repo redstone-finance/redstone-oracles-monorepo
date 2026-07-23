@@ -1,4 +1,5 @@
-import { arrayify, hexlify, toUtf8Bytes, toUtf8String } from "ethers/lib/utils";
+import { arrayify, hexlify } from "@ethersproject/bytes";
+import { toUtf8Bytes, toUtf8String } from "@ethersproject/strings";
 import { DataPackage, NumericDataPoint, RedstonePayload, SignedDataPackage } from "../src";
 import { hexlifyWithout0xPrefix } from "../src/common/utils";
 

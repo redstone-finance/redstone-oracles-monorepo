@@ -1,7 +1,7 @@
+import { hexlify } from "@ethersproject/bytes";
 import { RadixEngineToolkit } from "@radixdlt/radix-engine-toolkit";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
-import { hexlify } from "ethers/lib/utils";
 import { z } from "zod";
 import { COMPILED_TRANSACTION } from "./config";
 import { decompileIntent } from "./decompile-into-intent";

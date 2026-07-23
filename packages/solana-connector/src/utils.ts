@@ -1,6 +1,6 @@
+import { arrayify } from "@ethersproject/bytes";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Keypair } from "@solana/web3.js";
-import { utils } from "ethers";
 import { z } from "zod";
 
 export function hexToU8Array(hex: string): Uint8Array {
@@ -28,7 +28,7 @@ const BYTE_LENGTHS = {
 };
 
 export function makeKeypair(privateKeyInput: number[] | string | Uint8Array) {
-  const privateKey = utils.arrayify(privateKeyInput, { allowMissingPrefix: true });
+  const privateKey = arrayify(privateKeyInput, { allowMissingPrefix: true });
   const privateKeyBuffer = Buffer.from(privateKey);
 
   const isValidLength =

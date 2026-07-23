@@ -35,6 +35,9 @@
     "test": "yarn global:jest:cov"
   },
   "dependencies": {
+    "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/bytes": "^5.6.1",
+    "@ethersproject/strings": "^5.7.0",
     "@orbs-network/ton-access": "^2.3.3",
     "@redstone-finance/multichain-kit-legacy": "workspace:*",
     "@redstone-finance/protocol": "workspace:*",
@@ -43,8 +46,7 @@
     "@ton-community/func-js": "^0.11.0",
     "@ton/core": "^0.63.1",
     "@ton/crypto": "^3.3.0",
-    "@ton/ton": "^16.3.0",
-    "ethers": "^5.7.2"
+    "@ton/ton": "^16.3.0"
   },
   "devDependencies": {
     "@tact-lang/compiler": "^1.6.13",

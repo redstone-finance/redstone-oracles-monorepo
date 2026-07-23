@@ -1,10 +1,10 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import { LegacyPricesContractAdapter } from "@redstone-finance/multichain-kit-legacy";
 import {
   ContractData,
   ContractParamsProvider,
   DataPackagesRequestParams,
 } from "@redstone-finance/sdk";
-import { BigNumber } from "ethers";
 import { zip } from "lodash";
 
 export async function getContractDataFromExtendedPricesContractAdapter(

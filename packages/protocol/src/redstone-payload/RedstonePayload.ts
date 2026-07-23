@@ -1,4 +1,5 @@
-import { BytesLike, concat, isBytes, toUtf8Bytes } from "ethers/lib/utils";
+import { BytesLike, concat, isBytes } from "@ethersproject/bytes";
+import { toUtf8Bytes } from "@ethersproject/strings";
 import { Serializable } from "../common/Serializable";
 import {
   DATA_PACKAGES_COUNT_BS,

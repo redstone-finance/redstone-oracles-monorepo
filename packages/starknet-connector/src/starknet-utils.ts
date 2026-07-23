@@ -1,4 +1,4 @@
-import { BigNumberish } from "ethers";
+import { BigNumberish } from "@ethersproject/bignumber";
 import { Result } from "starknet";
 
 export function getNumberFromStarknetResult(value: Result | BigNumberish) {

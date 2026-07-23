@@ -1,15 +1,17 @@
-import { isBytesLike, SignatureLike, splitSignature } from "@ethersproject/bytes";
-import { Signer, Wallet } from "ethers";
 import {
   arrayify,
-  computeAddress,
   hexlify,
+  isBytesLike,
   joinSignature,
-  keccak256,
-  SigningKey,
-  toUtf8Bytes,
-  verifyMessage,
-} from "ethers/lib/utils";
+  SignatureLike,
+  splitSignature,
+} from "@ethersproject/bytes";
+import { keccak256 } from "@ethersproject/keccak256";
+import { SigningKey } from "@ethersproject/signing-key";
+import { toUtf8Bytes } from "@ethersproject/strings";
+import { computeAddress } from "@ethersproject/transactions";
+import { verifyMessage } from "@ethersproject/wallet";
+import { Signer, Wallet } from "ethers";
 import { ecdsaRecover } from "secp256k1";
 
 const RS_SIGNATURE_LENGTH = 64;

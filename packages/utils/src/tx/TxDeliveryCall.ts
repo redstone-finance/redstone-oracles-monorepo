@@ -1,5 +1,5 @@
+import { PopulatedTransaction } from "@ethersproject/contracts";
 import { TransactionRequest } from "@ethersproject/providers";
-import { PopulatedTransaction } from "ethers";
 
 /**
  * All values have to resolve to hex values

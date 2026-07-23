@@ -1,6 +1,6 @@
+import { arrayify, hexlify } from "@ethersproject/bytes";
 import { PublicKey, RadixEngineToolkit } from "@radixdlt/radix-engine-toolkit";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { arrayify, hexlify } from "ethers/lib/utils";
 import { publicKeyConvert } from "secp256k1";
 import { z } from "zod";
 import {} from "./constants";

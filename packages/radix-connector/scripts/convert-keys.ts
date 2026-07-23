@@ -1,5 +1,5 @@
-import { Wallet } from "ethers";
-import { arrayify, hexlify } from "ethers/lib/utils";
+import { arrayify, hexlify } from "@ethersproject/bytes";
+import { Wallet } from "@ethersproject/wallet";
 import { publicKeyConvert } from "secp256k1";
 import { makeRadixClient, NETWORK, PRIVATE_KEY } from "./constants";
 

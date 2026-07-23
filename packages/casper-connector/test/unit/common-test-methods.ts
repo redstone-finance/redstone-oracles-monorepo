@@ -1,5 +1,5 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import { RuntimeArgs } from "casper-js-sdk";
-import { BigNumber } from "ethers";
 import { ICasperConnection } from "../../src/casper/ICasperConnection";
 import { decodeHex, decodeStringCLList } from "../../src/casper/utils";
 import { CasperContractAdapter } from "../../src/contracts/CasperContractAdapter";

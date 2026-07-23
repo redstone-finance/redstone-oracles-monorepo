@@ -1,5 +1,6 @@
+import { hexlify } from "@ethersproject/bytes";
+import { toUtf8Bytes } from "@ethersproject/strings";
 import { consts } from "@redstone-finance/protocol";
-import { hexlify, toUtf8Bytes } from "ethers/lib/utils";
 import {
   DATA_PACKAGE_DATA_1,
   DATA_PACKAGE_DATA_2,

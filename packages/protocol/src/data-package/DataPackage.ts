@@ -1,15 +1,9 @@
-import type { Signature } from "ethers";
-import {
-  arrayify,
-  base64,
-  computeAddress,
-  concat,
-  hexlify,
-  joinSignature,
-  keccak256,
-  SigningKey,
-  splitSignature,
-} from "ethers/lib/utils";
+import * as base64 from "@ethersproject/base64";
+import type { Signature } from "@ethersproject/bytes";
+import { arrayify, concat, hexlify, joinSignature, splitSignature } from "@ethersproject/bytes";
+import { keccak256 } from "@ethersproject/keccak256";
+import { SigningKey } from "@ethersproject/signing-key";
+import { computeAddress } from "@ethersproject/transactions";
 import {
   DATA_POINT_VALUE_BYTE_SIZE_BS,
   DATA_POINTS_COUNT_BS,

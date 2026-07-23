@@ -1,5 +1,5 @@
+import { hexlify, hexZeroPad } from "@ethersproject/bytes";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { hexlify, hexZeroPad } from "ethers/lib/utils";
 import { readFileSync } from "fs";
 import { Account, BytesLike, ContractFactory, DeployContractOptions, StorageSlot } from "fuels";
 import path from "path";

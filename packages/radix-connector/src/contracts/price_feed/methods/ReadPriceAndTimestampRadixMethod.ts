@@ -1,5 +1,5 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import { PriceAndTimestamp } from "@redstone-finance/multichain-kit";
-import { BigNumber } from "ethers";
 import { ValueProxyRadixInvocation } from "../../../radix/RadixInvocation";
 import { RadixTransaction } from "../../../radix/RadixTransaction";
 

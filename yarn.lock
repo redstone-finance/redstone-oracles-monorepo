@@ -3951,7 +3951,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/base64@npm:5.8.0, @ethersproject/base64@npm:^5.8.0":
+"@ethersproject/base64@npm:5.8.0, @ethersproject/base64@npm:^5.7.0, @ethersproject/base64@npm:^5.8.0":
   version: 5.8.0
   resolution: "@ethersproject/base64@npm:5.8.0"
   dependencies:
@@ -4168,7 +4168,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/sha2@npm:5.8.0, @ethersproject/sha2@npm:^5.8.0":
+"@ethersproject/sha2@npm:5.8.0, @ethersproject/sha2@npm:^5.7.0, @ethersproject/sha2@npm:^5.8.0":
   version: 5.8.0
   resolution: "@ethersproject/sha2@npm:5.8.0"
   dependencies:
@@ -4193,7 +4193,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/solidity@npm:5.8.0":
+"@ethersproject/solidity@npm:5.8.0, @ethersproject/solidity@npm:^5.7.0":
   version: 5.8.0
   resolution: "@ethersproject/solidity@npm:5.8.0"
   dependencies:
@@ -4235,7 +4235,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/units@npm:5.8.0":
+"@ethersproject/units@npm:5.8.0, @ethersproject/units@npm:^5.7.0":
   version: 5.8.0
   resolution: "@ethersproject/units@npm:5.8.0"
   dependencies:
@@ -8365,6 +8365,7 @@ __metadata:
   dependencies:
     "@canton-network/core-token-standard-service": "npm:^1.2.3"
     "@canton-network/wallet-sdk": "npm:1.2.1"
+    "@ethersproject/bytes": "npm:^5.6.1"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
@@ -8372,7 +8373,6 @@ __metadata:
     axios: "npm:^1.15.2"
     decimal.js: "npm:^10.4.3"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.23"
     openapi-typescript-codegen: "npm:^0.29.0"
     secp256k1: "npm:^5.0.1"
@@ -8384,6 +8384,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/casper-connector@workspace:packages/casper-connector"
   dependencies:
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/strings": "npm:^5.7.0"
     "@noble/hashes": "npm:^1.3.3"
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/multichain-kit-legacy": "workspace:*"
@@ -8392,7 +8395,6 @@ __metadata:
     axios: "npm:^1.15.2"
     casper-js-sdk: "npm:^2.15.5"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     node-jq: "npm:^6.0.0"
     zod: "npm:^4.1.12"
   languageName: unknown
@@ -8485,6 +8487,7 @@ __metadata:
   resolution: "@redstone-finance/cli@workspace:packages/cli"
   dependencies:
     "@ethersproject/abi": "npm:^5.6.3"
+    "@ethersproject/address": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
     "@nomiclabs/hardhat-ethers": "npm:^2.0.6"
@@ -8501,7 +8504,6 @@ __metadata:
     chai: "npm:^4.3.10"
     chai-as-promised: "npm:^7.1.1"
     chalk: "npm:^4.1.2"
-    ethers: "npm:^5.7.2"
     hardhat: "npm:^2.28.6"
     hardhat-gas-reporter: "npm:^1.0.9"
     prompts: "npm:^2.4.2"
@@ -8518,9 +8520,17 @@ __metadata:
   dependencies:
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/address": "npm:^5.7.0"
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
     "@ethersproject/constants": "npm:^5.7.0"
     "@ethersproject/contracts": "npm:^5.7.0"
+    "@ethersproject/keccak256": "npm:^5.7.0"
+    "@ethersproject/properties": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
+    "@ethersproject/solidity": "npm:^5.7.0"
+    "@ethersproject/strings": "npm:^5.7.0"
+    "@ethersproject/transactions": "npm:^5.7.0"
+    "@ethersproject/units": "npm:^5.7.0"
     "@ledgerhq/hw-app-eth": "npm:6.42.1"
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
@@ -8664,7 +8674,12 @@ __metadata:
   resolution: "@redstone-finance/eth-contracts@workspace:packages/eth-contracts"
   dependencies:
     "@ethersproject/abi": "npm:^5.6.3"
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/keccak256": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
+    "@ethersproject/strings": "npm:^5.7.0"
+    "@ethersproject/transactions": "npm:^5.7.0"
+    "@ethersproject/units": "npm:^5.7.0"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
     "@nomicfoundation/hardhat-toolbox": "npm:^2.0.2"
@@ -8691,9 +8706,16 @@ __metadata:
     "@chainlink/contracts": "npm:1.2.0"
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/abstract-provider": "npm:^5.7.0"
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/constants": "npm:^5.7.0"
     "@ethersproject/contracts": "npm:^5.7.0"
     "@ethersproject/logger": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
+    "@ethersproject/solidity": "npm:^5.7.0"
+    "@ethersproject/strings": "npm:^5.7.0"
+    "@ethersproject/transactions": "npm:^5.7.0"
+    "@ethersproject/units": "npm:^5.7.0"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
     "@nomicfoundation/hardhat-toolbox": "npm:^2.0.2"
@@ -8732,8 +8754,11 @@ __metadata:
   resolution: "@redstone-finance/evm-connector@workspace:packages/evm-connector"
   dependencies:
     "@ethersproject/abi": "npm:^5.6.3"
+    "@ethersproject/bignumber": "npm:^5.7.0"
     "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/properties": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
+    "@ethersproject/strings": "npm:^5.7.0"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
     "@nomicfoundation/hardhat-toolbox": "npm:^2.0.2"
@@ -8801,7 +8826,13 @@ __metadata:
     "@coral-xyz/anchor": "npm:0.30.1"
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/abstract-provider": "npm:^5.7.0"
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
     "@ethersproject/constants": "npm:^5.7.0"
+    "@ethersproject/keccak256": "npm:^5.7.0"
+    "@ethersproject/sha2": "npm:^5.7.0"
+    "@ethersproject/strings": "npm:^5.7.0"
+    "@ethersproject/units": "npm:^5.7.0"
     "@googleapis/gmail": "npm:^16.1.1"
     "@meteora-ag/dlmm": "npm:^1.9.3"
     "@orca-so/common-sdk": "npm:^0.7.0"
@@ -8854,12 +8885,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/fuel-connector@workspace:packages/fuel-connector"
   dependencies:
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/multichain-kit-legacy": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     fuels: "npm:^0.97.0"
     lodash: "npm:^4.17.23"
     redstone-api: "npm:^0.4.13"
@@ -8891,7 +8923,6 @@ __metadata:
     chai: "npm:^4.3.10"
     dotenv: "npm:^16.0.3"
     eslint-import-resolver-typescript: "npm:^4.4.4"
-    ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.23"
     mocha: "npm:^11"
     solidity-coverage: "npm:^0.8.12"
@@ -8936,6 +8967,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/hl-hip3@workspace:packages/hl-hip3"
   dependencies:
+    "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/hash": "npm:^5.7.0"
+    "@ethersproject/keccak256": "npm:^5.7.0"
+    "@ethersproject/transactions": "npm:^5.7.0"
     "@msgpack/msgpack": "npm:^3.1.2"
     "@redstone-finance/agents": "workspace:*"
     "@redstone-finance/http-client": "workspace:*"
@@ -8983,6 +9018,8 @@ __metadata:
   resolution: "@redstone-finance/integration-tests@workspace:packages/integration"
   dependencies:
     "@actions/core": "npm:^3"
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/strings": "npm:^5.7.0"
     "@redstone-finance/cache-service": "workspace:*"
     "@redstone-finance/ecs-env-runner": "workspace:*"
     "@redstone-finance/evm-adapters": "workspace:*"
@@ -9204,6 +9241,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-chainlink-influx-synchronizer@workspace:packages/lambda/lambda-chainlink-influx-synchronizer"
   dependencies:
+    "@ethersproject/bignumber": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
@@ -9262,6 +9300,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-dex-price-shift-cost-estimator@workspace:packages/lambda/lambda-DEX-price-shift-cost-estimator"
   dependencies:
+    "@ethersproject/bignumber": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/fetchers": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
@@ -9439,6 +9478,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-hl-multisig@workspace:packages/lambda/lambda-hl-multisig"
   dependencies:
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/units": "npm:^5.7.0"
     "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
@@ -9611,6 +9653,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-monitoring-core@workspace:packages/lambda/lambda-monitoring-core"
   dependencies:
+    "@ethersproject/strings": "npm:^5.7.0"
     "@redstone-finance/evm-adapters": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
@@ -9654,6 +9697,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-multi-top-up@workspace:packages/lambda/lambda-multi-top-up"
   dependencies:
+    "@ethersproject/abi": "npm:^5.6.3"
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/units": "npm:^5.7.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/evm-multicall": "workspace:*"
@@ -9758,6 +9804,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-on-chain-relayer-update@workspace:packages/lambda/lambda-on-chain-relayer-update"
   dependencies:
     "@ethersproject/abstract-provider": "npm:^5.7.0"
+    "@ethersproject/bignumber": "npm:^5.7.0"
     "@ethersproject/logger": "npm:^5.7.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
@@ -9811,11 +9858,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-pyth-hermes-influx-synchronizer@workspace:packages/lambda/lambda-pyth-hermes-influx-synchronizer"
   dependencies:
+    "@ethersproject/bignumber": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.23"
   languageName: unknown
   linkType: soft
@@ -9824,6 +9871,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-pyth-influx-synchronizer@workspace:packages/lambda/lambda-pyth-influx-synchronizer"
   dependencies:
+    "@ethersproject/bignumber": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
@@ -9839,11 +9887,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-pythnet-influx-synchronizer@workspace:packages/lambda/lambda-pythnet-influx-synchronizer"
   dependencies:
+    "@ethersproject/bignumber": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.23"
   languageName: unknown
   linkType: soft
@@ -9864,7 +9912,6 @@ __metadata:
     "@types/lodash": "npm:^4.14.195"
     cors: "npm:^2.8.5"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     express: "npm:^4.18.1"
     express-async-handler: "npm:^1.1.4"
     lodash: "npm:^4.17.23"
@@ -9882,6 +9929,11 @@ __metadata:
     "@aws-sdk/client-ec2": "npm:^3.696.0"
     "@aws-sdk/client-ecs": "npm:^3.696.0"
     "@aws-sdk/client-s3": "npm:^3.696.0"
+    "@ethersproject/abi": "npm:^5.6.3"
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/hash": "npm:^5.7.0"
+    "@ethersproject/strings": "npm:^5.7.0"
+    "@ethersproject/units": "npm:^5.7.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
@@ -9913,6 +9965,11 @@ __metadata:
   resolution: "@redstone-finance/lambda-redstone-txs-indexer@workspace:packages/lambda/lambda-redstone-txs-indexer"
   dependencies:
     "@aws-sdk/client-ssm": "npm:^3.696.0"
+    "@ethersproject/abi": "npm:^5.6.3"
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/strings": "npm:^5.7.0"
+    "@ethersproject/units": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
@@ -9927,7 +9984,6 @@ __metadata:
     "@upstash/redis": "npm:^1.35.8"
     axios: "npm:^1.15.2"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.23"
     prompts: "npm:^2.4.2"
     zod: "npm:^4.1.12"
@@ -10017,6 +10073,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-wallet-balances@workspace:packages/lambda/lambda-wallet-balances"
   dependencies:
+    "@ethersproject/bignumber": "npm:^5.7.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10038,7 +10095,6 @@ __metadata:
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
@@ -10112,7 +10168,6 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
@@ -10167,6 +10222,7 @@ __metadata:
   resolution: "@redstone-finance/move-connector@workspace:packages/move-connector"
   dependencies:
     "@aptos-labs/ts-sdk": "npm:1.33.2"
+    "@ethersproject/bignumber": "npm:^5.7.0"
     "@ethersproject/bytes": "npm:^5.6.1"
     "@ledgerhq/hw-app-aptos": "npm:^6.31.0"
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
@@ -10177,7 +10233,6 @@ __metadata:
     "@types/prompts": "npm:^2.4.2"
     chai: "npm:^4.3.10"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.23"
     prompts: "npm:^2.4.2"
     zod: "npm:^4.1.12"
@@ -10209,6 +10264,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/node-commons@workspace:packages/node-commons"
   dependencies:
+    "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/signing-key": "npm:^5.7.0"
+    "@ethersproject/transactions": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/http-client": "workspace:*"
@@ -10247,6 +10305,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/on-chain-relayer@workspace:packages/on-chain-relayer"
   dependencies:
+    "@ethersproject/strings": "npm:^5.7.0"
+    "@ethersproject/units": "npm:^5.7.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/healthcheck": "workspace:*"
@@ -10265,7 +10325,6 @@ __metadata:
     chai-as-promised: "npm:^7.1.1"
     cron-parser: "npm:^4.8.1"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.23"
     mocha: "npm:^11"
     msw: "npm:^2.4.10"
@@ -10280,6 +10339,15 @@ __metadata:
   resolution: "@redstone-finance/oracle-node@workspace:packages/oracle-node"
   dependencies:
     "@ethereumjs/util": "npm:^10.0.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/constants": "npm:^5.7.0"
+    "@ethersproject/hash": "npm:^5.7.0"
+    "@ethersproject/keccak256": "npm:^5.7.0"
+    "@ethersproject/logger": "npm:^5.7.0"
+    "@ethersproject/signing-key": "npm:^5.7.0"
+    "@ethersproject/strings": "npm:^5.7.0"
+    "@ethersproject/transactions": "npm:^5.7.0"
+    "@ethersproject/wallet": "npm:^5.7.0"
     "@googleapis/gmail": "npm:^16.1.1"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@metamask/eth-sig-util": "npm:^4.0.1"
@@ -10395,7 +10463,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/protocol@workspace:packages/protocol"
   dependencies:
+    "@ethersproject/base64": "npm:^5.7.0"
+    "@ethersproject/bignumber": "npm:^5.7.0"
     "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/keccak256": "npm:^5.7.0"
+    "@ethersproject/signing-key": "npm:^5.7.0"
+    "@ethersproject/strings": "npm:^5.7.0"
+    "@ethersproject/transactions": "npm:^5.7.0"
+    "@ethersproject/units": "npm:^5.7.0"
+    "@ethersproject/wallet": "npm:^5.7.0"
     "@types/secp256k1": "npm:^4.0.6"
     decimal.js: "npm:^10.4.3"
     ethers: "npm:^5.7.2"
@@ -10444,7 +10520,11 @@ __metadata:
   resolution: "@redstone-finance/radix-connector@workspace:packages/radix-connector"
   dependencies:
     "@atlantis-l/radix-tool": "npm:^0.8.9"
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
     "@ethersproject/strings": "npm:^5.7.0"
+    "@ethersproject/units": "npm:^5.7.0"
+    "@ethersproject/wallet": "npm:^5.7.0"
     "@ledgerhq/hw-app-aptos": "npm:^6.31.0"
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
     "@radixdlt/babylon-gateway-api-sdk": "npm:^1.10.1"
@@ -10455,7 +10535,6 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     axios: "npm:^1.15.2"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.23"
     node-jq: "npm:^6.0.0"
     redstone-api: "npm:^0.4.13"
@@ -10470,6 +10549,8 @@ __metadata:
   dependencies:
     "@aws-sdk/client-ecs": "npm:^3.696.0"
     "@aws-sdk/client-s3": "npm:^3.696.0"
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/strings": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
     "@nomiclabs/hardhat-ethers": "npm:^2.0.6"
@@ -10517,13 +10598,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/remote-config@workspace:packages/remote-config"
   dependencies:
+    "@ethersproject/wallet": "npm:^5.7.0"
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/node-schedule": "npm:^2.1.0"
     "@types/xml2js": "npm:^0.4.14"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     node-schedule: "npm:^2.1.1"
     xml2js: "npm:^0.6.2"
     zod: "npm:^4.1.12"
@@ -10536,9 +10617,14 @@ __metadata:
   dependencies:
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/abstract-provider": "npm:^5.7.0"
+    "@ethersproject/address": "npm:^5.7.0"
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
     "@ethersproject/logger": "npm:^5.7.0"
     "@ethersproject/properties": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
+    "@ethersproject/transactions": "npm:^5.7.0"
+    "@ethersproject/units": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
@@ -10602,6 +10688,7 @@ __metadata:
   resolution: "@redstone-finance/solana-connector@workspace:packages/solana-connector"
   dependencies:
     "@coral-xyz/anchor": "npm:0.30.1"
+    "@ethersproject/bytes": "npm:^5.6.1"
     "@ledgerhq/hw-app-solana": "npm:^7.2.4"
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
     "@metaplex-foundation/beet": "npm:0.7.2"
@@ -10626,7 +10713,6 @@ __metadata:
     bs58: "npm:^6.0.0"
     chai: "npm:^4.3.10"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     jito-js-rpc: "npm:^0.2.2"
     litesvm: "npm:^0.2.0"
     lodash: "npm:^4.17.23"
@@ -10643,12 +10729,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/starknet-connector@workspace:packages/starknet-connector"
   dependencies:
+    "@ethersproject/bignumber": "npm:^5.7.0"
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/multichain-kit-legacy": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     starknet: "npm:^6.6.6"
     zod: "npm:^4.1.12"
   languageName: unknown
@@ -10659,6 +10745,7 @@ __metadata:
   resolution: "@redstone-finance/stellar-connector@workspace:packages/stellar-connector"
   dependencies:
     "@creit-tech/stellar-router-sdk": "npm:@jsr/creit-tech__stellar-router-sdk@^0.2.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
     "@ledgerhq/hw-app-str": "npm:^7.7.1"
     "@ledgerhq/hw-transport-node-hid-singleton": "npm:^6.35.1"
     "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*"
@@ -10672,7 +10759,6 @@ __metadata:
     "@types/urijs": "npm:^1.19.25"
     axios: "npm:^1.15.2"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.23"
     zod: "npm:^4.1.12"
   languageName: unknown
@@ -10683,6 +10769,9 @@ __metadata:
   resolution: "@redstone-finance/stylus-connector@workspace:packages/stylus-connector"
   dependencies:
     "@ethersproject/abi": "npm:^5.6.3"
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/contracts": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10695,6 +10784,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/sui-connector@workspace:packages/sui-connector"
   dependencies:
+    "@ethersproject/bytes": "npm:^5.6.1"
     "@grpc/grpc-js": "npm:^1.14.3"
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
     "@mysten/bcs": "npm:2.0.3"
@@ -10710,7 +10800,6 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     decimal.js: "npm:^10.4.3"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.23"
     secp256k1: "npm:^5.0.1"
     zod: "npm:^4.1.12"
@@ -10747,6 +10836,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/ton-connector@workspace:packages/ton-connector"
   dependencies:
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/strings": "npm:^5.7.0"
     "@orbs-network/ton-access": "npm:^2.3.3"
     "@redstone-finance/multichain-kit-legacy": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
@@ -10761,7 +10853,6 @@ __metadata:
     "@ton/test-utils": "npm:^0.12.0"
     "@ton/tolk-js": "npm:^1.4.2"
     "@ton/ton": "npm:^16.3.0"
-    ethers: "npm:^5.7.2"
   languageName: unknown
   linkType: soft
 
@@ -10775,8 +10866,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/utils@workspace:packages/utils"
   dependencies:
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/contracts": "npm:^5.7.0"
     "@ethersproject/logger": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
+    "@ethersproject/sha2": "npm:^5.7.0"
+    "@ethersproject/units": "npm:^5.7.0"
     "@types/lodash": "npm:^4.14.195"
     "@types/sinon": "npm:^10.0.15"
     axios: "npm:^1.15.2"

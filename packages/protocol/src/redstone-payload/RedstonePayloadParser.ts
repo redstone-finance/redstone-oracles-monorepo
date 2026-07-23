@@ -1,5 +1,7 @@
-import { BigNumber } from "ethers";
-import { formatUnits, hexlify, toUtf8String } from "ethers/lib/utils";
+import { BigNumber } from "@ethersproject/bignumber";
+import { hexlify } from "@ethersproject/bytes";
+import { toUtf8String } from "@ethersproject/strings";
+import { formatUnits } from "@ethersproject/units";
 import {
   DATA_FEED_ID_BS,
   DATA_PACKAGES_COUNT_BS,

@@ -1,4 +1,4 @@
-import { base64 } from "ethers/lib/utils";
+import * as base64 from "@ethersproject/base64";
 import { DataPoint, DataPointPlainObj } from "./DataPoint";
 import { INumericDataPoint, NumericDataPoint } from "./NumericDataPoint";
 

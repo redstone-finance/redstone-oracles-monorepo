@@ -1,4 +1,4 @@
-import { Contract, ethers, Signer } from "ethers";
+import { Contract, Signer } from "ethers";
 import { IStylusAdapter, LastUpdateDetailsStructOutput } from "../abi/IStylusAdapter";
 import { abi as PRICE_ADAPTER_ABI } from "../abi/StylusAdapter.json";
 
@@ -6,14 +6,10 @@ export class PriceAdapterService {
   private readonly contract: Contract & IStylusAdapter;
   private readonly signer: Signer;
 
-  constructor(contractAddress: string, signer: ethers.Signer) {
+  constructor(contractAddress: string, signer: Signer) {
     this.signer = signer;
 
-    this.contract = new ethers.Contract(
-      contractAddress,
-      PRICE_ADAPTER_ABI,
-      this.signer
-    ) as IStylusAdapter;
+    this.contract = new Contract(contractAddress, PRICE_ADAPTER_ABI, this.signer) as IStylusAdapter;
   }
 
   async readPriceData(feedIds: string[]): Promise<LastUpdateDetailsStructOutput[]> {

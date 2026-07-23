@@ -1,5 +1,5 @@
+import { BigNumberish } from "@ethersproject/bignumber";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
-import { BigNumberish } from "ethers";
 import { sleep } from "fuels";
 import { IS_CI, provider } from "../common/provider";
 import { readProxyContractId } from "../common/read-proxy-contract-id";

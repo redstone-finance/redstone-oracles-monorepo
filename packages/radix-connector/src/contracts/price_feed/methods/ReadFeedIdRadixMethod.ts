@@ -1,5 +1,5 @@
+import { BytesLike } from "@ethersproject/bytes";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { BytesLike } from "ethers";
 import { ValueProxyRadixInvocation } from "../../../radix/RadixInvocation";
 import { RadixTransaction } from "../../../radix/RadixTransaction";
 

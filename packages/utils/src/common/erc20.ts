@@ -1,4 +1,5 @@
-import { BigNumber, Contract } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
+import { Contract } from "ethers";
 
 export type ContractCallOverrides = { blockTag: string | number };
 

@@ -1,8 +1,8 @@
 import { AccountAddress, MoveVector } from "@aptos-labs/ts-sdk";
+import { BigNumber } from "@ethersproject/bignumber";
 import { hexlify } from "@ethersproject/bytes";
 import { ContractData } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { BigNumber } from "ethers";
 import { MoveClient } from "../MoveClient";
 import { MoveContractViewer } from "../MoveContractViewer";
 import { PriceDataSchema } from "../types";

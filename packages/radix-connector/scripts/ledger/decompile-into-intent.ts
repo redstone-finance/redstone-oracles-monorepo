@@ -1,5 +1,5 @@
+import { arrayify } from "@ethersproject/bytes";
 import { RadixEngineToolkit } from "@radixdlt/radix-engine-toolkit";
-import { arrayify } from "ethers/lib/utils";
 import { COMPILED_TRANSACTION } from "./config";
 
 export async function decompileIntent(compiledIntent: string) {

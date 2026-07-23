@@ -1,3 +1,4 @@
+import { arrayify } from "@ethersproject/bytes";
 import {
   Intent,
   Signature,
@@ -7,7 +8,6 @@ import {
 } from "@radixdlt/radix-engine-toolkit";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
-import { arrayify } from "ethers/lib/utils";
 import { z } from "zod";
 import { makeRadixClient } from "../constants";
 import { COMPILED_TRANSACTION, RAW_SIGNATURES } from "./config";

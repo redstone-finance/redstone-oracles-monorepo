@@ -1,8 +1,8 @@
+import { arrayify } from "@ethersproject/bytes";
 import { consts } from "@redstone-finance/protocol";
 import { beginCell, Builder } from "@ton/core";
 import { serializeDict } from "@ton/core/dist/dict/serializeDict";
 import assert from "assert";
-import { arrayify } from "ethers/lib/utils";
 import { splitPayloadHex } from "./split-payload-hex";
 import { createBuilderFromString } from "./ton-utils";
 

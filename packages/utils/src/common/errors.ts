@@ -1,7 +1,6 @@
-import type { ErrorCode } from "@ethersproject/logger";
+import { ErrorCode } from "@ethersproject/logger";
 import axios, { AxiosError } from "axios";
 import { LogLevels } from "consola";
-import { ethers } from "ethers";
 import { getLogLevel, loggerFactory, sanitizeLogMessage } from "../logger";
 import { JSONstringify, stringify } from "./misc";
 
@@ -78,7 +77,7 @@ const showStack = (stack?: string) => {
   return "";
 };
 
-const ethers_5_7_errorCodes: string[] = Object.values(ethers.errors);
+const ethers_5_7_errorCodes: string[] = Object.values(ErrorCode);
 
 function isEthers_5_7_Error(error: unknown): error is Ethers_5_7_Error {
   return (

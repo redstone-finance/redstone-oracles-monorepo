@@ -1,5 +1,5 @@
+import { BigNumberish } from "@ethersproject/bignumber";
 import { Value } from "@radixdlt/radix-engine-toolkit";
-import { BigNumberish } from "ethers";
 import { ValueRadixInvocation } from "../../../radix/RadixInvocation";
 import { RadixTransaction } from "../../../radix/RadixTransaction";
 import { makeFeedId } from "../../../radix/utils";

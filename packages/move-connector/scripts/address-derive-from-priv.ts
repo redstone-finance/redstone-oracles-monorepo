@@ -1,6 +1,6 @@
 import { PrivateKeyVariants, SigningScheme } from "@aptos-labs/ts-sdk";
+import { hexlify } from "@ethersproject/bytes";
 import "dotenv/config";
-import { hexlify } from "ethers/lib/utils";
 import { makeAptosAccount } from "../src";
 
 function main() {

@@ -1,5 +1,5 @@
+import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
-import { BigNumber, BigNumberish } from "ethers";
 import fs from "fs";
 import path from "path";
 

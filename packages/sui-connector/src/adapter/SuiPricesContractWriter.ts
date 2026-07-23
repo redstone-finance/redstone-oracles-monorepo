@@ -1,9 +1,9 @@
+import { arrayify } from "@ethersproject/bytes";
 import type { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
 import { SUI_CLOCK_OBJECT_ID } from "@mysten/sui/utils";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
-import { utils } from "ethers";
 import { SuiClient } from "../client/SuiClient";
 import { SuiConfig } from "../config";
 import { makeFeedIdBytes, uint8ArrayToBcs } from "../util";
@@ -57,7 +57,7 @@ export class SuiPricesContractWriter {
       arguments: [
         tx.object(this.config.priceAdapterObjectId),
         tx.pure(uint8ArrayToBcs(makeFeedIdBytes(feedId))),
-        tx.pure(uint8ArrayToBcs(utils.arrayify("0x" + payload))),
+        tx.pure(uint8ArrayToBcs(arrayify("0x" + payload))),
         tx.object(SUI_CLOCK_OBJECT_ID),
       ],
     });

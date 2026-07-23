@@ -1,12 +1,11 @@
+import { hexlify } from "@ethersproject/bytes";
+import { Cell, ContractProvider, serializeTuple } from "@ton/core";
 import { TonContract } from "../../src/TonContract";
 import {
   createArrayFromTuple,
   createBuilderFromString,
   createTupleItems,
 } from "../../src/ton-utils";
-
-import { Cell, ContractProvider, serializeTuple } from "@ton/core";
-import { hexlify } from "ethers/lib/utils";
 
 /* eslint-disable  @typescript-eslint/class-methods-use-this -- TON Getter methods must not be static */
 export class TonUnitTester extends TonContract {

@@ -1,4 +1,5 @@
-import { toUtf8Bytes } from "@ethersproject/strings/lib/utf8";
+import { arrayify } from "@ethersproject/bytes";
+import { toUtf8Bytes } from "@ethersproject/strings";
 import {
   address,
   array,
@@ -13,7 +14,6 @@ import {
   Value,
   ValueKind,
 } from "@radixdlt/radix-engine-toolkit";
-import { arrayify } from "ethers/lib/utils";
 
 export interface NonFungibleGlobalIdInput {
   resourceAddress: string;
