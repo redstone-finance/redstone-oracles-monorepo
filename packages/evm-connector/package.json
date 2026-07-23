@@ -22,7 +22,10 @@
     "preversion": "yarn build"
   },
   "dependencies": {
+    "@ethersproject/abi": "^5.6.3",
+    "@ethersproject/bytes": "^5.6.1",
     "@ethersproject/properties": "^5.7.0",
+    "@ethersproject/providers": "^5.6.8",
     "@openzeppelin/contracts": "^4.8.1",
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
@@ -31,10 +34,7 @@
     "ethers": "^5.7.2"
   },
   "devDependencies": {
-    "@ethersproject/abi": "^5.6.3",
     "@ethersproject/bignumber": "^5.7.0",
-    "@ethersproject/bytes": "^5.6.1",
-    "@ethersproject/providers": "^5.6.8",
     "@ethersproject/strings": "^5.7.0",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
