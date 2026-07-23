@@ -1,5 +1,5 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import "dotenv/config";
-import { BigNumber } from "ethers";
 import { MultiExecutor } from "../../src";
 import {
   CeilMedianConsensusExecutor,

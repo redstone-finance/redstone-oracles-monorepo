@@ -1,3 +1,4 @@
+import { hexlify } from "@ethersproject/bytes";
 import {
   ContractParamsProvider,
   DataPackagesRequestParams,
@@ -5,7 +6,6 @@ import {
   getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { hexlify } from "ethers/lib/utils";
 import {
   makeSolanaUpdater,
   readCluster,

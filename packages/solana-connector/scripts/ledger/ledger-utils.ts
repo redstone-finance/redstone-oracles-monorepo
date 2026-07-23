@@ -1,7 +1,7 @@
+import { hexlify } from "@ethersproject/bytes";
 import Solana from "@ledgerhq/hw-app-solana";
 import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
 import { PublicKey, VersionedTransaction } from "@solana/web3.js";
-import { hexlify } from "ethers/lib/utils";
 
 const getDerivationPath = (accountId: number) => `44'/501'/${accountId}`;
 

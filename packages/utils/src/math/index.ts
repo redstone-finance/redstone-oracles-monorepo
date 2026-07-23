@@ -1,5 +1,5 @@
+import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import Decimal from "decimal.js";
-import { BigNumber, BigNumberish } from "ethers";
 import * as ISafeNumberMath from "../ISafeNumber";
 import { ISafeNumber, createSafeNumber } from "../ISafeNumber";
 import { assert, bignumberishToDecimal } from "../common";

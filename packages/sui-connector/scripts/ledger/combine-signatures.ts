@@ -1,4 +1,4 @@
-import { hexlify } from "ethers/lib/utils";
+import { hexlify } from "@ethersproject/bytes";
 import { MULTI_SIG_PK_HEXES } from "./const";
 import { getMultiSigPublicKey } from "./get-multi-sig-address";
 

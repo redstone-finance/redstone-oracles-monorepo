@@ -1,7 +1,8 @@
+import { BigNumber } from "@ethersproject/bignumber";
+import { arrayify, hexlify } from "@ethersproject/bytes";
+import { toUtf8String } from "@ethersproject/strings";
 import { CLU256, CLU8, CLValue, CLValueBuilder } from "casper-js-sdk";
 import { CLList } from "casper-js-sdk/dist/lib/CLValue/List";
-import { BigNumber } from "ethers";
-import { arrayify, hexlify, toUtf8String } from "ethers/lib/utils";
 
 export function encodeByteCLList(param: string) {
   const bytes = Array.from(arrayify(param.startsWith("0x") ? param : "0x" + param));

@@ -1,5 +1,5 @@
+import { hexlify } from "@ethersproject/bytes";
 import "dotenv/config";
-import { hexlify } from "ethers/lib/utils";
 import { makeSuiKeypair } from "../src";
 
 const SHOW_PRIVATE_KEY = false;

@@ -1,6 +1,6 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { RuntimeArgs } from "casper-js-sdk";
-import { BigNumber } from "ethers";
 import { casperBlake2b } from "../../casper/casper-blake2b";
 import { RunMode } from "../RunMode";
 import { RuntimeArgsFactory } from "../RuntimeArgsFactory";

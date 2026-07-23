@@ -17,6 +17,14 @@
     "lint:fix": "yarn global:eslint --fix ."
   },
   "dependencies": {
+    "@ethersproject/base64": "^5.7.0",
+    "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/keccak256": "^5.7.0",
+    "@ethersproject/signing-key": "^5.7.0",
+    "@ethersproject/strings": "^5.7.0",
+    "@ethersproject/transactions": "^5.7.0",
+    "@ethersproject/units": "^5.7.0",
+    "@ethersproject/wallet": "^5.7.0",
     "decimal.js": "^10.4.3",
     "ethers": "^5.7.2",
     "secp256k1": "^5.0.1"

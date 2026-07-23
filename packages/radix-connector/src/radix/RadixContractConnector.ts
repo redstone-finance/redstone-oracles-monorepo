@@ -1,6 +1,6 @@
+import { parseEther } from "@ethersproject/units";
 import { IContractConnector } from "@redstone-finance/multichain-kit-legacy";
 import { loggerFactory } from "@redstone-finance/utils";
-import { utils } from "ethers";
 import { RadixClient } from "./RadixClient";
 
 export class RadixContractConnector<Adapter = never> implements IContractConnector<Adapter> {
@@ -24,7 +24,7 @@ export class RadixContractConnector<Adapter = never> implements IContractConnect
   }
 
   async getNormalizedBalance(address: string, blockNumber?: number) {
-    return utils.parseEther(await this.client.getXRDBalance(address, blockNumber)).toBigInt();
+    return parseEther(await this.client.getXRDBalance(address, blockNumber)).toBigInt();
   }
 
   async getBalance(address: string) {

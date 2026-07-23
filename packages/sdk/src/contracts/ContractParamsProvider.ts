@@ -1,7 +1,6 @@
-import { BytesLike, hexlify } from "@ethersproject/bytes";
-import { toUtf8Bytes } from "@ethersproject/strings/lib/utf8";
+import { arrayify, BytesLike, hexlify } from "@ethersproject/bytes";
+import { toUtf8Bytes, toUtf8String } from "@ethersproject/strings";
 import { RedstoneLogger } from "@redstone-finance/utils";
-import { arrayify, toUtf8String } from "ethers/lib/utils";
 import _ from "lodash";
 import { version } from "../../package.json";
 import type { DataPackagesResponseCache } from "../DataPackagesResponseCache";

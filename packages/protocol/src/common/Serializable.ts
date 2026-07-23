@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { hexlify } from "@ethersproject/bytes";
 import { hexlifyWithout0xPrefix } from "./utils";
 
 export abstract class Serializable {
@@ -8,7 +8,7 @@ export abstract class Serializable {
   toBytesHex(): string {
     const serializedBytes = this.toBytes();
 
-    return ethers.utils.hexlify(serializedBytes);
+    return hexlify(serializedBytes);
   }
 
   toBytesHexWithout0xPrefix(): string {

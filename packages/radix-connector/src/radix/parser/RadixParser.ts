@@ -1,3 +1,4 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import {
   NetworkId,
   RadixEngineToolkit,
@@ -5,7 +6,6 @@ import {
   Value,
   ValueKind,
 } from "@radixdlt/radix-engine-toolkit";
-import { BigNumber } from "ethers";
 import { GeneratedConverter, SerializableManifestValue } from "./generated";
 
 interface ObjInterface {
