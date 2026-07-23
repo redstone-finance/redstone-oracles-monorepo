@@ -1,5 +1,5 @@
-import { BigNumber } from "ethers";
-import { formatUnits, parseUnits } from "ethers/lib/utils";
+import { BigNumber } from "@ethersproject/bignumber";
+import { formatUnits, parseUnits } from "@ethersproject/units";
 
 const DEFAULT_DECIMALS = 18;
 

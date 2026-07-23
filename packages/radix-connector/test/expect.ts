@@ -1,5 +1,5 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import { Value, ValueKind } from "@radixdlt/radix-engine-toolkit";
-import { BigNumber } from "ethers";
 import { RadixParser } from "../src/radix/parser/RadixParser";
 
 export type ExtractedValue<K extends ValueKind> = Extract<Value, { kind: K }>;

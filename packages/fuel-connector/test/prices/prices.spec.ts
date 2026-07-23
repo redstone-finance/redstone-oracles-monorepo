@@ -1,5 +1,5 @@
+import { BigNumberish } from "@ethersproject/bignumber";
 import { ContractParamsProviderMock } from "@redstone-finance/sdk";
-import { BigNumberish } from "ethers";
 import fs from "fs";
 import path from "path";
 import { FuelPricesContractAdapter } from "../../src";

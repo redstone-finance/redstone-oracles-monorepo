@@ -1,5 +1,5 @@
 import { DataPackage, NumericDataPoint } from "@redstone-finance/protocol";
-import { ethers } from "ethers";
+import { Wallet } from "ethers";
 import { ReferenceValueVerifier } from "../src/ReferenceValueVerifier";
 
 // logger mocks
@@ -32,17 +32,17 @@ jest.mock("@redstone-finance/utils", () => {
   };
 });
 
-const MOCK_WALLET_1 = new ethers.Wallet(
+const MOCK_WALLET_1 = new Wallet(
   "0xfae81e7c122f2ad245be182d88889e6a037bbeebd7de7bb5ca10f891d359e440"
 );
-const MOCK_WALLET_2 = new ethers.Wallet(
+const MOCK_WALLET_2 = new Wallet(
   "0x0a566b182e650472efe9a17efb850cc01bb5e479add24739942ba43327a194f9"
 );
-const MOCK_WALLET_3 = new ethers.Wallet(
+const MOCK_WALLET_3 = new Wallet(
   "0xd56e1ee933657d6bcdec81f9956392aef47a7f8b1a1275b6e4ad551fb5d6b14c"
 );
 
-function makeSigned(signer: ethers.Wallet, dataPackageId: string, tsMs: number, value: number) {
+function makeSigned(signer: Wallet, dataPackageId: string, tsMs: number, value: number) {
   const dp = new NumericDataPoint({ dataFeedId: dataPackageId, value });
   const dataPackage = new DataPackage([dp], tsMs, dataPackageId);
 
@@ -99,7 +99,7 @@ describe("ReferenceValueVerifier", () => {
     verifier.registerDataPackage(makeSigned(MOCK_WALLET_2, "BTC", ts, 101));
     verifier.registerDataPackage(makeSigned(MOCK_WALLET_3, "BTC", ts, 102));
 
-    const tested = makeSigned(ethers.Wallet.createRandom(), "BTC", ts, 103); // ~1.98% from median 101
+    const tested = makeSigned(Wallet.createRandom(), "BTC", ts, 103); // ~1.98% from median 101
     const result = verifier.verifyDataPackage(tested);
 
     expect(result).toBeUndefined();
@@ -121,7 +121,7 @@ describe("ReferenceValueVerifier", () => {
     verifier.registerDataPackage(makeSigned(MOCK_WALLET_1, "BTC", ts, 100));
     verifier.registerDataPackage(makeSigned(MOCK_WALLET_2, "BTC", ts, 102));
 
-    const tested = makeSigned(ethers.Wallet.createRandom(), "BTC", ts, 101.5); // ~0.5% from median 101
+    const tested = makeSigned(Wallet.createRandom(), "BTC", ts, 101.5); // ~0.5% from median 101
     const result = verifier.verifyDataPackage(tested);
 
     expect(result).toBe(tested);
@@ -140,11 +140,11 @@ describe("ReferenceValueVerifier", () => {
     verifier.registerDataPackage(makeSigned(MOCK_WALLET_1, "SOL", ts, 50));
     verifier.registerDataPackage(makeSigned(MOCK_WALLET_2, "SOL", ts, 52));
     // non-reference signer (ignored as reference)
-    verifier.registerDataPackage(makeSigned(ethers.Wallet.createRandom(), "SOL", ts, 10));
+    verifier.registerDataPackage(makeSigned(Wallet.createRandom(), "SOL", ts, 10));
     // different id (ignored)
     verifier.registerDataPackage(makeSigned(MOCK_WALLET_3, "BTC", ts, 9999));
 
-    const tested = makeSigned(ethers.Wallet.createRandom(), "SOL", ts, 51.2); // median 51, ~0.392%
+    const tested = makeSigned(Wallet.createRandom(), "SOL", ts, 51.2); // median 51, ~0.392%
     const result = verifier.verifyDataPackage(tested);
     expect(result).toBe(tested);
     expect(mockError).not.toHaveBeenCalled();
@@ -162,7 +162,7 @@ describe("ReferenceValueVerifier", () => {
     verifier.registerDataPackage(makeSigned(MOCK_WALLET_1, "ADA", tNow - 2000, 10));
     verifier.registerDataPackage(makeSigned(MOCK_WALLET_2, "ADA", tNow - 2000, 11));
 
-    const tested = makeSigned(ethers.Wallet.createRandom(), "ADA", tNow, 10.4); // median=10.5, ~0.95%
+    const tested = makeSigned(Wallet.createRandom(), "ADA", tNow, 10.4); // median=10.5, ~0.95%
     const result = verifier.verifyDataPackage(tested);
     expect(result).toBe(tested);
   });
@@ -181,7 +181,7 @@ describe("ReferenceValueVerifier", () => {
     verifier.registerDataPackage(makeSigned(MOCK_WALLET_2, "DOT", 1000_000_4001, 22));
 
     // Test in ~3000ms -> only first ref -> not enough
-    const tested1 = makeSigned(ethers.Wallet.createRandom(), "DOT", 1000_000_3000, 21);
+    const tested1 = makeSigned(Wallet.createRandom(), "DOT", 1000_000_3000, 21);
     const r1 = verifier.verifyDataPackage(tested1);
     expect(r1).toBe(tested1);
     expect(mockWarn).toHaveBeenCalledWith(
@@ -191,7 +191,7 @@ describe("ReferenceValueVerifier", () => {
 
     // We add a second ref in the same second (3005ms -> 3000ms)
     verifier.registerDataPackage(makeSigned(MOCK_WALLET_2, "DOT", 1000_000_3005, 22));
-    const tested2 = makeSigned(ethers.Wallet.createRandom(), "DOT", 1000_000_3002, 21);
+    const tested2 = makeSigned(Wallet.createRandom(), "DOT", 1000_000_3002, 21);
     const r2 = verifier.verifyDataPackage(tested2);
     expect(r2).toBe(tested2); // median(20,22)=21 -> deviation 0
   });

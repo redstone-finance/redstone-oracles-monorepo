@@ -1,7 +1,7 @@
+import { BigNumber } from "@ethersproject/bignumber";
+import { parseEther } from "@ethersproject/units";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
-import { BigNumber } from "ethers";
-import { parseEther } from "ethers/lib/utils";
 import { ethers } from "hardhat";
 import { generateSaltForVote } from "../src/utils";
 import { DisputeResolutionEngine, LockingRegistry, RedstoneToken } from "../typechain-types";

@@ -1,7 +1,7 @@
+import { arrayify, BytesLike, hexlify } from "@ethersproject/bytes";
 import { bcs } from "@mysten/sui/bcs";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { arrayify, BytesLike, hexlify } from "ethers/lib/utils";
 
 const WRITE_PRICE_FUNCTIONS = ["write_price", "try_write_price"];
 const SHARED_OBJECT_ARG_ID = 0;

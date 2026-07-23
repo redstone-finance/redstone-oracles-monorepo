@@ -1,4 +1,6 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
+import { BigNumber } from "@ethersproject/bignumber";
+import { hexlify } from "@ethersproject/bytes";
 import { Deferrable } from "@ethersproject/properties";
 import {
   CuratedRpcList,
@@ -8,7 +10,7 @@ import {
   RpcIdentifier,
   sanitizeLogMessage,
 } from "@redstone-finance/utils";
-import { BigNumber, providers, utils } from "ethers";
+import { providers } from "ethers";
 import _ from "lodash";
 import { convertBlockTagToNumber, electRoundedMedian, getProviderNetworkInfo } from "../common";
 import { ProviderWithIdentifier } from "../ProviderExecutor";
@@ -252,7 +254,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
       "When using providerWithAgreement, blockTag has to be passed explicitly"
     );
     blockTag ??= await this.getBlockNumber();
-    const electedBlockTag = blockTag !== "latest" ? utils.hexlify(blockTag) : blockTag;
+    const electedBlockTag = blockTag !== "latest" ? hexlify(blockTag) : blockTag;
 
     const callResult = RedstoneCommon.timeout(
       this.executeCallWithAgreement(transaction, electedBlockTag),

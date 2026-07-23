@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { ethers } from "ethers";
+import { providers } from "ethers";
 import Sinon from "sinon";
 import { TxDeliverySigner } from "../../src";
 import { TxNonceCoordinator } from "../../src/tx-delivery-man/TxNonceCoordinator";
@@ -11,7 +11,7 @@ type ProviderStubs = {
   getTransactionReceipt: Sinon.SinonStub;
 };
 
-const createProvider = (counts: number[]): ethers.providers.JsonRpcProvider & ProviderStubs => {
+const createProvider = (counts: number[]): providers.JsonRpcProvider & ProviderStubs => {
   const getTransactionCount = Sinon.stub();
   counts.forEach((value, idx) => getTransactionCount.onCall(idx).resolves(value));
   // fallback to last value for extra calls
@@ -22,7 +22,7 @@ const createProvider = (counts: number[]): ethers.providers.JsonRpcProvider & Pr
   return {
     getTransactionCount,
     getTransactionReceipt,
-  } as unknown as ethers.providers.JsonRpcProvider & ProviderStubs;
+  } as unknown as providers.JsonRpcProvider & ProviderStubs;
 };
 
 describe("TxNonceCoordinator", () => {

@@ -1,9 +1,10 @@
+import { AbiCoder } from "@ethersproject/abi";
+import { hexlify } from "@ethersproject/bytes";
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { SimpleNumericMockWrapper } from "@redstone-finance/evm-connector";
 import { utils as protocolUtils } from "@redstone-finance/protocol";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { utils } from "ethers";
 import hr from "hardhat";
 import { RedstonePrimaryProdERC7412Mock } from "../../../typechain-types";
 import { DEFAULT_ROUND_ID_FOR_WITHOUT_ROUNDS } from "../../helpers";
@@ -34,7 +35,7 @@ const updateValues = async (
 
   const nextBlockTimestamp = currentBlockTime + 10;
 
-  const coder = new utils.AbiCoder();
+  const coder = new AbiCoder();
   const encodedDataPackageTimestamp = coder.encode(["uint256"], [dataPackageTimestamp]);
 
   // Update one data feed
@@ -75,12 +76,12 @@ describe("RedstonePrimaryProdERC7412", () => {
     });
 
     it("returns oracleId", async () => {
-      const redstoneInHex = utils.hexlify(protocolUtils.convertStringToBytes32("REDSTONE"));
+      const redstoneInHex = hexlify(protocolUtils.convertStringToBytes32("REDSTONE"));
       expect(await contract.oracleId()).to.equal(redstoneInHex);
     });
 
     it("should return same value for getDataFeedId and getDataFeedId", async () => {
-      const btcInHex = utils.hexlify(protocolUtils.convertStringToBytes32("BTC"));
+      const btcInHex = hexlify(protocolUtils.convertStringToBytes32("BTC"));
 
       expect(await contract.getDataFeedId()).to.equal(btcInHex);
       expect(await contract.getDataFeedId()).to.equal(btcInHex);

@@ -1,3 +1,4 @@
+import { hexlify } from "@ethersproject/bytes";
 import {
   MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE,
   NormalizedContractTx,
@@ -5,7 +6,6 @@ import {
 } from "@redstone-finance/multichain-kit";
 import { consts } from "@redstone-finance/protocol";
 import { VersionedTransactionResponse } from "@solana/web3.js";
-import { hexlify } from "ethers/lib/utils";
 import { SolanaClient } from "./client/SolanaClient";
 import { SolanaTxScanner } from "./client/SolanaTxScanner";
 

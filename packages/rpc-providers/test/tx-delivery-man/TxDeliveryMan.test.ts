@@ -2,7 +2,7 @@
 import { Tx } from "@redstone-finance/utils";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { ethers } from "ethers";
+import { providers } from "ethers";
 import hardhat from "hardhat";
 import Sinon from "sinon";
 import {
@@ -31,12 +31,12 @@ async function assertTxWillBeDelivered(
 describe("TxDeliveryMan", () => {
   describe("with more than one provider", () => {
     let counter!: Counter;
-    let connectProvider!: (provider: ethers.providers.Provider) => void;
+    let connectProvider!: (provider: providers.Provider) => void;
 
     beforeEach(async () => {
       await hardhat.ethers.provider.send("hardhat_reset", []);
       counter = await deployCounter(hardhat.ethers.provider);
-      connectProvider = (provider: ethers.providers.Provider) => {
+      connectProvider = (provider: providers.Provider) => {
         const signerWithNewProvider = counter.signer.connect(provider);
         counter = counter.connect(signerWithNewProvider);
       };
@@ -54,7 +54,7 @@ describe("TxDeliveryMan", () => {
       });
 
     it("should work if one of providers always fails", async () => {
-      const failingProvider = new ethers.providers.JsonRpcProvider("https://1.com");
+      const failingProvider = new providers.JsonRpcProvider("https://1.com");
       const fallbackProvider = new ProviderWithFallback([failingProvider, hardhat.ethers.provider]);
 
       const deliveryMan = createTxDeliveryMan(fallbackProvider);

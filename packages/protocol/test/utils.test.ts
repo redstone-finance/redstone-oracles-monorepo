@@ -1,4 +1,4 @@
-import { hexlify } from "ethers/lib/utils";
+import { hexlify } from "@ethersproject/bytes";
 import {
   assert,
   convertIntegerNumberToBytes,

@@ -1,3 +1,4 @@
+import { formatBytes32String } from "@ethersproject/strings";
 import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
 import {
   ContractParamsProvider,
@@ -5,7 +6,6 @@ import {
   UpdatePricesOptions,
 } from "@redstone-finance/sdk";
 import { loggerFactory, Tx } from "@redstone-finance/utils";
-import { utils } from "ethers";
 import { MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
 import { MultiFeedEvmContractAdapterBase } from "./MultiFeedEvmContractAdapterBase";
 
@@ -52,7 +52,7 @@ export class MultiFeedEvmContractAdapter extends MultiFeedEvmContractAdapterBase
 
     return Tx.convertToTxDeliveryCall(
       await wrappedContract.populateTransaction["updateDataFeedsValuesPartial"](
-        feedIds.map(utils.formatBytes32String)
+        feedIds.map(formatBytes32String)
       )
     );
   }

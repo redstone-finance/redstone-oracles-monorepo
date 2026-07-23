@@ -1,7 +1,7 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import { ContractParamsProvider, DataPackagesRequestParams } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import assert from "assert";
-import { BigNumber } from "ethers";
 import { ExampleBase, ExampleBase__factory } from "../typechain-types";
 import { EvmContractAdapter } from "./core/contract-interactions/EvmContractAdapter";
 

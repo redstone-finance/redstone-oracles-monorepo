@@ -1,8 +1,8 @@
+import { hexlify } from "@ethersproject/bytes";
 import { sampleRun } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon, RpcTelemetry } from "@redstone-finance/utils";
 import "dotenv/config";
-import { hexlify } from "ethers/lib/utils";
 import {
   DEFAULT_SOLANA_CONFIG,
   makeSolanaUpdater,

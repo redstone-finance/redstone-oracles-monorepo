@@ -1,3 +1,4 @@
+import { formatBytes32String } from "@ethersproject/strings";
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { DataPackage, INumericDataPoint, NumericDataPoint } from "@redstone-finance/protocol";
 import {
@@ -5,7 +6,6 @@ import {
   DataPackagesResponse,
   DataPackagesResponseCache,
 } from "@redstone-finance/sdk";
-import { formatBytes32String } from "ethers/lib/utils";
 
 export const ETH_PRICE = 1670.99;
 export const BTC_PRICE = 23077.68;

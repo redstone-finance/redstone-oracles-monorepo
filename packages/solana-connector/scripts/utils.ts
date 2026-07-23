@@ -1,6 +1,6 @@
+import { arrayify } from "@ethersproject/bytes";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Connection, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { arrayify } from "ethers/lib/utils";
 import { z } from "zod";
 import { makeKeypair } from "../src";
 

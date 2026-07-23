@@ -1,5 +1,5 @@
+import { arrayify, hexlify } from "@ethersproject/bytes";
 import { Secp256k1PublicKey } from "@mysten/sui/keypairs/secp256k1";
-import { arrayify, hexlify } from "ethers/lib/utils";
 import { publicKeyConvert } from "secp256k1";
 
 export function convertSecp256k1PublicKeyToSuiAddress(secp256k1PublicKey: string) {

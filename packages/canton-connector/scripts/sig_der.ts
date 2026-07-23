@@ -1,4 +1,4 @@
-import { arrayify, hexlify } from "ethers/lib/utils";
+import { arrayify, hexlify } from "@ethersproject/bytes";
 import * as secp from "secp256k1";
 
 function toDER(sig: Uint8Array): Uint8Array {

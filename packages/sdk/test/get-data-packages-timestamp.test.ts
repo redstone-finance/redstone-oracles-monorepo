@@ -1,5 +1,5 @@
+import { hexZeroPad } from "@ethersproject/bytes";
 import { DataPackage, NumericDataPoint } from "@redstone-finance/protocol";
-import { hexZeroPad } from "ethers/lib/utils";
 import { getDataPackagesTimestamp } from "../src";
 import type { DataPackagesResponse } from "../src/request-data-packages-common";
 

@@ -1,6 +1,6 @@
+import { BigNumber } from "@ethersproject/bignumber";
+import { arrayify } from "@ethersproject/bytes";
 import { ValueKind } from "@radixdlt/radix-engine-toolkit";
-import { BigNumber } from "ethers";
-import { arrayify } from "ethers/lib/utils";
 import { RadixParser } from "../src/radix/parser/RadixParser";
 import {
   expectArray,

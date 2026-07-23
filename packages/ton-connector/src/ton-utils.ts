@@ -1,6 +1,7 @@
+import { arrayify, hexlify } from "@ethersproject/bytes";
+import { toUtf8Bytes } from "@ethersproject/strings";
 import { consts } from "@redstone-finance/protocol";
 import { beginCell, Builder, Cell, TupleBuilder, TupleReader } from "@ton/core";
-import { arrayify, hexlify, toUtf8Bytes } from "ethers/lib/utils";
 import { OP_NUMBER_BITS } from "./config/constants";
 
 export function createTupleItems(items: (bigint | boolean | number | string)[]) {

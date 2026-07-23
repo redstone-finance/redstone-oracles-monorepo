@@ -1,4 +1,4 @@
-import { BigNumberish } from "ethers";
+import { BigNumberish } from "@ethersproject/bignumber";
 import _ from "lodash";
 import { getNS } from "../common";
 import { getMedian, getMedianOfBigNumbers } from "../math";

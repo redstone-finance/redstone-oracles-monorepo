@@ -3,18 +3,12 @@ import {
   NumericDataPoint,
   type SignedDataPackagePlainObj,
 } from "@redstone-finance/protocol";
-import { ethers } from "ethers";
+import { Wallet } from "ethers";
 import { computeMedian, verifyAndComputeMedian } from "../src/compute-median";
 
-const WALLET_1 = new ethers.Wallet(
-  "0xfae81e7c122f2ad245be182d88889e6a037bbeebd7de7bb5ca10f891d359e440"
-);
-const WALLET_2 = new ethers.Wallet(
-  "0x548e7c2fae09cc353ffe54ed40609d88a99fab24acfc81bfbf29cd6a638b4958"
-);
-const WALLET_3 = new ethers.Wallet(
-  "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
-);
+const WALLET_1 = new Wallet("0xfae81e7c122f2ad245be182d88889e6a037bbeebd7de7bb5ca10f891d359e440");
+const WALLET_2 = new Wallet("0x548e7c2fae09cc353ffe54ed40609d88a99fab24acfc81bfbf29cd6a638b4958");
+const WALLET_3 = new Wallet("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
 
 function makePackage(value: number, wallet = WALLET_1, feedId = "ETH"): SignedDataPackagePlainObj {
   const dp = new DataPackage(

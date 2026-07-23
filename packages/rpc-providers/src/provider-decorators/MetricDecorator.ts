@@ -1,8 +1,9 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
+import { BigNumber } from "@ethersproject/bignumber";
+import { Deferrable } from "@ethersproject/properties";
 import { createTelemetryPoint, TelemetryPoint } from "@redstone-finance/internal-utils";
 import { RpcTelemetry } from "@redstone-finance/utils";
-import { BigNumber, providers } from "ethers";
-import { Deferrable } from "ethers/lib/utils";
+import { providers } from "ethers";
 import { getProviderNetworkInfo, ReportMetricFn } from "../common";
 
 type FeeHistoryResponse = { reward: string[] };

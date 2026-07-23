@@ -1,5 +1,5 @@
+import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
-import { BigNumber, BigNumberish } from "ethers";
 import _ from "lodash";
 import { RadixClient } from "../../radix/RadixClient";
 import { RadixContractAdapter } from "../../radix/RadixContractAdapter";

@@ -38,14 +38,17 @@
     "transfer-multisig-tx": "yarn global:tsx scripts/ledger/transfer-multisig-tx.ts"
   },
   "dependencies": {
+    "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/bytes": "^5.6.1",
     "@ethersproject/strings": "^5.7.0",
+    "@ethersproject/units": "^5.7.0",
+    "@ethersproject/wallet": "^5.7.0",
     "@radixdlt/babylon-gateway-api-sdk": "^1.10.1",
     "@radixdlt/radix-engine-toolkit": "^1.0.5",
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/multichain-kit-legacy": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "axios": "^1.15.2",
-    "ethers": "^5.7.2",
     "lodash": "^4.17.23"
   },
   "devDependencies": {

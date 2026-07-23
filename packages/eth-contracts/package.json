@@ -16,12 +16,17 @@
     "lint:fix": "yarn global:eslint --fix ."
   },
   "dependencies": {
+    "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/keccak256": "^5.7.0",
+    "@ethersproject/strings": "^5.7.0",
+    "@ethersproject/units": "^5.7.0",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.6.3",
     "@ethersproject/providers": "^5.6.8",
+    "@ethersproject/transactions": "^5.7.0",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",

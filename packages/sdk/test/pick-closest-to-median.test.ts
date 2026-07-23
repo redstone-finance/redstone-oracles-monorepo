@@ -3,10 +3,10 @@ import {
   NumericDataPoint,
   SignedDataPackagePlainObj,
 } from "@redstone-finance/protocol";
-import { ethers } from "ethers";
+import { Wallet } from "ethers";
 import { pickDataFeedPackagesClosestToMedian } from "../src/pick-closest-to-median";
 
-const MOCK_WALLET_1 = new ethers.Wallet(
+const MOCK_WALLET_1 = new Wallet(
   "0xfae81e7c122f2ad245be182d88889e6a037bbeebd7de7bb5ca10f891d359e440"
 );
 

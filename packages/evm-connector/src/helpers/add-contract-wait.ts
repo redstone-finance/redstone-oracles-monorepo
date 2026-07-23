@@ -1,6 +1,8 @@
+import { LogDescription } from "@ethersproject/abi";
+import { BytesLike } from "@ethersproject/bytes";
+import { deepCopy } from "@ethersproject/properties";
 import { Log, TransactionResponse } from "@ethersproject/providers";
-import { BytesLike, Contract, ContractReceipt, Event } from "ethers";
-import { LogDescription, deepCopy } from "ethers/lib/utils";
+import { Contract, ContractReceipt, Event } from "ethers";
 
 // Copied from ethers.js source code
 export const addContractWait = (contract: Contract, tx: TransactionResponse) => {

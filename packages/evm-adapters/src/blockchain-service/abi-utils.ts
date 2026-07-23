@@ -1,11 +1,13 @@
+import { AbiCoder } from "@ethersproject/abi";
+import { BigNumberish } from "@ethersproject/bignumber";
+import { hexDataSlice } from "@ethersproject/bytes";
+import { parseBytes32String } from "@ethersproject/strings";
 import {
   MULTI_FEED_RELAYER_UPDATE_FUNCTION_SIGNATURE,
   SELECTOR_SIG_SIZE_BYTES,
 } from "@redstone-finance/multichain-kit";
 import { consts } from "@redstone-finance/protocol";
 import { MathUtils } from "@redstone-finance/utils";
-import { BigNumberish } from "ethers";
-import { AbiCoder, hexDataSlice, parseBytes32String } from "ethers/lib/utils";
 
 const REDSTONE_DEFAULT_DECIMALS = consts.DEFAULT_NUM_VALUE_DECIMALS;
 

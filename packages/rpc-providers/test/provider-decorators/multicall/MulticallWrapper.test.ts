@@ -1,7 +1,9 @@
+import { BigNumber } from "@ethersproject/bignumber";
+import { parseEther } from "@ethersproject/units";
 import { RedstoneMulticall3Abi, RedstoneMulticall3ByteCode } from "@redstone-finance/evm-multicall";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { BigNumber, Contract, ContractFactory, Wallet, ethers } from "ethers";
+import { Contract, ContractFactory, Wallet, providers } from "ethers";
 import hardhat from "hardhat";
 import Sinon from "sinon";
 import {
@@ -22,7 +24,7 @@ const multicallFnSpy = Sinon.spy(multicallUtils.safeExecuteMulticall3);
 
 function getProvider(
   multicallAddress: string,
-  providerFabric: () => ethers.providers.Provider,
+  providerFabric: () => providers.Provider,
   bufferSize = 2,
   maxCallDataSize = 100000000,
   autoResolveInterval = -1,
@@ -41,7 +43,7 @@ const NOT_MULTICALL_ADDRESS = Wallet.createRandom().address;
 
 const describeMultiWrapperSuite = (
   providerName: string,
-  providerFabric: () => ethers.providers.Provider
+  providerFabric: () => providers.Provider
 ) => {
   describe(`${providerName}`, () => {
     let counter!: Counter;
@@ -336,7 +338,7 @@ const describeMultiWrapperSuite = (
     });
 
     it("should fall back to provider.getBalance when multicall3 fails (retryBySingleCalls)", async () => {
-      type ProviderCall = typeof ethers.providers.Provider.prototype.call;
+      type ProviderCall = typeof providers.Provider.prototype.call;
       let callStub!: Sinon.SinonStub<Parameters<ProviderCall>, ReturnType<ProviderCall>>;
       let getBalanceSpy!: Sinon.SinonSpy;
 
@@ -373,7 +375,7 @@ const describeMultiWrapperSuite = (
     });
 
     it("it should work when fallback fails partially", async () => {
-      type ProviderCall = typeof ethers.providers.Provider.prototype.call;
+      type ProviderCall = typeof providers.Provider.prototype.call;
       type Params = Parameters<ProviderCall>;
       type Ret = ReturnType<ProviderCall>;
       type ProviderCallStub = Sinon.SinonStub<Params, Ret>;
@@ -429,10 +431,10 @@ const describeMultiWrapperSuite = (
      *  asserts the balance reflects that funding. Caller controls the provider, wallet
      *  index, address-arg shape and any parallel op that should ride along in the flush. */
     async function performGetBalanceTest(opts: {
-      provider: ethers.providers.Provider;
+      provider: providers.Provider;
       walletIndex: number;
       wrapAddressIn?: (addr: string) => string | Promise<string>;
-      parallelOp?: (provider: ethers.providers.Provider, blockTag: number) => Promise<void>;
+      parallelOp?: (provider: providers.Provider, blockTag: number) => Promise<void>;
     }) {
       const signers = await hardhat.ethers.getSigners();
       const wallet = signers[opts.walletIndex];
@@ -440,7 +442,7 @@ const describeMultiWrapperSuite = (
 
       // Fund deterministically so the asserted balance has a known floor (above whatever
       // the default hardhat starting balance is, in case the signer was reused).
-      const fundedAmount = ethers.utils.parseEther("3.14");
+      const fundedAmount = parseEther("3.14");
       await funder
         .sendTransaction({ to: wallet.address, value: fundedAmount })
         .then((t) => t.wait());
@@ -471,7 +473,7 @@ describe("Multicall decorator", () => {
       new ProviderWithAgreement([
         hardhat.ethers.provider,
         hardhat.ethers.provider,
-        new ethers.providers.JsonRpcProvider(), // this one will always fail
+        new providers.JsonRpcProvider(), // this one will always fail
       ])
   );
 
@@ -479,7 +481,7 @@ describe("Multicall decorator", () => {
     "ProviderWithFallback",
     () =>
       new ProviderWithFallback([
-        new ethers.providers.JsonRpcProvider(), // this one will always fail
+        new providers.JsonRpcProvider(), // this one will always fail
         hardhat.ethers.provider,
       ])
   );

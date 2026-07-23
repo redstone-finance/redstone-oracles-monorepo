@@ -1,6 +1,8 @@
+import { BigNumberish } from "@ethersproject/bignumber";
+import { formatBytes32String } from "@ethersproject/strings";
+import { parseUnits } from "@ethersproject/units";
 import { mine, time } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
-import { BigNumberish, utils } from "ethers";
 import { ethers, network } from "hardhat";
 import { FastMultiFeedAdapterWithoutRoundsMock } from "../../../../typechain-types";
 import { getImpersonatedSigner, permutations } from "../../../helpers";
@@ -32,7 +34,7 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
     const ts = toMicros(blockTs);
     const input = {
       dataFeedId: DATA_FEED_ID,
-      price: utils.parseUnits("1000", 8),
+      price: parseUnits("1000", 8),
     };
     await expect(
       adapter.connect(unauthorized).updateDataFeedsValues(ts, [input])
@@ -44,7 +46,7 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
     const blockTs = (await time.latest()) + 2;
     await time.setNextBlockTimestamp(blockTs);
     const ts = toMicros(blockTs);
-    const price = utils.parseUnits("1000", 8);
+    const price = parseUnits("1000", 8);
 
     await adapter.connect(updater).updateDataFeedsValues(ts, [{ dataFeedId: DATA_FEED_ID, price }]);
 
@@ -62,7 +64,7 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
       await adapter.connect(updater).updateDataFeedsValues(toMicros(blockTs), [
         {
           dataFeedId: DATA_FEED_ID,
-          price: utils.parseUnits(String(1000 + i), 8),
+          price: parseUnits(String(1000 + i), 8),
         },
       ]);
     }
@@ -81,19 +83,19 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
     await twoStaleThenThreeFresh(adapter, [900, 1100], [1000, 1002, 1004]);
     const { lastValue } = await adapter.getLastUpdateDetails(DATA_FEED_ID);
     // median([1000, 1002, 1004]) = 1002
-    expect(lastValue).to.equal(utils.parseUnits("1002", 8));
+    expect(lastValue).to.equal(parseUnits("1002", 8));
   });
 
   it("uses median of fresh prices; large outlier is ignored by median", async () => {
     await updateByAllNodesFresh(adapter, [100, 101, 102, 103, 1000]);
     const { lastValue } = await adapter.getLastUpdateDetails(DATA_FEED_ID);
-    expect(lastValue).to.equal(utils.parseUnits("102", 8));
+    expect(lastValue).to.equal(parseUnits("102", 8));
   });
 
   it("for even fresh count, median is the average of the two middle values", async () => {
     await updateByAllNodesFresh(adapter, [100, 100, 100, 100, 100]);
     const r1 = await adapter.getLastUpdateDetails(DATA_FEED_ID);
-    expect(r1.lastValue).to.equal(utils.parseUnits("100", 8));
+    expect(r1.lastValue).to.equal(parseUnits("100", 8));
 
     const jump = (await time.latest()) + 20; // > 10s staleness window
     await time.setNextBlockTimestamp(jump);
@@ -105,18 +107,18 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
       await adapter
         .connect(updater)
         .updateDataFeedsValues(toMicros(ts), [
-          { dataFeedId: DATA_FEED_ID, price: utils.parseUnits(String([10, 20, 30, 40][i]), 8) },
+          { dataFeedId: DATA_FEED_ID, price: parseUnits(String([10, 20, 30, 40][i]), 8) },
         ]);
     }
 
     const { lastValue } = await adapter.getLastUpdateDetails(DATA_FEED_ID);
-    expect(lastValue).to.equal(utils.parseUnits("25", 8));
+    expect(lastValue).to.equal(parseUnits("25", 8));
   });
 
   it("updates value even for small changes (no deadband)", async () => {
     await updateByAllNodesFresh(adapter, [100, 100, 100, 100, 100]);
     const previousPrice = await adapter.getValueForDataFeed(DATA_FEED_ID);
-    expect(previousPrice).to.equal(utils.parseUnits("100", 8));
+    expect(previousPrice).to.equal(parseUnits("100", 8));
 
     const medCandidates = [100.1, 100.2, 100.3];
     const base = (await time.latest()) + 2;
@@ -127,12 +129,12 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
       await adapter
         .connect(updater)
         .updateDataFeedsValues(toMicros(ts), [
-          { dataFeedId: DATA_FEED_ID, price: utils.parseUnits(String(medCandidates[i]), 8) },
+          { dataFeedId: DATA_FEED_ID, price: parseUnits(String(medCandidates[i]), 8) },
         ]);
     }
 
     const { lastValue } = await adapter.getLastUpdateDetails(DATA_FEED_ID);
-    expect(lastValue).to.equal(utils.parseUnits("100.1", 8));
+    expect(lastValue).to.equal(parseUnits("100.1", 8));
   });
 
   it("rejects zero price; rejects stale/too-future data timestamp; rejects non-increasing block timestamp", async () => {
@@ -153,7 +155,7 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
       adapter.connect(updater).updateDataFeedsValues(tooOldTs, [
         {
           dataFeedId: DATA_FEED_ID,
-          price: utils.parseUnits("1000", 8),
+          price: parseUnits("1000", 8),
         },
       ])
     ).to.emit(adapter, "UpdateSkipDueToDataTimestamp");
@@ -165,7 +167,7 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
       adapter.connect(updater).updateDataFeedsValues(aheadOk, [
         {
           dataFeedId: DATA_FEED_ID,
-          price: utils.parseUnits("1000", 8),
+          price: parseUnits("1000", 8),
         },
       ])
     ).to.not.be.reverted;
@@ -177,7 +179,7 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
       adapter.connect(updater).updateDataFeedsValues(aheadTooFar, [
         {
           dataFeedId: DATA_FEED_ID,
-          price: utils.parseUnits("1000", 8),
+          price: parseUnits("1000", 8),
         },
       ])
     ).to.emit(adapter, "UpdateSkipDueToDataTimestamp");
@@ -187,8 +189,8 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
     const fixedBlockTs = (await time.latest()) + 100;
     await time.setNextBlockTimestamp(fixedBlockTs);
 
-    const price1 = utils.parseUnits("1", 8);
-    const price2 = utils.parseUnits("2", 8);
+    const price1 = parseUnits("1", 8);
+    const price2 = parseUnits("2", 8);
     const ts1 = toMicros(fixedBlockTs) + 10;
     const ts2 = ts1 + 1;
 
@@ -219,16 +221,16 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
 
     const inputs = [
       {
-        dataFeedId: utils.formatBytes32String("ETH"),
-        price: utils.parseUnits("1000", 8),
+        dataFeedId: formatBytes32String("ETH"),
+        price: parseUnits("1000", 8),
       },
       {
-        dataFeedId: utils.formatBytes32String("BTC"),
-        price: utils.parseUnits("30000", 8),
+        dataFeedId: formatBytes32String("BTC"),
+        price: parseUnits("30000", 8),
       },
       {
-        dataFeedId: utils.formatBytes32String("USDT"),
-        price: utils.parseUnits("7", 8),
+        dataFeedId: formatBytes32String("USDT"),
+        price: parseUnits("7", 8),
       },
     ];
 
@@ -243,11 +245,11 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
 
   it("handles concurrent batch updates from multiple updaters; aggregation per feed is independent", async () => {
     const feeds = [
-      utils.formatBytes32String("ETH"),
-      utils.formatBytes32String("BTC"),
-      utils.formatBytes32String("USDT"),
-      utils.formatBytes32String("LINK"),
-      utils.formatBytes32String("MATIC"),
+      formatBytes32String("ETH"),
+      formatBytes32String("BTC"),
+      formatBytes32String("USDT"),
+      formatBytes32String("LINK"),
+      formatBytes32String("MATIC"),
     ];
 
     const base = (await time.latest()) + 2;
@@ -255,7 +257,7 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
       const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[i]);
       const inputs = feeds.map((feedId, idx) => ({
         dataFeedId: feedId,
-        price: utils.parseUnits((1000 + i * 10 + idx).toString(), 8),
+        price: parseUnits((1000 + i * 10 + idx).toString(), 8),
       }));
       await time.setNextBlockTimestamp(base + i);
       await adapter.connect(updater).updateDataFeedsValues(toMicros(base + i), inputs);
@@ -263,9 +265,7 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
 
     for (const feedId of feeds) {
       const expected = 1020 + feeds.indexOf(feedId);
-      expect(await adapter.getValueForDataFeed(feedId)).to.equal(
-        utils.parseUnits(String(expected), 8)
-      );
+      expect(await adapter.getValueForDataFeed(feedId)).to.equal(parseUnits(String(expected), 8));
     }
   });
 
@@ -305,8 +305,8 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
     const inputs = [];
     for (let i = 0; i < 200; i++) {
       inputs.push({
-        dataFeedId: utils.formatBytes32String(`FEED_${i}`),
-        price: utils.parseUnits(String(1000 + i), 8),
+        dataFeedId: formatBytes32String(`FEED_${i}`),
+        price: parseUnits(String(1000 + i), 8),
       });
     }
 
@@ -314,9 +314,9 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
       .be.reverted;
 
     for (let i = 0; i < 200; i++) {
-      const feedId = utils.formatBytes32String(`FEED_${i}`);
+      const feedId = formatBytes32String(`FEED_${i}`);
       const stored = await adapter.getUpdaterLastPriceData(4, feedId);
-      expect(stored.price).to.equal(utils.parseUnits(String(1000 + i), 8));
+      expect(stored.price).to.equal(parseUnits(String(1000 + i), 8));
       expect(stored.priceTimestamp).to.equal(toMicros(blockTs));
     }
   });
@@ -330,34 +330,34 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
   describe("Median of prices (exposed via mock)", () => {
     it("returns median for odd count", async () => {
       const p: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish] = [
-        utils.parseUnits("100", 8),
-        utils.parseUnits("101", 8),
-        utils.parseUnits("102", 8),
-        utils.parseUnits("103", 8),
-        utils.parseUnits("500", 8),
+        parseUnits("100", 8),
+        parseUnits("101", 8),
+        parseUnits("102", 8),
+        parseUnits("103", 8),
+        parseUnits("500", 8),
       ];
       const median = await adapter._medianOfPrices(p, 5);
-      expect(median).to.equal(utils.parseUnits("102", 8));
+      expect(median).to.equal(parseUnits("102", 8));
     });
 
     it("returns average of the two middle values for even count", async () => {
       const p: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish] = [
-        utils.parseUnits("100", 8),
-        utils.parseUnits("200", 8),
-        utils.parseUnits("300", 8),
-        utils.parseUnits("400", 8),
+        parseUnits("100", 8),
+        parseUnits("200", 8),
+        parseUnits("300", 8),
+        parseUnits("400", 8),
         0,
       ];
       const median = await adapter._medianOfPrices(p, 4);
-      expect(median).to.equal(utils.parseUnits("250", 8));
+      expect(median).to.equal(parseUnits("250", 8));
     });
 
     it("odd count = 5 → median = 102 for every permutation", async () => {
       const values5 = [100, 101, 102, 103, 500];
-      const expected = utils.parseUnits("102", 8);
+      const expected = parseUnits("102", 8);
 
       for (const perm of permutations(values5)) {
-        const tuple = perm.map((x) => utils.parseUnits(String(x), 8)) as [
+        const tuple = perm.map((x) => parseUnits(String(x), 8)) as [
           BigNumberish,
           BigNumberish,
           BigNumberish,
@@ -372,13 +372,16 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
 
     it("even count = 4 → median = (200+300)/2 = 250 for every permutation", async () => {
       const values4 = [100, 200, 300, 400];
-      const expected = utils.parseUnits("250", 8);
+      const expected = parseUnits("250", 8);
 
       for (const perm of permutations(values4)) {
-        const padded = [
-          ...perm.map((x) => utils.parseUnits(String(x), 8)),
-          utils.parseUnits("0", 8),
-        ] as [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish];
+        const padded = [...perm.map((x) => parseUnits(String(x), 8)), parseUnits("0", 8)] as [
+          BigNumberish,
+          BigNumberish,
+          BigNumberish,
+          BigNumberish,
+          BigNumberish,
+        ];
 
         const median = await adapter._medianOfPrices(padded, 4);
         expect(median).to.equal(expected, `perm=${perm.join(",")}`);
@@ -387,13 +390,13 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
 
     it("odd count = 3 → median = 20 for every permutation", async () => {
       const values3 = [10, 20, 30];
-      const expected = utils.parseUnits("20", 8);
+      const expected = parseUnits("20", 8);
 
       for (const perm of permutations(values3)) {
         const padded = [
-          ...perm.map((x) => utils.parseUnits(String(x), 8)),
-          utils.parseUnits("0", 8),
-          utils.parseUnits("0", 8),
+          ...perm.map((x) => parseUnits(String(x), 8)),
+          parseUnits("0", 8),
+          parseUnits("0", 8),
         ] as [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish];
 
         const median = await adapter._medianOfPrices(padded, 3);
@@ -403,10 +406,10 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
 
     it("odd count = 5 with duplicates → median = 101 for every permutation", async () => {
       const values = [100, 100, 101, 102, 103];
-      const expected = utils.parseUnits("101", 8);
+      const expected = parseUnits("101", 8);
 
       for (const perm of permutations(values)) {
-        const tuple = perm.map((x) => utils.parseUnits(String(x), 8)) as [
+        const tuple = perm.map((x) => parseUnits(String(x), 8)) as [
           BigNumberish,
           BigNumberish,
           BigNumberish,
@@ -420,13 +423,16 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
 
     it("even count = 4 with duplicates → median = 200 for every permutation", async () => {
       const values = [100, 100, 300, 400];
-      const expected = utils.parseUnits("200", 8);
+      const expected = parseUnits("200", 8);
 
       for (const perm of permutations(values)) {
-        const padded = [
-          ...perm.map((x) => utils.parseUnits(String(x), 8)),
-          utils.parseUnits("0", 8),
-        ] as [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish];
+        const padded = [...perm.map((x) => parseUnits(String(x), 8)), parseUnits("0", 8)] as [
+          BigNumberish,
+          BigNumberish,
+          BigNumberish,
+          BigNumberish,
+          BigNumberish,
+        ];
         const median = await adapter._medianOfPrices(padded, 4);
         expect(median).to.equal(expected, `perm=${perm.join(",")}`);
       }
@@ -434,13 +440,13 @@ describe("FastMultiFeedAdapterWithoutRounds", function () {
 
     it("odd count = 3 with duplicates → median = 20 for every permutation", async () => {
       const values = [20, 20, 30];
-      const expected = utils.parseUnits("20", 8);
+      const expected = parseUnits("20", 8);
 
       for (const perm of permutations(values)) {
         const padded = [
-          ...perm.map((x) => utils.parseUnits(String(x), 8)),
-          utils.parseUnits("0", 8),
-          utils.parseUnits("0", 8),
+          ...perm.map((x) => parseUnits(String(x), 8)),
+          parseUnits("0", 8),
+          parseUnits("0", 8),
         ] as [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish];
         const median = await adapter._medianOfPrices(padded, 3);
         expect(median).to.equal(expected, `perm=${perm.join(",")}`);

@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/unbound-method */
+import { BigNumber } from "@ethersproject/bignumber";
+import { BytesLike } from "@ethersproject/bytes";
 import { ErrorCode } from "@ethersproject/logger";
+import { Transaction, parse } from "@ethersproject/transactions";
 import { Tx } from "@redstone-finance/utils";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { BigNumber, BytesLike, Transaction, ethers } from "ethers";
+import { providers } from "ethers";
 import hardhat from "hardhat";
 import _ from "lodash";
 import Sinon from "sinon";
@@ -21,7 +24,7 @@ const underpricedError = {
   message: "maxFeePerGas",
 };
 const parseTransaction = (transaction: BytesLike) => {
-  const parsedTx = ethers.utils.parseTransaction(transaction);
+  const parsedTx = parse(transaction);
 
   for (const [key, value] of Object.entries(parsedTx)) {
     if (BigNumber.isBigNumber(value)) {
@@ -54,7 +57,7 @@ describe("TxDelivery", () => {
     });
 
     const createTxDelivery = (opts: Partial<TxDeliveryOpts> = {}) => {
-      const provider = counter.provider as ethers.providers.JsonRpcProvider;
+      const provider = counter.provider as providers.JsonRpcProvider;
       const txNonceCoordinator = new TxNonceCoordinator([provider], counter.signer, {});
 
       return new TxDelivery(
@@ -83,7 +86,7 @@ describe("TxDelivery", () => {
     it("should deliver transaction with deferred callData", async () => {
       let count = 1;
 
-      const provider = counter.provider as ethers.providers.JsonRpcProvider;
+      const provider = counter.provider as providers.JsonRpcProvider;
       const txNonceCoordinator = new TxNonceCoordinator([provider], counter.signer, {});
 
       const delivery = new TxDelivery(
@@ -111,7 +114,7 @@ describe("TxDelivery", () => {
     it("should deliver transaction with deferred callData", async () => {
       const count = 8;
 
-      const provider = counter.provider as ethers.providers.JsonRpcProvider;
+      const provider = counter.provider as providers.JsonRpcProvider;
       const txNonceCoordinator = new TxNonceCoordinator([provider], counter.signer, {});
 
       const delivery = new TxDelivery(

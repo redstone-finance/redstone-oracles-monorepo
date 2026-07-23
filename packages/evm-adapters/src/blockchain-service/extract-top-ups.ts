@@ -1,8 +1,9 @@
+import { Interface } from "@ethersproject/abi";
 import { BlockWithTransactions, TransactionResponse } from "@ethersproject/abstract-provider";
+import { BigNumber } from "@ethersproject/bignumber";
 import { Multicall3Abi, RedstoneMulticall3Abi } from "@redstone-finance/evm-multicall";
 import type { NormalizedTopUpEntry } from "@redstone-finance/multichain-kit";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { BigNumber, utils } from "ethers";
 
 const ZRODELKO_ADDRESS = "0x086863620790827b167a6e0bEc22D8314A032c11";
 
@@ -60,7 +61,7 @@ function decodeMulticallTopUp(
 ): NormalizedTopUpEntry[] {
   const abi = multicall3.type === "RedstoneMulticall3" ? RedstoneMulticall3Abi : Multicall3Abi;
   try {
-    const decoded = new utils.Interface(abi).decodeFunctionData(
+    const decoded = new Interface(abi).decodeFunctionData(
       "aggregate3Value",
       tx.data
     ) as unknown as TopUpMulticallCalldata;

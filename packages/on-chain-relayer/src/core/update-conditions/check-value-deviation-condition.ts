@@ -1,3 +1,4 @@
+import { formatUnits } from "@ethersproject/units";
 import { consts, INumericDataPoint } from "@redstone-finance/protocol";
 import {
   DataPackagesResponse,
@@ -5,7 +6,6 @@ import {
   getDataPointsForDataFeedId,
 } from "@redstone-finance/sdk";
 import { MathUtils } from "@redstone-finance/utils";
-import { utils } from "ethers";
 import { RelayerConfig } from "../../config/RelayerConfig";
 
 export const checkValueDeviationCondition = (
@@ -24,7 +24,7 @@ export const checkValueDeviationCondition = (
     const dataPointObj = dataPoint.toObj() as INumericDataPoint;
 
     const valueFromContractAsDecimal = Number(
-      utils.formatUnits(
+      formatUnits(
         valueFromContract.toString(),
         dataPointObj.decimals ?? consts.DEFAULT_NUM_VALUE_DECIMALS
       )

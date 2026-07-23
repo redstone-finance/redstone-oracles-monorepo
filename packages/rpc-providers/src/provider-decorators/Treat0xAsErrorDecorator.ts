@@ -1,6 +1,6 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
+import { Deferrable } from "@ethersproject/properties";
 import { providers } from "ethers";
-import { Deferrable } from "ethers/lib/utils";
 import { getProviderNetworkInfo } from "../common";
 
 export function Treat0xAsErrorDecorator(factory: () => providers.Provider) {

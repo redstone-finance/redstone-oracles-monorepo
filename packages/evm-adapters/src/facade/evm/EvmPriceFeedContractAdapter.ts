@@ -1,5 +1,6 @@
+import { parseBytes32String } from "@ethersproject/strings";
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
-import { Contract, providers, utils } from "ethers";
+import { Contract, providers } from "ethers";
 import { abi as PriceFeedWithRoundsAbi } from "../../../artifacts/contracts/price-feeds/with-rounds/PriceFeedWithRounds.sol/PriceFeedWithRounds.json";
 import { PriceFeedWithRounds } from "../../../typechain-types";
 
@@ -23,7 +24,7 @@ export class EvmPriceFeedContractAdapter implements PriceFeedAdapter {
   async getDataFeedId(blockTag?: number) {
     const hexFeedId = await this.contract.getDataFeedId({ blockTag });
 
-    return utils.parseBytes32String(hexFeedId);
+    return parseBytes32String(hexFeedId);
   }
 
   async getDecimals(blockTag?: number) {

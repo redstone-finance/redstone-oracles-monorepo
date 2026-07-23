@@ -1,4 +1,4 @@
-import { BigNumberish } from "ethers";
+import { BigNumberish } from "@ethersproject/bignumber";
 
 export type PriceFeedRoundData = { answer: BigNumberish };
 

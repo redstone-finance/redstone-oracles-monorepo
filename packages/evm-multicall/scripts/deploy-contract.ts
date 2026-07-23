@@ -1,6 +1,6 @@
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import assert from "assert";
-import { ethers } from "ethers";
+import { Wallet } from "ethers";
 import hre from "hardhat";
 
 const SSM_MULTICALL_PRIVATE_KEY_NAME =
@@ -10,7 +10,7 @@ async function deployRedstoneMulticall() {
   const privKey = await getSSMParameterValue(SSM_MULTICALL_PRIVATE_KEY_NAME);
   assert.ok(privKey, "Failed to fetch SSM_MULTICALL_PRIVATE_KEY_NAME");
 
-  const wallet = new ethers.Wallet(privKey).connect(hre.ethers.provider);
+  const wallet = new Wallet(privKey).connect(hre.ethers.provider);
 
   console.log("deploy start");
   const contractFactory = await hre.ethers.getContractFactory("RedstoneMulticall3", wallet);

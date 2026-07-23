@@ -1,5 +1,6 @@
+import { hexlify } from "@ethersproject/bytes";
+import { computePublicKey } from "@ethersproject/signing-key";
 import { Wallet } from "ethers";
-import { computePublicKey, hexlify } from "ethers/lib/utils";
 import { DataPackage, SignedDataPackage } from "../src/data-package/DataPackage";
 import { NumericDataPoint } from "../src/data-point/NumericDataPoint";
 

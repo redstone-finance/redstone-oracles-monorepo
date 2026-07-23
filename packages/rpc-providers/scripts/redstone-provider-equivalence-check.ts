@@ -3,7 +3,8 @@
 import { StaticJsonRpcProvider } from "@ethersproject/providers";
 import { HttpClient } from "@redstone-finance/http-client";
 import assert from "assert";
-import { ethers, Wallet } from "ethers";
+import { ErrorCode } from "@ethersproject/logger";
+import { providers, Wallet } from "ethers";
 import hardhat from "hardhat";
 import {
   RedstoneEthers5Provider,
@@ -40,7 +41,7 @@ const ZERO_BYTES32 = "0x" + "0".repeat(64);
 const SIMPLE_METHODS_TO_TEST = [];
 
 export async function deployCounter(
-  provider: ethers.providers.Provider
+  provider: providers.Provider
 ): Promise<Counter> {
   const wallet = TEST_WALLET.connect(provider);
   const factory = await hardhat.ethers.getContractFactory("Counter", wallet);
@@ -241,7 +242,7 @@ async function main() {
   const countSecond = await redCounter.getCount();
   assert.deepStrictEqual(countFirst.add(11), countSecond);
   [error] = await Promise.allSettled([counter.fail()]);
-  assert.equal(error.reason.code, ethers.errors.CALL_EXCEPTION);
+  assert.equal(error.reason.code, ErrorCode.CALL_EXCEPTION);
 
   await testEquality(redCounter, counter, "inc", [{ gasLimit: 1 }]);
   await testEquality(redCounter, counter, "inc", [{ nonce: 1 }]);

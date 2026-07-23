@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { Wallet } from "ethers";
 
 export interface FullTestSpec {
   "Pull model": Record<string, Nested<PullModelTestCase>>;
@@ -8,7 +8,7 @@ export interface FullTestSpec {
 export type Nested<T> = T | { [title: string]: Nested<T> };
 
 export interface ContractConfiguration {
-  authorisedSigners: ethers.Wallet[];
+  authorisedSigners: Wallet[];
   requiredSignersCount: number;
 }
 

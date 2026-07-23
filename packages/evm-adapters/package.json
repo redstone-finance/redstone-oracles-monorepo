@@ -26,8 +26,14 @@
   "dependencies": {
     "@chainlink/contracts": "1.2.0",
     "@ethersproject/abstract-provider": "^5.7.0",
+    "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/bytes": "^5.6.1",
+    "@ethersproject/constants": "^5.7.0",
     "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/logger": "^5.7.0",
+    "@ethersproject/solidity": "^5.7.0",
+    "@ethersproject/strings": "^5.7.0",
+    "@ethersproject/transactions": "^5.7.0",
     "@openzeppelin/contracts": "^4.8.1",
     "@openzeppelin/contracts-upgradeable": "^4.8.3",
     "@redstone-finance/evm-connector": "workspace:*",
@@ -43,6 +49,7 @@
   "devDependencies": {
     "@ethersproject/abi": "^5.6.3",
     "@ethersproject/providers": "^5.6.8",
+    "@ethersproject/units": "^5.7.0",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",

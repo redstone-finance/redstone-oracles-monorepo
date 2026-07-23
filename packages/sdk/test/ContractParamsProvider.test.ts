@@ -4,7 +4,7 @@ import {
   mockSignedDataPackagesResponse,
 } from "./mocks/mock-packages";
 // Do not remove this empty line to have the mocks working
-import { arrayify } from "ethers/lib/utils";
+import { arrayify } from "@ethersproject/bytes";
 import {
   ContractParamsProvider,
   DataPackagesRequestParams,

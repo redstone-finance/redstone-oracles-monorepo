@@ -1,7 +1,7 @@
+import { hexlify } from "@ethersproject/bytes";
 import { toBase64 } from "@mysten/bcs";
 import { Ed25519PublicKey } from "@mysten/sui/keypairs/ed25519";
 import { MultiSigPublicKey } from "@mysten/sui/multisig";
-import { hexlify } from "ethers/lib/utils";
 import { MULTI_SIG_PK_HEXES, THRESHOLD_FACTOR } from "./const";
 
 export function getMultiSigPublicKey(pkHexes: string[]) {

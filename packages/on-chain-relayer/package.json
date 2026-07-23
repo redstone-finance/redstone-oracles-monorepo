@@ -37,6 +37,7 @@
     "preversion": "yarn build"
   },
   "dependencies": {
+    "@ethersproject/units": "^5.7.0",
     "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/chain-orchestrator": "workspace:*",
     "@redstone-finance/healthcheck": "workspace:*",
@@ -50,12 +51,12 @@
     "@redstone-finance/utils": "workspace:*",
     "cron-parser": "^4.8.1",
     "dotenv": "^16.0.3",
-    "ethers": "^5.7.2",
     "lodash": "^4.17.23",
     "toad-scheduler": "^3.1.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@ethersproject/strings": "^5.7.0",
     "@types/chai": "^4.3.4",
     "@types/lodash": "^4.14.195",
     "@types/sinon-chai": "^3.2.12",

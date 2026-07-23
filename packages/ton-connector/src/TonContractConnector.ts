@@ -1,5 +1,5 @@
+import { hexlify } from "@ethersproject/bytes";
 import { IContractConnector } from "@redstone-finance/multichain-kit-legacy";
-import { hexlify } from "ethers/lib/utils";
 import { sleep } from "./Ton";
 import { TonContract } from "./TonContract";
 import { TonContractFactory } from "./TonContractFactory";

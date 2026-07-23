@@ -1,7 +1,8 @@
 import { ErrorCode } from "@ethersproject/logger";
 import { TransactionRequest, TransactionResponse } from "@ethersproject/providers";
+import { parseEther } from "@ethersproject/units";
 import { loggerFactory, RedstoneCommon, RedstoneLogger, Tx } from "@redstone-finance/utils";
-import { providers, utils } from "ethers";
+import { providers } from "ethers";
 import _ from "lodash";
 import { AuctionModelGasEstimator } from "./AuctionModelGasEstimator";
 import { AuctionModelGasEstimatorV2 } from "./AuctionModelGasEstimatorV2";
@@ -315,7 +316,7 @@ export class TxDelivery {
       chainId,
       gasLimit,
       ...priceModelDeterminant,
-      value: call.value ?? utils.parseEther("0").toHexString(),
+      value: call.value ?? parseEther("0").toHexString(),
     };
   }
 

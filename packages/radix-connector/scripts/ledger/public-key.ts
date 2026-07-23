@@ -1,6 +1,6 @@
+import { hexlify } from "@ethersproject/bytes";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
-import { hexlify } from "ethers/lib/utils";
 import { z } from "zod";
 import { LedgerSigner } from "./ledger-utils";
 

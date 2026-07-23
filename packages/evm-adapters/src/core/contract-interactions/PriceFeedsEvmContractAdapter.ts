@@ -1,6 +1,6 @@
+import { formatBytes32String, parseBytes32String } from "@ethersproject/strings";
 import { ContractData, ContractParamsProvider, ValuesForDataFeeds } from "@redstone-finance/sdk";
 import { RedstoneCommon, Tx } from "@redstone-finance/utils";
-import { utils } from "ethers";
 import { RedstoneAdapterBase } from "../../../typechain-types";
 import { EvmContractAdapter } from "./EvmContractAdapter";
 import { getLatestTimestampsFromContract } from "./get-latest-timestamps-from-contract";
@@ -9,7 +9,7 @@ export class PriceFeedsEvmContractAdapter<
   Contract extends RedstoneAdapterBase,
 > extends EvmContractAdapter<Contract> {
   async getDataFeedIds(blockTag?: number) {
-    return (await this.adapterContract.getDataFeedIds({ blockTag })).map(utils.parseBytes32String);
+    return (await this.adapterContract.getDataFeedIds({ blockTag })).map(parseBytes32String);
   }
 
   override async makeUpdateTx(
@@ -54,7 +54,7 @@ export class PriceFeedsEvmContractAdapter<
   }
 
   async getValuesForDataFeeds(dataFeeds: string[], blockTag?: number) {
-    const dataFeedsAsBytes32 = dataFeeds.map(utils.formatBytes32String);
+    const dataFeedsAsBytes32 = dataFeeds.map(formatBytes32String);
     const valuesFromContractAsBigNumber = await this.adapterContract.getValuesForDataFeeds(
       dataFeedsAsBytes32,
       {

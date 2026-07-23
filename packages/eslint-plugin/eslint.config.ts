@@ -130,6 +130,42 @@ export default defineConfig([
       ],
       "import-x/order": "off",
       "import-x/namespace": "off",
+      "@typescript-eslint/no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "ethers",
+              allowImportNames: [
+                "Contract",
+                "BaseContract",
+                "ContractFactory",
+                "Signer",
+                "VoidSigner",
+                "Wallet",
+                "providers",
+                "Event",
+                "EventFilter",
+                "ContractTransaction",
+                "ContractReceipt",
+                "PopulatedTransaction",
+                "ContractInterface",
+                "ContractFunction",
+                "Overrides",
+                "CallOverrides",
+                "PayableOverrides",
+              ],
+              message:
+                "Import helpers from the matching @ethersproject/* subpackage (bignumber, bytes, strings, units, abi, keccak256, ...). Only the Contract/providers/Signer/Wallet layer may be imported from `ethers`.",
+            },
+            {
+              name: "ethers/lib/utils",
+              message:
+                "Import from the matching @ethersproject/* subpackage instead of ethers/lib/utils.",
+            },
+          ],
+        },
+      ],
       eqeqeq: "error",
       "array-func/prefer-array-from": "off",
       "@typescript-eslint/no-deprecated": "error",

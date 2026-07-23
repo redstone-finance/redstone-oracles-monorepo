@@ -1,5 +1,5 @@
-import { BigNumber } from "ethers";
-import { parseEther } from "ethers/lib/utils";
+import { BigNumber } from "@ethersproject/bignumber";
+import { parseEther } from "@ethersproject/units";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { ethers, network, upgrades } from "hardhat";
 

@@ -1,6 +1,6 @@
 import { TransactionReceipt, TransactionResponse } from "@ethersproject/providers";
 import { loggerFactory, RedstoneCommon, sanitizeLogMessage, Tx } from "@redstone-finance/utils";
-import { ethers, providers } from "ethers";
+import { providers } from "ethers";
 import { getProviderNetworkInfo } from "../common";
 import { ProviderWithAgreement } from "../providers/ProviderWithAgreement";
 import { ProviderWithFallback } from "../providers/ProviderWithFallback";
@@ -169,9 +169,9 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
 
 function extractProviders(
   provider: TxDeliveryManSupportedProviders
-): readonly ethers.providers.JsonRpcProvider[] {
+): readonly providers.JsonRpcProvider[] {
   if (provider instanceof ProviderWithFallback || provider instanceof ProviderWithAgreement) {
-    return Object.freeze(provider.providers) as ethers.providers.JsonRpcProvider[];
+    return Object.freeze(provider.providers) as providers.JsonRpcProvider[];
   }
 
   return Object.freeze([provider]);

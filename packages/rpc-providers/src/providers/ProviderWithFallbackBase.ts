@@ -1,4 +1,5 @@
 import { BlockWithTransactions } from "@ethersproject/abstract-provider";
+import { BigNumber } from "@ethersproject/bignumber";
 import {
   Block,
   EventType,
@@ -10,7 +11,6 @@ import {
   TransactionReceipt,
   TransactionResponse,
 } from "@ethersproject/providers";
-import { BigNumber } from "ethers";
 
 /** Abstract class which wraps all easy methods which can easily fallback */
 export abstract class ProviderWithFallbackBase implements Provider {

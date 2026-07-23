@@ -1,16 +1,9 @@
+import { BigNumber } from "@ethersproject/bignumber";
+import { BytesLike, arrayify, hexlify, isHexString, zeroPad } from "@ethersproject/bytes";
+import { keccak256 } from "@ethersproject/keccak256";
+import { formatBytes32String, toUtf8Bytes } from "@ethersproject/strings";
+import { parseUnits } from "@ethersproject/units";
 import Decimal from "decimal.js";
-import { BigNumber } from "ethers";
-import {
-  BytesLike,
-  arrayify,
-  formatBytes32String,
-  hexlify,
-  isHexString,
-  keccak256,
-  parseUnits,
-  toUtf8Bytes,
-  zeroPad,
-} from "ethers/lib/utils";
 
 const ZERO_EX_PREFIX_LENGTH = 2; // length of string "0x"
 

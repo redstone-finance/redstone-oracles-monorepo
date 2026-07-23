@@ -1,3 +1,4 @@
+import { hexlify } from "@ethersproject/bytes";
 import { StreamTransactionsResponse } from "@radixdlt/babylon-gateway-api-sdk";
 import {
   defaultValidationConfig,
@@ -9,7 +10,6 @@ import {
   TransactionBuilder,
 } from "@radixdlt/radix-engine-toolkit";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { hexlify } from "ethers/lib/utils";
 import { TransferXRDRadixMethod } from "../methods/TransferXRDRadixMethod";
 import { RadixApiClient } from "./RadixApiClient";
 import {

@@ -1,7 +1,7 @@
 import { DataPackage, NumericDataPoint, SignedDataPackage } from "@redstone-finance/protocol";
 import { DataPackagesResponseStorage } from "@redstone-finance/sdk";
 import { RedstoneLogger } from "@redstone-finance/utils";
-import { ethers } from "ethers";
+import { Wallet } from "ethers";
 import {
   DataPackageSubscriber,
   DataPackageSubscriberParams,
@@ -13,19 +13,19 @@ import {
   SubscribeCallback,
 } from "../src";
 
-const MOCK_WALLET_1 = new ethers.Wallet(
+const MOCK_WALLET_1 = new Wallet(
   "0xfae81e7c122f2ad245be182d88889e6a037bbeebd7de7bb5ca10f891d359e440"
 );
-const MOCK_WALLET_2 = new ethers.Wallet(
+const MOCK_WALLET_2 = new Wallet(
   "0x0a566b182e650472efe9a17efb850cc01bb5e479add24739942ba43327a194f9"
 );
-const MOCK_WALLET_3 = new ethers.Wallet(
+const MOCK_WALLET_3 = new Wallet(
   "0xd56e1ee933657d6bcdec81f9956392aef47a7f8b1a1275b6e4ad551fb5d6b14c"
 );
-const MOCK_WALLET_4 = new ethers.Wallet(
+const MOCK_WALLET_4 = new Wallet(
   "0x0926c41d4b99ce1a7b713f14bc553975ee1de28311a94f10ccedec7d9c35c329"
 );
-const MOCK_WALLET_5 = new ethers.Wallet(
+const MOCK_WALLET_5 = new Wallet(
   "0x7712474356ae40814b45e9317579388d5e185ac17177f0399831f29141c7c896"
 );
 
@@ -64,7 +64,7 @@ function createDataPackage(
   dataPackageId: string,
   value: number,
   timestamp: number,
-  signer: ethers.Wallet
+  signer: Wallet
 ): SignedDataPackage {
   const dataPackage = new DataPackage(
     [
@@ -83,7 +83,7 @@ function createDataPackage(
 async function publishToPubSub(
   pubSub: PooledMqttClient,
   packageData: {
-    signer: ethers.Wallet;
+    signer: Wallet;
     value: number;
     timestamp: number;
     dataPackageId: string;

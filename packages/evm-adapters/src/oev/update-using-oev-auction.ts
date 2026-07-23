@@ -1,9 +1,9 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
+import { parse as parseTransaction, Transaction } from "@ethersproject/transactions";
 import { isEvmNetworkId, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
 import { randomUUID } from "crypto";
-import { providers, Signer, Transaction } from "ethers";
-import { parseTransaction } from "ethers/lib/utils";
+import { providers, Signer } from "ethers";
 import { RedstoneEvmContract } from "../facade/evm/RedstoneEvmContract";
 import { OevConfig } from "./oev-config";
 

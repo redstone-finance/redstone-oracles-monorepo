@@ -7,7 +7,7 @@ import {
   sanitizeLogMessage,
 } from "@redstone-finance/utils";
 import chai from "chai";
-import { ethers } from "ethers";
+import { providers } from "ethers";
 import { RpcUrlsPerChain } from "../../scripts/read-ssm-rpc-urls";
 import { ChainConfig, getChainConfigByNetworkId, getLocalChainConfigs } from "../../src";
 
@@ -31,7 +31,7 @@ export const validateNetworkRpcUrls = (rpcUrlsPerChain: RpcUrlsPerChain) => {
         const host = getRpcHost(rpcUrl);
 
         it(`Test getNetwork '${name}' rpc url: ${host}`, async function () {
-          const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+          const provider = new providers.JsonRpcProvider(rpcUrl);
           const fetchedChainId = await RedstoneCommon.retry({
             ...RETRY_CONFIG,
             fn: async () => (await provider.getNetwork()).chainId,
@@ -47,7 +47,7 @@ export const validateNetworkRpcUrls = (rpcUrlsPerChain: RpcUrlsPerChain) => {
 };
 
 const getBlockNumberWithTimeout = async (rpcUrl: string, timeout: number): Promise<number> => {
-  const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+  const provider = new providers.JsonRpcProvider(rpcUrl);
   const host = getRpcHost(rpcUrl);
   const blockNumber = await RedstoneCommon.retry({
     ...RETRY_CONFIG,

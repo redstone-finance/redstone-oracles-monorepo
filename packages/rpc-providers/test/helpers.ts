@@ -1,4 +1,5 @@
-import { BigNumber, Contract, Wallet, providers } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
+import { Contract, Wallet, providers } from "ethers";
 import hardhat from "hardhat";
 import Sinon from "sinon";
 import { DEFAULT_TX_DELIVERY_OPTS, Eip1559GasEstimatorV2, TxDeliveryOpts } from "../src";

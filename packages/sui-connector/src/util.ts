@@ -1,3 +1,4 @@
+import { arrayify, isHexString } from "@ethersproject/bytes";
 import { bcs, BcsType } from "@mysten/bcs";
 import type { Keypair } from "@mysten/sui/cryptography";
 import { SuiGraphQLClient } from "@mysten/sui/graphql";
@@ -5,7 +6,6 @@ import { getJsonRpcFullnodeUrl, SuiJsonRpcClient } from "@mysten/sui/jsonRpc";
 import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { execSync } from "child_process";
-import { arrayify, isHexString } from "ethers/lib/utils";
 import fs from "fs";
 import path from "path";
 import { z } from "zod";

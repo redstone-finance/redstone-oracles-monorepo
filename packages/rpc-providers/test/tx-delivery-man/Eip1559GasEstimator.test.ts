@@ -1,6 +1,6 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import { Tx } from "@redstone-finance/utils";
 import { expect } from "chai";
-import { BigNumber } from "ethers";
 import hardhat from "hardhat";
 import Sinon from "sinon";
 import { DEFAULT_TX_DELIVERY_OPTS, TxDeliveryOpts, type Eip1559Fee } from "../../src";

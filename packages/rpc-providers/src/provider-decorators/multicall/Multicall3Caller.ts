@@ -1,4 +1,6 @@
+import { Interface } from "@ethersproject/abi";
 import { BlockTag } from "@ethersproject/abstract-provider";
+import { hexZeroPad } from "@ethersproject/bytes";
 import {
   type ChainConfigs,
   getChainConfigByNetworkId,
@@ -6,10 +8,10 @@ import {
   getMulticall3,
 } from "@redstone-finance/chain-configs";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { Contract, providers, utils } from "ethers";
+import { Contract, providers } from "ethers";
 import Multicall3Abi from "./Multicall3.abi.json";
 
-export const MULTICALL3_INTERFACE = new utils.Interface(Multicall3Abi.abi);
+export const MULTICALL3_INTERFACE = new Interface(Multicall3Abi.abi);
 export const GET_ETH_BALANCE_FN = "getEthBalance";
 export const MULTICALL3_SELF_TARGET = "__MULTICALL3__";
 
@@ -144,7 +146,7 @@ async function safeFallbackSelfCall(
       logger.debug(`fallback self-call getEthBalance succeeded addr=${addr} blockTag=${blockTag}`);
 
       // ABI-encode as uint256 (32-byte big-endian) to match what aggregate3 would return.
-      return { returnData: utils.hexZeroPad(balance.toHexString(), 32), success: true };
+      return { returnData: hexZeroPad(balance.toHexString(), 32), success: true };
     }
 
     throw new Error(`Unhandled self-targeted multicall3 selector: ${fragment.name}`);

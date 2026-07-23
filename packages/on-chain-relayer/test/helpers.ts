@@ -1,3 +1,4 @@
+import { formatBytes32String } from "@ethersproject/strings";
 import {
   consts,
   DataPackage,
@@ -11,7 +12,6 @@ import {
   DataPackagesResponseCache,
 } from "@redstone-finance/sdk";
 import { HARDHAT_CHAIN_ID, Tx } from "@redstone-finance/utils";
-import { formatBytes32String } from "ethers/lib/utils";
 import { RelayerConfig } from "../src";
 
 export const ethDataFeed = formatBytes32String("ETH");

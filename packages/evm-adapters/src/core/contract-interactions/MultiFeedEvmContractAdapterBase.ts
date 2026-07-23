@@ -1,5 +1,5 @@
+import { formatBytes32String } from "@ethersproject/strings";
 import { ContractData, LastRoundDetails } from "@redstone-finance/sdk";
-import { utils } from "ethers";
 import { MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
 import { EvmContractAdapter } from "./EvmContractAdapter";
 
@@ -25,7 +25,7 @@ export abstract class MultiFeedEvmContractAdapterBase<
     feedIds: string[],
     blockTag?: number
   ): Promise<LastRoundDetails[]> {
-    const dataFeedsAsBytes32 = feedIds.map(utils.formatBytes32String);
+    const dataFeedsAsBytes32 = feedIds.map(formatBytes32String);
     const contractOutput = await this.adapterContract.getLastUpdateDetailsUnsafeForMany(
       dataFeedsAsBytes32,
       {

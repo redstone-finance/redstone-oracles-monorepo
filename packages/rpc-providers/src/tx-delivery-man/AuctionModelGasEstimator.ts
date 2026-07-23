@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { providers } from "ethers";
 import { GasEstimator } from "./GasEstimator";
 import { unsafeBnToNumber, type AuctionModelFee, type TxDeliveryOptsValidated } from "./common";
 
@@ -11,7 +11,7 @@ import { unsafeBnToNumber, type AuctionModelFee, type TxDeliveryOptsValidated } 
 export class AuctionModelGasEstimator implements GasEstimator<AuctionModelFee> {
   constructor(readonly opts: TxDeliveryOptsValidated) {}
 
-  async getFees(provider: ethers.providers.JsonRpcProvider): Promise<AuctionModelFee> {
+  async getFees(provider: providers.JsonRpcProvider): Promise<AuctionModelFee> {
     return {
       gasPrice: unsafeBnToNumber(await provider.getGasPrice()),
     };

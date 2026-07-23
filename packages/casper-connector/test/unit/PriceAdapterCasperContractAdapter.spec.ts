@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 import { ICasperConnection } from "../../src/casper/ICasperConnection";
 import { STORAGE_KEY_VALUES } from "../../src/contracts/constants";
 import { PriceAdapterCasperContractAdapter } from "../../src/contracts/price_adapter/PriceAdapterCasperContractAdapter";

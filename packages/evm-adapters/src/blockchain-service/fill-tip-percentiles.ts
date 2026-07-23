@@ -1,6 +1,6 @@
 import { BlockWithTransactions, TransactionResponse } from "@ethersproject/abstract-provider";
+import { BigNumber } from "@ethersproject/bignumber";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { BigNumber } from "ethers";
 
 const PERCENTILE_QUANT_FACTOR = 100;
 

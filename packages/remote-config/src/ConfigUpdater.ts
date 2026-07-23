@@ -1,10 +1,10 @@
+import { verifyMessage } from "@ethersproject/wallet";
 import {
   calculateBuffersHash,
   calculateDirectoryHash,
   terminateWithRemoteConfigError,
 } from "@redstone-finance/internal-utils";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { ethers } from "ethers";
 import { scheduleJob } from "node-schedule";
 import { EventEmitter } from "node:events";
 import fs from "node:fs";
@@ -170,7 +170,7 @@ export class ConfigUpdater extends EventEmitter {
       }
       logger.debug("Verifying signature", signature);
 
-      return ethers.utils.verifyMessage(configHash, signature);
+      return verifyMessage(configHash, signature);
     } catch (e) {
       logger.error(`Error while verifying signature ${RedstoneCommon.stringifyError(e)}`);
 

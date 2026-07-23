@@ -1,5 +1,5 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
-import { BigNumber } from "ethers";
 import { MoveClient } from "../MoveClient";
 import { MoveContractViewer } from "../MoveContractViewer";
 

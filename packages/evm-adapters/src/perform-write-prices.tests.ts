@@ -2,7 +2,7 @@ import { consts } from "@redstone-finance/protocol";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { expect } from "chai";
-import { ethers, Wallet } from "ethers";
+import { Wallet, providers } from "ethers";
 import { EvmAdapterType } from "./facade/evm/get-evm-contract";
 import { getEvmContractAdapter } from "./facade/evm/get-evm-contract-adapter";
 import { RedstoneEvmContract } from "./facade/evm/RedstoneEvmContract";
@@ -11,7 +11,7 @@ export const TEST_PRIVATE_KEY =
   "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 
 export async function performWritePricesTests(
-  provider: ethers.providers.Provider,
+  provider: providers.Provider,
   config: { adapterContractType: EvmAdapterType },
   deployer: (signer?: Wallet) => Promise<RedstoneEvmContract>,
   txDeliveryManCreator: (adapterContract: RedstoneEvmContract) => Tx.ITxDeliveryMan,

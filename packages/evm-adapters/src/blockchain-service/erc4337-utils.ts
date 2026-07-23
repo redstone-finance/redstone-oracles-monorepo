@@ -1,8 +1,10 @@
+import { Interface } from "@ethersproject/abi";
 import { Log, TransactionReceipt, TransactionResponse } from "@ethersproject/abstract-provider";
+import { BigNumber } from "@ethersproject/bignumber";
+import { hexDataSlice } from "@ethersproject/bytes";
+import * as constants from "@ethersproject/constants";
 import { consts } from "@redstone-finance/protocol";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { BigNumber, constants } from "ethers";
-import { hexDataSlice, Interface } from "ethers/lib/utils";
 
 export type UserOpTx = TransactionResponse & { userOp: { occurrence: number } };
 

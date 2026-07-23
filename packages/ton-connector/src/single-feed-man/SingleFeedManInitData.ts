@@ -1,6 +1,7 @@
+import { hexlify } from "@ethersproject/bytes";
+import { toUtf8Bytes } from "@ethersproject/strings";
 import { consts } from "@redstone-finance/protocol";
 import { beginCell, Cell, serializeTuple } from "@ton/core";
-import { hexlify, toUtf8Bytes } from "ethers/lib/utils";
 import { SIGNER_COUNT_THRESHOLD_BITS } from "../config/constants";
 import { createTupleItems } from "../ton-utils";
 import { TonInitData } from "../TonInitData";

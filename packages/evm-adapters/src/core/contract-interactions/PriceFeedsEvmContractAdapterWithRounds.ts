@@ -1,5 +1,5 @@
+import { formatBytes32String } from "@ethersproject/strings";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { utils } from "ethers";
 import { PriceFeedsAdapterWithRounds } from "../../../typechain-types";
 import { PriceFeedsEvmContractAdapter } from "./PriceFeedsEvmContractAdapter";
 
@@ -18,11 +18,9 @@ export class PriceFeedsEvmContractAdapterWithRounds<
 
   async getValueForDataFeedAndRound(feedId: string, roundId: bigint, blockTag?: number) {
     return (
-      await this.adapterContract.getValueForDataFeedAndRound(
-        utils.formatBytes32String(feedId),
-        roundId,
-        { blockTag }
-      )
+      await this.adapterContract.getValueForDataFeedAndRound(formatBytes32String(feedId), roundId, {
+        blockTag,
+      })
     ).toBigInt();
   }
 }

@@ -1,6 +1,6 @@
+import type { BigNumber } from "@ethersproject/bignumber";
 import type { ChainConfigs } from "@redstone-finance/chain-configs";
 import { Tx } from "@redstone-finance/utils";
-import type { BigNumber } from "ethers";
 
 export type AuctionModelFee = {
   gasPrice: number;

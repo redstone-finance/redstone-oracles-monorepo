@@ -1,6 +1,6 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
+import { Deferrable } from "@ethersproject/properties";
 import { providers } from "ethers";
-import { Deferrable } from "ethers/lib/utils";
 import { appendFileSync } from "fs";
 
 export function TxDumpDecorator(factory: () => providers.Provider) {

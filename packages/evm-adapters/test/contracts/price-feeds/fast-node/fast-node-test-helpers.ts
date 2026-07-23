@@ -1,11 +1,12 @@
+import { formatBytes32String } from "@ethersproject/strings";
+import { parseUnits } from "@ethersproject/units";
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
-import { utils } from "ethers";
 import { ethers } from "hardhat";
 import { FastMultiFeedAdapter } from "../../../../typechain-types";
 import { getImpersonatedSigner } from "../../../helpers";
 
-export const DATA_FEED_ID = utils.formatBytes32String("ETH");
+export const DATA_FEED_ID = formatBytes32String("ETH");
 
 /**
  * Authorized updaters as wired in FastMultiFeedAdapterWithRoundsMock.getAuthorisedUpdaterId()
@@ -38,7 +39,7 @@ export async function updateByAllNodesFresh(
     const blockTs = base + i;
     await time.setNextBlockTimestamp(blockTs);
     const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[i]);
-    const price = utils.parseUnits(String(prices[i]), 8);
+    const price = parseUnits(String(prices[i]), 8);
     const priceTimestamp = toMicros(blockTs);
 
     await adapter
@@ -73,7 +74,7 @@ export async function twoStaleThenThreeFresh(
     const blockTs = now + i;
     await time.setNextBlockTimestamp(blockTs);
     const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[i]);
-    const price = utils.parseUnits(String(pricesOld[i]), 8);
+    const price = parseUnits(String(pricesOld[i]), 8);
     await adapter
       .connect(updater)
       .updateDataFeedsValues(toMicros(blockTs), [{ dataFeedId: feedId, price }]);
@@ -87,7 +88,7 @@ export async function twoStaleThenThreeFresh(
     const blockTs = now + j;
     await time.setNextBlockTimestamp(blockTs);
     const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[2 + j]);
-    const price = utils.parseUnits(String(pricesFresh[j]), 8);
+    const price = parseUnits(String(pricesFresh[j]), 8);
     await adapter
       .connect(updater)
       .updateDataFeedsValues(toMicros(blockTs), [{ dataFeedId: feedId, price }]);

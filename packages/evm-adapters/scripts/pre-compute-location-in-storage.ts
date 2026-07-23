@@ -1,6 +1,6 @@
+import { Interface } from "@ethersproject/abi";
+import { keccak256 as solidityKeccak256 } from "@ethersproject/solidity";
 import { utils } from "@redstone-finance/protocol";
-import { ethers } from "ethers";
-import { solidityKeccak256 } from "ethers/lib/utils";
 
 const dataFeedId = utils.convertStringToBytes32("ETH/USDC");
 
@@ -12,6 +12,6 @@ console.log(
 );
 
 const abi = ["function getExchangeRate() returns (uint256)"];
-const iface = new ethers.utils.Interface(abi);
+const iface = new Interface(abi);
 
 console.log(iface.encodeFunctionData("getExchangeRate"));

@@ -1,7 +1,9 @@
+import { Interface } from "@ethersproject/abi";
+import type { BigNumber } from "@ethersproject/bignumber";
+import { isHexString } from "@ethersproject/bytes";
+import { parseBytes32String } from "@ethersproject/strings";
 import type { EventEntry } from "@redstone-finance/multichain-kit";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import type { BigNumber } from "ethers";
-import { Interface, isHexString, parseBytes32String } from "ethers/lib/utils";
 import { extractDataPointValue } from "./abi-utils";
 
 const KNOWN_EVENTS_MULTI_FEED_UPDATE = ["ValueUpdate(uint256,bytes32,uint256)"];
