@@ -1,9 +1,10 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { BASE_FEE, nativeToScVal, xdr } from "@stellar/stellar-sdk";
 import { StellarInvocation } from "../client/IStellarCaller";
 import { FeedMapping, feedMappingToScVal } from "../sep-40-types";
 import { StellarContractOps } from "./StellarContractOps";
 
-const TIMEOUT_SEC = 3600;
+const TIMEOUT_SEC = RedstoneCommon.hourToSecs(12);
 
 const FN_ADD_FEED = "add_feed";
 const FN_REMOVE_FEED = "remove_feed";
@@ -62,6 +63,24 @@ export class StellarSep40ContractOps extends StellarContractOps {
     return await this.multicallTx(
       sender,
       feeds.map((feed) => this.invocation(FN_REMOVE_FEED, nativeToScVal(feed, { type: "string" }))),
+      fee,
+      timeout
+    );
+  }
+
+  async replaceFeedIdTx(
+    sender: string,
+    oldFeedId: string,
+    newFeedMapping: FeedMapping,
+    fee = BASE_FEE,
+    timeout = TIMEOUT_SEC
+  ) {
+    return await this.multicallTx(
+      sender,
+      [
+        this.invocation(FN_REMOVE_FEED, nativeToScVal(oldFeedId, { type: "string" })),
+        this.invocation(FN_ADD_FEED, feedMappingToScVal(newFeedMapping)),
+      ],
       fee,
       timeout
     );
