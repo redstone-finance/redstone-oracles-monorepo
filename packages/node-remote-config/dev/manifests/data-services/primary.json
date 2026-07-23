@@ -3952,13 +3952,7 @@
     },
     "USDH": {
       "source": [
-        "hyperliquid-api-fetcher-usdc",
-        "nest-hyperevm-usdc",
-        "nest-hyperevm-usdt0",
-        "nest-hyperevm-whype",
-        "project-x-hyperevm-usdc-100",
-        "project-x-hyperevm-usdt0-100",
-        "project-x-hyperevm-whype-3000"
+        "alias"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
