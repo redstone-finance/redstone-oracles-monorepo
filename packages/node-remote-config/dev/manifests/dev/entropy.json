@@ -12,106 +12,95 @@
   },
   "defaultBroadcasters": ["redstone-packages", "influx"],
   "tokens": {
-    "USDT": {
-      "source": ["kraken-usd"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "XMR": {
-      "source": [
-        "ws-spot-bitmart-usdt",
-        "ws-spot-htx-usdt",
-        "ws-spot-kraken-usd",
-        "ws-spot-kucoin-usdt",
-        "ws-spot-xt-usdt"
-      ],
+    "OPENAI": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false,
-      "types": ["crypto"]
+      "types": ["rwa"]
     },
-    "ORACLE_hyna:XMR": {
-      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+    "ORACLE_ani:OPENAI": {
+      "source": ["ws-hyperliquid-perps-ani", "ws-hydromancer-perps-ani"],
       "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
+        "ws-hyperliquid-perps-ani": 10,
+        "ws-hydromancer-perps-ani": 1
       },
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "MARK_hyna:XMR": {
-      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+    "MARK_ani:OPENAI": {
+      "source": ["ws-hyperliquid-perps-ani", "ws-hydromancer-perps-ani"],
       "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
+        "ws-hyperliquid-perps-ani": 10,
+        "ws-hydromancer-perps-ani": 1
       },
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "MID_hyna:XMR": {
-      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+    "MID_ani:OPENAI": {
+      "source": ["ws-hyperliquid-perps-ani", "ws-hydromancer-perps-ani"],
       "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
+        "ws-hyperliquid-perps-ani": 10,
+        "ws-hydromancer-perps-ani": 1
       },
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "MID_hyna:XMR_EMA_HALF_5M": {
+    "MID_ani:OPENAI_EMA_HALF_5M": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "ENTROPY_DEPTH_hyna:XMR": {
-      "source": ["ws-hyperliquid-perps-hyna"],
+    "ENTROPY_DEPTH_ani:OPENAI": {
+      "source": ["ws-hyperliquid-perps-ani"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "ENTROPY_DEPTH_hyna:XMR_EMA_HALF_5M": {
+    "ENTROPY_DEPTH_ani:OPENAI_EMA_HALF_5M": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "ENTROPY_DEPTH_hyna:XMR_EMA_HALF_5D": {
+    "ENTROPY_DEPTH_ani:OPENAI_EMA_HALF_5D": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "hyna:XMR_MARK_0": {
+    "ani:OPENAI_MARK_0": {
       "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "hyna:XMR_MARK_1": {
+    "ani:OPENAI_MARK_1": {
       "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "hyna:XMR_EXT": {
+    "ani:OPENAI_EXT": {
       "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "hyna:XMR": {
+    "ani:OPENAI": {
       "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "OPEN_INTEREST_hyna:XMR": {
-      "source": ["ws-hyperliquid-perps-hyna"],
+    "OPEN_INTEREST_ani:OPENAI": {
+      "source": ["ws-hyperliquid-perps-ani"],
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
