@@ -40,6 +40,13 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "JPY_FX": {
+      "priceFeedAddress": "0xF76Bf1a6E5543644B3D41Db2075467cE0B4BFcd4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
