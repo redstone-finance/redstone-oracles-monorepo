@@ -165,6 +165,41 @@
         "deviationPercentage": 0.05,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "SolvBTC.BBN_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "CDJ26SW7PDQPKFWMPECFWTLXIMLZRBKHII563RAJMLVUEAUFIP6GCPGE",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "SolvBTC_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "CAQY3PREVJLM4Y3HK5SKWMHY5E4ULJO6B4VYQ7AK5IUQX6JC57IVIO7O",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "deJTRSY_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "CBOERMDX6PS5QYPBCCTV26JUJIVPQ2MCODQGQFOWVVGFJZLARZCBWTDK",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.25,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "deJAAA_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "CB3J6JU2L26HUMWPINRCUACGPJPSQPKPHSZLGQ2VV7YCJBFWERECZB7O",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.25,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "XAUm_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "CCS42NWCON33NGXH2EWQ732JXWL32XBMXCBO4QKWBDSHJX3L4FBVAAIF",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
