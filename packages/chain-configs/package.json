@@ -21,9 +21,9 @@
     "compare:ssm-rpc-urls-dev": "ENV=dev yarn global:tsx scripts/compare-ssm-rpc-urls.ts",
     "test": "hardhat test",
     "test:rpc-urls-dev-all": "ENV=dev TEST_RPC=T hardhat test test/rpc-urls/ssm-rpc-urls.test.ts",
-    "test:rpc-urls-dev-specific": "ENV=dev TEST_RPC=T CHAIN_ID=${CHAIN_ID} hardhat test test/rpc-urls/ssm-rpc-urls.test.ts",
+    "test:rpc-urls-dev-specific": "ENV=dev TEST_RPC=T NETWORK_ID=${NETWORK_ID} hardhat test test/rpc-urls/ssm-rpc-urls.test.ts",
     "test:rpc-urls-prod-all": "ENV=prod TEST_RPC=T hardhat test test/rpc-urls/ssm-rpc-urls.test.ts",
-    "test:rpc-urls-prod-specific": "ENV=prod TEST_RPC=T CHAIN_ID=${CHAIN_ID} hardhat test test/rpc-urls/ssm-rpc-urls.test.ts",
+    "test:rpc-urls-prod-specific": "ENV=prod TEST_RPC=T NETWORK_ID=${NETWORK_ID} hardhat test test/rpc-urls/ssm-rpc-urls.test.ts",
     "test:chain-configs": "hardhat test test/chain-configs.test.ts"
   },
   "dependencies": {
