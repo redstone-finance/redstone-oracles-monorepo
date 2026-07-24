@@ -1,0 +1,24 @@
+{
+  "chain": {
+    "name": "arc",
+    "id": 5042
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "adapterContract": "0xe1df239Ac22E8a873B2a4dF975C8dfc3249350e4",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "USDC": {
+      "priceFeedAddress": "0xBC00346ef584737ED7E56ae72C0004080e9F2977"
+    },
+    "BTC": {
+      "priceFeedAddress": "0xf5528a63c0d6E5F23Fe8A4f0Dac2Ae7A04174753"
+    },
+    "EUROC": {
+      "priceFeedAddress": "0x7C687d7Cf9d2899326d868Fdd33D75F270525d4c"
+    }
+  }
+}
