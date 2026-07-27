@@ -122,21 +122,15 @@ See more about the Pull model and the Disclosed Core Contract [here](./core/READ
 
 See more about the Push model, PricePill lifecycle and all choices [here](./adapter/README.md)
 
-```haskell
-  nonconsuming choice GetPrices : RedStoneResult
-    with
-      caller : Party
-      feedIds : [RedStoneFeedId]
-      currentTime : Time
-      payloadHex : PayloadHex
-    controller caller
+The `RedStoneAdapter` template implements **both** the `IRedStoneAdapter` and the `IRedStoneCore` interfaces, so `GetPrices` (defined on `IRedStoneCore`) is also callable on an adapter contract. The choices defined by the `IRedStoneAdapter` interface itself are:
 
+```haskell
   nonconsuming choice WritePrices : ContractId IRedStoneAdapter
     with
       caller : Party
       feedIds : [RedStoneFeedId]
       currentTime : Time
-      payloadHex : Text
+      payloadHex : PayloadHex
       context : WritePricesContext
     controller caller
 
@@ -185,23 +179,25 @@ and contains a snapshot of price data for a single feed.
 
 #### Pill Data Fields
 
-Each `RedStonePricePill` contract contains:
+Each `RedStonePricePill` contract has the following fields:
 
 | Field | Type | Description |
 | ------- | ------ | ------------- |
-| `value` | `Numeric 8` | The aggregated price value |
-| `timestamp` | `Int` | Data timestamp (ms since epoch) |
-| `writeTimestamp` | `Int` | When the pill was written to the ledger (ms) |
+| `owner` | `Party` | Signatory of the pill |
+| `viewers` | `[Party]` | Parties allowed to read the pill |
+| `creators` | `[Party]` | Parties allowed to archive the pill |
 | `feedId` | `RedStoneFeedId` | Feed identifier (e.g., `[69, 84, 72]` for ETH) |
-| `description` | `Text` | Human-readable description |
+| `priceData` | `RedStonePriceData RedStoneValue` | Nested record with `value : Numeric 8`, `packageTimestamp : Int` (data timestamp, ms) and `writeTimestamp : Int` (ledger write time, ms) |
 | `stalenessMs` | `Int` | Staleness window in milliseconds |
 | `adapterId` | `Text` | Identifier of the adapter that created this pill |
+
+There is no stored `description` field — the human-readable description is derived on read by the `ReadDescription` choice.
 
 #### Pill Lifecycle
 
 1. **Creation**: Pills are created during `WritePrices` when the adapter has a `pillFactory` configured. The factory creates one pill per feed ID per write operation. Each pill is a separate Daml contract that can be independently queried.
 2. **Active period**: The pill is readable via `ReadData`, `ReadPrice`, `ReadTimestamp`. `IsDataStale` returns `False` while the current ledger time is within the staleness window. `ReadData` and `ReadPrice` assert the pill is not stale before returning data.
-3. **Retention**: The adapter keeps the **newest 2 pills per feed** — older ones are archived during the next write. The newest pill is always available for at least `pill_keep_ms` (1 minute) — it will not be archived until the next `WritePrices` call after that time elapses.
+3. **Retention**: The adapter always keeps the **newest 2 pills per feed** regardless of age. Older ones (the 3rd and beyond) are "demoted" on write, and archived on a later write once more than `pill_keep_ms` (1 minute) has elapsed since demotion. So a demoted pill stays available for at least `pill_keep_ms` before the next `WritePrices` call archives it.
 4. **Archival**: Stale pills are archived by the factory via `ArchivePricePills`, which exercises the consuming `ArchivePill` choice on each pill. Only `creators` (the updater party) can archive pills.
 
 #### Pill Duration & Staleness
@@ -251,7 +247,7 @@ All choices take `caller : Party` as the first parameter:
     controller caller
 ```
 
-- **`ReadData`** — verifies the caller is a viewer, asserts the pill is not stale, then returns full `RedStonePriceData` (value, timestamp, writeTimestamp)
+- **`ReadData`** — verifies the caller is a viewer, asserts the pill is not stale, then returns full `RedStonePriceData` (`value`, `packageTimestamp`, `writeTimestamp`)
 - **`ReadPrice`** — verifies the caller is a viewer, asserts the pill is not stale, then returns just the price value
 - **`ReadTimestamp`** — returns the data timestamp
 - **`ReadFeedId`** — returns the feed ID
