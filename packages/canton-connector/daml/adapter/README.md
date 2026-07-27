@@ -60,7 +60,9 @@ The `currentTime` is the off-chain real-world timestamp, verified against the le
 ### [RedStone Adapter](./src/RedStoneAdapter.daml)
 
 The main oracle contract that consumes _RedStone_ data, written in DAML.
-It implements the [`IRedStoneAdapter`](../interface/src/IRedStoneAdapter.daml) interface.
+It implements the [`IRedStoneAdapter`](../interface/src/IRedStoneAdapter.daml) interface, as well as the
+[`IRedStoneCore`](../interface/src/IRedStoneCore.daml) interface — so the `GetPrices` choice below (defined on
+`IRedStoneCore`) is also callable on an adapter contract.
 
 #### ⨗ GetPrices
 
@@ -209,7 +211,7 @@ nonconsuming choice ReadData : (RedStonePriceData RedStoneValue)
   controller caller
 ```
 
-Verifies the caller is a viewer, asserts the pill is not stale, then returns the full `RedStonePriceData` (value, timestamp, writeTimestamp) stored in the pill.
+Verifies the caller is a viewer, asserts the pill is not stale, then returns the full `RedStonePriceData` (`value`, `packageTimestamp`, `writeTimestamp`) stored in the pill.
 
 #### ∮ ReadPrice
 
@@ -231,7 +233,7 @@ nonconsuming choice ReadTimestamp : Int
   controller caller
 ```
 
-Returns the data timestamp (in milliseconds) stored in the pill.
+Returns the data timestamp (`packageTimestamp`, in milliseconds) stored in the pill.
 
 #### ∮ ReadFeedId
 
@@ -265,7 +267,7 @@ nonconsuming choice IsDataStale : Bool
 ```
 
 Returns `True` if the current ledger time exceeds the pill's staleness window
-(`writeTimestamp + stalenessMs`). Used by `ReadData` and `ReadPrice` to guard against reading stale data.
+(`packageTimestamp + stalenessMs`, i.e. measured from the data timestamp). Used by `ReadData` and `ReadPrice` to guard against reading stale data.
 
 #### ⨒ ArchivePill
 
@@ -282,7 +284,7 @@ A consuming choice that archives (deletes) the pill contract. Validates that the
 
 1. **Creation**: When `WritePrices` is called on the adapter, the `PricePillFactory` creates a new `PricePill` for each feed with the latest price data, timestamp, and a staleness window (`pill_staleness_ms` = 1 day).
 2. **Active period**: The pill is readable via `ReadData`, `ReadPrice`, `ReadTimestamp`. `IsDataStale` returns `false` while the current ledger time is within the staleness window. `ReadData` and `ReadPrice` assert the pill is not stale before returning data.
-3. **Retention**: The newest pill is always available for at least `pill_keep_ms` (1 minute) — it will not be archived until the next `WritePrices` call after that time elapses. The adapter always keeps the 2 newest pills per feed. Older pills may accumulate if updates happen faster than once per minute, and are archived during the next `WritePrices` call once their `writeTimestamp` exceeds `pill_keep_ms`.
+3. **Retention**: The adapter always keeps the **2 newest pills per feed** regardless of age. Older pills (the 3rd and beyond) are "demoted" on a write, and archived on a later `WritePrices` call once more than `pill_keep_ms` (1 minute) has elapsed since demotion. So a demoted pill stays available for at least `pill_keep_ms` before being archived. Older pills may accumulate if updates happen faster than once per minute.
 4. **Archival**: Stale pills are archived by the factory via `ArchivePricePills`, which exercises the consuming `ArchivePill` choice on each pill. Only `creators` (the updater party) can archive pills.
 
 ## ⚠ Possible transaction failures
