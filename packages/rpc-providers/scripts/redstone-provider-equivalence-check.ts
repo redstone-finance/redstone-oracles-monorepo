@@ -4,7 +4,8 @@ import { StaticJsonRpcProvider } from "@ethersproject/providers";
 import { HttpClient } from "@redstone-finance/http-client";
 import assert from "assert";
 import { ErrorCode } from "@ethersproject/logger";
-import { providers, Wallet } from "ethers";
+import { Wallet } from "@ethersproject/wallet";
+import * as providers from "@ethersproject/providers";
 import hardhat from "hardhat";
 import {
   RedstoneEthers5Provider,

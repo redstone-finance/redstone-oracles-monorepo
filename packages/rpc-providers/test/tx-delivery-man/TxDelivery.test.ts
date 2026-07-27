@@ -3,11 +3,11 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { BytesLike } from "@ethersproject/bytes";
 import { ErrorCode } from "@ethersproject/logger";
+import * as providers from "@ethersproject/providers";
 import { Transaction, parse } from "@ethersproject/transactions";
 import { Tx } from "@redstone-finance/utils";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { providers } from "ethers";
 import hardhat from "hardhat";
 import _ from "lodash";
 import Sinon from "sinon";

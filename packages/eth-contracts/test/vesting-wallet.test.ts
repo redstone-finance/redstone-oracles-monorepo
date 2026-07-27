@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+import { Contract } from "@ethersproject/contracts";
 import { Transaction } from "@ethersproject/transactions";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
-import { Contract } from "ethers";
 import { ethers, upgrades } from "hardhat";
 import { time } from "../src/utils";
 import { RedstoneToken } from "../typechain-types";

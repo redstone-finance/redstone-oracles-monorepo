@@ -51,7 +51,9 @@
     "ethers": "^5.7.2"
   },
   "devDependencies": {
+    "@ethersproject/abi": "^5.6.3",
     "@ethersproject/units": "^5.7.0",
+    "@ethersproject/wallet": "^5.7.0",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",

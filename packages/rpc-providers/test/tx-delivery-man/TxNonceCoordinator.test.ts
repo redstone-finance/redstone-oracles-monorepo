@@ -1,5 +1,5 @@
+import * as providers from "@ethersproject/providers";
 import { expect } from "chai";
-import { providers } from "ethers";
 import Sinon from "sinon";
 import { TxDeliverySigner } from "../../src";
 import { TxNonceCoordinator } from "../../src/tx-delivery-man/TxNonceCoordinator";

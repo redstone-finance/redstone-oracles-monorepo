@@ -1,3 +1,4 @@
+import * as providers from "@ethersproject/providers";
 import {
   fetchChainConfigs,
   getChainConfigByNetworkId,
@@ -6,7 +7,6 @@ import {
 import { EvmBlockchainService } from "@redstone-finance/evm-adapters";
 import { BalanceProvider } from "@redstone-finance/multichain-kit";
 import { isNonEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import { getNonEvmBlockchainService } from "../blockchain-service/get-non-evm-blockchain-service";
 import { CurrencyTokenBalanceProvider } from "./CurrencyTokenBalanceProvider";
 import {

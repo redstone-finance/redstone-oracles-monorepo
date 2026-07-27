@@ -1,5 +1,5 @@
+import * as providers from "@ethersproject/providers";
 import { BlockchainServiceWithTxLookup } from "@redstone-finance/multichain-kit";
-import { providers } from "ethers";
 import { EvmTxLookup } from "./EvmTxLookup";
 import { Multicall3Config } from "./extract-top-ups";
 

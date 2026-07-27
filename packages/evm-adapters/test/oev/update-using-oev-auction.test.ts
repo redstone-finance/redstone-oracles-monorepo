@@ -1,8 +1,10 @@
 import { BigNumber } from "@ethersproject/bignumber";
+import { Contract } from "@ethersproject/contracts";
+import * as providers from "@ethersproject/providers";
 import { TransactionReceipt } from "@ethersproject/providers";
+import { Wallet } from "@ethersproject/wallet";
 import { HARDHAT_CHAIN_ID, RedstoneCommon } from "@redstone-finance/utils";
 import { expect } from "chai";
-import { Contract, providers, Wallet } from "ethers";
 import { abi as RedstoneAdapterBaseAbi } from "../../artifacts/contracts/core/RedstoneAdapterBase.sol/RedstoneAdapterBase.json";
 import { updateUsingOevAuction } from "../../src";
 import { OevConfig } from "../../src/oev/oev-config";

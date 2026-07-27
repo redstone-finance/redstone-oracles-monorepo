@@ -1,6 +1,7 @@
+import { Contract } from "@ethersproject/contracts";
+import * as providers from "@ethersproject/providers";
 import { BalanceProvider, BlockProvider } from "@redstone-finance/multichain-kit";
 import { Erc20Abi, Erc20Contract } from "@redstone-finance/rpc-providers";
-import { Contract, providers } from "ethers";
 
 export class CurrencyTokenBalanceProvider implements BalanceProvider, BlockProvider {
   constructor(

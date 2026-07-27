@@ -1,6 +1,7 @@
+import { Contract } from "@ethersproject/contracts";
+import * as providers from "@ethersproject/providers";
 import { parseBytes32String } from "@ethersproject/strings";
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
-import { Contract, providers } from "ethers";
 import { abi as PriceFeedWithRoundsAbi } from "../../../artifacts/contracts/price-feeds/with-rounds/PriceFeedWithRounds.sol/PriceFeedWithRounds.json";
 import { PriceFeedWithRounds } from "../../../typechain-types";
 

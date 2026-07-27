@@ -1,13 +1,13 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
 import { BigNumber } from "@ethersproject/bignumber";
 import { Deferrable } from "@ethersproject/properties";
+import * as providers from "@ethersproject/providers";
 import {
   type ChainConfigs,
   getChainConfigByNetworkId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import { z } from "zod";
 import {
   GET_ETH_BALANCE_FN,

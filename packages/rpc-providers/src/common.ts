@@ -1,7 +1,7 @@
 import { BlockTag } from "@ethersproject/abstract-provider";
+import * as providers from "@ethersproject/providers";
 import { TelemetryPoint } from "@redstone-finance/internal-utils";
 import { HARDHAT_CHAIN_ID, MathUtils, NetworkId } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import { RedstoneEthers5Provider } from "./providers/RedstoneProvider";
 
 export type ReportMetricFn = (message: TelemetryPoint) => void;

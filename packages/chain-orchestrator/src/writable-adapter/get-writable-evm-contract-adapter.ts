@@ -1,3 +1,5 @@
+import * as providers from "@ethersproject/providers";
+import { Wallet } from "@ethersproject/wallet";
 import {
   getEvmContract,
   getEvmContractAdapter,
@@ -8,7 +10,6 @@ import {
 } from "@redstone-finance/evm-adapters";
 import { TxDeliveryManSupportedProviders } from "@redstone-finance/rpc-providers";
 import { RedstoneCommon, Tx } from "@redstone-finance/utils";
-import { providers, Wallet } from "ethers";
 import { getRelayerProvider } from "./get-relayer-provider";
 import { getTxDeliveryMan } from "./get-tx-delivery-man";
 import { EvmRelayerConfig } from "./partial-relayer-config";

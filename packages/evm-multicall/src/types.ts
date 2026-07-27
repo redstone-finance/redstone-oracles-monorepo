@@ -1,4 +1,4 @@
-import { Contract } from "ethers";
+import { Contract } from "@ethersproject/contracts";
 
 export interface Call3 {
   address: string;

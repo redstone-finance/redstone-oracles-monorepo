@@ -1,10 +1,10 @@
+import * as providers from "@ethersproject/providers";
 import {
   CuratedRpcList,
   RedstoneCommon,
   RedstoneLogger,
   RpcIdentifier,
 } from "@redstone-finance/utils";
-import { providers } from "ethers";
 
 export type ProviderWithIdentifier = {
   provider: providers.Provider;

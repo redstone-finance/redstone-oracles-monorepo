@@ -1,4 +1,5 @@
 import { ErrorCode } from "@ethersproject/logger";
+import * as providers from "@ethersproject/providers";
 import { EventType, Listener, Provider, TransactionReceipt } from "@ethersproject/providers";
 import {
   ChainConfig,
@@ -6,7 +7,6 @@ import {
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
 import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import _ from "lodash";
 import { getProviderNetworkInfo } from "../common";
 import { ProviderWithFallbackBase } from "./ProviderWithFallbackBase";

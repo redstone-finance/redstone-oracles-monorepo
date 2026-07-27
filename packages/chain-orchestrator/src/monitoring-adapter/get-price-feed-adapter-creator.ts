@@ -1,7 +1,7 @@
+import * as providers from "@ethersproject/providers";
 import { EvmPriceFeedContractAdapter } from "@redstone-finance/evm-adapters";
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import { isEvmNetworkId, NetworkId, NonEvmNetworkId } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import {
   fetchParsedRpcUrlsFromSsmByNetworkIdMemoized,
   getProviderMemoized,

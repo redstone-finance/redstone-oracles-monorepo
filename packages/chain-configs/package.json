@@ -27,13 +27,14 @@
     "test:chain-configs": "hardhat test test/chain-configs.test.ts"
   },
   "dependencies": {
+    "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/providers": "^5.6.8",
+    "@ethersproject/wallet": "^5.7.0",
     "@redstone-finance/evm-multicall": "workspace:*",
     "@redstone-finance/internal-utils": "workspace:*",
     "@redstone-finance/remote-config": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "dayjs": "^1.11.12",
-    "ethers": "^5.7.2",
     "lodash": "^4.17.23",
     "zod": "^4.1.12"
   },
@@ -50,6 +51,7 @@
     "chai": "^4.3.10",
     "chalk": "^4.1.2",
     "dotenv": "^16.0.3",
+    "ethers": "^5.7.2",
     "hardhat": "^2.28.6",
     "hardhat-gas-reporter": "^1.0.9",
     "mocha": "^11",

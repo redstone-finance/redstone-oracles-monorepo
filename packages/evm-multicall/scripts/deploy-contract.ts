@@ -1,6 +1,6 @@
+import { Wallet } from "@ethersproject/wallet";
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import assert from "assert";
-import { Wallet } from "ethers";
 import hre from "hardhat";
 
 const SSM_MULTICALL_PRIVATE_KEY_NAME =

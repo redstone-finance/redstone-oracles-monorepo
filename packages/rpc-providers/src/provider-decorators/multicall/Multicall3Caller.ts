@@ -1,6 +1,8 @@
 import { Interface } from "@ethersproject/abi";
 import { BlockTag } from "@ethersproject/abstract-provider";
 import { hexZeroPad } from "@ethersproject/bytes";
+import { Contract } from "@ethersproject/contracts";
+import * as providers from "@ethersproject/providers";
 import {
   type ChainConfigs,
   getChainConfigByNetworkId,
@@ -8,7 +10,6 @@ import {
   getMulticall3,
 } from "@redstone-finance/chain-configs";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { Contract, providers } from "ethers";
 import Multicall3Abi from "./Multicall3.abi.json";
 
 export const MULTICALL3_INTERFACE = new Interface(Multicall3Abi.abi);

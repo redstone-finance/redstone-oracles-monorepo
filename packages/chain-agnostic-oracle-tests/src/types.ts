@@ -1,4 +1,4 @@
-import { Wallet } from "ethers";
+import { Wallet } from "@ethersproject/wallet";
 
 export interface FullTestSpec {
   "Pull model": Record<string, Nested<PullModelTestCase>>;

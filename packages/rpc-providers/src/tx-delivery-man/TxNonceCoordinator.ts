@@ -1,5 +1,5 @@
+import * as providers from "@ethersproject/providers";
 import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import { TxDeliveryOpts } from "./common";
 import { NonceFetcher } from "./NonceFetcher";
 import type { TxDeliverySigner } from "./TxDelivery";

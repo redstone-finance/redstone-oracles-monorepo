@@ -1,5 +1,5 @@
 import { BigNumber } from "@ethersproject/bignumber";
-import { Contract } from "ethers";
+import { Contract } from "@ethersproject/contracts";
 import { ContractCallOverrides } from "./common";
 
 export interface Erc20Contract extends Contract {

@@ -1,8 +1,8 @@
 import { ErrorCode } from "@ethersproject/logger";
+import * as providers from "@ethersproject/providers";
 import { TransactionRequest, TransactionResponse } from "@ethersproject/providers";
 import { parseEther } from "@ethersproject/units";
 import { loggerFactory, RedstoneCommon, RedstoneLogger, Tx } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import _ from "lodash";
 import { AuctionModelGasEstimator } from "./AuctionModelGasEstimator";
 import { AuctionModelGasEstimatorV2 } from "./AuctionModelGasEstimatorV2";

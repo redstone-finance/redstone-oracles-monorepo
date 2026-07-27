@@ -1,4 +1,4 @@
-import { providers } from "ethers";
+import * as providers from "@ethersproject/providers";
 
 /**
  * Decorator that deduplicates concurrent `getBlockNumber()` calls on a provider.

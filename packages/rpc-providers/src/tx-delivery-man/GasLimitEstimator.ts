@@ -1,6 +1,6 @@
 import { BigNumber } from "@ethersproject/bignumber";
+import * as providers from "@ethersproject/providers";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import type { TxDeliveryOptsValidated } from "./common";
 
 export type GasEstimateTx = {

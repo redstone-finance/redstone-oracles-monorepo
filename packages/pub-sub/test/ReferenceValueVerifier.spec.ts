@@ -1,5 +1,5 @@
+import { Wallet } from "@ethersproject/wallet";
 import { DataPackage, NumericDataPoint } from "@redstone-finance/protocol";
-import { Wallet } from "ethers";
 import { ReferenceValueVerifier } from "../src/ReferenceValueVerifier";
 
 // logger mocks

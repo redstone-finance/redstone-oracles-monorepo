@@ -1,8 +1,9 @@
+import * as providers from "@ethersproject/providers";
+import { Wallet } from "@ethersproject/wallet";
 import { consts } from "@redstone-finance/protocol";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { expect } from "chai";
-import { Wallet, providers } from "ethers";
 import { EvmAdapterType } from "./facade/evm/get-evm-contract";
 import { getEvmContractAdapter } from "./facade/evm/get-evm-contract-adapter";
 import { RedstoneEvmContract } from "./facade/evm/RedstoneEvmContract";

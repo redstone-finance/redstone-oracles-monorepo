@@ -1,4 +1,4 @@
-import { providers } from "ethers";
+import * as providers from "@ethersproject/providers";
 import { GasEstimator } from "./GasEstimator";
 import { unsafeBnToNumber, type AuctionModelFee, type TxDeliveryOptsValidated } from "./common";
 

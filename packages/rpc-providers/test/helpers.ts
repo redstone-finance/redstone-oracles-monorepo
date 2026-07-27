@@ -1,5 +1,7 @@
 import { BigNumber } from "@ethersproject/bignumber";
-import { Contract, Wallet, providers } from "ethers";
+import { Contract } from "@ethersproject/contracts";
+import * as providers from "@ethersproject/providers";
+import { Wallet } from "@ethersproject/wallet";
 import { BrowserProvider, type Provider as ProviderV6 } from "ethers-v6";
 import hardhat from "hardhat";
 import Sinon from "sinon";

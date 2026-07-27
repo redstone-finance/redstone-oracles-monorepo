@@ -1,3 +1,4 @@
+import * as providers from "@ethersproject/providers";
 import {
   HARDHAT_CHAIN_ID,
   loggerFactory,
@@ -5,7 +6,6 @@ import {
   RedstoneCommon,
   Tx,
 } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import { getProviderNetworkInfo } from "../common";
 import { ProviderExecutor, ProviderWithIdentifier } from "../ProviderExecutor";
 import { TxDeliveryOpts } from "./common";

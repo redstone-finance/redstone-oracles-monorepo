@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/unbound-method */
+import * as providers from "@ethersproject/providers";
 import { Tx } from "@redstone-finance/utils";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { providers } from "ethers";
 import hardhat from "hardhat";
 import Sinon from "sinon";
 import {

@@ -1,7 +1,6 @@
 import type { BlockTag, Provider } from "@ethersproject/abstract-provider";
-import { type ContractInterface } from "@ethersproject/contracts";
+import { Contract, type ContractInterface } from "@ethersproject/contracts";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { Contract } from "ethers";
 import {
   Contract as ContractV6,
   type ContractRunner,

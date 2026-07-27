@@ -1,11 +1,12 @@
+import { Contract } from "@ethersproject/contracts";
 import { Provider } from "@ethersproject/providers";
+import { Wallet } from "@ethersproject/wallet";
 import {
   EvmMulticallTypes,
   Multicall3Abi,
   RedstoneMulticall3Abi,
 } from "@redstone-finance/evm-multicall";
 import { NetworkId, RedstoneCommon } from "@redstone-finance/utils";
-import { Contract, Wallet } from "ethers";
 import { ChainConfig, ChainConfigs } from "./schemas";
 
 export function getChainConfig(chainConfigs: ChainConfigs, networkName: string): ChainConfig {

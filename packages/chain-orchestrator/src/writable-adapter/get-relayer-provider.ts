@@ -1,7 +1,7 @@
+import * as providers from "@ethersproject/providers";
 import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finance/chain-configs";
 import { MegaProviderBuilder, ProviderDecorators } from "@redstone-finance/rpc-providers";
 import { isEvmNetworkId } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import { EvmRelayerConfig } from "./partial-relayer-config";
 import { getRelayerMetricReporter } from "./rpc-metric-reporter";
 

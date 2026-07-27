@@ -1,6 +1,6 @@
+import * as providers from "@ethersproject/providers";
 import { TransactionReceipt, TransactionResponse } from "@ethersproject/providers";
 import { loggerFactory, RedstoneCommon, sanitizeLogMessage, Tx } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import { getProviderNetworkInfo } from "../common";
 import { ProviderWithAgreement } from "../providers/ProviderWithAgreement";
 import { ProviderWithFallback } from "../providers/ProviderWithFallback";

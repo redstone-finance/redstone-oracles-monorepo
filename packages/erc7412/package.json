@@ -23,7 +23,6 @@
     "@redstone-finance/evm-connector": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "erc7412": "^0.2.3",
-    "ethers": "^5.7.2",
     "node-gyp": "^12"
   },
   "devDependencies": {
@@ -40,6 +39,7 @@
     "@types/chai": "^4.3.4",
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.1",
+    "ethers": "^5.7.2",
     "hardhat": "^2.28.6",
     "hardhat-gas-reporter": "^1.0.9",
     "solidity-coverage": "^0.8.12",

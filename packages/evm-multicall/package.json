@@ -18,11 +18,12 @@
     "preversion": "yarn build"
   },
   "dependencies": {
-    "ethers": "^5.7.2"
+    "@ethersproject/contracts": "^5.7.0"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.6.3",
     "@ethersproject/providers": "^5.6.8",
+    "@ethersproject/wallet": "^5.7.0",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
@@ -35,6 +36,7 @@
     "@types/lodash": "^4.14.195",
     "@types/sinon": "^10.0.15",
     "chai": "^4.3.10",
+    "ethers": "^5.7.2",
     "hardhat": "^2.28.6",
     "hardhat-gas-reporter": "^1.0.9",
     "sinon": "^18.0.0",

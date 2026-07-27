@@ -1,7 +1,7 @@
+import * as providers from "@ethersproject/providers";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { providers } from "ethers";
 import sinon from "sinon";
 import { BlockNumberDedupDecorator } from "../../src/provider-decorators/BlockNumberDedupDecorator";
 

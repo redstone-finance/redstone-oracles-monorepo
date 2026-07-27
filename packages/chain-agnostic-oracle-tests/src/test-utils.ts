@@ -1,3 +1,4 @@
+import { Wallet } from "@ethersproject/wallet";
 import {
   DataPackage,
   DataPoint,
@@ -7,7 +8,6 @@ import {
   SignedDataPackagePlainObj,
   utils,
 } from "@redstone-finance/protocol";
-import { Wallet } from "ethers";
 
 export interface MockDataPackageConfig {
   signer: MockSignerAddress;

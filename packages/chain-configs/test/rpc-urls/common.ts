@@ -1,3 +1,4 @@
+import * as providers from "@ethersproject/providers";
 import {
   deconstructNetworkId,
   isNonEvmNetworkId,
@@ -7,7 +8,6 @@ import {
   sanitizeLogMessage,
 } from "@redstone-finance/utils";
 import chai from "chai";
-import { providers } from "ethers";
 import { RpcUrlsPerChain } from "../../scripts/read-ssm-rpc-urls";
 import { ChainConfig, getChainConfigByNetworkId, getLocalChainConfigs } from "../../src";
 

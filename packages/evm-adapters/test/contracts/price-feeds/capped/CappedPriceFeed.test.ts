@@ -1,8 +1,8 @@
 import { BigNumber } from "@ethersproject/bignumber";
+import { Wallet } from "@ethersproject/wallet";
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { Wallet } from "ethers";
 import { ethers } from "hardhat";
 import { MockCappedPriceFeed } from "../../../../typechain-types";
 chai.use(chaiAsPromised);

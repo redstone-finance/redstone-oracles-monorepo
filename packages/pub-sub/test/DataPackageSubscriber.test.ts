@@ -1,7 +1,7 @@
+import { Wallet } from "@ethersproject/wallet";
 import { DataPackage, NumericDataPoint, SignedDataPackage } from "@redstone-finance/protocol";
 import { DataPackagesResponseStorage } from "@redstone-finance/sdk";
 import { RedstoneLogger } from "@redstone-finance/utils";
-import { Wallet } from "ethers";
 import {
   DataPackageSubscriber,
   DataPackageSubscriberParams,

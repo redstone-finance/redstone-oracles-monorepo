@@ -1,4 +1,4 @@
-import { providers } from "ethers";
+import * as providers from "@ethersproject/providers";
 import type { FeeStructure } from "./common";
 
 export interface GasEstimator<T extends FeeStructure> {

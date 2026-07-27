@@ -1,3 +1,4 @@
+import * as providers from "@ethersproject/providers";
 import {
   fetchChainConfigs,
   fetchParsedRpcUrlsFromSsmByNetworkId,
@@ -6,7 +7,6 @@ import {
 } from "@redstone-finance/chain-configs";
 import { MegaProviderBuilder, MulticallDecorator } from "@redstone-finance/rpc-providers";
 import { isEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import { z } from "zod";
 
 export const DEFAULT_PROVIDER_CONFIG: {

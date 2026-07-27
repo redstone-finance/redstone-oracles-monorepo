@@ -4,6 +4,7 @@ import {
   TransactionResponse,
 } from "@ethersproject/abstract-provider";
 import { ErrorCode } from "@ethersproject/logger";
+import * as providers from "@ethersproject/providers";
 import {
   getFunctionSignature,
   normalizeRedStoneTxData,
@@ -12,7 +13,6 @@ import {
 } from "@redstone-finance/multichain-kit";
 import { consts } from "@redstone-finance/protocol";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import { expandUserOpTxs, extractUserOpReceipt, isUserOpTx } from "./erc4337-utils";
 import { parseLogEvent } from "./event-utils";
 import { extractTopUpEntries, Multicall3Config } from "./extract-top-ups";

@@ -1,10 +1,11 @@
 import { BigNumber } from "@ethersproject/bignumber";
-import { ContractFactory } from "@ethersproject/contracts";
+import { Contract, ContractFactory } from "@ethersproject/contracts";
+import * as providers from "@ethersproject/providers";
 import { parseEther } from "@ethersproject/units";
+import { Wallet } from "@ethersproject/wallet";
 import { RedstoneMulticall3Abi, RedstoneMulticall3ByteCode } from "@redstone-finance/evm-multicall";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { Contract, Wallet, providers } from "ethers";
 import hardhat from "hardhat";
 import Sinon from "sinon";
 import {

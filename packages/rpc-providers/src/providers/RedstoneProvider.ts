@@ -4,10 +4,10 @@ import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { BytesLike, hexlify, hexValue, hexZeroPad } from "@ethersproject/bytes";
 import { ErrorCode } from "@ethersproject/logger";
 import { Deferrable } from "@ethersproject/properties";
+import * as providers from "@ethersproject/providers";
 import { HttpClient } from "@redstone-finance/http-client";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { AxiosRequestConfig } from "axios";
-import { providers } from "ethers";
 
 type EthereumRpcRequest = {
   jsonrpc: "2.0";

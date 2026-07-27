@@ -1,6 +1,6 @@
+import * as providers from "@ethersproject/providers";
 import { HttpClient } from "@redstone-finance/http-client";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import { z } from "zod";
 import {
   ProviderWithAgreement,

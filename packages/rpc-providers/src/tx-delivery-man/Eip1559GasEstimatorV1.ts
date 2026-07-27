@@ -1,10 +1,10 @@
+import * as providers from "@ethersproject/providers";
 import {
   ChainConfig,
   getChainConfigByNetworkId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
 import { MathUtils, RedstoneCommon, Tx } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import { getProviderNetworkId } from "../common";
 import { GasEstimator } from "./GasEstimator";
 import { unsafeBnToNumber, type Eip1559Fee, type TxDeliveryOptsValidated } from "./common";

@@ -2,6 +2,7 @@ import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
 import { BigNumber } from "@ethersproject/bignumber";
 import { hexlify } from "@ethersproject/bytes";
 import { Deferrable } from "@ethersproject/properties";
+import * as providers from "@ethersproject/providers";
 import {
   CuratedRpcList,
   loggerFactory,
@@ -10,7 +11,6 @@ import {
   RpcIdentifier,
   sanitizeLogMessage,
 } from "@redstone-finance/utils";
-import { providers } from "ethers";
 import _ from "lodash";
 import { convertBlockTagToNumber, electRoundedMedian, getProviderNetworkInfo } from "../common";
 import { ProviderWithIdentifier } from "../ProviderExecutor";
