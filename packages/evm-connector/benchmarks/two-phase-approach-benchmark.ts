@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
+import { ContractTransaction } from "@ethersproject/contracts";
 import { DataPackage, NumericDataPoint, utils } from "@redstone-finance/protocol";
-import { ContractTransaction } from "ethers";
 import { ethers } from "hardhat";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,

@@ -10,7 +10,6 @@ export * from "./clone";
 export * from "./conversions";
 export * from "./date-utils";
 export * from "./env";
-export * from "./erc20";
 export * from "./errors";
 export * from "./fetch-with-fallback";
 export * from "./Fetcher";

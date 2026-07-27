@@ -1,6 +1,7 @@
 import { FunctionFragment } from "@ethersproject/abi";
+import { Signer } from "@ethersproject/abstract-signer";
 import { RedstonePayload, SignedDataPackage } from "@redstone-finance/protocol";
-import { Contract, Signer } from "ethers";
+import { Contract } from "ethers";
 import { addContractWait } from "../helpers/add-contract-wait";
 
 interface OverwriteFunctionArgs<T extends Contract> {

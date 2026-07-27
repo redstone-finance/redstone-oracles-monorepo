@@ -1,4 +1,5 @@
-import { Contract, Signer } from "ethers";
+import { Signer } from "@ethersproject/abstract-signer";
+import { Contract } from "ethers";
 import { IStylusAdapter, LastUpdateDetailsStructOutput } from "../abi/IStylusAdapter";
 import { abi as PRICE_ADAPTER_ABI } from "../abi/StylusAdapter.json";
 

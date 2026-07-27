@@ -1,5 +1,5 @@
 import { splitSignature } from "@ethersproject/bytes";
-import { Wallet } from "ethers";
+import { Wallet } from "@ethersproject/wallet";
 import { UniversalSigner } from "../src";
 
 const PRIVATE_KEY_FOR_TESTS = "0x1111111111111111111111111111111111111111111111111111111111111111";

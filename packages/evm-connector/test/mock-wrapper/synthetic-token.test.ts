@@ -1,6 +1,6 @@
+import { Signer } from "@ethersproject/abstract-signer";
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
-import { Signer } from "ethers";
 import { ethers } from "hardhat";
 import { getMockNumericPackage, getRange, MockSignerIndex } from "../../src/helpers/test-utils";
 import { WrapperBuilder } from "../../src/index";
