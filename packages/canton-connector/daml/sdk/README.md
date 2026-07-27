@@ -59,7 +59,7 @@ processPayload: Config -> Text -> ProcessorRawOutcome
 (
 [
   Ok 3114.205,
-  Error \"[RedStone.VerificationError] Signer count not achieved with: [9007390000000,9007390000000]\"
+  Error \"[RedStone.VerificationError] Signer count not achieved with: [Some 9007390000000,Some 9007390000000]\"
 ],
 1765215110000
 )
