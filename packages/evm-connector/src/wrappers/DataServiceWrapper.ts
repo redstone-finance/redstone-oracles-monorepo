@@ -1,3 +1,4 @@
+import { Contract } from "@ethersproject/contracts";
 import { SignedDataPackage } from "@redstone-finance/protocol";
 import {
   DataPackagesRequestParams,
@@ -5,7 +6,6 @@ import {
   resolveDataServiceUrls,
 } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { Contract } from "ethers";
 import { version } from "../../package.json";
 import { BaseWrapper } from "./BaseWrapper";
 

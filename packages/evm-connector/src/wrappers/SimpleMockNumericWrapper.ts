@@ -1,5 +1,5 @@
+import { Contract } from "@ethersproject/contracts";
 import { DataPackage, INumericDataPoint, NumericDataPoint } from "@redstone-finance/protocol";
-import { Contract } from "ethers";
 import { version } from "../../package.json";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,

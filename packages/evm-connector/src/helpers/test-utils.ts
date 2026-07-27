@@ -1,4 +1,5 @@
 import { arrayify } from "@ethersproject/bytes";
+import { Wallet } from "@ethersproject/wallet";
 import {
   DataPackage,
   DataPoint,
@@ -9,7 +10,6 @@ import {
   StringDataPoint,
   utils,
 } from "@redstone-finance/protocol";
-import { Wallet } from "ethers";
 import type { MockDataPackageConfig } from "../wrappers/MockWrapper";
 
 export const MAX_MOCK_SIGNERS_COUNT = 19;
