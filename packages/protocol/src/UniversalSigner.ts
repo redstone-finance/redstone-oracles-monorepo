@@ -1,3 +1,4 @@
+import { Signer } from "@ethersproject/abstract-signer";
 import {
   arrayify,
   hexlify,
@@ -11,7 +12,6 @@ import { SigningKey } from "@ethersproject/signing-key";
 import { toUtf8Bytes } from "@ethersproject/strings";
 import { computeAddress } from "@ethersproject/transactions";
 import { verifyMessage } from "@ethersproject/wallet";
-import { Signer, Wallet } from "ethers";
 import { ecdsaRecover } from "secp256k1";
 
 const RS_SIGNATURE_LENGTH = 64;
@@ -76,10 +76,7 @@ export class UniversalSigner {
     return sig;
   }
 
-  static signWithEthereumHashMessage(
-    signerOrWallet: Signer | Wallet,
-    message: string
-  ): Promise<string> {
+  static signWithEthereumHashMessage(signerOrWallet: Signer, message: string): Promise<string> {
     return signerOrWallet.signMessage(message);
   }
 
