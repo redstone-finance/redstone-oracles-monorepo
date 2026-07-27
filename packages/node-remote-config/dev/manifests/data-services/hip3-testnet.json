@@ -3819,6 +3819,42 @@
           "maxDelayMilliseconds": 1000
         }
       }
+    },
+
+    "OPENAI_PERP": {
+      "source": ["ws-perp-binance-usdt", "ws-perp-coinbase-usdc", "ws-perp-mexc-usdt"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPENAI_SECONDARIES": {
+      "source": ["jupiter", "notice", "dex-screener"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ANTHROPIC_PERP": {
+      "source": ["ws-perp-binance-usdt", "ws-perp-coinbase-usdc", "ws-perp-mexc-usdt"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ANTHROPIC_SECONDARIES": {
+      "source": ["jupiter", "notice", "dex-screener"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SPCX_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-coinbase-usdc",
+        "ws-perp-mexc-usdt",
+        "polymarket"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SPCX_SECONDARIES": {
+      "source": ["jupiter", "notice", "dex-screener"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
