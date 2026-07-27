@@ -10646,6 +10646,7 @@ __metadata:
     chai: "npm:^4.3.10"
     chai-as-promised: "npm:^7.1.1"
     ethers: "npm:^5.7.2"
+    ethers-v6: "npm:ethers@6.13.5"
     hardhat: "npm:^2.28.6"
     hardhat-gas-reporter: "npm:^1.0.9"
     lodash: "npm:^4.17.23"
