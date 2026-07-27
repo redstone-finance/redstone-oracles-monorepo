@@ -2595,6 +2595,10 @@
     },
     "SAMSUNG": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "KRW",
       "rateFeed": false,
       "types": [
@@ -2603,6 +2607,10 @@
     },
     "SK_HYNIX": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "KRW",
       "rateFeed": false,
       "types": [
@@ -2611,6 +2619,10 @@
     },
     "HYUNDAI": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "KRW",
       "rateFeed": false,
       "types": [
