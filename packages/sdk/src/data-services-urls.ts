@@ -17,22 +17,12 @@ const AUTHENTICATED_GATEWAY_URLS_BY_DATA_SERVICE: Partial<Record<string, string[
 export const resolveAuthenticatedGatewayUrls = (dataServiceId: string): string[] =>
   AUTHENTICATED_GATEWAY_URLS_BY_DATA_SERVICE[dataServiceId] ?? PROD_AUTHENTICATED_GATEWAY_URLS;
 
-// GCP gateways don't support metadata, AWS prod1 doesn't support historical data
+// prod1 doesn't support historical data
 const allReadGateways = {
-  dev1_gcp: {
-    url: "https://oracle-gateway-1.b.redstone.vip",
-    historical: true,
-    metadata: false,
-  },
   dev1_aws: {
     url: "https://oracle-gateway-1.b.redstone.finance",
     historical: true,
     metadata: true,
-  },
-  prod1_gcp: {
-    url: "https://oracle-gateway-1.a.redstone.vip",
-    historical: false,
-    metadata: false,
   },
   prod1_aws: {
     url: "https://oracle-gateway-1.a.redstone.finance",
@@ -56,10 +46,10 @@ const allReadGateways = {
   },
 };
 
-const DEV_GWS = [allReadGateways.dev1_aws, allReadGateways.dev1_gcp];
+const DEV_GWS = [allReadGateways.dev1_aws];
 
 // order matters here, as the first gateway is being tried first by requestDataPackages function
-const PROD_GWS = [allReadGateways.prod2_aws, allReadGateways.prod1_gcp, allReadGateways.prod1_aws];
+const PROD_GWS = [allReadGateways.prod2_aws, allReadGateways.prod1_aws];
 
 const REDSTONE_DATA_SERVICES_URLS: Partial<Record<string, Gateway[]>> = {
   "redstone-primary-prod": PROD_GWS,
