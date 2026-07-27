@@ -12,11 +12,15 @@
   },
   "defaultBroadcasters": ["redstone-packages", "influx"],
   "tokens": {
-    "OPENAI": {
-      "source": [],
+    "OPENAI_PERP": {
+      "source": ["ws-perp-binance-usdt", "ws-perp-coinbase-usdc", "ws-perp-mexc-usdt"],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
+      "rateFeed": false
+    },
+    "OPENAI_SECONDARIES": {
+      "source": ["jupiter", "notice", "dex-screener"],
+      "denomination": "USD",
+      "rateFeed": false
     },
     "ORACLE_ani:OPENAI": {
       "source": ["ws-hyperliquid-perps-ani", "ws-hydromancer-perps-ani"],
