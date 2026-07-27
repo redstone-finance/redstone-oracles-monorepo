@@ -1,9 +1,9 @@
+import { Wallet } from "@ethersproject/wallet";
 import {
   DataPackage,
   NumericDataPoint,
   type SignedDataPackagePlainObj,
 } from "@redstone-finance/protocol";
-import { Wallet } from "ethers";
 import { computeMedian, verifyAndComputeMedian } from "../src/compute-median";
 
 const WALLET_1 = new Wallet("0xfae81e7c122f2ad245be182d88889e6a037bbeebd7de7bb5ca10f891d359e440");

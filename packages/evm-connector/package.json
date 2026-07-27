@@ -28,15 +28,16 @@
     "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/properties": "^5.7.0",
     "@ethersproject/providers": "^5.6.8",
+    "@ethersproject/wallet": "^5.7.0",
     "@openzeppelin/contracts": "^4.8.1",
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
-    "axios": "^1.15.2",
-    "ethers": "^5.7.2"
+    "axios": "^1.15.2"
   },
   "devDependencies": {
     "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/bytes": "^5.6.1",
     "@ethersproject/strings": "^5.7.0",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
@@ -55,6 +56,7 @@
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.1",
     "esbuild": "^0.28",
+    "ethers": "^5.7.2",
     "hardhat": "^2.28.6",
     "hardhat-gas-reporter": "^1.0.9",
     "http-server": "^14.1.1",

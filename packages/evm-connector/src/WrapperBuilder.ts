@@ -1,5 +1,5 @@
+import { Contract } from "@ethersproject/contracts";
 import { DataPackagesResponse } from "@redstone-finance/sdk";
-import { Contract } from "ethers";
 import { DataPackagesWrapper } from "./wrappers/DataPackagesWrapper";
 import { DataPackagesRequestInput, DataServiceWrapper } from "./wrappers/DataServiceWrapper";
 import { MockDataPackageConfig, MockWrapper } from "./wrappers/MockWrapper";

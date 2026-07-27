@@ -1,9 +1,9 @@
+import { Wallet } from "@ethersproject/wallet";
 import {
   DataPackage,
   NumericDataPoint,
   SignedDataPackagePlainObj,
 } from "@redstone-finance/protocol";
-import { Wallet } from "ethers";
 import { pickDataFeedPackagesClosestToMedian } from "../src/pick-closest-to-median";
 
 const MOCK_WALLET_1 = new Wallet(
