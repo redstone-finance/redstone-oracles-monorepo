@@ -5,6 +5,7 @@ export type TxDeliveryCall = Tx.TxDeliveryCall;
 
 export * from "./BackgroundBlockNumbersFetcher";
 export * from "./common";
+export * from "./evm-contract";
 export * from "./hardhat-network-configs";
 export * from "./MegaProviderBuilder";
 export * from "./provider-decorators/MetricDecorator";

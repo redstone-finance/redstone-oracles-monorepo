@@ -49,6 +49,10 @@ contract Counter {
     return count + 1;
   }
 
+  function getCounts() public view returns (uint256 current, uint256 next) {
+    return (count, count + 1);
+  }
+
   function infiniteLoop() public view returns (uint256) {
     // counter will always equal 0
     uint256 counter = 0;

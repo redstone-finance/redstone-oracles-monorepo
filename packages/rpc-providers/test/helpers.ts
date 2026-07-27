@@ -1,5 +1,6 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { Contract, Wallet, providers } from "ethers";
+import { BrowserProvider, type Provider as ProviderV6 } from "ethers-v6";
 import hardhat from "hardhat";
 import Sinon from "sinon";
 import { DEFAULT_TX_DELIVERY_OPTS, Eip1559GasEstimatorV2, TxDeliveryOpts } from "../src";
@@ -49,6 +50,14 @@ export class HardhatProviderMocker {
   set(toMock: ToMock) {
     this.toMock = toMock;
   }
+}
+
+export function realV5Provider(): providers.Provider {
+  return hardhat.ethers.provider;
+}
+
+export function realV6Provider(): ProviderV6 {
+  return new BrowserProvider(hardhat.network.provider);
 }
 
 export async function deployCounter(
