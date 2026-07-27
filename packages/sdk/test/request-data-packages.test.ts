@@ -1,7 +1,7 @@
+import { Wallet } from "@ethersproject/wallet";
 import { DataPackage } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
-import { Wallet } from "ethers";
 import {
   DataPackagesRequestParams,
   DataPackagesResponseStorage,
