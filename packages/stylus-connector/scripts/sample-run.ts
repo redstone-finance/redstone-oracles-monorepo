@@ -1,3 +1,5 @@
+import * as providers from "@ethersproject/providers";
+import { Wallet } from "@ethersproject/wallet";
 import {
   ContractParamsProvider,
   DataPackagesRequestParams,
@@ -5,7 +7,6 @@ import {
 } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
-import { providers, Wallet } from "ethers";
 import { PriceAdapterService } from "./PriceAdapterService";
 
 async function main() {

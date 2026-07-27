@@ -1,6 +1,6 @@
+import { Contract } from "@ethersproject/contracts";
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
-import { Contract } from "ethers";
 import { ethers } from "hardhat";
 import { WrapperBuilder } from "../../src/index";
 import { BaseWrapper } from "../../src/wrappers/BaseWrapper";
