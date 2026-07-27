@@ -1,5 +1,5 @@
 import { BalanceProvider, BlockProvider } from "@redstone-finance/multichain-kit";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { Erc20Abi, Erc20Contract } from "@redstone-finance/rpc-providers";
 import { Contract, providers } from "ethers";
 
 export class CurrencyTokenBalanceProvider implements BalanceProvider, BlockProvider {
@@ -17,11 +17,7 @@ export class CurrencyTokenBalanceProvider implements BalanceProvider, BlockProvi
   }
 
   private async balanceOf(erc20TokenAddress: string, addressOrName: string, blockTag?: number) {
-    const contract = new Contract(
-      erc20TokenAddress,
-      RedstoneCommon.Erc20Abi,
-      this.provider
-    ) as RedstoneCommon.Erc20Contract;
+    const contract = new Contract(erc20TokenAddress, Erc20Abi, this.provider) as Erc20Contract;
 
     return blockTag
       ? await contract.callStatic.balanceOf(addressOrName, { blockTag })

@@ -5,7 +5,8 @@ import type { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import type { BytesLike } from "@ethersproject/bytes";
 import type { PopulatedTransaction } from "@ethersproject/contracts";
 import type { Interface } from "@ethersproject/abi";
-import type { BaseContract, CallOverrides, ContractTransaction, Overrides, Signer } from "ethers";
+import type { Signer } from "@ethersproject/abstract-signer";
+import type { BaseContract, CallOverrides, ContractTransaction, Overrides } from "@ethersproject/contracts";
 import type { FunctionFragment, Result } from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {

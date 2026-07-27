@@ -1,9 +1,9 @@
+import { ContractTransaction } from "@ethersproject/contracts";
 import { formatBytes32String } from "@ethersproject/strings";
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { WrapperBuilder } from "@redstone-finance/evm-connector";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { ContractTransaction } from "ethers";
 import { ethers, upgrades } from "hardhat";
 import {
   IRedstoneAdapter,

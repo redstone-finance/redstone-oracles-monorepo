@@ -16,6 +16,7 @@
     "lint:fix": "yarn global:eslint --fix ."
   },
   "dependencies": {
+    "@ethersproject/abstract-signer": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",
     "@ethersproject/keccak256": "^5.7.0",
     "@ethersproject/strings": "^5.7.0",

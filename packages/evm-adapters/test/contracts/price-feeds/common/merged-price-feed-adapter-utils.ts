@@ -1,10 +1,10 @@
 import { BigNumber } from "@ethersproject/bignumber";
+import { Event } from "@ethersproject/contracts";
 import { formatBytes32String } from "@ethersproject/strings";
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { WrapperBuilder } from "@redstone-finance/evm-connector";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { Event } from "ethers";
 import { ethers, upgrades } from "hardhat";
 import { MergedPriceFeedAdapterWithRounds } from "../../../../typechain-types";
 import { DEFAULT_ROUND_ID_FOR_WITHOUT_ROUNDS } from "../../../helpers";

@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@ethersproject/abi": "^5.6.3",
+    "@ethersproject/abstract-signer": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",
     "@ethersproject/bytes": "^5.6.1",
     "@ethersproject/contracts": "^5.7.0",

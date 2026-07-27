@@ -1,6 +1,6 @@
+import { Signer } from "@ethersproject/abstract-signer";
 import { keccak256 } from "@ethersproject/keccak256";
 import { toUtf8Bytes } from "@ethersproject/strings";
-import { Signer } from "ethers";
 import { ethers, network } from "hardhat";
 const { provider } = ethers;
 

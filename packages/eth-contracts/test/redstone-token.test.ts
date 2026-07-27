@@ -1,5 +1,5 @@
+import { Signer } from "@ethersproject/abstract-signer";
 import { expect } from "chai";
-import { Signer } from "ethers";
 import { ethers } from "hardhat";
 import { RedstoneToken } from "../typechain-types";
 

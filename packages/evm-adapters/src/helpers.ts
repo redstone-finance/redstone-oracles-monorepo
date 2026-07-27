@@ -1,4 +1,4 @@
-import { Signer } from "ethers";
+import { Signer } from "@ethersproject/abstract-signer";
 import {
   MultiFeedAdapterWithoutRoundsMock__factory,
   PriceFeedsAdapterWithoutRoundsMock__factory,

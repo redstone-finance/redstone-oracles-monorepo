@@ -1,7 +1,6 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "ethers";
-
-export type ContractCallOverrides = { blockTag: string | number };
+import { ContractCallOverrides } from "./common";
 
 export interface Erc20Contract extends Contract {
   callStatic: {

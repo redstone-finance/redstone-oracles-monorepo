@@ -1,6 +1,6 @@
 import { BigNumber } from "@ethersproject/bignumber";
+import { Event } from "@ethersproject/contracts";
 import { expect } from "chai";
-import { Event } from "ethers";
 import { ethers } from "hardhat";
 import { WrapperBuilder } from "../../src/index";
 import { SampleWithEvents } from "../../typechain-types";

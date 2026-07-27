@@ -1,6 +1,7 @@
+import { Signer } from "@ethersproject/abstract-signer";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { providers, Signer, Wallet } from "ethers";
+import { providers, Wallet } from "ethers";
 import hardhat from "hardhat";
 import Sinon, * as sinon from "sinon";
 import { ProviderWithAgreement } from "../../src";
