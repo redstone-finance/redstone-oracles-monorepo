@@ -3,7 +3,6 @@ import { DataPackagesResponseCache } from "./DataPackagesResponseCache";
 import { DataPackagesRequestParams } from "./request-data-packages";
 import {
   DataPackagesResponse,
-  getResponseFeedIds,
   getResponseTimestamp,
   isResponseEmpty,
 } from "./request-data-packages-common";
@@ -119,18 +118,9 @@ export class DataPackagesResponseStorage {
     }
   }
 
-  private static normalizeRequestParams(
-    requestParams: DataPackagesRequestParams,
-    response?: DataPackagesResponse
-  ) {
-    const modifiedQuery =
-      !response || !requestParams.returnAllPackages
-        ? undefined
-        : { dataPackagesIds: getResponseFeedIds(response), returnAllPackages: false };
-
+  private static normalizeRequestParams(requestParams: DataPackagesRequestParams) {
     return {
       ...requestParams,
-      ...modifiedQuery,
       historicalTimestamp: undefined,
       storageInstance: undefined,
     } as DataPackagesRequestParams;
