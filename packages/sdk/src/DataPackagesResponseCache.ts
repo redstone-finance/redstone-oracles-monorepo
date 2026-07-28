@@ -61,7 +61,9 @@ export class DataPackagesResponseCache {
     }
 
     if (this.requestParams.returnAllPackages || requestParams.returnAllPackages) {
-      this.logger.error("Responses returning all packages are not supported");
+      if (!skipLogging) {
+        this.logger.error("Extending responses returning all packages is not supported");
+      }
 
       return false;
     }
