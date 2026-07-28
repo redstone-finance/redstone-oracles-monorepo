@@ -6,7 +6,7 @@
   "types": "dist/src/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "clean": "yarn global:ts-hardhat-clean",
+    "clean": "yarn global:ts-clean",
     "build": "yarn global:tsc -p tsconfig.build.json",
     "build:turbo": "yarn global:turbo build",
     "typecheck": "yarn global:tsc --noEmit",
@@ -19,12 +19,12 @@
     "print:ssm-rpc-urls-prod": "ENV=prod yarn global:tsx scripts/print-ssm-rpc-urls.ts",
     "compare:ssm-rpc-urls-prod": "ENV=prod yarn global:tsx scripts/compare-ssm-rpc-urls.ts",
     "compare:ssm-rpc-urls-dev": "ENV=dev yarn global:tsx scripts/compare-ssm-rpc-urls.ts",
-    "test": "hardhat test",
-    "test:rpc-urls-dev-all": "ENV=dev TEST_RPC=T hardhat test test/rpc-urls/ssm-rpc-urls.test.ts",
-    "test:rpc-urls-dev-specific": "ENV=dev TEST_RPC=T NETWORK_ID=${NETWORK_ID} hardhat test test/rpc-urls/ssm-rpc-urls.test.ts",
-    "test:rpc-urls-prod-all": "ENV=prod TEST_RPC=T hardhat test test/rpc-urls/ssm-rpc-urls.test.ts",
-    "test:rpc-urls-prod-specific": "ENV=prod TEST_RPC=T NETWORK_ID=${NETWORK_ID} hardhat test test/rpc-urls/ssm-rpc-urls.test.ts",
-    "test:chain-configs": "hardhat test test/chain-configs.test.ts"
+    "test": "mocha 'test/**/*.test.ts'",
+    "test:rpc-urls-dev-all": "ENV=dev TEST_RPC=T mocha test/rpc-urls/ssm-rpc-urls.test.ts",
+    "test:rpc-urls-dev-specific": "ENV=dev TEST_RPC=T NETWORK_ID=${NETWORK_ID} mocha test/rpc-urls/ssm-rpc-urls.test.ts",
+    "test:rpc-urls-prod-all": "ENV=prod TEST_RPC=T mocha test/rpc-urls/ssm-rpc-urls.test.ts",
+    "test:rpc-urls-prod-specific": "ENV=prod TEST_RPC=T NETWORK_ID=${NETWORK_ID} mocha test/rpc-urls/ssm-rpc-urls.test.ts",
+    "test:chain-configs": "mocha test/chain-configs.test.ts"
   },
   "dependencies": {
     "@ethersproject/contracts": "^5.7.0",
@@ -39,24 +39,11 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@ethersproject/abi": "^5.6.3",
-    "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
-    "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
-    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
-    "@nomiclabs/hardhat-ethers": "^2.0.6",
-    "@nomiclabs/hardhat-etherscan": "^3.1.7",
-    "@typechain/ethers-v5": "^10.2.0",
-    "@typechain/hardhat": "^6.1.2",
     "@types/chai": "^4.3.4",
     "chai": "^4.3.10",
     "chalk": "^4.1.2",
     "dotenv": "^16.0.3",
-    "ethers": "^5.7.2",
-    "hardhat": "^2.28.6",
-    "hardhat-gas-reporter": "^1.0.9",
-    "mocha": "^11",
-    "solidity-coverage": "^0.8.12",
-    "typechain": "^8.1.1"
+    "mocha": "^11"
   },
   "overrides": {
     "elliptic": "^6.6.1"
