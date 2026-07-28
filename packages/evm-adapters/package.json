@@ -5,7 +5,6 @@
   "main": "dist/src/index.js",
   "exports": {
     ".": "./dist/src/index.js",
-    "./in-process-evm": "./dist/src/in-process-evm.js",
     "./artifacts/*": "./artifacts/*",
     "./typechain-types": "./typechain-types"
   },

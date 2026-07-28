@@ -5,7 +5,6 @@ import PriceFeedsAdapterWithRoundsOneSignerMockArtifact from "../artifacts/contr
 import PriceFeedWithRoundsMockArtifact, {
   abi as PriceFeedWithRoundsMockAbi,
 } from "../artifacts/contracts/mocks/PriceFeedWithRoundsMock.sol/PriceFeedWithRoundsMock.json";
-import { PrimaryDemoExample__factory, PrimaryProdExample__factory } from "../typechain-types";
 
 export type {
   ExampleBase,
@@ -39,6 +38,4 @@ export {
   PriceFeedsAdapterWithRoundsOneSignerMockArtifact,
   PriceFeedWithRoundsMockAbi,
   PriceFeedWithRoundsMockArtifact,
-  PrimaryDemoExample__factory,
-  PrimaryProdExample__factory,
 };

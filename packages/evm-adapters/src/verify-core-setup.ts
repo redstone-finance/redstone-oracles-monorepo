@@ -21,8 +21,7 @@ export async function verifyCoreSetup<Contract extends ExampleBase>(
   config: Omit<DataPackagesRequestParams, "dataPackagesIds">,
   dataFeedIds: string[],
   contract: Contract,
-  call: (wrappedContract: Contract) => Promise<BigNumber[]>,
-  beforeCall?: () => Promise<void>
+  call: (wrappedContract: Contract) => Promise<BigNumber[]>
 ) {
   console.log(`Checking ${checkName}`);
 
@@ -46,8 +45,6 @@ export async function verifyCoreSetup<Contract extends ExampleBase>(
         `⛔️Failed check ${checkName} - missing feed${RedstoneCommon.getS(missingFeeds.length)}: ${missingFeeds.join(", ")}`
       );
     }
-
-    await beforeCall?.();
 
     const prices = await RedstoneCommon.retry({
       fn: () => possiblyUnrecoverableError(call(wrappedContract)),
