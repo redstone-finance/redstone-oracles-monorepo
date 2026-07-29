@@ -3721,138 +3721,67 @@
       }
     },
 
-    "AMAT": {
-      "source": ["alltick-stocks-api-deferred"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ORACLE_xyz:AMAT": {
-      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-xyz": 10,
-        "ws-hydromancer-perps-xyz": 1
-      },
-      "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "MARK_xyz:AMAT": {
-      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-xyz": 10,
-        "ws-hydromancer-perps-xyz": 1
-      },
-      "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "MID_xyz:AMAT": {
-      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-xyz": 10,
-        "ws-hydromancer-perps-xyz": 1
-      },
-      "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "MID_xyz:AMAT_EMA_HALF_5M": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ENTROPY_DEPTH_xyz:AMAT": {
-      "source": ["ws-hyperliquid-perps-xyz"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ENTROPY_DEPTH_xyz:AMAT_EMA_HALF_5M": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ENTROPY_DEPTH_xyz:AMAT_EMA_HALF_5D": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "xyz:AMAT_MARK_0": {
-      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "xyz:AMAT_MARK_1": {
-      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "xyz:AMAT_EXT": {
-      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "xyz:AMAT": {
-      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "OPEN_INTEREST_xyz:AMAT": {
-      "source": ["ws-hyperliquid-perps-xyz"],
-      "broadcasters": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1000000000,
-          "maxDelayMilliseconds": 1000
-        }
-      }
-    },
-
     "OPENAI_PERP": {
       "source": ["ws-perp-binance-usdt", "ws-perp-coinbase-usdc", "ws-perp-mexc-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
     "OPENAI_SECONDARIES": {
-      "source": ["jupiter", "notice", "dex-screener"],
+      "source": ["notice", "hiive"],
       "denomination": "USD",
       "rateFeed": false
     },
+    "OPENAI_PRESTOCKS": {
+      "source": ["jupiter", "dex-screener"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "jupiter"
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+
     "ANTHROPIC_PERP": {
       "source": ["ws-perp-binance-usdt", "ws-perp-coinbase-usdc", "ws-perp-mexc-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
     "ANTHROPIC_SECONDARIES": {
-      "source": ["jupiter", "notice", "dex-screener"],
+      "source": ["notice", "hiive"],
       "denomination": "USD",
       "rateFeed": false
     },
+    "ANTHROPIC_PRESTOCKS": {
+      "source": ["jupiter", "dex-screener"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "jupiter"
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+
     "SPCX_PERP": {
       "source": [
         "ws-perp-binance-usdt",
         "ws-perp-coinbase-usdc",
         "ws-perp-mexc-usdt",
-        "polymarket"
+        "perp-polymarket"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "SPCX_SECONDARIES": {
-      "source": ["jupiter", "notice", "dex-screener"],
+      "source": ["jupiter", "hiive"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SPCX_PRESTOCKS": {
+      "source": ["jupiter", "dex-screener"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "jupiter"
+      },
       "denomination": "USD",
       "rateFeed": false
     }
