@@ -18,7 +18,16 @@
       "rateFeed": false
     },
     "OPENAI_SECONDARIES": {
-      "source": ["jupiter", "notice", "dex-screener"],
+      "source": ["notice", "hiive"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPENAI_PRESTOCKS": {
+      "source": ["jupiter", "dex-screener"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "jupiter"
+      },
       "denomination": "USD",
       "rateFeed": false
     },
