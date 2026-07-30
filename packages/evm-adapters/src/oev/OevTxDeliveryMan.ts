@@ -1,6 +1,7 @@
+import { Signer } from "@ethersproject/abstract-signer";
+import * as providers from "@ethersproject/providers";
 import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { EvmTxDeliveryManContext } from "../EvmTxDeliveryManContext";
-import { RedstoneEvmContract } from "../facade/evm/RedstoneEvmContract";
 import { OevConfig } from "./oev-config";
 import { updateUsingOevAuction } from "./update-using-oev-auction";
 
@@ -9,7 +10,8 @@ export class OevTxDeliveryMan implements Tx.ITxDeliveryMan<EvmTxDeliveryManConte
 
   constructor(
     private readonly fallbackDeliveryMan: Tx.ITxDeliveryMan,
-    private readonly adapterContract: RedstoneEvmContract,
+    private readonly signer: Signer,
+    private readonly provider: providers.Provider,
     private readonly config: OevConfig
   ) {}
 
@@ -40,7 +42,8 @@ export class OevTxDeliveryMan implements Tx.ITxDeliveryMan<EvmTxDeliveryManConte
     const updateUsingOevAuctionPromise = updateUsingOevAuction(
       this.config,
       txDeliveryCall.data,
-      this.adapterContract
+      this.signer,
+      this.provider
     );
     const timeout = this.config.oevTotalTimeout;
 

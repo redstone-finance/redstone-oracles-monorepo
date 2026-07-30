@@ -2,7 +2,7 @@ import { defaultAbiCoder } from "@ethersproject/abi";
 import { BigNumber } from "@ethersproject/bignumber";
 import { expect } from "chai";
 import { Interface } from "ethers-v6";
-import { toV5BigNumber, toV6Arg } from "../src/evm-contract-conversions";
+import { toV5BigNumber, toV6Arg } from "../src/evm-contract/conversions";
 
 const AMOUNT_X = "123456789012345678901234567890";
 const AMOUNT_Y = "987654321098765432109876543210";

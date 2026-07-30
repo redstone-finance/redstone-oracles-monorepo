@@ -1,6 +1,5 @@
-import { Signer } from "@ethersproject/abstract-signer";
-import { Contract } from "@ethersproject/contracts";
 import { Provider } from "@ethersproject/providers";
+import { evmWritableContract } from "@redstone-finance/rpc-providers";
 import { NetworkId } from "@redstone-finance/utils";
 import { abi as redstoneAdapterABI } from "../../../artifacts/contracts/core/RedstoneAdapterBase.sol/RedstoneAdapterBase.json";
 import { abi as stylusAdapterABI } from "../../../artifacts/contracts/custom-integrations/stylus/IStylusAdapter.sol/IStylusAdapter.json";
@@ -22,40 +21,45 @@ export function getEvmContract(
     adapterContractAddress: string;
     adapterContractType: EvmAdapterType;
     withRounds?: boolean;
+    isV6Contract?: boolean;
   },
-  signerOrProvider?: Signer | Provider
+  provider: Provider
 ): RedstoneEvmContract {
-  const { adapterContractAddress, adapterContractType, withRounds } = config;
+  const { adapterContractAddress, adapterContractType, withRounds, isV6Contract } = config;
 
   switch (adapterContractType) {
     case "multi-feed":
-      return new Contract(
+      return evmWritableContract<MultiFeedAdapterWithoutRounds>(
         adapterContractAddress,
         multifeedAdapterABI,
-        signerOrProvider
-      ) as MultiFeedAdapterWithoutRounds;
+        provider,
+        isV6Contract
+      );
 
     case "price-feeds": {
       if (withRounds) {
-        return new Contract(
+        return evmWritableContract<PriceFeedsAdapterWithRounds>(
           adapterContractAddress,
           priceAdapterWithRoundsABI,
-          signerOrProvider
-        ) as PriceFeedsAdapterWithRounds;
+          provider,
+          isV6Contract
+        );
       }
 
-      return new Contract(
+      return evmWritableContract<RedstoneAdapterBase>(
         adapterContractAddress,
         redstoneAdapterABI,
-        signerOrProvider
-      ) as RedstoneAdapterBase;
+        provider,
+        isV6Contract
+      );
     }
 
     case "stylus":
-      return new Contract(
+      return evmWritableContract<IStylusAdapter & RedstoneAdapterBase>(
         adapterContractAddress,
         stylusAdapterABI,
-        signerOrProvider
-      ) as IStylusAdapter & RedstoneAdapterBase;
+        provider,
+        isV6Contract
+      );
   }
 }

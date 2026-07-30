@@ -1,19 +1,15 @@
 import { BigNumber } from "@ethersproject/bignumber";
-import { Contract } from "@ethersproject/contracts";
 import * as providers from "@ethersproject/providers";
 import { TransactionReceipt } from "@ethersproject/providers";
 import { Wallet } from "@ethersproject/wallet";
 import { HARDHAT_CHAIN_ID, RedstoneCommon } from "@redstone-finance/utils";
 import { expect } from "chai";
-import { abi as RedstoneAdapterBaseAbi } from "../../artifacts/contracts/core/RedstoneAdapterBase.sol/RedstoneAdapterBase.json";
 import { updateUsingOevAuction } from "../../src";
 import { OevConfig } from "../../src/oev/oev-config";
-import { RedstoneAdapterBase } from "../../typechain-types";
 import { server, START_OEV_AUCTION_URL } from "./mock-server";
 
 const TEST_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 const AUCTION_VERIFICATION_TIMEOUT = 20;
-const CONTRACT_ADDRESS = "0x61ed8EBd497d11654e91f5faFeadaAF4cB125E0C";
 
 const config: OevConfig = {
   networkId: HARDHAT_CHAIN_ID,
@@ -42,9 +38,7 @@ describe("update-using-oev-auction", () => {
     };
     const wallet = new Wallet(TEST_PRIVATE_KEY).connect(provider);
 
-    const adapterContract = new Contract(CONTRACT_ADDRESS, RedstoneAdapterBaseAbi, wallet);
-
-    await updateUsingOevAuction(config, "0x", adapterContract as RedstoneAdapterBase);
+    await updateUsingOevAuction(config, "0x", wallet, provider);
   });
 
   it("should throw exception before verification finishes", async () => {
@@ -57,10 +51,8 @@ describe("update-using-oev-auction", () => {
 
     const wallet = new Wallet(TEST_PRIVATE_KEY).connect(provider);
 
-    const adapterContract = new Contract(CONTRACT_ADDRESS, RedstoneAdapterBaseAbi, wallet);
-
     try {
-      await updateUsingOevAuction(config, "0x", adapterContract as RedstoneAdapterBase);
+      await updateUsingOevAuction(config, "0x", wallet, provider);
       expect.fail("Should have thrown an error");
     } catch (error) {
       expect((error as Error).message).to.include(

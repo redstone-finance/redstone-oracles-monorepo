@@ -9,7 +9,9 @@ export class PriceFeedsEvmContractAdapter<
   Contract extends RedstoneAdapterBase,
 > extends EvmContractAdapter<Contract> {
   async getDataFeedIds(blockTag?: number) {
-    return (await this.adapterContract.getDataFeedIds({ blockTag })).map(parseBytes32String);
+    return (await this.adapterContract.callStatic.getDataFeedIds({ blockTag })).map(
+      parseBytes32String
+    );
   }
 
   override async makeUpdateTx(
@@ -55,12 +57,10 @@ export class PriceFeedsEvmContractAdapter<
 
   async getValuesForDataFeeds(dataFeeds: string[], blockTag?: number) {
     const dataFeedsAsBytes32 = dataFeeds.map(formatBytes32String);
-    const valuesFromContractAsBigNumber = await this.adapterContract.getValuesForDataFeeds(
-      dataFeedsAsBytes32,
-      {
+    const valuesFromContractAsBigNumber =
+      await this.adapterContract.callStatic.getValuesForDataFeeds(dataFeedsAsBytes32, {
         blockTag,
-      }
-    );
+      });
     const dataFeedsValues: ValuesForDataFeeds = {};
     for (const [index, dataFeedId] of dataFeeds.entries()) {
       dataFeedsValues[dataFeedId] = valuesFromContractAsBigNumber[index].toBigInt();

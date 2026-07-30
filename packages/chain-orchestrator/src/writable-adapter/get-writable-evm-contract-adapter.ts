@@ -20,7 +20,7 @@ export function getWritableEvmContractAdapter(
 ) {
   const blockProvider = getRelayerProvider(relayerConfig);
   const signer = new Wallet(relayerConfig.privateKey, blockProvider);
-  const adapterContract = getEvmContract(relayerConfig, signer);
+  const adapterContract = getEvmContract(relayerConfig, blockProvider);
   const txDeliveryMan = makeTxDeliveryMan(
     relayerConfig,
     signer,
@@ -28,7 +28,7 @@ export function getWritableEvmContractAdapter(
     adapterContract,
     deliveryManOverride
   );
-  const adapter = getEvmContractAdapter(relayerConfig, adapterContract, txDeliveryMan);
+  const adapter = getEvmContractAdapter(relayerConfig, adapterContract, txDeliveryMan, signer);
 
   return { adapter, blockProvider };
 }
@@ -49,10 +49,12 @@ function makeTxDeliveryMan(
       txDeliveryMan = new OevMultiAuctionsTxDeliveryMan(
         txDeliveryMan,
         adapterContract as MultiFeedAdapterWithoutRounds,
+        signer,
+        provider,
         relayerConfig
       );
     } else {
-      txDeliveryMan = new OevTxDeliveryMan(txDeliveryMan, adapterContract, relayerConfig);
+      txDeliveryMan = new OevTxDeliveryMan(txDeliveryMan, signer, provider, relayerConfig);
     }
   }
 

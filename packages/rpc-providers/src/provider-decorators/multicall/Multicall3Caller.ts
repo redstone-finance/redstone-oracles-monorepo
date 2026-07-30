@@ -7,9 +7,9 @@ import {
   type ChainConfigs,
   getChainConfigByNetworkId,
   getLocalChainConfigs,
-  getMulticall3,
 } from "@redstone-finance/chain-configs";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { getMulticall3 } from "./getMulticall3";
 import Multicall3Abi from "./Multicall3.abi.json";
 
 export const MULTICALL3_INTERFACE = new Interface(Multicall3Abi.abi);
@@ -55,7 +55,7 @@ export async function safeExecuteMulticall3(
     const multicall3Contract = getMulticall3(
       {
         overrideAddress: multicallAddress,
-        signerOrProvider: provider,
+        provider,
       },
       getChainConfigByNetworkId(chainConfigs ?? getLocalChainConfigs(), chainId)
     );

@@ -7,7 +7,9 @@ export class PriceFeedsEvmContractAdapterWithRounds<
   Contract extends PriceFeedsAdapterWithRounds,
 > extends PriceFeedsEvmContractAdapter<Contract> {
   async getLatestRoundIds(feedIds: string[], numberOfRounds: number, blockTag?: number) {
-    const roundId = (await this.adapterContract.getLatestRoundId({ blockTag })).toBigInt();
+    const roundId = (
+      await this.adapterContract.callStatic.getLatestRoundId({ blockTag })
+    ).toBigInt();
     const roundArr = Array.from({ length: numberOfRounds }, (_, i) =>
       roundId > BigInt(i) ? roundId - BigInt(i) : undefined
     ).filter(RedstoneCommon.isDefined);
@@ -18,9 +20,11 @@ export class PriceFeedsEvmContractAdapterWithRounds<
 
   async getValueForDataFeedAndRound(feedId: string, roundId: bigint, blockTag?: number) {
     return (
-      await this.adapterContract.getValueForDataFeedAndRound(formatBytes32String(feedId), roundId, {
-        blockTag,
-      })
+      await this.adapterContract.callStatic.getValueForDataFeedAndRound(
+        formatBytes32String(feedId),
+        roundId,
+        { blockTag }
+      )
     ).toBigInt();
   }
 }

@@ -1,3 +1,4 @@
+import { Signer } from "@ethersproject/abstract-signer";
 import { NetworkId, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import {
   IStylusAdapter,
@@ -26,13 +27,15 @@ export function getEvmContractAdapter(
     withRounds?: boolean;
   },
   adapterContract: RedstoneEvmContract,
-  txDeliveryMan = emptyTxDeliveryMan
+  txDeliveryMan = emptyTxDeliveryMan,
+  signer?: Signer
 ): EvmContractAdapter<RedstoneEvmContract> {
   switch (config.adapterContractType) {
     case "multi-feed":
       return new MultiFeedEvmContractAdapter(
         adapterContract as MultiFeedAdapterWithoutRounds,
         txDeliveryMan,
+        signer,
         RedstoneCommon.isTruthy(config.oevAuctionUrl?.length)
       );
 
@@ -40,20 +43,23 @@ export function getEvmContractAdapter(
       if (config.withRounds) {
         return new PriceFeedsEvmContractAdapterWithRounds(
           adapterContract as PriceFeedsAdapterWithRounds,
-          txDeliveryMan
+          txDeliveryMan,
+          signer
         );
       }
 
       return new PriceFeedsEvmContractAdapter(
         adapterContract as RedstoneAdapterBase,
-        txDeliveryMan
+        txDeliveryMan,
+        signer
       );
     }
 
     case "stylus":
       return new StylusContractAdapter(
         adapterContract as IStylusAdapter & MultiFeedAdapterWithoutRounds,
-        txDeliveryMan
+        txDeliveryMan,
+        signer
       );
   }
 }

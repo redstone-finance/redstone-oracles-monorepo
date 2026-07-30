@@ -1,3 +1,4 @@
+import { Signer } from "@ethersproject/abstract-signer";
 import { BaseContract } from "@ethersproject/contracts";
 import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
 import { WriteContractAdapter } from "@redstone-finance/multichain-kit";
@@ -7,7 +8,7 @@ import {
   getDataPackagesTimestamp,
   UpdatePricesOptions,
 } from "@redstone-finance/sdk";
-import { Tx } from "@redstone-finance/utils";
+import { RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { RedstoneEvmContract } from "../../facade/evm/RedstoneEvmContract";
 
 export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
@@ -37,11 +38,14 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
         paramsProvider?: ContractParamsProvider;
         canOmitFallbackAfterFailing?: boolean;
       }
-    >
+    >,
+    protected signer?: Signer
   ) {}
 
   async getSignerAddress() {
-    return await this.adapterContract.signer.getAddress();
+    RedstoneCommon.assert(RedstoneCommon.isDefined(this.signer), "Signer is not set");
+
+    return await this.signer.getAddress();
   }
 
   abstract makeUpdateTx(
@@ -60,7 +64,7 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
   }
 
   async getUniqueSignerThreshold(blockTag?: number) {
-    return await this.adapterContract.getUniqueSignersThreshold({ blockTag });
+    return await this.adapterContract.callStatic.getUniqueSignersThreshold({ blockTag });
   }
 
   async writePricesFromPayloadToContract(

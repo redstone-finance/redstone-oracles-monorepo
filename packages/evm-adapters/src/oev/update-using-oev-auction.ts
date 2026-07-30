@@ -5,7 +5,6 @@ import { parse as parseTransaction, Transaction } from "@ethersproject/transacti
 import { isEvmNetworkId, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
 import { randomUUID } from "crypto";
-import { RedstoneEvmContract } from "../facade/evm/RedstoneEvmContract";
 import { OevConfig } from "./oev-config";
 
 const logger = loggerFactory("update-using-oev-auction");
@@ -13,12 +12,13 @@ const logger = loggerFactory("update-using-oev-auction");
 export const updateUsingOevAuction = async (
   config: OevConfig,
   txDeliveryCalldata: string,
-  adapterContract: RedstoneEvmContract,
+  signer: Signer,
+  provider: providers.Provider,
   customAuctionId = ""
 ) => {
   const loggerPref = `OEV Auction ${customAuctionId}`;
   const start = Date.now();
-  const auctionResponse = await runOevAuction(config, adapterContract.signer, txDeliveryCalldata);
+  const auctionResponse = await runOevAuction(config, signer, txDeliveryCalldata);
   const auctionFinished = Date.now();
   logger.info(
     `${loggerPref} finished in ${auctionFinished - start}ms with response`,
@@ -44,7 +44,7 @@ export const updateUsingOevAuction = async (
     config.oevAuctionVerificationTimeout ?? 1.5 * config.getBlockNumberTimeout;
 
   const verificationPromises = result.map((tx) =>
-    verifyFastlaneResponse(adapterContract.provider as providers.JsonRpcProvider, tx, config)
+    verifyFastlaneResponse(provider as providers.JsonRpcProvider, tx, config)
   );
 
   await RedstoneCommon.timeout(

@@ -26,7 +26,7 @@ export abstract class MultiFeedEvmContractAdapterBase<
     blockTag?: number
   ): Promise<LastRoundDetails[]> {
     const dataFeedsAsBytes32 = feedIds.map(formatBytes32String);
-    const contractOutput = await this.adapterContract.getLastUpdateDetailsUnsafeForMany(
+    const contractOutput = await this.adapterContract.callStatic.getLastUpdateDetailsUnsafeForMany(
       dataFeedsAsBytes32,
       {
         blockTag,

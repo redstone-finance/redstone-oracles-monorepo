@@ -1,3 +1,4 @@
+import { Wallet } from "@ethersproject/wallet";
 import { Tx } from "@redstone-finance/utils";
 import { ethers } from "hardhat";
 import {
@@ -5,7 +6,6 @@ import {
   deployMultiFeedAdapterWithoutRoundsMock,
   deployPriceFeedsAdapterWithoutRoundsMock,
   performWritePricesTests,
-  RedstoneEvmContract,
 } from "../../src";
 import {
   BTC_PRICE,
@@ -21,9 +21,9 @@ const defaultFeedEntries = [
   { feedId: ethDataFeed, price: ETH_PRICE },
 ];
 
-const txDeliveryManCreator = (adapterContract: RedstoneEvmContract): Tx.ITxDeliveryMan => ({
+const txDeliveryManCreator = (signer: Wallet): Tx.ITxDeliveryMan => ({
   deliver: async (txDeliveryCall) => {
-    const tx = await adapterContract.signer.sendTransaction({
+    const tx = await signer.sendTransaction({
       to: txDeliveryCall.to,
       data: txDeliveryCall.data,
     });
@@ -31,42 +31,44 @@ const txDeliveryManCreator = (adapterContract: RedstoneEvmContract): Tx.ITxDeliv
   },
 });
 
-describe("write-prices", () => {
-  const provider = ethers.provider;
+for (const isV6Contract of [false, true]) {
+  describe(`write-prices (${isV6Contract ? "v6" : "v5"})`, () => {
+    const provider = ethers.provider;
 
-  it("should update price in multi-feed adapter", async () => {
-    const adapterContract = await performWritePricesTests(
-      provider,
-      { adapterContractType: "multi-feed" },
-      deployMultiFeedAdapterWithoutRoundsMock,
-      txDeliveryManCreator,
-      new ContractParamsProviderMock()
-    );
+    it("should update price in multi-feed adapter", async () => {
+      const adapterContract = await performWritePricesTests(
+        provider,
+        { adapterContractType: "multi-feed", isV6Contract },
+        deployMultiFeedAdapterWithoutRoundsMock,
+        txDeliveryManCreator,
+        new ContractParamsProviderMock()
+      );
 
-    await checkDataValues(adapterContract, defaultFeedEntries);
+      await checkDataValues(adapterContract, defaultFeedEntries);
+    });
+
+    it("should update price in multi-feed adapter with multi-point-package", async () => {
+      const adapterContract = await performWritePricesTests(
+        provider,
+        { adapterContractType: "multi-feed", isV6Contract },
+        deployMultiFeedAdapterWithoutRoundsMock,
+        txDeliveryManCreator,
+        new ContractParamsProviderMockMulti()
+      );
+
+      await checkDataValues(adapterContract, defaultFeedEntries);
+    });
+
+    it("should update price in price-feeds adapter", async () => {
+      const adapterContract = await performWritePricesTests(
+        provider,
+        { adapterContractType: "price-feeds", isV6Contract },
+        deployPriceFeedsAdapterWithoutRoundsMock,
+        txDeliveryManCreator,
+        new ContractParamsProviderMock()
+      );
+
+      await checkDataValues(adapterContract, [{ feedId: btcDataFeed, price: BTC_PRICE }]);
+    });
   });
-
-  it("should update price in multi-feed adapter with multi-point-package", async () => {
-    const adapterContract = await performWritePricesTests(
-      provider,
-      { adapterContractType: "multi-feed" },
-      deployMultiFeedAdapterWithoutRoundsMock,
-      txDeliveryManCreator,
-      new ContractParamsProviderMockMulti()
-    );
-
-    await checkDataValues(adapterContract, defaultFeedEntries);
-  });
-
-  it("should update price in price-feeds adapter", async () => {
-    const adapterContract = await performWritePricesTests(
-      provider,
-      { adapterContractType: "price-feeds" },
-      deployPriceFeedsAdapterWithoutRoundsMock,
-      txDeliveryManCreator,
-      new ContractParamsProviderMock()
-    );
-
-    await checkDataValues(adapterContract, [{ feedId: btcDataFeed, price: BTC_PRICE }]);
-  });
-});
+}

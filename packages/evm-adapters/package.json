@@ -43,6 +43,7 @@
     "@redstone-finance/evm-multicall": "workspace:*",
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/protocol": "workspace:*",
+    "@redstone-finance/rpc-providers": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "axios": "^1.15.2",

@@ -4,7 +4,7 @@ import { consts } from "@redstone-finance/protocol";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { expect } from "chai";
-import { EvmAdapterType } from "./facade/evm/get-evm-contract";
+import { EvmAdapterType, getEvmContract } from "./facade/evm/get-evm-contract";
 import { getEvmContractAdapter } from "./facade/evm/get-evm-contract-adapter";
 import { RedstoneEvmContract } from "./facade/evm/RedstoneEvmContract";
 
@@ -13,25 +13,27 @@ export const TEST_PRIVATE_KEY =
 
 export async function performWritePricesTests(
   provider: providers.Provider,
-  config: { adapterContractType: EvmAdapterType },
+  config: { adapterContractType: EvmAdapterType; isV6Contract?: boolean },
   deployer: (signer?: Wallet) => Promise<RedstoneEvmContract>,
-  txDeliveryManCreator: (adapterContract: RedstoneEvmContract) => Tx.ITxDeliveryMan,
+  txDeliveryManCreator: (signer: Wallet) => Tx.ITxDeliveryMan,
   paramsProvider: ContractParamsProvider
 ) {
   const signer = new Wallet(TEST_PRIVATE_KEY, provider);
-
-  // Deploy contract
-  const adapterContract = await deployer(signer);
-
-  // Update prices
+  const deployedContract = await deployer(signer);
+  const adapterContract = getEvmContract(
+    { ...config, adapterContractAddress: deployedContract.address },
+    provider
+  );
   const contractAdapter = getEvmContractAdapter(
     config,
     adapterContract,
-    txDeliveryManCreator(adapterContract)
+    txDeliveryManCreator(signer),
+    signer
   );
+
   await contractAdapter.writePricesFromPayloadToContract(paramsProvider);
 
-  return adapterContract;
+  return deployedContract;
 }
 
 const createNumberFromContract = (price: number) =>

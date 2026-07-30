@@ -1,7 +1,6 @@
-import { Contract } from "@ethersproject/contracts";
 import * as providers from "@ethersproject/providers";
 import { BalanceProvider, BlockProvider } from "@redstone-finance/multichain-kit";
-import { Erc20Abi, Erc20Contract } from "@redstone-finance/rpc-providers";
+import { Erc20Abi, Erc20Contract, evmContract } from "@redstone-finance/rpc-providers";
 
 export class CurrencyTokenBalanceProvider implements BalanceProvider, BlockProvider {
   constructor(
@@ -18,7 +17,7 @@ export class CurrencyTokenBalanceProvider implements BalanceProvider, BlockProvi
   }
 
   private async balanceOf(erc20TokenAddress: string, addressOrName: string, blockTag?: number) {
-    const contract = new Contract(erc20TokenAddress, Erc20Abi, this.provider) as Erc20Contract;
+    const contract = evmContract<Erc20Contract>(erc20TokenAddress, Erc20Abi, this.provider);
 
     return blockTag
       ? await contract.callStatic.balanceOf(addressOrName, { blockTag })

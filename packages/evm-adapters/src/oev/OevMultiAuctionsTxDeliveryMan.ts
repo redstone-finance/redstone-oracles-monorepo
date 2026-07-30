@@ -1,3 +1,5 @@
+import { Signer } from "@ethersproject/abstract-signer";
+import * as providers from "@ethersproject/providers";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { MultiFeedAdapterWithoutRounds } from "../../typechain-types";
@@ -12,6 +14,8 @@ export class OevMultiAuctionsTxDeliveryMan implements Tx.ITxDeliveryMan<EvmTxDel
   constructor(
     private readonly fallbackDeliveryMan: Tx.ITxDeliveryMan,
     private readonly adapterContract: MultiFeedAdapterWithoutRounds,
+    private readonly signer: Signer,
+    private readonly provider: providers.Provider,
     private readonly config: OevConfig
   ) {}
 
@@ -76,7 +80,9 @@ export class OevMultiAuctionsTxDeliveryMan implements Tx.ITxDeliveryMan<EvmTxDel
         { [feedId]: dataPackages[feedId] },
         [feedId],
         metadataTimestamp
-      ).then((tx) => updateUsingOevAuction(this.config, tx.data, this.adapterContract, feedId));
+      ).then((tx) =>
+        updateUsingOevAuction(this.config, tx.data, this.signer, this.provider, feedId)
+      );
       auctionPromises.push(updateUsingOevAuctionPromise);
     }
 

@@ -8423,10 +8423,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/chain-configs@workspace:packages/chain-configs"
   dependencies:
-    "@ethersproject/contracts": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
-    "@ethersproject/wallet": "npm:^5.7.0"
-    "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -8726,6 +8723,7 @@ __metadata:
     "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@typechain/ethers-v5": "npm:^10.2.0"
@@ -9362,10 +9360,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-erc20-transfer@workspace:packages/lambda/lambda-erc20-transfer"
   dependencies:
-    "@ethersproject/contracts": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
     "@ethersproject/wallet": "npm:^5.7.0"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     elliptic: "npm:^6.6.1"
     zod: "npm:^4.1.12"
@@ -9492,13 +9490,13 @@ __metadata:
   dependencies:
     "@ethersproject/bignumber": "npm:^5.7.0"
     "@ethersproject/bytes": "npm:^5.6.1"
-    "@ethersproject/contracts": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
     "@ethersproject/units": "npm:^5.7.0"
     "@ethersproject/wallet": "npm:^5.7.0"
     "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     axios: "npm:^1.15.2"
     elliptic: "npm:^6.6.1"

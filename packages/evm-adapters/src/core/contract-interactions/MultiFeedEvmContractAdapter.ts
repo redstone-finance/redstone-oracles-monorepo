@@ -1,3 +1,4 @@
+import { Signer } from "@ethersproject/abstract-signer";
 import { formatBytes32String } from "@ethersproject/strings";
 import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
 import {
@@ -15,9 +16,10 @@ export class MultiFeedEvmContractAdapter extends MultiFeedEvmContractAdapterBase
   constructor(
     adapterContract: MultiFeedAdapterWithoutRounds,
     txDeliveryMan: Tx.ITxDeliveryMan,
+    signer?: Signer,
     private shouldUpdateAllFeedsInBaseIteration?: boolean
   ) {
-    super(adapterContract, txDeliveryMan);
+    super(adapterContract, txDeliveryMan, signer);
   }
 
   async makeUpdateTx(
