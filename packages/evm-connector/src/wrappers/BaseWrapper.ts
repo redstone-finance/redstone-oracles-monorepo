@@ -10,6 +10,13 @@ interface OverwriteFunctionArgs<T extends Contract> {
   functionName: string;
 }
 
+export type PopulatableContract = {
+  populateTransaction: Record<
+    string,
+    (...args: unknown[]) => Promise<{ to?: string; data: string }>
+  >;
+};
+
 export abstract class BaseWrapper<T extends Contract> {
   protected contract!: T;
 
@@ -65,7 +72,17 @@ export abstract class BaseWrapper<T extends Contract> {
     this.contract = contract;
   }
 
-  overwriteEthersContract(contract: T): T {
+  overwriteEthersContract(contract: T): T;
+  overwriteEthersContract<C extends PopulatableContract>(contract: C): C;
+  overwriteEthersContract(contract: T | PopulatableContract): T | PopulatableContract {
+    if ("functions" in contract) {
+      return this.overwriteV5Contract(contract);
+    }
+
+    return this.wrapPopulatableContract(contract);
+  }
+
+  private overwriteV5Contract(contract: T): T {
     this.setContractForFetchingDefaultParams(contract);
     const contractPrototype = Object.getPrototypeOf(contract) as object;
     const wrappedContract = Object.assign(Object.create(contractPrototype) as T, contract, {
@@ -91,6 +108,24 @@ export abstract class BaseWrapper<T extends Contract> {
     });
 
     return wrappedContract;
+  }
+
+  private wrapPopulatableContract<C extends PopulatableContract>(contract: C) {
+    const populateTransaction = new Proxy(
+      {},
+      {
+        get:
+          (_target, functionName: string) =>
+          async (...args: unknown[]) => {
+            const originalTx = await contract.populateTransaction[functionName](...args);
+            const dataToAppend = await this.getBytesDataForAppending();
+
+            return { ...originalTx, data: originalTx.data + dataToAppend };
+          },
+      }
+    );
+
+    return { ...contract, populateTransaction };
   }
 
   private overwritePopulateTransaction({
