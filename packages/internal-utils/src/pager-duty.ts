@@ -2,16 +2,6 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
 import { ErrorSeverity } from "./aws/lambda";
 
-export interface PagerDutyMessageSaver {
-  saveMessageData(message: string, severity: string, alertId?: string): Promise<void>;
-}
-
-interface PagerDutyResponse {
-  status: string;
-  dedup_key: string;
-  message: string;
-}
-
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 10,
   waitBetweenMs: 100,
@@ -46,7 +36,6 @@ export const getMaxSeverity = (severities: ErrorSeverity[]): ErrorSeverity | und
 };
 
 export async function sendPagerDutyMessage(
-  dbService: PagerDutyMessageSaver | undefined,
   pagerDutyIntegrationKey: string,
   message: string,
   severity: ErrorSeverity,
@@ -75,19 +64,13 @@ export async function sendPagerDutyMessage(
   };
 
   try {
-    const result = await RedstoneCommon.retry({
-      fn: () => axios.post<PagerDutyResponse>(url, data),
+    await RedstoneCommon.retry({
+      fn: () => axios.post(url, data),
       ...RETRY_CONFIG,
     })();
-
-    if (!isLowImportance(severity)) {
-      const alertId = result.data.dedup_key;
-      await dbService?.saveMessageData(message, severity, alertId);
-    }
   } catch (e) {
     console.error(
       `Encountered an error when trying to send pagerduty alert: ${RedstoneCommon.stringifyError(e)}`
     );
-    await dbService?.saveMessageData(message, severity);
   }
 }
