@@ -39,7 +39,8 @@ export const getProviderWithRpcUrls = async (
   if (!isEvmNetworkId(networkId)) {
     throw new Error("Non-evm networkId passed to evm provider builder.");
   }
-  const chainConfig = getChainConfigByNetworkId(await fetchChainConfigs(), networkId);
+  const chainConfigs = await fetchChainConfigs();
+  const chainConfig = getChainConfigByNetworkId(chainConfigs, networkId);
 
   return new MegaProviderBuilder({
     rpcUrls,
@@ -61,7 +62,7 @@ export const getProviderWithRpcUrls = async (
       rpcUrls.length !== 1
     )
     .addDecorator(
-      (factory) => MulticallDecorator(factory),
+      (factory) => MulticallDecorator(factory, { chainConfigs }),
       config.useMulticall && RedstoneCommon.isNonEmpty(chainConfig.multicall3.address)
     )
     .build();
