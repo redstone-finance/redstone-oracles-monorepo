@@ -2425,6 +2425,30 @@
         "rwa"
       ]
     },
+    "ZHIPU": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GIGADEVICE": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "TSMC": {
       "source": [],
       "priceAggregator": "redstoneX",
