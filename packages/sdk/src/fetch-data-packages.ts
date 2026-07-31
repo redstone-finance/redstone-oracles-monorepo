@@ -43,8 +43,11 @@ const pendingPromises: Record<
 > = {};
 
 export async function fetchDataPackagesDedup(reqParams: DataPackagesRequestParams) {
-  const urlsKey = reqParams.urls ? Array.from(new Set(reqParams.urls)).sort().join(",") : "";
-  const key = urlsKey + getPathComponents(reqParams).join("/") + getFeedsKey(reqParams);
+  const key = [
+    getTargetUrlsKey(reqParams),
+    getPathComponents(reqParams).join("/"),
+    getScopeKey(reqParams),
+  ].join("|");
 
   pendingPromises[key] ??= fetchInStages(reqParams);
 
@@ -218,12 +221,22 @@ function getPathComponents(reqParams: DataPackagesRequestParams, byDataFeeds = f
   return pathComponents;
 }
 
-function getFeedsKey(reqParams: DataPackagesRequestParams) {
+const joinSortedUnique = (values: string[]) => Array.from(new Set(values)).sort().join(",");
+
+function getTargetUrlsKey(reqParams: DataPackagesRequestParams) {
+  const urls = getAuthGatewayUrls(reqParams)
+    .map((url, i) => url ?? `<unresolved-gateway-${i}>`)
+    .concat(reqParams.urls ?? []);
+
+  return `urls[${joinSortedUnique(urls)}]`;
+}
+
+function getScopeKey(reqParams: DataPackagesRequestParams) {
   if (!reqParams.authenticatedGateways?.length || reqParams.returnAllPackages) {
-    return "";
+    return "all-packages";
   }
 
-  return "|" + [...reqParams.dataPackagesIds].sort().join(",");
+  return `feeds[${joinSortedUnique(reqParams.dataPackagesIds)}]`;
 }
 
 const prepareDataPackagePromises = (
@@ -231,14 +244,17 @@ const prepareDataPackagePromises = (
   targets: GatewayTarget[]
 ): Promise<DataPackagesResponse>[] => targets.map((t) => fetchFromGateway(t, reqParams));
 
-function getAuthGatewayTargets(reqParams: DataPackagesRequestParams): GatewayTarget[] {
+function getAuthGatewayUrls(reqParams: DataPackagesRequestParams): (string | undefined)[] {
   if (!reqParams.authenticatedGateways?.length) {
     return [];
   }
   const defaultUrls = resolveAuthenticatedGatewayUrls(reqParams.dataServiceId);
 
-  return reqParams.authenticatedGateways.map((gateway, i) => {
-    const url = gateway.url ?? defaultUrls[i];
+  return reqParams.authenticatedGateways.map((gateway, i) => gateway.url ?? defaultUrls[i]);
+}
+
+function getAuthGatewayTargets(reqParams: DataPackagesRequestParams): GatewayTarget[] {
+  return getAuthGatewayUrls(reqParams).map((url, i) => {
     if (!url) {
       throw new Error(
         `No URL for authenticated gateway at index ${i}. Either provide a url or ensure authenticatedGateways length does not exceed the number of default URLs for this data service.`
@@ -247,7 +263,7 @@ function getAuthGatewayTargets(reqParams: DataPackagesRequestParams): GatewayTar
 
     return {
       url,
-      headers: { "x-api-key": gateway.apiKey },
+      headers: { "x-api-key": reqParams.authenticatedGateways![i].apiKey },
       byDataFeeds: !reqParams.returnAllPackages,
     };
   });

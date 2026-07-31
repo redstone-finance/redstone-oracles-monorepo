@@ -982,5 +982,94 @@ describe("request-data-packages", () => {
       expect(axiosGetSpy).toHaveBeenCalledTimes(1);
       expect(getAxiosCall(axiosGetSpy).url).toContain(PROD_AUTHENTICATED_GATEWAY_URLS[0]);
     });
+
+    describe("in-flight deduplication", () => {
+      const mockDelayedResponse = () => {
+        const spy = jest.spyOn(axios, "get");
+        spy.mockImplementation(
+          () =>
+            new Promise((resolve) =>
+              setTimeout(() => resolve({ data: mockSignedDataPackages }), 20)
+            )
+        );
+
+        return spy;
+      };
+
+      const hostsOf = (spy: jest.SpyInstance) =>
+        (spy.mock.calls as [string][]).map(([url]) => new URL(url).host).sort();
+
+      it("should not dedup concurrent requests that differ only by the authenticated gateway", async () => {
+        const axiosGetSpy = mockDelayedResponse();
+        const gateways = [1, 2, 3, 4].map((i) => ({
+          url: `https://auth-gw-${i}.test`,
+          apiKey: `key-${i}`,
+        }));
+
+        await Promise.all(
+          gateways.map((gateway) =>
+            requestDataPackages({
+              ...getReqParams(),
+              uniqueSignersCount: 1,
+              skipSignatureVerification: true,
+              urls: [],
+              authenticatedGateways: [gateway],
+            })
+          )
+        );
+
+        expect(hostsOf(axiosGetSpy)).toEqual([
+          "auth-gw-1.test",
+          "auth-gw-2.test",
+          "auth-gw-3.test",
+          "auth-gw-4.test",
+        ]);
+      });
+
+      it("should not serve an authenticated all-packages request from a concurrent public-gateway fetch", async () => {
+        const axiosGetSpy = mockDelayedResponse();
+
+        await Promise.all([
+          requestDataPackages({
+            ...getReqParams(),
+            uniqueSignersCount: 1,
+            skipSignatureVerification: true,
+          }),
+          requestDataPackages({
+            dataServiceId: "mock-data-service-tests",
+            uniqueSignersCount: 1,
+            authorizedSigners: ["0x4fE51A2963a44Cd3DABB05AEe14b9F9A4652fF6b"],
+            skipSignatureVerification: true,
+            returnAllPackages: true,
+            urls: [],
+            authenticatedGateways: [{ url: "https://auth-gw.test", apiKey: "admin-key" }],
+          }),
+        ]);
+
+        const hosts = hostsOf(axiosGetSpy);
+        expect(hosts).toHaveLength(2);
+        expect(hosts).toContain("auth-gw.test");
+        expect(hosts.filter((host) => host !== "auth-gw.test")).toHaveLength(1);
+      });
+
+      it("should still dedup concurrent requests that target the very same gateway and scope", async () => {
+        const axiosGetSpy = mockDelayedResponse();
+        const params = {
+          ...getReqParams(),
+          uniqueSignersCount: 1,
+          skipSignatureVerification: true,
+          urls: [],
+          authenticatedGateways: [{ url: "https://auth-gw.test", apiKey: "key" }],
+        };
+
+        await Promise.all([
+          requestDataPackages({ ...params }),
+          requestDataPackages({ ...params }),
+          requestDataPackages({ ...params }),
+        ]);
+
+        expect(axiosGetSpy).toHaveBeenCalledTimes(1);
+      });
+    });
   });
 });
