@@ -31,7 +31,6 @@
     "get-code-hashes": "yarn global:tsx scripts/get-code-hashes.ts"
   },
   "dependencies": {
-    "@ethersproject/bytes": "^5.6.1",
     "@grpc/grpc-js": "^1.14.3",
     "@mysten/bcs": "2.0.3",
     "@mysten/sui": "2.4.0",
