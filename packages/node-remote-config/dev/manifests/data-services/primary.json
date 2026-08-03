@@ -2637,6 +2637,63 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "BRSRV_ETHEREUM_FUNDAMENTAL": {
+      "source": [
+        "securitize-tsso",
+        "securitize-api"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
+      "denomination": "USD",
+      "rateFeed": true,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 0.1,
+          "maxDelayMilliseconds": 120000
+        }
+      }
+    },
+    "BRSRV_TEMPO_FUNDAMENTAL": {
+      "source": [
+        "securitize-tsso",
+        "securitize-api"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
+      "denomination": "USD",
+      "rateFeed": true,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 0.1,
+          "maxDelayMilliseconds": 120000
+        }
+      }
+    },
+    "BRSRV_SOLANA_FUNDAMENTAL": {
+      "source": [
+        "securitize-tsso",
+        "securitize-api"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
+      "denomination": "USD",
+      "rateFeed": true,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 0.1,
+          "maxDelayMilliseconds": 120000
+        }
+      }
+    },
     "scUSD_FUNDAMENTAL": {
       "source": [
         "ethereum-evm-fetcher-veda"
