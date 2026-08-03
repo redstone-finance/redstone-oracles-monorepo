@@ -19,6 +19,7 @@ const networkToGeckoTerminalNameMap: {
   unichain: "unichain",
   hemi: "hemi",
   "solana-mainnet": "solana",
+  "stellar-mainnet": "stellar",
   monad: "monad",
 };
 
