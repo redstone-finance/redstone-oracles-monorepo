@@ -6132,6 +6132,10 @@
         "ws-perp-coinbase-usdc",
         "ws-perp-mexc-usdt"
       ],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -6140,6 +6144,10 @@
         "notice",
         "hiive"
       ],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -6161,6 +6169,10 @@
         "ws-perp-coinbase-usdc",
         "ws-perp-mexc-usdt"
       ],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -6169,6 +6181,10 @@
         "notice",
         "hiive"
       ],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -6186,14 +6202,21 @@
     },
     "SPCX_PERP": {
       "source": [],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },
     "SPCX_SECONDARIES": {
       "source": [
-        "jupiter",
         "hiive"
       ],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },
