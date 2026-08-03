@@ -24,7 +24,6 @@
   "dependencies": {
     "@canton-network/core-token-standard-service": "^1.2.3",
     "@canton-network/wallet-sdk": "1.2.1",
-    "@ethersproject/bytes": "^5.6.1",
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",

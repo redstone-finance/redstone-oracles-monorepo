@@ -1,4 +1,3 @@
-import { arrayify, isHexString } from "@ethersproject/bytes";
 import { bcs, BcsType } from "@mysten/bcs";
 import type { Keypair } from "@mysten/sui/cryptography";
 import { SuiGraphQLClient } from "@mysten/sui/graphql";
@@ -57,7 +56,7 @@ export function makeSuiKeypair(privateKey?: string): Keypair {
   }
 
   return Secp256k1Keypair.fromSecretKey(
-    isHexString(key) || isHexString(`0x${key}`) ? arrayify(key, { allowMissingPrefix: true }) : key
+    RedstoneCommon.isHexString(key) ? RedstoneCommon.arrayify(key) : key
   );
 }
 

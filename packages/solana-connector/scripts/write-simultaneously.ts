@@ -1,4 +1,3 @@
-import { hexlify } from "@ethersproject/bytes";
 import {
   ContractParamsProvider,
   DataPackagesRequestParams,
@@ -27,7 +26,7 @@ async function prepareParamsProviderWithData(requestParams: DataPackagesRequestP
 
 export async function writeSimultaneously() {
   const keypair = readKeypair();
-  console.log("Public key:", hexlify(keypair.publicKey.toBytes()));
+  console.log("Public key:", RedstoneCommon.hexlify(keypair.publicKey.toBytes()));
   const rpcUrls = await getRpcUrls();
   const { client, jito } = new SolanaClientBuilder().withRpcUrls(rpcUrls).buildWithJito();
   const updater = makeSolanaUpdater({ client, jito }, readProgramAddress(readCluster()), keypair);
