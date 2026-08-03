@@ -5602,6 +5602,13 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "thUSD_FUNDAMENTAL": {
+      "source": [
+        "accountable-theo"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
