@@ -14,11 +14,19 @@
   "tokens": {
     "OPENAI_PERP": {
       "source": ["ws-perp-binance-usdt", "ws-perp-coinbase-usdc", "ws-perp-mexc-usdt"],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },
     "OPENAI_SECONDARIES": {
       "source": ["notice", "hiive"],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },

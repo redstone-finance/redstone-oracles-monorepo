@@ -1,3 +1,4 @@
+import { NetworkId, NonEvmChainTypeEnum } from "@redstone-finance/utils";
 import { Cluster } from "@solana/web3.js";
 import _ from "lodash";
 
@@ -22,4 +23,8 @@ export function getSolanaChainId(cluster: Cluster) {
   }
 
   return Number(chainId);
+}
+
+export function getSolanaNetworkId(cluster: Cluster) {
+  return `${NonEvmChainTypeEnum.enum.solana}/${getSolanaChainId(cluster)}` as NetworkId;
 }
