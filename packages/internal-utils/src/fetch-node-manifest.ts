@@ -24,7 +24,7 @@ export type NodeManifest = {
   analysers?: {
     candle?: {
       interval: string;
-      tokens: Record<string, { broadcasters?: string[] }>;
+      tokens: Record<string, { broadcasters?: string[]; skipBroadcasting?: boolean }>;
     };
   };
 };
