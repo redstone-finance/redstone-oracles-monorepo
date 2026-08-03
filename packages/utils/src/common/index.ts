@@ -14,6 +14,7 @@ export * from "./errors";
 export * from "./fetch-with-fallback";
 export * from "./Fetcher";
 export * from "./fs-path-safe";
+export * from "./hex";
 export * from "./js-utils";
 export * from "./memoize";
 export * from "./misc";

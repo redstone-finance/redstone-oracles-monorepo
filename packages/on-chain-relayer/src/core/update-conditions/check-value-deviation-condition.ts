@@ -1,11 +1,10 @@
-import { formatUnits } from "@ethersproject/units";
 import { consts, INumericDataPoint } from "@redstone-finance/protocol";
 import {
   DataPackagesResponse,
   getDataPackagesTimestamp,
   getDataPointsForDataFeedId,
 } from "@redstone-finance/sdk";
-import { MathUtils } from "@redstone-finance/utils";
+import { MathUtils, RedstoneCommon } from "@redstone-finance/utils";
 import { RelayerConfig } from "../../config/RelayerConfig";
 
 export const checkValueDeviationCondition = (
@@ -23,11 +22,9 @@ export const checkValueDeviationCondition = (
   for (const dataPoint of dataPoints) {
     const dataPointObj = dataPoint.toObj() as INumericDataPoint;
 
-    const valueFromContractAsDecimal = Number(
-      formatUnits(
-        valueFromContract.toString(),
-        dataPointObj.decimals ?? consts.DEFAULT_NUM_VALUE_DECIMALS
-      )
+    const valueFromContractAsDecimal = RedstoneCommon.toReadableNumber(
+      valueFromContract,
+      dataPointObj.decimals ?? consts.DEFAULT_NUM_VALUE_DECIMALS
     );
 
     logTrace.addPerDataFeedLog(timestampMilliseconds, valueFromContractAsDecimal, dataPointObj);

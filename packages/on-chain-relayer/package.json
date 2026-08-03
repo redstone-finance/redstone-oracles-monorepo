@@ -37,7 +37,6 @@
     "preversion": "yarn build"
   },
   "dependencies": {
-    "@ethersproject/units": "^5.7.0",
     "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/chain-orchestrator": "workspace:*",
     "@redstone-finance/healthcheck": "workspace:*",

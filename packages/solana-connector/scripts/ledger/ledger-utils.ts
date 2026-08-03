@@ -1,6 +1,6 @@
-import { hexlify } from "@ethersproject/bytes";
 import Solana from "@ledgerhq/hw-app-solana";
 import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { PublicKey, VersionedTransaction } from "@solana/web3.js";
 
 const getDerivationPath = (accountId: number) => `44'/501'/${accountId}`;
@@ -12,7 +12,9 @@ export class SolanaLedgerSigner {
   ) {}
 
   async signTransaction(transaction: VersionedTransaction) {
-    console.log(`Serialized transaction, check with \`wtf\`: ${hexlify(transaction.serialize())}`);
+    console.log(
+      `Serialized transaction, check with \`wtf\`: ${RedstoneCommon.hexlify(transaction.serialize())}`
+    );
     const serializedMessage = transaction.message.serialize();
 
     const result = await this.solana.signTransaction(
@@ -28,7 +30,7 @@ export class SolanaLedgerSigner {
     const edPublicKey = new PublicKey(result.address);
 
     return {
-      publicKey: hexlify(result.address),
+      publicKey: RedstoneCommon.hexlify(result.address),
       address: edPublicKey.toBase58(),
       ed: edPublicKey,
     };
