@@ -280,7 +280,6 @@
     "DAI": {
       "source": [
         "bitget-usdt",
-        "bitmart-usdt",
         "bitrue-usdt",
         "gate-usdt",
         "kraken-usd",
