@@ -58,6 +58,10 @@ export function realV5Provider(): providers.Provider {
   return hardhat.ethers.provider;
 }
 
+export function realV5Signer() {
+  return new Wallet(TEST_PRIVATE_KEY).connect(realV5Provider());
+}
+
 export function realV6Provider(): ProviderV6 {
   return new BrowserProvider(hardhat.network.provider);
 }

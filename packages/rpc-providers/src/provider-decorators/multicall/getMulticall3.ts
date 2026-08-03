@@ -5,7 +5,7 @@ import {
   Multicall3Abi,
   RedstoneMulticall3Abi,
 } from "@redstone-finance/evm-multicall";
-import { evmWritableContract } from "../../evm-contract";
+import { evmContract } from "../../evm-contract";
 
 export type Multicall3Options = {
   overrideAddress?: string;
@@ -24,13 +24,13 @@ export function getMulticall3(
 
   if (multicall3.type === "Multicall3") {
     return Object.assign(
-      evmWritableContract<EvmMulticallTypes.Multicall3>(address, Multicall3Abi, opts.provider),
+      evmContract<EvmMulticallTypes.Multicall3>(address, Multicall3Abi, opts.provider),
       { address }
     );
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- defensive against multicall3.type outside the typed union
   } else if (multicall3.type === "RedstoneMulticall3") {
     return Object.assign(
-      evmWritableContract<EvmMulticallTypes.RedstoneMulticall3>(
+      evmContract<EvmMulticallTypes.RedstoneMulticall3>(
         address,
         RedstoneMulticall3Abi,
         opts.provider

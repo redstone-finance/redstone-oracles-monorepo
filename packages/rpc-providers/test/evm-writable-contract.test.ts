@@ -2,7 +2,7 @@ import { Interface } from "@ethersproject/abi";
 import { BigNumber } from "@ethersproject/bignumber";
 import { expect } from "chai";
 import { evmWritableContract } from "../src";
-import { deployCounter, realV5Provider, realV6Provider } from "./helpers";
+import { deployCounter, realV5Provider, realV5Signer } from "./helpers";
 
 const COUNTER_ABI = ["function incBy(uint256 by)", "function fund() payable"];
 const INC_BY = 7;
@@ -11,20 +11,18 @@ const FUND_VALUE = BigNumber.from(1234);
 interface CounterWritable {
   callStatic: object;
   populateTransaction: {
-    incBy: (by: number) => Promise<{ to?: string; data: string }>;
+    incBy: (by: number) => Promise<{ to?: string; data: string; from?: string }>;
     fund: (overrides: {
       value: BigNumber;
-    }) => Promise<{ to?: string; data: string; value?: BigNumber }>;
+    }) => Promise<{ to?: string; data: string; value?: BigNumber; from?: string }>;
   };
 }
 
 const WRITABLE_CONTRACTS: Record<string, (address: string) => CounterWritable> = {
   "v5 path": (address) =>
-    evmWritableContract<CounterWritable>(address, COUNTER_ABI, realV5Provider(), false),
-  "v6 path over a real ethers-v5 provider": (address) =>
-    evmWritableContract<CounterWritable>(address, COUNTER_ABI, realV5Provider(), true),
-  "v6 path over a real ethers-v6 provider": (address) =>
-    evmWritableContract<CounterWritable>(address, COUNTER_ABI, realV6Provider()),
+    evmWritableContract<CounterWritable>(address, COUNTER_ABI, realV5Signer(), false),
+  "v6 path": (address) =>
+    evmWritableContract<CounterWritable>(address, COUNTER_ABI, realV5Signer(), true),
 };
 
 for (const [name, build] of Object.entries(WRITABLE_CONTRACTS)) {
@@ -51,6 +49,12 @@ for (const [name, build] of Object.entries(WRITABLE_CONTRACTS)) {
 
       expect(tx.to?.toLowerCase()).to.equal(address.toLowerCase());
       expect(tx.value?.toString()).to.equal(FUND_VALUE.toString());
+    });
+
+    it("sets `from` to the signer", async () => {
+      const tx = await contract.populateTransaction.incBy(INC_BY);
+
+      expect(tx.from?.toLowerCase()).to.equal(realV5Signer().address.toLowerCase());
     });
   });
 }

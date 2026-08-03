@@ -1,8 +1,8 @@
 import * as providers from "@ethersproject/providers";
 import { Wallet } from "@ethersproject/wallet";
 import {
-  getEvmContract,
   getEvmContractAdapter,
+  getWritableEvmContract,
   MultiFeedAdapterWithoutRounds,
   OevMultiAuctionsTxDeliveryMan,
   OevTxDeliveryMan,
@@ -20,7 +20,7 @@ export function getWritableEvmContractAdapter(
 ) {
   const blockProvider = getRelayerProvider(relayerConfig);
   const signer = new Wallet(relayerConfig.privateKey, blockProvider);
-  const adapterContract = getEvmContract(relayerConfig, blockProvider);
+  const adapterContract = getWritableEvmContract(relayerConfig, signer);
   const txDeliveryMan = makeTxDeliveryMan(
     relayerConfig,
     signer,

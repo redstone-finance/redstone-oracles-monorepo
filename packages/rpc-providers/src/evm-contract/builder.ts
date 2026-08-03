@@ -1,4 +1,5 @@
 import type { BlockTag, Provider } from "@ethersproject/abstract-provider";
+import type { Signer } from "@ethersproject/abstract-signer";
 import { Contract, type ContractInterface } from "@ethersproject/contracts";
 import {
   Contract as ContractV6,
@@ -33,11 +34,34 @@ export function buildContract<Api>(
   } as Api;
 }
 
-function v5ProviderRunner(address: string, provider: Provider) {
+export function buildWritableContract<Api>(
+  address: string,
+  abi: ContractInterface,
+  signer: Signer,
+  isV6Contract: boolean
+) {
+  if (!isV6Contract) {
+    const contract = new Contract(address, abi, signer);
+
+    return {
+      callStatic: contract.callStatic,
+      populateTransaction: contract.populateTransaction,
+    } as Api;
+  }
+
+  const contract = new ContractV6(address, abi as InterfaceAbi, v5ProviderRunner(address, signer));
+
+  return {
+    callStatic: v6CallStatic(contract),
+    populateTransaction: v6WritablePopulateTransaction(contract, signer),
+  } as Api;
+}
+
+function v5ProviderRunner(address: string, providerOrSigner: Provider | Signer) {
   const runner: ContractRunner = {
     provider: null,
     call: (tx) =>
-      provider.call(
+      providerOrSigner.call(
         { to: address, data: tx.data ?? undefined },
         (tx.blockTag ?? undefined) as BlockTag | undefined
       ),
@@ -77,6 +101,21 @@ function v6PopulateTransaction(contract: ContractV6) {
           toV5BigNumber(
             await contract.getFunction(method).populateTransaction(...args.map(toV6Arg))
           ),
+    }
+  );
+}
+
+function v6WritablePopulateTransaction(contract: ContractV6, signer: Signer) {
+  return new Proxy(
+    {},
+    {
+      get:
+        (_target, method: string) =>
+        async (...args: unknown[]) =>
+          toV5BigNumber({
+            ...(await contract.getFunction(method).populateTransaction(...args.map(toV6Arg))),
+            from: await signer.getAddress(),
+          }),
     }
   );
 }

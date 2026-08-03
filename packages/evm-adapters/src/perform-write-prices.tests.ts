@@ -4,7 +4,7 @@ import { consts } from "@redstone-finance/protocol";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { expect } from "chai";
-import { EvmAdapterType, getEvmContract } from "./facade/evm/get-evm-contract";
+import { EvmAdapterType, getWritableEvmContract } from "./facade/evm/get-evm-contract";
 import { getEvmContractAdapter } from "./facade/evm/get-evm-contract-adapter";
 import { RedstoneEvmContract } from "./facade/evm/RedstoneEvmContract";
 
@@ -20,9 +20,9 @@ export async function performWritePricesTests(
 ) {
   const signer = new Wallet(TEST_PRIVATE_KEY, provider);
   const deployedContract = await deployer(signer);
-  const adapterContract = getEvmContract(
+  const adapterContract = getWritableEvmContract(
     { ...config, adapterContractAddress: deployedContract.address },
-    provider
+    signer
   );
   const contractAdapter = getEvmContractAdapter(
     config,

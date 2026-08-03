@@ -21,7 +21,7 @@ export type {
 export { EvmBlockchainService } from "./blockchain-service/EvmBlockchainService";
 export { type EvmContractAdapter } from "./core/contract-interactions/EvmContractAdapter";
 export { EvmPriceFeedContractAdapter } from "./facade/evm/EvmPriceFeedContractAdapter";
-export { getEvmContract } from "./facade/evm/get-evm-contract";
+export { getEvmContract, getWritableEvmContract } from "./facade/evm/get-evm-contract";
 export { getEvmContractAdapter } from "./facade/evm/get-evm-contract-adapter";
 export { type RedstoneEvmContract } from "./facade/evm/RedstoneEvmContract";
 export {
