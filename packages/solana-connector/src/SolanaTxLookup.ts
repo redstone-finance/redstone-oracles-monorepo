@@ -1,10 +1,10 @@
-import { hexlify } from "@ethersproject/bytes";
 import {
   MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE,
   NormalizedContractTx,
   RangeScanTxLookup,
 } from "@redstone-finance/multichain-kit";
 import { consts } from "@redstone-finance/protocol";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { VersionedTransactionResponse } from "@solana/web3.js";
 import { SolanaClient } from "./client/SolanaClient";
 import { SolanaTxScanner } from "./client/SolanaTxScanner";
@@ -38,7 +38,7 @@ export class SolanaTxLookup extends RangeScanTxLookup<VersionedTransactionRespon
 
 function normalizeSolanaTx(tx: VersionedTransactionResponse): NormalizedContractTx[] {
   const instruction = tx.transaction.message.compiledInstructions.find((i) =>
-    hexlify(i.data).endsWith(consts.REDSTONE_MARKER_HEX_PURE)
+    RedstoneCommon.hexlify(i.data).endsWith(consts.REDSTONE_MARKER_HEX_PURE)
   );
   if (!instruction) {
     return [];

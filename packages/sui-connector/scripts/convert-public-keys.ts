@@ -1,18 +1,18 @@
-import { arrayify, hexlify } from "@ethersproject/bytes";
 import { Secp256k1PublicKey } from "@mysten/sui/keypairs/secp256k1";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { publicKeyConvert } from "secp256k1";
 
 export function convertSecp256k1PublicKeyToSuiAddress(secp256k1PublicKey: string) {
-  const compressedPublicKey = publicKeyConvert(arrayify(secp256k1PublicKey), true);
+  const compressedPublicKey = publicKeyConvert(RedstoneCommon.arrayify(secp256k1PublicKey), true);
 
   const suiPublicKey = new Secp256k1PublicKey(compressedPublicKey);
   const suiAddress = suiPublicKey.toSuiAddress();
 
   return {
     secp256k1PublicKey,
-    compressedPublicKey: hexlify(compressedPublicKey),
+    compressedPublicKey: RedstoneCommon.hexlify(compressedPublicKey),
     suiAddress,
-    suiPublicKey: hexlify(suiPublicKey.toRawBytes()),
+    suiPublicKey: RedstoneCommon.hexlify(suiPublicKey.toRawBytes()),
   };
 }
 

@@ -1,7 +1,7 @@
-import { hexlify } from "@ethersproject/bytes";
 import { toBase64 } from "@mysten/bcs";
 import { Ed25519PublicKey } from "@mysten/sui/keypairs/ed25519";
 import { MultiSigPublicKey } from "@mysten/sui/multisig";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { MULTI_SIG_PK_HEXES, THRESHOLD_FACTOR } from "./const";
 
 export function getMultiSigPublicKey(pkHexes: string[]) {
@@ -19,7 +19,7 @@ export function getMultiSigPublicKey(pkHexes: string[]) {
 function getMultiSigAddress(pkHexes: string[]) {
   const multiSigPublicKey = getMultiSigPublicKey(pkHexes);
   const multiSigAddress = multiSigPublicKey.toSuiAddress();
-  const multiSigPublicKeyHex = hexlify(multiSigPublicKey.toRawBytes());
+  const multiSigPublicKeyHex = RedstoneCommon.hexlify(multiSigPublicKey.toRawBytes());
 
   console.log({
     multiSigAddress,

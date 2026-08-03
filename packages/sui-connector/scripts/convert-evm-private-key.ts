@@ -1,4 +1,4 @@
-import { hexlify } from "@ethersproject/bytes";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { makeSuiKeypair } from "../src";
 
@@ -8,7 +8,7 @@ function main(showPrivateKey: boolean) {
   const keypair = makeSuiKeypair();
 
   console.log(`SUI_ADDRESS=${keypair.toSuiAddress()}`);
-  console.log(`SUI_PUBLIC_KEY=${hexlify(keypair.getPublicKey().toRawBytes())}`);
+  console.log(`SUI_PUBLIC_KEY=${RedstoneCommon.hexlify(keypair.getPublicKey().toRawBytes())}`);
 
   if (!showPrivateKey) {
     return;

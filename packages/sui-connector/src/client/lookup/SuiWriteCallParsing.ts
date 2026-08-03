@@ -1,4 +1,3 @@
-import { arrayify, BytesLike, hexlify } from "@ethersproject/bytes";
 import { bcs } from "@mysten/sui/bcs";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
@@ -72,7 +71,7 @@ function decodeFeedId(rawValue: unknown) {
 
   try {
     return ContractParamsProvider.unhexlifyFeedId(
-      bcs.vector(bcs.u8()).parse(arrayify(rawValue as BytesLike))
+      bcs.vector(bcs.u8()).parse(RedstoneCommon.arrayify(rawValue as number[]))
     );
   } catch {
     return undefined;
@@ -81,7 +80,7 @@ function decodeFeedId(rawValue: unknown) {
 
 function encodePayload(rawValue: unknown) {
   try {
-    return hexlify(rawValue as BytesLike);
+    return RedstoneCommon.hexlify(rawValue as number[]);
   } catch {
     return undefined;
   }
