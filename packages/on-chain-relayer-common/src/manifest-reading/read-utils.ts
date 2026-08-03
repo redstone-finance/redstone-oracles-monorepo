@@ -2,7 +2,12 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import { MANIFEST_DIRS, ManifestType } from "../schemas";
 
 export function getOnChainRelayerBasePath() {
-  return RedstoneCommon.path.join(__dirname, "../../../../relayer-remote-config/main");
+  const candidates = [
+    RedstoneCommon.path.join(__dirname, "../../../../relayer-remote-config/main"),
+    RedstoneCommon.path.join(__dirname, "relayer-remote-config/main"),
+  ];
+
+  return candidates.find(RedstoneCommon.fs.existsSync) ?? candidates[0];
 }
 
 export const removeFileExtension = (fileName: string): string => {
