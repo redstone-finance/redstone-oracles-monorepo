@@ -2619,9 +2619,12 @@
     },
     "SAMSUNG": {
       "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
       },
       "denomination": "KRW",
       "rateFeed": false,
@@ -2631,9 +2634,12 @@
     },
     "SK_HYNIX": {
       "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
       },
       "denomination": "KRW",
       "rateFeed": false,
@@ -2643,9 +2649,12 @@
     },
     "HYUNDAI": {
       "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
       },
       "denomination": "KRW",
       "rateFeed": false,
