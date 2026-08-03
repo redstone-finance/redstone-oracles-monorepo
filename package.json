@@ -39,6 +39,7 @@
     "global:lambda-add-secp256k1": "cd $INIT_CWD && grep -q 'The nonce generation function failed' lambda-dist/index.js && mkdir -p lambda-dist/build/Release/ && cp -R ../../../node_modules/secp256k1/prebuilds/linux-x64/secp256k1.glibc.node lambda-dist/build/Release/addon.node || true",
     "global:lambda-add-node-remote-config": "cd $INIT_CWD && grep -q node-remote-config lambda-dist/index.js && cp -R ../../node-remote-config lambda-dist || true",
     "global:lambda-add-monitoring-manifests": "cd $INIT_CWD && grep -q monitoring-manifests/manifests lambda-dist/index.js && mkdir -p lambda-dist/monitoring-manifests && cp -R ../../monitoring-manifests/manifests lambda-dist/monitoring-manifests || true",
+    "global:lambda-add-relayer-remote-config": "cd $INIT_CWD && mkdir -p lambda-dist/relayer-remote-config && cp -R ../../relayer-remote-config/main lambda-dist/relayer-remote-config",
     "global:lambda-clean": "cd $INIT_CWD && yarn global:ts-clean && rm -rf lambda-dist",
     "global:lambda-zip": "cd $INIT_CWD && cd lambda-dist && zip -r build.zip *",
     "global:lambda-pushToBucket": "cd $INIT_CWD && KEY=$(yarn global:lambda-key) && aws s3 cp ./lambda-dist/build.zip s3://$BUCKET_NAME/$KEY --only-show-errors --no-progress && echo \"S3 object: $KEY\"",
