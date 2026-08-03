@@ -3,6 +3,7 @@ import { loggerFactory } from "../logger";
 export type FsPartialInterface = {
   readFileSync: (path: string) => Buffer;
   readdirSync: (path: string) => string[];
+  existsSync: (path: string) => boolean;
 };
 
 export type PathInterface<ParsedPath, FormatInputPathObject, PlatformPath> = {
