@@ -1,4 +1,3 @@
-import { arrayify } from "@ethersproject/bytes";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Keypair } from "@solana/web3.js";
 import { z } from "zod";
@@ -28,8 +27,7 @@ const BYTE_LENGTHS = {
 };
 
 export function makeKeypair(privateKeyInput: number[] | string | Uint8Array) {
-  const privateKey = arrayify(privateKeyInput, { allowMissingPrefix: true });
-  const privateKeyBuffer = Buffer.from(privateKey);
+  const privateKeyBuffer = Buffer.from(RedstoneCommon.arrayify(privateKeyInput));
 
   const isValidLength =
     privateKeyBuffer.length === BYTE_LENGTHS.PRIVATE_KEY ||

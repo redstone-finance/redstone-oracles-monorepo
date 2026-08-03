@@ -1,4 +1,3 @@
-import { hexlify } from "@ethersproject/bytes";
 import {
   MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE,
   NormalizedContractTx,
@@ -6,6 +5,7 @@ import {
   TxLookupAddresses,
 } from "@redstone-finance/multichain-kit";
 import { consts } from "@redstone-finance/protocol";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { Address, rpc, xdr } from "@stellar/stellar-sdk";
 import { StellarClient } from "../client/StellarClient";
 
@@ -79,7 +79,10 @@ function normalizeStellarTx(
 function findRedStonePayload(args: xdr.ScVal[]) {
   try {
     const bytes = args.at(-1)?.bytes();
-    if (bytes !== undefined && hexlify(bytes).endsWith(consts.REDSTONE_MARKER_HEX_PURE)) {
+    if (
+      bytes !== undefined &&
+      RedstoneCommon.hexlify(bytes).endsWith(consts.REDSTONE_MARKER_HEX_PURE)
+    ) {
       return bytes;
     }
   } catch {

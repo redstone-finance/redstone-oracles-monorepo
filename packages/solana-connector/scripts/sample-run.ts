@@ -1,4 +1,3 @@
-import { hexlify } from "@ethersproject/bytes";
 import { sampleRun } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon, RpcTelemetry } from "@redstone-finance/utils";
@@ -17,7 +16,11 @@ import { readKeypair } from "./utils";
 
 async function main() {
   const keypair = readKeypair();
-  console.log("Public key:", hexlify(keypair.publicKey.toBytes()), keypair.publicKey.toBase58());
+  console.log(
+    "Public key:",
+    RedstoneCommon.hexlify(keypair.publicKey.toBytes()),
+    keypair.publicKey.toBase58()
+  );
   const rpcUrls = await getRpcUrls();
   const { client, jito } = new SolanaClientBuilder()
     .withCluster(readCluster())

@@ -1,4 +1,3 @@
-import { arrayify } from "@ethersproject/bytes";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Connection, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { z } from "zod";
@@ -12,7 +11,7 @@ export function readKeypairBytes() {
     z.array(z.number().gte(0).lte(255)).or(z.string())
   );
 
-  return arrayify(keypair, { allowMissingPrefix: true });
+  return RedstoneCommon.arrayify(keypair);
 }
 
 export function readKeypair() {

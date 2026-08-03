@@ -1,9 +1,9 @@
-import { hexlify } from "@ethersproject/bytes";
 import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
 import { fromBase64 } from "@mysten/bcs";
 import Sui from "@mysten/ledgerjs-hw-app-sui";
 import { messageWithIntent, toSerializedSignature } from "@mysten/sui/cryptography";
 import { Ed25519PublicKey } from "@mysten/sui/keypairs/ed25519";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { LEDGER_ACCOUNT } from "./const";
 
 const getDerivationPath = (accountId: number) => `44'/784'/${accountId}'/0'/0'`;
@@ -12,8 +12,8 @@ const getPublicKey = async (sui: Sui, accountId = LEDGER_ACCOUNT) => {
   const result = await sui.getPublicKey(getDerivationPath(accountId));
 
   return {
-    publicKey: hexlify(result.publicKey),
-    address: hexlify(result.address),
+    publicKey: RedstoneCommon.hexlify(result.publicKey),
+    address: RedstoneCommon.hexlify(result.address),
     ed: new Ed25519PublicKey(result.publicKey),
   };
 };

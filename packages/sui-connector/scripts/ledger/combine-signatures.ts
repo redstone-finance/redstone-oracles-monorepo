@@ -1,4 +1,4 @@
-import { hexlify } from "@ethersproject/bytes";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { MULTI_SIG_PK_HEXES } from "./const";
 import { getMultiSigPublicKey } from "./get-multi-sig-address";
 
@@ -8,7 +8,7 @@ function combineSignatures(pkHexes: string[], signatures: string[]) {
   const multiSigSignature = multiSigPublicKey.combinePartialSignatures(signatures);
   const multiSigAddress = multiSigPublicKey.toSuiAddress();
 
-  const multiSigPublicKeyHex = hexlify(multiSigPublicKey.toRawBytes());
+  const multiSigPublicKeyHex = RedstoneCommon.hexlify(multiSigPublicKey.toRawBytes());
   console.log(multiSigAddress);
 
   console.log({
