@@ -3723,11 +3723,19 @@
 
     "OPENAI_PERP": {
       "source": ["ws-perp-binance-usdt", "ws-perp-coinbase-usdc", "ws-perp-mexc-usdt"],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },
     "OPENAI_SECONDARIES": {
       "source": ["notice", "hiive"],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -3743,11 +3751,19 @@
 
     "ANTHROPIC_PERP": {
       "source": ["ws-perp-binance-usdt", "ws-perp-coinbase-usdc", "ws-perp-mexc-usdt"],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },
     "ANTHROPIC_SECONDARIES": {
       "source": ["notice", "hiive"],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -3768,11 +3784,19 @@
         "ws-perp-mexc-usdt",
         "perp-polymarket"
       ],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },
     "SPCX_SECONDARIES": {
-      "source": ["jupiter", "hiive"],
+      "source": ["hiive"],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
       "denomination": "USD",
       "rateFeed": false
     },
