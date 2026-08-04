@@ -1,4 +1,3 @@
-import { formatBytes32String } from "@ethersproject/strings";
 import {
   consts,
   DataPackage,
@@ -11,11 +10,11 @@ import {
   DataPackagesResponse,
   DataPackagesResponseCache,
 } from "@redstone-finance/sdk";
-import { HARDHAT_CHAIN_ID, Tx } from "@redstone-finance/utils";
+import { HARDHAT_CHAIN_ID, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { RelayerConfig } from "../src";
 
-export const ethDataFeed = formatBytes32String("ETH");
-export const btcDataFeed = formatBytes32String("BTC");
+export const ethDataFeed = RedstoneCommon.formatBytes32String("ETH");
+export const btcDataFeed = RedstoneCommon.formatBytes32String("BTC");
 export const ETH_PRICE = 1670.99;
 export const BTC_PRICE = 23077.68;
 export const MULTI_POINT_DATA_PACKAGE_ID = "__MULTI__";

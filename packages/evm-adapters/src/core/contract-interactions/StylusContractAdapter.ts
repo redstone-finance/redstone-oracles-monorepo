@@ -10,7 +10,7 @@ export class StylusContractAdapter extends MultiFeedEvmContractAdapterBase<
     paramsProvider: ContractParamsProvider,
     metadataTimestamp: number
   ): Promise<Tx.TxDeliveryCall> {
-    const feedsIds = paramsProvider.getHexlifiedFeedIds(true, 32);
+    const feedsIds = paramsProvider.getHexlifiedFeedIdsAsBytes32();
     const payload = await paramsProvider.getPayloadHex(true, {
       componentName: "stylus-adapter",
       withUnsignedMetadata: true,

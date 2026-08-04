@@ -1,14 +1,11 @@
-import { Wallet } from "@ethersproject/wallet";
 import {
   DataPackage,
   NumericDataPoint,
   SignedDataPackagePlainObj,
 } from "@redstone-finance/protocol";
-import { pickDataFeedPackagesClosestToMedian } from "../src/pick-closest-to-median";
+import { pickDataFeedPackagesClosestToMedian } from "../src";
 
-const MOCK_WALLET_1 = new Wallet(
-  "0xfae81e7c122f2ad245be182d88889e6a037bbeebd7de7bb5ca10f891d359e440"
-);
+const MOCK_PRIVATE_KEY = "0xfae81e7c122f2ad245be182d88889e6a037bbeebd7de7bb5ca10f891d359e440";
 
 function createMockDataPackage(values: number[]): SignedDataPackagePlainObj {
   const dataPackage = new DataPackage(
@@ -23,7 +20,7 @@ function createMockDataPackage(values: number[]): SignedDataPackagePlainObj {
     "ETH"
   );
 
-  return dataPackage.sign(MOCK_WALLET_1.privateKey).toObj();
+  return dataPackage.sign(MOCK_PRIVATE_KEY).toObj();
 }
 
 describe("pickDataFeedPackagesClosestToMedian", () => {
