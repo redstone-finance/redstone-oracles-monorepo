@@ -1,4 +1,4 @@
-import * as base64 from "@ethersproject/base64";
+import { decodeBase64 } from "../common/base64";
 import { DataPoint, DataPointPlainObj } from "./DataPoint";
 import { INumericDataPoint, NumericDataPoint } from "./NumericDataPoint";
 
@@ -12,7 +12,7 @@ export const deserializeDataPointFromObj = (plainObject: DataPointPlainObj): Dat
   } else {
     return new DataPoint(
       plainObject.dataFeedId,
-      base64.decode(plainObject.value),
+      decodeBase64(plainObject.value),
       plainObject.metadata
     );
   }

@@ -2,13 +2,15 @@ import { arrayify, BytesLike, hexlify } from "./hex";
 
 const TRAILING_NULLS_REGEXP = /\0+$/;
 const BYTES32_LENGTH = 32;
+const UTF8_ENCODER = new TextEncoder();
+const UTF8_DECODER = new TextDecoder();
 
 export function toUtf8Bytes(text: string) {
-  return Uint8Array.from(Buffer.from(text, "utf8"));
+  return UTF8_ENCODER.encode(text);
 }
 
 export function toUtf8String(value: BytesLike) {
-  return Buffer.from(arrayify(value)).toString("utf8");
+  return UTF8_DECODER.decode(arrayify(value));
 }
 
 export function parseBytes32String(value: BytesLike) {

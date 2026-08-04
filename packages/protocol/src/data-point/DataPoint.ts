@@ -1,5 +1,5 @@
-import * as base64 from "@ethersproject/base64";
 import { concat } from "@ethersproject/bytes";
+import { encodeBase64 } from "../common/base64";
 import { Serializable } from "../common/Serializable";
 import { ConvertibleToBytes32, convertStringToBytes32 } from "../common/utils";
 import type { INumericDataPoint } from "./NumericDataPoint";
@@ -29,7 +29,7 @@ export class DataPoint extends Serializable {
   toObj(): DataPointPlainObj {
     return {
       dataFeedId: this.dataFeedId,
-      value: base64.encode(this.value),
+      value: encodeBase64(this.value),
       metadata: this.metadata,
     };
   }

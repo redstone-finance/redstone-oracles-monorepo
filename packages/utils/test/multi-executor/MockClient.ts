@@ -1,4 +1,3 @@
-import { hexlify } from "@ethersproject/bytes";
 import { RedstoneCommon } from "../../src";
 
 export type OneOfTypes = string | number;
@@ -44,7 +43,7 @@ export class MockClient {
   async someHexFunction(arg: string) {
     await this.invoke(arg);
 
-    const result = arg + hexlify(this.ident).substring(2);
+    const result = arg + RedstoneCommon.hexlify([this.ident]).substring(2);
     if (this.isFailing) {
       throw new Error(`ERROR: ${result}`);
     }
