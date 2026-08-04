@@ -41,7 +41,8 @@ export async function sendPagerDutyMessage(
   severity: ErrorSeverity,
   pagerSource: string,
   group?: string,
-  dedupKey?: string
+  dedupKey?: string,
+  _isOkMessage?: boolean
 ) {
   const MAX_MESSAGE_LENGTH = 1023;
   const trimmedMessage =
@@ -60,6 +61,7 @@ export async function sendPagerDutyMessage(
     },
     routing_key: pagerDutyIntegrationKey,
     event_action: "trigger",
+    // event_action: isOkMessage && ? "resolve" : "trigger", TODO [robal] next step
     dedup_key: dedupKey,
   };
 
