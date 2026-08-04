@@ -1,18 +1,15 @@
-import { Wallet } from "@ethersproject/wallet";
 import { DataPackage } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
 import {
   DataPackagesRequestParams,
   DataPackagesResponseStorage,
-  requestDataPackages,
-  requestRedstonePayload,
-} from "../src";
-import {
   DEV_AUTHENTICATED_GATEWAY_URLS,
   PROD_AUTHENTICATED_GATEWAY_URLS,
+  requestDataPackages,
+  requestRedstonePayload,
   resolveAuthenticatedGatewayUrls,
-} from "../src/data-services-urls";
+} from "../src";
 import {
   MOCK_TIMESTAMP,
   mockSignedDataPackages,
@@ -21,7 +18,14 @@ import {
 import { server } from "./mocks/server";
 
 const TEST_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
-const MOCK_WALLET = new Wallet(TEST_PRIVATE_KEY);
+const MOCK_SIGNER = {
+  privateKey: TEST_PRIVATE_KEY,
+  address: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+};
+const OTHER_SIGNER = {
+  privateKey: "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
+  address: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+};
 
 const getReqParams = (urls?: string[]): DataPackagesRequestParams => {
   return {
@@ -316,7 +320,7 @@ describe("request-data-packages", () => {
       dataPoints: [{ dataFeedId: "ETH", value: 20000 }],
       timestampMilliseconds: 1732724591164,
       dataPackageId: "ETH",
-    }).sign(MOCK_WALLET.privateKey);
+    }).sign(MOCK_SIGNER.privateKey);
 
     axiosGetSpy.mockResolvedValue({
       data: {
@@ -370,7 +374,7 @@ describe("request-data-packages", () => {
       dataPoints: [{ dataFeedId: "ETH", value: 20000 }],
       timestampMilliseconds: now,
       dataPackageId: "ETH",
-    }).sign(MOCK_WALLET.privateKey);
+    }).sign(MOCK_SIGNER.privateKey);
 
     axiosGetSpy.mockResolvedValue({
       data: {
@@ -423,7 +427,7 @@ describe("request-data-packages", () => {
       dataPoints: [{ dataFeedId: "BTC", value: 20000 }],
       timestampMilliseconds: 1654353400000,
       dataPackageId: "BTC",
-    }).sign(MOCK_WALLET.privateKey);
+    }).sign(MOCK_SIGNER.privateKey);
 
     axiosGetSpy.mockResolvedValueOnce({
       data: {
@@ -460,7 +464,7 @@ describe("request-data-packages", () => {
       dataPoints: [{ dataFeedId: "BTC", value: 20000 }],
       timestampMilliseconds: 1654353400000,
       dataPackageId: "BTC",
-    }).sign(MOCK_WALLET.privateKey);
+    }).sign(MOCK_SIGNER.privateKey);
 
     axiosGetSpy.mockResolvedValueOnce({
       data: {
@@ -483,7 +487,7 @@ describe("request-data-packages", () => {
       uniqueSignersCount: 1,
       dataPackagesIds: ["BTC"],
       returnAllPackages: false,
-      authorizedSigners: [MOCK_WALLET.address],
+      authorizedSigners: [MOCK_SIGNER.address],
       ignoreMissingFeed: true,
     });
     expect(result).toMatchObject({});
@@ -495,7 +499,7 @@ describe("request-data-packages", () => {
       dataPoints: [{ dataFeedId: "BTC", value: 20000 }],
       timestampMilliseconds: 1654353400000,
       dataPackageId: "BTC",
-    }).sign(MOCK_WALLET.privateKey);
+    }).sign(MOCK_SIGNER.privateKey);
 
     axiosGetSpy.mockResolvedValueOnce({
       data: {
@@ -518,7 +522,7 @@ describe("request-data-packages", () => {
       uniqueSignersCount: 1,
       dataPackagesIds: ["BTC"],
       returnAllPackages: false,
-      authorizedSigners: [MOCK_WALLET.address],
+      authorizedSigners: [MOCK_SIGNER.address],
       maxTimestampDeviationMS: 1,
       ignoreMissingFeed: true,
     });
@@ -531,14 +535,13 @@ describe("request-data-packages", () => {
       dataPoints: [{ dataFeedId: "BTC", value: 20000 }],
       timestampMilliseconds: 1654353400000,
       dataPackageId: "BTC",
-    }).sign(MOCK_WALLET.privateKey);
+    }).sign(MOCK_SIGNER.privateKey);
 
-    const mockWallet2 = Wallet.createRandom();
     const signedDataPackageByNOTAuthorizedSigner = DataPackage.fromObj({
       dataPoints: [{ dataFeedId: "BTC", value: 30000 }],
       timestampMilliseconds: 1654353400000,
       dataPackageId: "BTC",
-    }).sign(mockWallet2.privateKey);
+    }).sign(OTHER_SIGNER.privateKey);
 
     axiosGetSpy.mockResolvedValue({
       data: {
@@ -579,7 +582,7 @@ describe("request-data-packages", () => {
       uniqueSignersCount: 1,
       dataPackagesIds: ["ETH"],
       returnAllPackages: false,
-      authorizedSigners: [MOCK_WALLET.address],
+      authorizedSigners: [MOCK_SIGNER.address],
     });
 
     expect(result["ETH"]![0].dataPackage.dataPoints[0].toObj().value).toEqual(20_000);
@@ -591,7 +594,7 @@ describe("request-data-packages", () => {
           uniqueSignersCount: 2,
           dataPackagesIds: ["ETH"],
           returnAllPackages: false,
-          authorizedSigners: [MOCK_WALLET.address],
+          authorizedSigners: [MOCK_SIGNER.address],
         })
       )
     ).rejects.toThrow(/Too few data packages with unique signers/);
