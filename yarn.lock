@@ -3951,7 +3951,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/base64@npm:5.8.0, @ethersproject/base64@npm:^5.7.0, @ethersproject/base64@npm:^5.8.0":
+"@ethersproject/base64@npm:5.8.0, @ethersproject/base64@npm:^5.8.0":
   version: 5.8.0
   resolution: "@ethersproject/base64@npm:5.8.0"
   dependencies:
@@ -8403,8 +8403,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/chain-agnostic-oracle-tests@workspace:packages/chain-agnostic-oracle-tests"
   dependencies:
-    "@ethersproject/bytes": "npm:^5.6.1"
-    "@ethersproject/wallet": "npm:^5.7.0"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -8441,8 +8439,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/chain-orchestrator@workspace:packages/chain-orchestrator"
   dependencies:
-    "@ethersproject/contracts": "npm:^5.7.0"
-    "@ethersproject/providers": "npm:^5.6.8"
     "@ethersproject/wallet": "npm:^5.7.0"
     "@redstone-finance/canton-connector": "workspace:*"
     "@redstone-finance/chain-configs": "workspace:*"
@@ -8510,7 +8506,6 @@ __metadata:
     "@ethersproject/address": "npm:^5.7.0"
     "@ethersproject/bignumber": "npm:^5.7.0"
     "@ethersproject/bytes": "npm:^5.6.1"
-    "@ethersproject/constants": "npm:^5.7.0"
     "@ethersproject/contracts": "npm:^5.7.0"
     "@ethersproject/properties": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
@@ -8699,7 +8694,6 @@ __metadata:
     "@ethersproject/abstract-signer": "npm:^5.7.0"
     "@ethersproject/bignumber": "npm:^5.7.0"
     "@ethersproject/bytes": "npm:^5.6.1"
-    "@ethersproject/constants": "npm:^5.7.0"
     "@ethersproject/contracts": "npm:^5.7.0"
     "@ethersproject/logger": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
@@ -9100,10 +9094,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-aggregator-influx-synchronizer@workspace:packages/lambda/lambda-aggregator-influx-synchronizer"
   dependencies:
-    "@ethersproject/abstract-provider": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -9298,7 +9292,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-dex-price-shift-cost-estimator@workspace:packages/lambda/lambda-DEX-price-shift-cost-estimator"
   dependencies:
-    "@ethersproject/abstract-provider": "npm:^5.7.0"
     "@ethersproject/bignumber": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/fetchers": "workspace:*"
@@ -9644,8 +9637,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-monitoring-core@workspace:packages/lambda/lambda-monitoring-core"
   dependencies:
-    "@ethersproject/abstract-provider": "npm:^5.7.0"
-    "@ethersproject/strings": "npm:^5.7.0"
     "@redstone-finance/evm-adapters": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
@@ -9798,7 +9789,6 @@ __metadata:
     "@ethersproject/abstract-provider": "npm:^5.7.0"
     "@ethersproject/bignumber": "npm:^5.7.0"
     "@ethersproject/logger": "npm:^5.7.0"
-    "@ethersproject/providers": "npm:^5.6.8"
     "@ethersproject/wallet": "npm:^5.7.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
@@ -9924,10 +9914,7 @@ __metadata:
     "@aws-sdk/client-s3": "npm:^3.696.0"
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/bignumber": "npm:^5.7.0"
-    "@ethersproject/hash": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
-    "@ethersproject/strings": "npm:^5.7.0"
-    "@ethersproject/units": "npm:^5.7.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
@@ -9960,9 +9947,6 @@ __metadata:
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/bignumber": "npm:^5.7.0"
-    "@ethersproject/bytes": "npm:^5.6.1"
-    "@ethersproject/strings": "npm:^5.7.0"
-    "@ethersproject/units": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
@@ -10309,7 +10293,6 @@ __metadata:
   dependencies:
     "@ethereumjs/util": "npm:^10.0.0"
     "@ethersproject/bytes": "npm:^5.6.1"
-    "@ethersproject/constants": "npm:^5.7.0"
     "@ethersproject/contracts": "npm:^5.7.0"
     "@ethersproject/hash": "npm:^5.7.0"
     "@ethersproject/logger": "npm:^5.7.0"
@@ -10433,7 +10416,6 @@ __metadata:
   resolution: "@redstone-finance/protocol@workspace:packages/protocol"
   dependencies:
     "@ethersproject/abstract-signer": "npm:^5.7.0"
-    "@ethersproject/base64": "npm:^5.7.0"
     "@ethersproject/bignumber": "npm:^5.7.0"
     "@ethersproject/bytes": "npm:^5.6.1"
     "@ethersproject/keccak256": "npm:^5.7.0"
@@ -10466,7 +10448,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/pub-sub@workspace:packages/pub-sub"
   dependencies:
-    "@ethersproject/wallet": "npm:^5.7.0"
     "@msgpack/msgpack": "npm:^3.1.2"
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
@@ -10519,8 +10500,6 @@ __metadata:
     "@aws-sdk/client-ecs": "npm:^3.696.0"
     "@aws-sdk/client-s3": "npm:^3.696.0"
     "@ethersproject/bignumber": "npm:^5.7.0"
-    "@ethersproject/contracts": "npm:^5.7.0"
-    "@ethersproject/providers": "npm:^5.6.8"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
@@ -10563,9 +10542,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/remote-config@workspace:packages/remote-config"
   dependencies:
-    "@ethersproject/wallet": "npm:^5.7.0"
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/node-schedule": "npm:^2.1.0"
     "@types/xml2js": "npm:^0.4.14"
@@ -10826,13 +10805,11 @@ __metadata:
   resolution: "@redstone-finance/utils@workspace:packages/utils"
   dependencies:
     "@ethersproject/bignumber": "npm:^5.7.0"
-    "@ethersproject/bytes": "npm:^5.6.1"
     "@ethersproject/contracts": "npm:^5.7.0"
     "@ethersproject/keccak256": "npm:^5.7.0"
     "@ethersproject/logger": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
     "@ethersproject/sha2": "npm:^5.7.0"
-    "@ethersproject/units": "npm:^5.7.0"
     "@types/lodash": "npm:^4.14.195"
     "@types/sinon": "npm:^10.0.15"
     axios: "npm:^1.15.2"
