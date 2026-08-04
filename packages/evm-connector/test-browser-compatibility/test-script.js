@@ -1,6 +1,9 @@
 import { getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { ethers } from "ethers";
 import { WrapperBuilder } from "../src/index";
+import { assertEncodingWorksWithoutBuffer } from "./encoding-checks";
+
+assertEncodingWorksWithoutBuffer();
 
 const provider = new ethers.providers.JsonRpcProvider(
   "https://ethereum.publicnode.com"

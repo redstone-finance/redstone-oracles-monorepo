@@ -1,9 +1,9 @@
-import * as base64 from "@ethersproject/base64";
 import type { Signature } from "@ethersproject/bytes";
 import { arrayify, concat, hexlify, joinSignature, splitSignature } from "@ethersproject/bytes";
 import { keccak256 } from "@ethersproject/keccak256";
 import { SigningKey } from "@ethersproject/signing-key";
 import { computeAddress } from "@ethersproject/transactions";
+import { decodeBase64, encodeBase64 } from "../common/base64";
 import {
   DATA_POINT_VALUE_BYTE_SIZE_BS,
   DATA_POINTS_COUNT_BS,
@@ -196,7 +196,7 @@ export class SignedDataPackage extends Serializable implements SignedDataPackage
 
     return {
       ...this.dataPackage.toObj(),
-      signature: base64.encode(signatureHex),
+      signature: encodeBase64(signatureHex),
     };
   }
 
@@ -254,7 +254,7 @@ export function deserializeSignedPackage(
   if (!signatureBase64) {
     throw new Error("Signature can not be empty");
   }
-  const signatureBytes: Uint8Array = base64.decode(signatureBase64);
+  const signatureBytes: Uint8Array = decodeBase64(signatureBase64);
   const parsedSignature = splitSignature(signatureBytes);
 
   const { signature: _, ...unsignedDataPackagePlainObj } = plainObject;
