@@ -1,11 +1,14 @@
-import * as providers from "@ethersproject/providers";
 import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finance/chain-configs";
-import { MegaProviderBuilder, ProviderDecorators } from "@redstone-finance/rpc-providers";
+import {
+  MegaProviderBuilder,
+  ProviderDecorators,
+  type EvmProvider,
+} from "@redstone-finance/rpc-providers";
 import { isEvmNetworkId } from "@redstone-finance/utils";
 import { EvmRelayerConfig } from "./partial-relayer-config";
 import { getRelayerMetricReporter } from "./rpc-metric-reporter";
 
-let cachedProvider: providers.Provider | undefined;
+let cachedProvider: EvmProvider | undefined;
 
 const ACCEPTABLE_BLOCK_DIFF_IN_MS = 10_000;
 

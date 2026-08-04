@@ -1,4 +1,3 @@
-import * as providers from "@ethersproject/providers";
 import {
   fetchChainConfigs,
   getChainConfigByNetworkId,
@@ -6,6 +5,7 @@ import {
 } from "@redstone-finance/chain-configs";
 import { EvmBlockchainService } from "@redstone-finance/evm-adapters";
 import { BalanceProvider } from "@redstone-finance/multichain-kit";
+import { type EvmProvider } from "@redstone-finance/rpc-providers";
 import { isNonEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { getNonEvmBlockchainService } from "../blockchain-service/get-non-evm-blockchain-service";
 import { CurrencyTokenBalanceProvider } from "./CurrencyTokenBalanceProvider";
@@ -58,7 +58,7 @@ export async function getBalanceProviderWithRpcUrls(
 }
 
 export async function getEvmBalanceProvider(
-  provider: providers.Provider,
+  provider: EvmProvider,
   networkId: NetworkId
 ): Promise<BalanceProvider> {
   const { gasCurrencyToken } = getChainConfigByNetworkId(await fetchChainConfigs(), networkId);

@@ -18,9 +18,9 @@
     "test:watch": "yarn global:jest --watch"
   },
   "dependencies": {
-    "@ethersproject/wallet": "^5.7.0",
     "@redstone-finance/http-client": "workspace:*",
     "@redstone-finance/internal-utils": "workspace:*",
+    "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "dotenv": "^16.0.3",
     "node-schedule": "^2.1.1",

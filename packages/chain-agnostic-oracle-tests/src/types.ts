@@ -1,4 +1,4 @@
-import { Wallet } from "@ethersproject/wallet";
+import { MockSigner } from "./test-utils";
 
 export interface FullTestSpec {
   "Pull model": Record<string, Nested<PullModelTestCase>>;
@@ -8,7 +8,7 @@ export interface FullTestSpec {
 export type Nested<T> = T | { [title: string]: Nested<T> };
 
 export interface ContractConfiguration {
-  authorisedSigners: Wallet[];
+  authorisedSigners: readonly MockSigner[];
   requiredSignersCount: number;
 }
 

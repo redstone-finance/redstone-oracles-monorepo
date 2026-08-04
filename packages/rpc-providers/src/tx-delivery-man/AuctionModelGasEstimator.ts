@@ -11,7 +11,7 @@ import { unsafeBnToNumber, type AuctionModelFee, type TxDeliveryOptsValidated } 
 export class AuctionModelGasEstimator implements GasEstimator<AuctionModelFee> {
   constructor(readonly opts: TxDeliveryOptsValidated) {}
 
-  async getFees(provider: providers.JsonRpcProvider): Promise<AuctionModelFee> {
+  async getFees(provider: providers.Provider): Promise<AuctionModelFee> {
     return {
       gasPrice: unsafeBnToNumber(await provider.getGasPrice()),
     };

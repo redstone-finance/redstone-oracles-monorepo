@@ -6,6 +6,7 @@ import { RedstoneEthers5Provider } from "./providers/RedstoneProvider";
 
 export type ReportMetricFn = (message: TelemetryPoint) => void;
 export type ContractCallOverrides = { blockTag: BlockTag };
+export type EvmProvider = providers.Provider;
 
 /** Assumes that if blockTag is string the it is hex string */
 export const convertBlockTagToNumber = (blockTag: BlockTag): number =>

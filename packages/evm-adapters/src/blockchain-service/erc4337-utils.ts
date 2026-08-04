@@ -2,9 +2,8 @@ import { Interface } from "@ethersproject/abi";
 import { Log, TransactionReceipt, TransactionResponse } from "@ethersproject/abstract-provider";
 import { BigNumber } from "@ethersproject/bignumber";
 import { hexDataSlice } from "@ethersproject/bytes";
-import * as constants from "@ethersproject/constants";
 import { consts } from "@redstone-finance/protocol";
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon, RedstoneConstants } from "@redstone-finance/utils";
 
 export type UserOpTx = TransactionResponse & { userOp: { occurrence: number } };
 
@@ -128,7 +127,7 @@ function getCallGasLimit(op: DecodedUserOp) {
   return (
     op.callGasLimit ??
     BigNumber.from(
-      hexDataSlice(op.accountGasLimits ?? constants.HashZero, CALL_GAS_LIMIT_OFFSET_BYTES)
+      hexDataSlice(op.accountGasLimits ?? RedstoneConstants.HASH_ZERO, CALL_GAS_LIMIT_OFFSET_BYTES)
     )
   );
 }

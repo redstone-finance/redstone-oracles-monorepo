@@ -1,8 +1,7 @@
 import { BigNumber } from "@ethersproject/bignumber";
-import { Contract } from "@ethersproject/contracts";
 import { ContractCallOverrides } from "./common";
 
-export interface Erc20Contract extends Contract {
+export interface Erc20Contract {
   callStatic: {
     balanceOf: (account: string, overrides?: ContractCallOverrides) => Promise<BigNumber>;
     totalSupply: (overrides?: ContractCallOverrides) => Promise<BigNumber>;

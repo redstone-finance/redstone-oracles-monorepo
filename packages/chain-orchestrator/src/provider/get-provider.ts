@@ -1,11 +1,14 @@
-import * as providers from "@ethersproject/providers";
 import {
   fetchChainConfigs,
   fetchParsedRpcUrlsFromSsmByNetworkId,
   getChainConfigByNetworkId,
   type Env,
 } from "@redstone-finance/chain-configs";
-import { MegaProviderBuilder, MulticallDecorator } from "@redstone-finance/rpc-providers";
+import {
+  MegaProviderBuilder,
+  MulticallDecorator,
+  type EvmProvider,
+} from "@redstone-finance/rpc-providers";
 import { isEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 
@@ -23,7 +26,7 @@ export const getProvider = async (
   networkId: NetworkId,
   env: Env,
   config = DEFAULT_PROVIDER_CONFIG
-): Promise<providers.Provider> => {
+): Promise<EvmProvider> => {
   return await getProviderWithRpcUrls(
     networkId,
     await fetchParsedRpcUrlsFromSsmByNetworkIdMemoized(networkId, env),
@@ -35,22 +38,14 @@ export const getProviderWithRpcUrls = async (
   networkId: NetworkId,
   rpcUrls: string[],
   config = DEFAULT_PROVIDER_CONFIG
-): Promise<providers.Provider> => {
-  if (!isEvmNetworkId(networkId)) {
-    throw new Error("Non-evm networkId passed to evm provider builder.");
-  }
-  const chainConfigs = await fetchChainConfigs();
-  const chainConfig = getChainConfigByNetworkId(chainConfigs, networkId);
-
-  return new MegaProviderBuilder({
+): Promise<EvmProvider> => {
+  const { builder, chainConfig, chainConfigs } = await megaProviderBuilderFor(
+    networkId,
     rpcUrls,
-    network: {
-      chainId: networkId,
-      name: `network-${networkId}`,
-    },
-    throttleLimit: 1,
-    timeout: config.singleProviderOperationTimeout,
-  })
+    config
+  );
+
+  return builder
     .agreement(
       {
         ignoreAgreementOnInsufficientResponses: true,
@@ -68,6 +63,16 @@ export const getProviderWithRpcUrls = async (
     .build();
 };
 
+export const getFallbackProviderWithRpcUrls = async (
+  networkId: NetworkId,
+  rpcUrls: string[],
+  config = DEFAULT_PROVIDER_CONFIG
+) => {
+  const { builder, chainConfig } = await megaProviderBuilderFor(networkId, rpcUrls, config);
+
+  return builder.fallback({ chainConfig, ...config }, rpcUrls.length !== 1).build();
+};
+
 export const getProviderMemoized = RedstoneCommon.memoize({
   functionToMemoize: getProvider,
   ttl: 60_000,
@@ -77,3 +82,28 @@ export const fetchParsedRpcUrlsFromSsmByNetworkIdMemoized = RedstoneCommon.memoi
   functionToMemoize: fetchParsedRpcUrlsFromSsmByNetworkId,
   ttl: 58_000, // time for reaction for getProvider
 });
+
+async function megaProviderBuilderFor(
+  networkId: NetworkId,
+  rpcUrls: string[],
+  config: typeof DEFAULT_PROVIDER_CONFIG
+) {
+  if (!isEvmNetworkId(networkId)) {
+    throw new Error("Non-evm networkId passed to evm provider builder.");
+  }
+  const chainConfigs = await fetchChainConfigs();
+
+  return {
+    builder: new MegaProviderBuilder({
+      rpcUrls,
+      network: {
+        chainId: networkId,
+        name: `network-${networkId}`,
+      },
+      throttleLimit: 1,
+      timeout: config.singleProviderOperationTimeout,
+    }),
+    chainConfig: getChainConfigByNetworkId(chainConfigs, networkId),
+    chainConfigs,
+  };
+}

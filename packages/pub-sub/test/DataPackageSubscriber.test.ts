@@ -1,4 +1,3 @@
-import { Wallet } from "@ethersproject/wallet";
 import { DataPackage, NumericDataPoint, SignedDataPackage } from "@redstone-finance/protocol";
 import { DataPackagesResponseStorage } from "@redstone-finance/sdk";
 import { RedstoneLogger } from "@redstone-finance/utils";
@@ -12,22 +11,14 @@ import {
   RateLimitsCircuitBreaker,
   SubscribeCallback,
 } from "../src";
-
-const MOCK_WALLET_1 = new Wallet(
-  "0xfae81e7c122f2ad245be182d88889e6a037bbeebd7de7bb5ca10f891d359e440"
-);
-const MOCK_WALLET_2 = new Wallet(
-  "0x0a566b182e650472efe9a17efb850cc01bb5e479add24739942ba43327a194f9"
-);
-const MOCK_WALLET_3 = new Wallet(
-  "0xd56e1ee933657d6bcdec81f9956392aef47a7f8b1a1275b6e4ad551fb5d6b14c"
-);
-const MOCK_WALLET_4 = new Wallet(
-  "0x0926c41d4b99ce1a7b713f14bc553975ee1de28311a94f10ccedec7d9c35c329"
-);
-const MOCK_WALLET_5 = new Wallet(
-  "0x7712474356ae40814b45e9317579388d5e185ac17177f0399831f29141c7c896"
-);
+import {
+  MOCK_SIGNER_1,
+  MOCK_SIGNER_2,
+  MOCK_SIGNER_3,
+  MOCK_SIGNER_4,
+  MOCK_SIGNER_5,
+  MockSigner,
+} from "./mock-signers";
 
 const dataServiceId = "data-service-1";
 
@@ -64,7 +55,7 @@ function createDataPackage(
   dataPackageId: string,
   value: number,
   timestamp: number,
-  signer: Wallet
+  signer: MockSigner
 ): SignedDataPackage {
   const dataPackage = new DataPackage(
     [
@@ -83,7 +74,7 @@ function createDataPackage(
 async function publishToPubSub(
   pubSub: PooledMqttClient,
   packageData: {
-    signer: Wallet;
+    signer: MockSigner;
     value: number;
     timestamp: number;
     dataPackageId: string;
@@ -101,7 +92,7 @@ async function publishToPubSub(
         topic: PubSubTopics.encodeDataPackageTopic({
           dataServiceId,
           dataPackageId: dataPackage.dataPackage.dataPackageId,
-          nodeAddress: MOCK_WALLET_1.address,
+          nodeAddress: MOCK_SIGNER_1.address,
         }),
         data: dataPackage.toObj(),
       },
@@ -116,7 +107,7 @@ function createMockParams(override: Partial<DataPackageSubscriberParams>) {
   return {
     dataServiceId,
     dataPackageIds: ["ETH"],
-    authorizedSigners: [MOCK_WALLET_1.address, MOCK_WALLET_2.address],
+    authorizedSigners: [MOCK_SIGNER_1.address, MOCK_SIGNER_2.address],
     uniqueSignersCount: 2,
     minimalOffChainSignersCount: 2,
     ignoreMissingFeeds: false,
@@ -135,7 +126,7 @@ async function singleSignerSetUp(override: Partial<DataPackageSubscriberParams> 
     pubSub,
     createMockParams({
       dataPackageIds: ["ETH"],
-      authorizedSigners: [MOCK_WALLET_1.address],
+      authorizedSigners: [MOCK_SIGNER_1.address],
       uniqueSignersCount: 1,
       minimalOffChainSignersCount: 1,
       ...override,
@@ -176,7 +167,7 @@ describe("subscribe-data-packages", () => {
             pubSub,
             createMockParams({
               uniqueSignersCount: 2,
-              authorizedSigners: [MOCK_WALLET_3.address],
+              authorizedSigners: [MOCK_SIGNER_3.address],
             })
           )
       ).toThrow(/Misconfiguration authorizedSigners/);
@@ -192,7 +183,7 @@ describe("subscribe-data-packages", () => {
             createMockParams({
               uniqueSignersCount: 2,
               minimalOffChainSignersCount: 1,
-              authorizedSigners: [MOCK_WALLET_3.address, MOCK_WALLET_1.address],
+              authorizedSigners: [MOCK_SIGNER_3.address, MOCK_SIGNER_1.address],
             })
           )
       ).toThrow(/Misconfiguration uniqueSignersCount/);
@@ -209,8 +200,8 @@ describe("subscribe-data-packages", () => {
       await subscriber.subscribe(() => {});
 
       expect(subscriber.topics).toEqual([
-        `data-package/data-service-1/ETH/${MOCK_WALLET_1.address}`,
-        `data-package/data-service-1/ETH/${MOCK_WALLET_2.address}`,
+        `data-package/data-service-1/ETH/${MOCK_SIGNER_1.address}`,
+        `data-package/data-service-1/ETH/${MOCK_SIGNER_2.address}`,
       ]);
       expect([...(pubSub as unknown as MockPubSubClient).topicToCallback.keys()]).toEqual(
         subscriber.topics
@@ -230,7 +221,7 @@ describe("subscribe-data-packages", () => {
       });
 
       await publishToPubSub(pubSub, {
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
         value: VALUE,
         timestamp: notAlignedTimestamp,
         dataPackageId: "ETH",
@@ -238,7 +229,7 @@ describe("subscribe-data-packages", () => {
       expect(callback).not.toHaveBeenCalled();
 
       await publishToPubSub(pubSub, {
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
         value: VALUE,
         timestamp: alignedTimestamp,
         dataPackageId: "ETH",
@@ -250,7 +241,7 @@ describe("subscribe-data-packages", () => {
       const { pubSub, callback } = await singleSignerSetUp();
 
       await publishToPubSub(pubSub, {
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
         value: VALUE,
         timestamp: notAlignedTimestamp,
         dataPackageId: "ETH",
@@ -266,7 +257,7 @@ describe("subscribe-data-packages", () => {
       // 10 min ahead - beyond MAX_PACKAGE_STALENESS (2 min); must be rejected so
       // it neither advances lastPublishedState nor lingers as a future-keyed entry.
       await publishToPubSub(pubSub, {
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
         value: 12,
         timestamp: Date.now() + 10 * 60 * 1000,
         dataPackageId: "ETH",
@@ -275,7 +266,7 @@ describe("subscribe-data-packages", () => {
 
       // A normal current-timestamp package still publishes (feed not blocked)
       await publishToPubSub(pubSub, {
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
         value: 13,
         timestamp: Date.now(),
         dataPackageId: "ETH",
@@ -286,7 +277,7 @@ describe("subscribe-data-packages", () => {
     it("should aggregate prices for single data feed id, one signer", async () => {
       const { pubSub, callback } = await singleSignerSetUp();
 
-      const dataPackage = createDataPackage("ETH", 12, Date.now(), MOCK_WALLET_1);
+      const dataPackage = createDataPackage("ETH", 12, Date.now(), MOCK_SIGNER_1);
 
       await pubSub.publish(
         [
@@ -294,7 +285,7 @@ describe("subscribe-data-packages", () => {
             topic: PubSubTopics.encodeDataPackageTopic({
               dataServiceId,
               dataPackageId: "ETH",
-              nodeAddress: MOCK_WALLET_1.address,
+              nodeAddress: MOCK_SIGNER_1.address,
             }),
             data: dataPackage.toObj(),
           },
@@ -310,7 +301,7 @@ describe("subscribe-data-packages", () => {
 
     it("should reject package not fulfilling schema", async () => {
       const { pubSub, callback, logger } = await singleSignerSetUp();
-      const dataPackage = createDataPackage("ETH", 12, Date.now(), MOCK_WALLET_1);
+      const dataPackage = createDataPackage("ETH", 12, Date.now(), MOCK_SIGNER_1);
 
       await pubSub.publish(
         [
@@ -318,7 +309,7 @@ describe("subscribe-data-packages", () => {
             topic: PubSubTopics.encodeDataPackageTopic({
               dataServiceId,
               dataPackageId: "ETH",
-              nodeAddress: MOCK_WALLET_1.address,
+              nodeAddress: MOCK_SIGNER_1.address,
             }),
             data: { ...dataPackage.toObj(), timestampMilliseconds: "abc" },
           },
@@ -332,7 +323,7 @@ describe("subscribe-data-packages", () => {
 
     it("should reject package wrong signer", async () => {
       const { pubSub, callback, logger } = await singleSignerSetUp();
-      const dataPackage = createDataPackage("ETH", 12, Date.now(), MOCK_WALLET_2);
+      const dataPackage = createDataPackage("ETH", 12, Date.now(), MOCK_SIGNER_2);
 
       await pubSub.publish(
         [
@@ -340,7 +331,7 @@ describe("subscribe-data-packages", () => {
             topic: PubSubTopics.encodeDataPackageTopic({
               dataServiceId,
               dataPackageId: "ETH",
-              nodeAddress: MOCK_WALLET_1.address,
+              nodeAddress: MOCK_SIGNER_1.address,
             }),
             data: dataPackage.toObj(),
           },
@@ -362,25 +353,25 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 12,
         timestamp,
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
       });
 
       expect(callback).toHaveBeenCalledTimes(1);
-      subscriber.params.authorizedSigners.push(MOCK_WALLET_2.address);
+      subscriber.params.authorizedSigners.push(MOCK_SIGNER_2.address);
 
       // the same
       await publishToPubSub(pubSub, {
         dataPackageId: "ETH",
         value: 12,
         timestamp,
-        signer: MOCK_WALLET_2,
+        signer: MOCK_SIGNER_2,
       });
 
       jest.advanceTimersByTime(500);
       expect(callback).toHaveBeenCalledTimes(1);
       expect(loggerDebug).toHaveBeenCalledWith(
         expect.stringContaining(
-          `Package from ${MOCK_WALLET_2.address} timestamp=${timestamp} dataPackageId=ETH was rejected because packageTimestamp`
+          `Package from ${MOCK_SIGNER_2.address} timestamp=${timestamp} dataPackageId=ETH was rejected because packageTimestamp`
         )
       );
 
@@ -389,14 +380,14 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 12,
         timestamp: timestamp - 1,
-        signer: MOCK_WALLET_2,
+        signer: MOCK_SIGNER_2,
       });
 
       jest.advanceTimersByTime(500);
       expect(callback).toHaveBeenCalledTimes(1);
       expect(loggerDebug).toHaveBeenCalledWith(
         expect.stringContaining(
-          `Package from ${MOCK_WALLET_2.address} timestamp=${timestamp - 1} dataPackageId=ETH was rejected because packageTimestamp`
+          `Package from ${MOCK_SIGNER_2.address} timestamp=${timestamp - 1} dataPackageId=ETH was rejected because packageTimestamp`
         )
       );
     });
@@ -408,7 +399,7 @@ describe("subscribe-data-packages", () => {
         pubSub,
         createMockParams({
           dataPackageIds: ["ETH"],
-          authorizedSigners: [MOCK_WALLET_1.address, MOCK_WALLET_2.address],
+          authorizedSigners: [MOCK_SIGNER_1.address, MOCK_SIGNER_2.address],
           uniqueSignersCount: 2,
         })
       );
@@ -426,27 +417,27 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 12,
         timestamp: timestamp,
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
       });
 
       await publishToPubSub(pubSub, {
         dataPackageId: "ETH",
         value: 13,
         timestamp: timestamp,
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
       });
 
       expect(callback).toHaveBeenCalledTimes(0);
       expect(logger).toHaveBeenCalledWith(
         expect.stringContaining(
-          `Package from ${MOCK_WALLET_1.address} timestamp=${timestamp} dataPackageId=ETH was rejected because already have package from this signer`
+          `Package from ${MOCK_SIGNER_1.address} timestamp=${timestamp} dataPackageId=ETH was rejected because already have package from this signer`
         )
       );
     });
 
     it("should reject package if id not in requested dataPackageId", async () => {
       const { pubSub, callback, loggerDebug } = await singleSignerSetUp();
-      const dataPackage = createDataPackage("ETH2", 12, Date.now(), MOCK_WALLET_1);
+      const dataPackage = createDataPackage("ETH2", 12, Date.now(), MOCK_SIGNER_1);
 
       // first call to setup packageTimestamp
       await pubSub.publish(
@@ -455,7 +446,7 @@ describe("subscribe-data-packages", () => {
             topic: PubSubTopics.encodeDataPackageTopic({
               dataServiceId,
               dataPackageId: "ETH",
-              nodeAddress: MOCK_WALLET_1.address,
+              nodeAddress: MOCK_SIGNER_1.address,
             }),
             data: dataPackage.toObj(),
           },
@@ -476,7 +467,7 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 12,
         timestamp: Date.now(),
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
       });
 
       expect(callback).toHaveBeenCalledTimes(1);
@@ -497,7 +488,7 @@ describe("subscribe-data-packages", () => {
         pubSub,
         createMockParams({
           dataPackageIds: ["ETH"],
-          authorizedSigners: [MOCK_WALLET_1.address, MOCK_WALLET_2.address],
+          authorizedSigners: [MOCK_SIGNER_1.address, MOCK_SIGNER_2.address],
           uniqueSignersCount: 1,
           minimalOffChainSignersCount: 2,
         })
@@ -511,7 +502,7 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 11,
         timestamp: packageTimestamp,
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
       });
 
       // doesn't publish cause still only one signer
@@ -522,7 +513,7 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 12,
         timestamp: packageTimestamp,
-        signer: MOCK_WALLET_2,
+        signer: MOCK_SIGNER_2,
       });
 
       jest.advanceTimersByTime(500);
@@ -536,7 +527,7 @@ describe("subscribe-data-packages", () => {
         pubSub,
         createMockParams({
           dataPackageIds: ["ETH"],
-          authorizedSigners: [MOCK_WALLET_1.address, MOCK_WALLET_2.address],
+          authorizedSigners: [MOCK_SIGNER_1.address, MOCK_SIGNER_2.address],
           uniqueSignersCount: 1,
           minimalOffChainSignersCount: 1,
         })
@@ -550,7 +541,7 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 12,
         timestamp: packageTimestamp,
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
       });
 
       expect(callback).toHaveBeenCalledTimes(0);
@@ -568,7 +559,7 @@ describe("subscribe-data-packages", () => {
         pubSub,
         createMockParams({
           dataPackageIds: ["ETH"],
-          authorizedSigners: [MOCK_WALLET_1.address, MOCK_WALLET_2.address],
+          authorizedSigners: [MOCK_SIGNER_1.address, MOCK_SIGNER_2.address],
           uniqueSignersCount: 1,
           minimalOffChainSignersCount: 1,
           waitMsForOtherSignersAfterMinimalSignersCountSatisfied: 0,
@@ -583,7 +574,7 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 12,
         timestamp: packageTimestamp,
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
       });
 
       expect(callback).toHaveBeenCalledTimes(1);
@@ -596,7 +587,7 @@ describe("subscribe-data-packages", () => {
         pubSub,
         createMockParams({
           dataPackageIds: ["ETH", "BTC"],
-          authorizedSigners: [MOCK_WALLET_1.address, MOCK_WALLET_2.address],
+          authorizedSigners: [MOCK_SIGNER_1.address, MOCK_SIGNER_2.address],
           uniqueSignersCount: 2,
           minimalOffChainSignersCount: 2,
           ignoreMissingFeeds: true,
@@ -610,7 +601,7 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 12,
         timestamp: packageTimestamp,
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
       });
 
       jest.advanceTimersByTime(500);
@@ -620,7 +611,7 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 13,
         timestamp: packageTimestamp,
-        signer: MOCK_WALLET_2,
+        signer: MOCK_SIGNER_2,
       });
 
       expect(callback).toHaveBeenCalledTimes(0);
@@ -640,7 +631,7 @@ describe("subscribe-data-packages", () => {
         pubSub,
         createMockParams({
           dataPackageIds: ["ETH", "BTC"],
-          authorizedSigners: [MOCK_WALLET_1.address, MOCK_WALLET_2.address],
+          authorizedSigners: [MOCK_SIGNER_1.address, MOCK_SIGNER_2.address],
           uniqueSignersCount: 2,
           minimalOffChainSignersCount: 2,
           ignoreMissingFeeds: true,
@@ -667,13 +658,13 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 12,
         timestamp: packageTimestamp,
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
       });
       await publishToPubSub(pubSub, {
         dataPackageId: "ETH",
         value: 13,
         timestamp: packageTimestamp,
-        signer: MOCK_WALLET_2,
+        signer: MOCK_SIGNER_2,
       });
 
       // Firing the scheduled publish must not let the throw escape the timer
@@ -693,7 +684,7 @@ describe("subscribe-data-packages", () => {
       const pubSub = createMockPubSubClient();
       const storageInstance = new DataPackagesResponseStorage();
 
-      const authorizedSigners = [MOCK_WALLET_1.address, MOCK_WALLET_2.address];
+      const authorizedSigners = [MOCK_SIGNER_1.address, MOCK_SIGNER_2.address];
       const subscriber = new DataPackageSubscriber(
         pubSub,
         createMockParams({
@@ -713,7 +704,7 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 12,
         timestamp: packageTimestamp,
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
       });
 
       jest.advanceTimersByTime(200);
@@ -723,7 +714,7 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "BTC",
         value: 15,
         timestamp: packageTimestamp,
-        signer: MOCK_WALLET_2,
+        signer: MOCK_SIGNER_2,
       });
 
       jest.advanceTimersByTime(200);
@@ -743,7 +734,7 @@ describe("subscribe-data-packages", () => {
   });
 
   describe("production like situations", () => {
-    const NODES = [MOCK_WALLET_1, MOCK_WALLET_2, MOCK_WALLET_3, MOCK_WALLET_4, MOCK_WALLET_5];
+    const NODES = [MOCK_SIGNER_1, MOCK_SIGNER_2, MOCK_SIGNER_3, MOCK_SIGNER_4, MOCK_SIGNER_5];
     it("should prices closest to median and slice at unique signer threshold", async () => {
       const pubSub = createMockPubSubClient();
 
@@ -957,14 +948,14 @@ describe("subscribe-data-packages", () => {
       jest.setTimeout(15_000);
       const { callback, pubSub, subscriber } = await singleSignerSetUp();
 
-      const fallbackPackage = createDataPackage("ETH", 3, Date.now() + 2_000, MOCK_WALLET_1);
+      const fallbackPackage = createDataPackage("ETH", 3, Date.now() + 2_000, MOCK_SIGNER_1);
       const fallbackFn = jest.fn().mockImplementationOnce(() => ({
         ETH: [fallbackPackage],
       }));
       subscriber.enableFallback(fallbackFn, 1_000, 200);
 
       await publishToPubSub(pubSub, {
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
         value: 2,
         timestamp: Date.now(),
         dataPackageId: "ETH",
@@ -985,12 +976,12 @@ describe("subscribe-data-packages", () => {
       const { callback, pubSub, subscriber } = await singleSignerSetUp();
 
       const fallbackFn = jest.fn().mockImplementationOnce(() => ({
-        ETH: [createDataPackage("ETH", 3, Date.now() + 2_000, MOCK_WALLET_1)],
+        ETH: [createDataPackage("ETH", 3, Date.now() + 2_000, MOCK_SIGNER_1)],
       }));
       subscriber.enableFallback(fallbackFn, 1_500, 200);
 
       await publishToPubSub(pubSub, {
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
         value: 2,
         timestamp: Date.now(),
         dataPackageId: "ETH",
@@ -1019,7 +1010,7 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 1,
         timestamp: Date.now() + 1,
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
       });
       expect(unsubSpy).toHaveBeenCalledTimes(0);
 
@@ -1027,7 +1018,7 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 1,
         timestamp: Date.now() + 2,
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
       });
       expect(unsubSpy).toHaveBeenCalledTimes(0);
 
@@ -1035,7 +1026,7 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
         value: 1,
         timestamp: Date.now() + 3,
-        signer: MOCK_WALLET_1,
+        signer: MOCK_SIGNER_1,
       });
       expect(unsubSpy).toHaveBeenCalledTimes(1);
     });

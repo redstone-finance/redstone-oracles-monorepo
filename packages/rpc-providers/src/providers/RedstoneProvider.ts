@@ -319,6 +319,10 @@ export class RedstoneEthers5Provider implements providers.Provider {
     return Promise.resolve(this.network);
   }
 
+  async send<T>(method: string, params: unknown[]): Promise<T> {
+    return await this.rpc.send<T>(method, params);
+  }
+
   async getBlockNumber(): Promise<number> {
     return await this._getBlockNumberCached();
   }

@@ -1,5 +1,6 @@
 import * as providers from "@ethersproject/providers";
 import { BlockchainServiceWithTxLookup } from "@redstone-finance/multichain-kit";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { EvmTxLookup } from "./EvmTxLookup";
 import { Multicall3Config } from "./extract-top-ups";
 
@@ -18,10 +19,10 @@ export class EvmBlockchainService implements BlockchainServiceWithTxLookup {
   }
 
   async getTimeForBlock(block: number): Promise<Date> {
-    const blockData = await this.provider.getBlockWithTransactions(block);
+    const blockData = await this.provider.getBlock(block);
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- some providers return null for not-yet-finalized blocks; treat as epoch
-    return new Date((blockData?.timestamp || 0) * 1000);
+    return new Date(RedstoneCommon.secsToMs(blockData?.timestamp ?? 0));
   }
 
   async getReceiptForTransaction(tx: { hash?: string }) {

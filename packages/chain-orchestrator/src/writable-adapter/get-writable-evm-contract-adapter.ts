@@ -1,4 +1,3 @@
-import * as providers from "@ethersproject/providers";
 import { Wallet } from "@ethersproject/wallet";
 import {
   getEvmContractAdapter,
@@ -8,7 +7,7 @@ import {
   OevTxDeliveryMan,
   RedstoneEvmContract,
 } from "@redstone-finance/evm-adapters";
-import { TxDeliveryManSupportedProviders } from "@redstone-finance/rpc-providers";
+import { TxDeliveryManSupportedProviders, type EvmProvider } from "@redstone-finance/rpc-providers";
 import { RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { getRelayerProvider } from "./get-relayer-provider";
 import { getTxDeliveryMan } from "./get-tx-delivery-man";
@@ -36,7 +35,7 @@ export function getWritableEvmContractAdapter(
 function makeTxDeliveryMan(
   relayerConfig: EvmRelayerConfig,
   signer: Wallet,
-  provider: providers.Provider,
+  provider: EvmProvider,
   adapterContract: RedstoneEvmContract,
   deliveryManOverride?: Tx.ITxDeliveryMan
 ) {

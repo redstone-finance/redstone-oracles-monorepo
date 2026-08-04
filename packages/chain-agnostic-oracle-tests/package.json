@@ -16,8 +16,6 @@
     "lint:fix": "yarn global:eslint --fix ."
   },
   "dependencies": {
-    "@ethersproject/bytes": "^5.6.1",
-    "@ethersproject/wallet": "^5.7.0",
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",

@@ -1,7 +1,7 @@
 import { Env, fetchParsedRpcUrlsFromSsmByNetworkId } from "@redstone-finance/chain-configs";
-import { EvmBlockchainService } from "@redstone-finance/evm-adapters";
 import { BalanceProvider, BlockProvider } from "@redstone-finance/multichain-kit";
 import { isNonEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
+import { getEvmBlockchainService } from "../blockchain-service/get-blockchain-service";
 import { getNonEvmBlockchainService } from "../blockchain-service/get-non-evm-blockchain-service";
 import {
   DEFAULT_PROVIDER_CONFIG,
@@ -43,7 +43,7 @@ async function getChainProviderWithRpcUrls(
     if (isNonEvmNetworkId(networkId)) {
       return await getNonEvmBlockchainService(networkId, rpcUrls);
     } else {
-      return new EvmBlockchainService(
+      return getEvmBlockchainService(
         await getProviderWithRpcUrls(networkId, rpcUrls, {
           ...DEFAULT_PROVIDER_CONFIG,
           singleProviderOperationTimeout: SINGLE_RPC_TIMEOUT_MILLISECONDS,

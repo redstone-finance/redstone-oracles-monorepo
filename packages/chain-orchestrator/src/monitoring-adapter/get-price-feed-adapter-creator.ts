@@ -1,6 +1,6 @@
-import * as providers from "@ethersproject/providers";
 import { EvmPriceFeedContractAdapter } from "@redstone-finance/evm-adapters";
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
+import { type EvmProvider } from "@redstone-finance/rpc-providers";
 import { isEvmNetworkId, NetworkId, NonEvmNetworkId } from "@redstone-finance/utils";
 import {
   fetchParsedRpcUrlsFromSsmByNetworkIdMemoized,
@@ -18,7 +18,7 @@ export type PriceFeedAdapterCreator = (
 export async function getPriceFeedAdapterCreator(
   networkId: NetworkId,
   env: MonitoringEnv,
-  overrides?: { provider?: providers.Provider; rpcUrls?: string[] }
+  overrides?: { provider?: EvmProvider; rpcUrls?: string[] }
 ): Promise<PriceFeedAdapterCreator> {
   if (isEvmNetworkId(networkId)) {
     return await getEvmPriceFeedAdapterCreator(networkId, env, overrides?.provider);
@@ -30,7 +30,7 @@ export async function getPriceFeedAdapterCreator(
 async function getEvmPriceFeedAdapterCreator(
   networkId: number,
   env: MonitoringEnv,
-  overrideProvider?: providers.Provider
+  overrideProvider?: EvmProvider
 ): Promise<PriceFeedAdapterCreator> {
   const provider = overrideProvider ?? (await getProviderMemoized(networkId, env));
 

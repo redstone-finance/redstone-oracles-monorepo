@@ -6,7 +6,7 @@ import {
 } from "@redstone-finance/chain-configs";
 import { MathUtils, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { getProviderNetworkId } from "../common";
-import { GasEstimator } from "./GasEstimator";
+import { assertJsonRpcProvider, GasEstimator } from "./GasEstimator";
 import { unsafeBnToNumber, type Eip1559Fee, type TxDeliveryOptsValidated } from "./common";
 
 type FeeHistoryResponse = { reward: string[] };
@@ -21,7 +21,9 @@ export class Eip1559GasEstimatorV1 implements GasEstimator<Eip1559Fee> {
   private maxPriorityFeePerGas = 1_000_000_000;
 
   /** this is reasonable (ether.js is not reasonable) fallback if gasOracle is not set */
-  async getFees(provider: providers.JsonRpcProvider): Promise<Eip1559Fee> {
+  async getFees(provider: providers.Provider): Promise<Eip1559Fee> {
+    assertJsonRpcProvider(provider);
+
     const [lastBlock, _] = await Promise.all([
       provider.getBlock("latest"),
       this.refreshLastUsedPriorityFee(provider),
