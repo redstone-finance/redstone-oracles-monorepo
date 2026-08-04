@@ -1,23 +1,31 @@
-import { Wallet } from "@ethersproject/wallet";
 import {
   DataPackage,
   NumericDataPoint,
   type SignedDataPackagePlainObj,
 } from "@redstone-finance/protocol";
-import { computeMedian, verifyAndComputeMedian } from "../src/compute-median";
+import { computeMedian, verifyAndComputeMedian } from "../src";
 
-const WALLET_1 = new Wallet("0xfae81e7c122f2ad245be182d88889e6a037bbeebd7de7bb5ca10f891d359e440");
-const WALLET_2 = new Wallet("0x548e7c2fae09cc353ffe54ed40609d88a99fab24acfc81bfbf29cd6a638b4958");
-const WALLET_3 = new Wallet("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
+const SIGNER_1 = {
+  privateKey: "0xfae81e7c122f2ad245be182d88889e6a037bbeebd7de7bb5ca10f891d359e440",
+  address: "0x701790Ca360222a7e34212175280907e1572EbE6",
+};
+const SIGNER_2 = {
+  privateKey: "0x548e7c2fae09cc353ffe54ed40609d88a99fab24acfc81bfbf29cd6a638b4958",
+  address: "0x8559361F0e878c73379cB15A46D6B058EF070E5A",
+};
+const SIGNER_3 = {
+  privateKey: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+  address: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+};
 
-function makePackage(value: number, wallet = WALLET_1, feedId = "ETH"): SignedDataPackagePlainObj {
+function makePackage(value: number, signer = SIGNER_1, feedId = "ETH"): SignedDataPackagePlainObj {
   const dp = new DataPackage(
     [new NumericDataPoint({ dataFeedId: feedId, value })],
     1_000_000,
     feedId
   );
 
-  return dp.sign(wallet.privateKey).toObj();
+  return dp.sign(signer.privateKey).toObj();
 }
 
 /** Manually craft a plain-obj with a string value (no real signature needed for computeMedian). */
@@ -58,7 +66,7 @@ describe("computeMedian", () => {
       1_000_000,
       "ETH"
     )
-      .sign(WALLET_1.privateKey)
+      .sign(SIGNER_1.privateKey)
       .toObj();
 
     expect(() => computeMedian([multiFeedPackage])).toThrow("MultiFeedPackages are not supported");
@@ -73,68 +81,68 @@ describe("computeMedian", () => {
 });
 
 describe("verifyAndComputeMedian", () => {
-  const WALLET_1_ADDRESS = WALLET_1.address;
-  const WALLET_2_ADDRESS = WALLET_2.address;
+  const SIGNER_1_ADDRESS = SIGNER_1.address;
+  const SIGNER_2_ADDRESS = SIGNER_2.address;
 
   it("computes median from all packages when all signers are whitelisted", () => {
     const packages = [
-      makePackage(10, WALLET_1),
-      makePackage(20, WALLET_2),
-      makePackage(30, WALLET_1),
+      makePackage(10, SIGNER_1),
+      makePackage(20, SIGNER_2),
+      makePackage(30, SIGNER_1),
     ];
-    const result = verifyAndComputeMedian(packages, [WALLET_1_ADDRESS, WALLET_2_ADDRESS]);
+    const result = verifyAndComputeMedian(packages, [SIGNER_1_ADDRESS, SIGNER_2_ADDRESS]);
     expect(result).toBe(20);
   });
 
   it("filters out packages from non-whitelisted signers before computing median", () => {
     const packages = [
-      makePackage(10, WALLET_1), // whitelisted → kept
-      makePackage(20, WALLET_1), // whitelisted → kept
-      makePackage(999, WALLET_2), // NOT whitelisted → dropped
+      makePackage(10, SIGNER_1), // whitelisted → kept
+      makePackage(20, SIGNER_1), // whitelisted → kept
+      makePackage(999, SIGNER_2), // NOT whitelisted → dropped
     ];
-    const result = verifyAndComputeMedian(packages, [WALLET_1_ADDRESS]);
+    const result = verifyAndComputeMedian(packages, [SIGNER_1_ADDRESS]);
     expect(result).toBe(15); // median of [10, 20]
   });
 
   it("is case-insensitive for signer addresses", () => {
-    const packages = [makePackage(42, WALLET_1)];
-    expect(verifyAndComputeMedian(packages, [WALLET_1_ADDRESS.toLowerCase()])).toBe(42);
-    expect(verifyAndComputeMedian(packages, [WALLET_1_ADDRESS.toUpperCase()])).toBe(42);
+    const packages = [makePackage(42, SIGNER_1)];
+    expect(verifyAndComputeMedian(packages, [SIGNER_1_ADDRESS.toLowerCase()])).toBe(42);
+    expect(verifyAndComputeMedian(packages, [SIGNER_1_ADDRESS.toUpperCase()])).toBe(42);
   });
 
   it("throws when no packages pass signature verification against the whitelist", () => {
-    const packages = [makePackage(42, WALLET_2)]; // WALLET_2 not in whitelist
-    expect(() => verifyAndComputeMedian(packages, [WALLET_1_ADDRESS])).toThrow(
+    const packages = [makePackage(42, SIGNER_2)]; // SIGNER_2 not in whitelist
+    expect(() => verifyAndComputeMedian(packages, [SIGNER_1_ADDRESS])).toThrow(
       "no packages from whitelisted signers found"
     );
   });
 
   it("throws on empty packages array (no whitelisted packages)", () => {
-    expect(() => verifyAndComputeMedian([], [WALLET_1_ADDRESS])).toThrow(
+    expect(() => verifyAndComputeMedian([], [SIGNER_1_ADDRESS])).toThrow(
       "no packages from whitelisted signers found"
     );
   });
 
   it("silently discards packages with invalid signatures", () => {
-    const validPkg = makePackage(50, WALLET_1);
+    const validPkg = makePackage(50, SIGNER_1);
     const invalidPkg: SignedDataPackagePlainObj = {
       ...validPkg,
       signature: "aW52YWxpZA==", // base64("invalid") – bad signature
     };
-    const result = verifyAndComputeMedian([validPkg, invalidPkg], [WALLET_1_ADDRESS]);
+    const result = verifyAndComputeMedian([validPkg, invalidPkg], [SIGNER_1_ADDRESS]);
     expect(result).toBe(50);
   });
 
-  it("allows a third whitelisted wallet to contribute to the median", () => {
+  it("allows a third whitelisted signer to contribute to the median", () => {
     const packages = [
-      makePackage(10, WALLET_1),
-      makePackage(20, WALLET_2),
-      makePackage(30, WALLET_3),
+      makePackage(10, SIGNER_1),
+      makePackage(20, SIGNER_2),
+      makePackage(30, SIGNER_3),
     ];
     const result = verifyAndComputeMedian(packages, [
-      WALLET_1_ADDRESS,
-      WALLET_2_ADDRESS,
-      WALLET_3.address,
+      SIGNER_1_ADDRESS,
+      SIGNER_2_ADDRESS,
+      SIGNER_3.address,
     ]);
     expect(result).toBe(20);
   });

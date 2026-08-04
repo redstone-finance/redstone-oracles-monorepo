@@ -1,6 +1,4 @@
-import { arrayify, BytesLike, hexlify } from "@ethersproject/bytes";
-import { toUtf8Bytes, toUtf8String } from "@ethersproject/strings";
-import { RedstoneLogger } from "@redstone-finance/utils";
+import { RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
 import _ from "lodash";
 import { version } from "../../package.json";
 import type { DataPackagesResponseCache } from "../DataPackagesResponseCache";
@@ -17,6 +15,8 @@ import {
 import { convertDataPackagesResponse } from "../request-redstone-payload";
 
 export const DEFAULT_COMPONENT_NAME = "data-packages-wrapper";
+
+const BYTES32_HEX_LENGTH = 32 * 2 + "0x".length;
 
 export type SplitPayloads<T> = {
   [p: string]: T;
@@ -73,22 +73,28 @@ export class ContractParamsProvider {
     return _.chunk(feedIds, batchSize).map((feedIds) => this.copyForFeedIds(feedIds));
   }
 
-  static hexlifyFeedId(feedId: string, allowMissingPrefix?: boolean, padRightSize?: number) {
-    const hex = hexlify(toUtf8Bytes(feedId), { allowMissingPrefix });
-
-    return padRightSize ? hex.padEnd(padRightSize * 2 + (hex.startsWith("0x") ? 2 : 0), "0") : hex;
+  static hexlifyFeedId(feedId: string) {
+    return RedstoneCommon.hexlify(RedstoneCommon.toUtf8Bytes(feedId));
   }
 
-  static hexlifyFeedIds(feedIds: string[], allowMissingPrefix?: boolean, padRightSize?: number) {
-    return feedIds.map((feedId) => this.hexlifyFeedId(feedId, allowMissingPrefix, padRightSize));
+  static hexlifyFeedIdAsBytes32(feedId: string) {
+    return this.hexlifyFeedId(feedId).padEnd(BYTES32_HEX_LENGTH, "0");
   }
 
-  static unhexlifyFeedId(hexlifiedFeedId: BytesLike) {
-    return toUtf8String(hexlifiedFeedId).replace(/\0+$/, "");
+  static hexlifyFeedIds(feedIds: string[]) {
+    return feedIds.map((feedId) => this.hexlifyFeedId(feedId));
+  }
+
+  static hexlifyFeedIdsAsBytes32(feedIds: string[]) {
+    return feedIds.map((feedId) => this.hexlifyFeedIdAsBytes32(feedId));
+  }
+
+  static unhexlifyFeedId(hexlifiedFeedId: RedstoneCommon.BytesLike) {
+    return RedstoneCommon.parseBytes32String(hexlifiedFeedId);
   }
 
   static arrayifyFeedId(feedId: string) {
-    return Array.from(arrayify(feedId));
+    return Array.from(RedstoneCommon.arrayify(feedId));
   }
 
   async getPayloadHex(
@@ -99,15 +105,17 @@ export class ContractParamsProvider {
   }
 
   async getPayloadData(unsignedMetadataArgs?: UnsignedMetadataArgs): Promise<number[]> {
-    return Array.from(arrayify(await this.getPayloadHex(true, unsignedMetadataArgs)));
+    return Array.from(
+      RedstoneCommon.arrayify(await this.getPayloadHex(true, unsignedMetadataArgs))
+    );
   }
 
-  getHexlifiedFeedIds(allowMissingPrefix?: boolean, padRightSize?: number): string[] {
-    return ContractParamsProvider.hexlifyFeedIds(
-      this.getDataFeedIds(),
-      allowMissingPrefix,
-      padRightSize
-    );
+  getHexlifiedFeedIds(): string[] {
+    return ContractParamsProvider.hexlifyFeedIds(this.getDataFeedIds());
+  }
+
+  getHexlifiedFeedIdsAsBytes32(): string[] {
+    return ContractParamsProvider.hexlifyFeedIdsAsBytes32(this.getDataFeedIds());
   }
 
   getArrayifiedFeedIds(): Array<number>[] {

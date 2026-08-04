@@ -4,7 +4,7 @@ import {
   mockSignedDataPackagesResponse,
 } from "./mocks/mock-packages";
 // Do not remove this empty line to have the mocks working
-import { arrayify } from "@ethersproject/bytes";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   ContractParamsProvider,
   DataPackagesRequestParams,
@@ -43,11 +43,15 @@ describe("ContractParamsProvider tests", () => {
 
   it("should convert hex payload to array of numbers", async () => {
     const payloadData = await sut.getPayloadData();
-    expect(payloadData).toEqual(Array.from(arrayify("0x" + mockPayload)));
+    expect(payloadData).toEqual(Array.from(RedstoneCommon.arrayify(mockPayload)));
   });
 
   it("should return hexlified feed IDs", () => {
     expect(sut.getHexlifiedFeedIds()).toEqual(["0x455448", "0x425443"]);
+    expect(sut.getHexlifiedFeedIdsAsBytes32()).toEqual([
+      `0x455448${"00".repeat(29)}`,
+      `0x425443${"00".repeat(29)}`,
+    ]);
   });
 
   it("should return data feed IDs", () => {
