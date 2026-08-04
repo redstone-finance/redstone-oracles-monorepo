@@ -1,10 +1,10 @@
-import { hexZeroPad } from "@ethersproject/bytes";
 import { DataPackage, NumericDataPoint } from "@redstone-finance/protocol";
+import type { DataPackagesResponse } from "../src";
 import { getDataPackagesTimestamp } from "../src";
-import type { DataPackagesResponse } from "../src/request-data-packages-common";
 
-const PK_1 = hexZeroPad("0x01", 32);
-const PK_2 = hexZeroPad("0x02", 32);
+const PRIVATE_KEY_BYTES = 32;
+const PK_1 = privateKeyFromByte(1);
+const PK_2 = privateKeyFromByte(2);
 
 const TIMESTAMP_BTC_ETH = 1729243240000;
 
@@ -117,3 +117,7 @@ describe("getDataPackagesTimestamp tests", () => {
     expect(timestamp).toBe(TIMESTAMP_BTC_ETH);
   });
 });
+
+function privateKeyFromByte(byte: number) {
+  return `0x${byte.toString(16).padStart(PRIVATE_KEY_BYTES * 2, "0")}`;
+}

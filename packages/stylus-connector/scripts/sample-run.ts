@@ -25,7 +25,7 @@ async function main() {
   const provider = new providers.JsonRpcProvider(rpcUrl);
 
   const paramsProvider = new ContractParamsProvider(requestParams);
-  const feeds = paramsProvider.getHexlifiedFeedIds(true, 32);
+  const feeds = paramsProvider.getHexlifiedFeedIdsAsBytes32();
   const payload = await paramsProvider.getPayloadHex();
   const wallet = new Wallet(privateKey, provider);
 
