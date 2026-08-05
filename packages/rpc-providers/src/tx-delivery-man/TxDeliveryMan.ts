@@ -207,5 +207,6 @@ const getTxReceiptDesc = (receipt: TransactionReceipt) => {
     receipt.status
   }) in block #${receipt.blockNumber}[tx index: ${
     receipt.transactionIndex
-  }]. gas_used=${receipt.gasUsed.toString()} effective_gas_price=${receipt.effectiveGasPrice.toString()} confirmations=${receipt.confirmations}`;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- effectiveGasPrice can be undefined on kava chain
+  }]. gas_used=${receipt.gasUsed.toString()} effective_gas_price=${receipt.effectiveGasPrice?.toString()} confirmations=${receipt.confirmations}`;
 };

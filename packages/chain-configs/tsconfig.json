@@ -1,7 +1,4 @@
 {
   "extends": "@redstone-finance/typescript-config/tsconfig-common.json",
-  "include": ["**/*", ".jest/*", "src/**/*.json", "manifest/*.json"],
-  "compilerOptions": {
-    "types": ["node", "mocha"]
-  }
+  "include": ["**/*", ".jest/*", "src/**/*.json", "manifest/*.json"]
 }

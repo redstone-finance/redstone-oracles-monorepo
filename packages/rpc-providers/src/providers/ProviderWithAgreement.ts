@@ -211,7 +211,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
       // pass the staleness check for MAX_BLOCK_STALENESS mins, even if the network is down
       this.lastBlockNumberForProvider[identifier] = {
         blockNumber,
-        changedAt: await this.getBlockTimestampMs(provider, blockNumber),
+        changedAt: await this.getBlockTimestampMs(provider, blockNumber).catch((_) => Date.now()),
       };
 
       return;
@@ -235,14 +235,19 @@ export class ProviderWithAgreement extends ProviderWithFallback {
         this.agreementConfig.getBlockNumberTimeoutMS
       );
 
-      return RedstoneCommon.secsToMs(block.timestamp);
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- getBlock can return null if the block is not found
+      if (block) {
+        return RedstoneCommon.secsToMs(block.timestamp);
+      } else {
+        this.logger.warn(`Block not found for block number ${blockNumber}`);
+      }
     } catch (e) {
       this.logger.warn(
-        `Failed to fetch block timestamp for staleness anchor, falling back to now: ${sanitizeLogMessage(String(e))}`
+        `Failed to fetch block timestamp for staleness anchor: ${sanitizeLogMessage(String(e))}`
       );
-
-      return Date.now();
     }
+
+    throw new Error(`Failed to fetch block`);
   }
 
   override async call(

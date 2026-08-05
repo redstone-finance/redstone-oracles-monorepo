@@ -1,6 +1,7 @@
 import * as providers from "@ethersproject/providers";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import chai from "chai";
+import { describe, it } from "mocha";
 import { ChainConfig, getLocalChainConfigs } from "../src";
 import { skipIfDisabledOrNotSupported } from "./rpc-urls/common";
 
