@@ -1,3 +1,3 @@
-export * from "./abi-hash";
+export * from "./abi";
 export * from "./read";
 export * from "./writable";

@@ -2,11 +2,24 @@ import { BlockTag } from "@ethersproject/abstract-provider";
 import * as providers from "@ethersproject/providers";
 import { TelemetryPoint } from "@redstone-finance/internal-utils";
 import { HARDHAT_CHAIN_ID, MathUtils, NetworkId } from "@redstone-finance/utils";
+import type { Provider as ProviderV6 } from "ethers-v6";
 import { RedstoneEthers5Provider } from "./providers/RedstoneProvider";
 
 export type ReportMetricFn = (message: TelemetryPoint) => void;
 export type ContractCallOverrides = { blockTag: BlockTag };
 export type EvmProvider = providers.Provider;
+
+export function callAtBlock(
+  provider: EvmProvider | ProviderV6,
+  tx: { to: string; data: string },
+  blockTag?: BlockTag
+) {
+  return isV6Provider(provider) ? provider.call({ ...tx, blockTag }) : provider.call(tx, blockTag);
+}
+
+export function isV6Provider(provider: EvmProvider | ProviderV6): provider is ProviderV6 {
+  return "broadcastTransaction" in provider;
+}
 
 /** Assumes that if blockTag is string the it is hex string */
 export const convertBlockTagToNumber = (blockTag: BlockTag): number =>

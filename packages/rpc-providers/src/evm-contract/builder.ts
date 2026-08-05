@@ -7,6 +7,7 @@ import {
   type InterfaceAbi,
   type Provider as ProviderV6,
 } from "ethers-v6";
+import { isV6Provider } from "../common";
 import { toV5BigNumber, toV6Arg } from "./conversions";
 
 export type CallStaticApi = { callStatic: object };
@@ -118,8 +119,4 @@ function v6WritablePopulateTransaction(contract: ContractV6, signer: Signer) {
           }),
     }
   );
-}
-
-function isV6Provider(provider: Provider | ProviderV6): provider is ProviderV6 {
-  return "broadcastTransaction" in provider;
 }
