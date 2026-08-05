@@ -33,7 +33,7 @@
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
-    "axios": "^1.15.2"
+    "axios": "^1.19"
   },
   "devDependencies": {
     "@ethersproject/bignumber": "^5.7.0",

@@ -27,7 +27,7 @@
     "@redstone-finance/multichain-kit-legacy": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
-    "axios": "^1.15.2",
+    "axios": "^1.19",
     "casper-js-sdk": "^2.15.5",
     "zod": "^4.1.12"
   },
