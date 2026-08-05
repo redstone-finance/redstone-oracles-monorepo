@@ -48,7 +48,7 @@
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/multichain-kit-legacy": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
-    "axios": "^1.15.2",
+    "axios": "^1.19",
     "lodash": "^4.17.23"
   },
   "devDependencies": {
