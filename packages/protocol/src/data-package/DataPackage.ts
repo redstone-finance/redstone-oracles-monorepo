@@ -1,8 +1,6 @@
 import type { Signature } from "@ethersproject/bytes";
-import { arrayify, concat, hexlify, joinSignature, splitSignature } from "@ethersproject/bytes";
+import { arrayify, concat, hexlify } from "@ethersproject/bytes";
 import { keccak256 } from "@ethersproject/keccak256";
-import { SigningKey } from "@ethersproject/signing-key";
-import { computeAddress } from "@ethersproject/transactions";
 import { decodeBase64, encodeBase64 } from "../common/base64";
 import {
   DATA_POINT_VALUE_BYTE_SIZE_BS,
@@ -92,15 +90,9 @@ export class DataPackage extends Serializable {
   }
 
   sign(privateKey: string): SignedDataPackage {
-    // Prepare hash for signing
     const signableHashBytes = this.getSignableHash();
 
-    // Generating a signature
-    const signingKey = new SigningKey(privateKey);
-    const fullSignature = signingKey.signDigest(signableHashBytes);
-
-    // Return a signed data package
-    return new SignedDataPackage(this, fullSignature);
+    return new SignedDataPackage(this, UniversalSigner.signDigest(signableHashBytes, privateKey));
   }
 
   protected serializeDataPoints(): Uint8Array {
@@ -155,7 +147,7 @@ export class SignedDataPackage extends Serializable implements SignedDataPackage
   ) {
     super();
     if (typeof signature === "string") {
-      this.signature = splitSignature(signature);
+      this.signature = UniversalSigner.splitSignature(signature);
     } else {
       this.signature = signature;
     }
@@ -166,7 +158,7 @@ export class SignedDataPackage extends Serializable implements SignedDataPackage
   }
 
   serializeSignatureToHex(): string {
-    return joinSignature(this.signature);
+    return UniversalSigner.joinSignature(this.signature);
   }
 
   recoverSignerPublicKey(): Uint8Array {
@@ -255,7 +247,7 @@ export function deserializeSignedPackage(
     throw new Error("Signature can not be empty");
   }
   const signatureBytes: Uint8Array = decodeBase64(signatureBase64);
-  const parsedSignature = splitSignature(signatureBytes);
+  const parsedSignature = UniversalSigner.splitSignature(signatureBytes);
 
   const { signature: _, ...unsignedDataPackagePlainObj } = plainObject;
   const unsignedDataPackage = DataPackage.fromObj(unsignedDataPackagePlainObj);
@@ -268,9 +260,7 @@ export function recoverSignerPublicKey(object: SignedDataPackageLike): Uint8Arra
 }
 
 export function recoverSignerAddress(object: SignedDataPackageLike): string {
-  const signerPublicKeyBytes = recoverSignerPublicKey(object);
-
-  return computeAddress(signerPublicKeyBytes);
+  return UniversalSigner.recoverAddress(object.dataPackage.getSignableHash(), object.signature);
 }
 
 export function recoverDeserializedSignerAddress(plainObj: SignedDataPackagePlainObj): string {
