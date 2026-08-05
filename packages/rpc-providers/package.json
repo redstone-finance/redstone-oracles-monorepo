@@ -36,7 +36,7 @@
     "@redstone-finance/http-client": "workspace:*",
     "@redstone-finance/internal-utils": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
-    "axios": "^1.15.2",
+    "axios": "^1.19",
     "ethers-v6": "npm:ethers@6.13.5",
     "lodash": "^4.17.23",
     "zod": "^4.1.12"

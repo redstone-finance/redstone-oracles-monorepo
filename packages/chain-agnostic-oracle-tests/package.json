@@ -20,7 +20,7 @@
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "@types/lodash": "^4.14.195",
-    "axios": "^1.15.2",
+    "axios": "^1.19",
     "consola": "^3.4.2",
     "decimal.js": "^10.4.3",
     "lodash": "^4.17.23"

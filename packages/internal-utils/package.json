@@ -34,7 +34,7 @@
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "@types/lodash": "^4.14.195",
-    "axios": "^1.15.2",
+    "axios": "^1.19",
     "dayjs": "^1.11.12",
     "jsonc-parser": "^3.3.1",
     "lodash": "^4.17.23",
