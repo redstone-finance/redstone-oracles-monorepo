@@ -1,6 +1,7 @@
 import { Signer } from "@ethersproject/abstract-signer";
 import {
   arrayify,
+  BytesLike,
   hexlify,
   isBytesLike,
   joinSignature,
@@ -29,17 +30,34 @@ export class UniversalSigner {
 
   static signStringifiableData(data: unknown, privateKey: string): string {
     const digest = UniversalSigner.getDigestForData(data);
-    const signingKey = new SigningKey(privateKey);
-    const fullSignature = signingKey.signDigest(digest);
 
-    return joinSignature(fullSignature);
+    return joinSignature(UniversalSigner.signDigest(digest, privateKey));
+  }
+
+  static signDigest(digest: BytesLike, privateKey: string) {
+    return new SigningKey(privateKey).signDigest(digest);
+  }
+
+  static joinSignature(signature: SignatureLike) {
+    return joinSignature(signature);
+  }
+
+  static splitSignature(signature: SignatureLike) {
+    return splitSignature(signature);
+  }
+
+  static addressFromPrivateKey(privateKey: string) {
+    return computeAddress(new SigningKey(privateKey).publicKey);
   }
 
   static recoverSigner(data: unknown, signature: SignatureLike) {
     const digest = arrayify(UniversalSigner.getDigestForData(data));
-    const publicKey = UniversalSigner.recoverPublicKey(digest, signature);
 
-    return computeAddress(publicKey);
+    return UniversalSigner.recoverAddress(digest, signature);
+  }
+
+  static recoverAddress(digest: Uint8Array, signature: SignatureLike) {
+    return computeAddress(UniversalSigner.recoverPublicKey(digest, signature));
   }
 
   static recoverPublicKey(digest: Uint8Array, signature: SignatureLike) {
