@@ -228,6 +228,13 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "thUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0x1f14a50bA904A28CF6088e71B6a15561074398d7",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
