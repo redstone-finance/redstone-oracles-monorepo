@@ -71,6 +71,9 @@ export const convertNumberToString = (value: NumberLike, decimals: number): stri
   });
 };
 
+export const convertNumberToFixed = (value: number, decimals: number): number =>
+  Number(value.toFixed(decimals));
+
 export const convertIntegerNumberToBytes = (value: NumberLike, byteSize: number): Uint8Array => {
   assert(Number.isInteger(Number(value)), "convertIntegerNumberToBytes expects integer as input");
   const decimals = 0; // 0 digits after comma

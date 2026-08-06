@@ -7,6 +7,7 @@ import {
   ConvertibleToBytes32,
   assert,
   convertNumberToBytes,
+  convertNumberToFixed,
   useDefaultIfUndefined,
 } from "../common/utils";
 import { DataPoint, Metadata } from "./DataPoint";
@@ -45,6 +46,10 @@ export class NumericDataPoint extends DataPoint {
   override toObj(): INumericDataPoint {
     return {
       ...this.numericDataPointArgs,
+      value: convertNumberToFixed(
+        this.numericDataPointArgs.value,
+        getNumericDataPointDecimals(this.numericDataPointArgs)
+      ),
     };
   }
 }
