@@ -14,7 +14,7 @@ export const btcDataFeed = formatBytes32String("BTC");
 const MULTI_POINT_DATA_PACKAGE_ID = "__MULTI__";
 const BASE_CACHE_PARAMS = {
   authorizedSigners: ["0x01"],
-  dataServiceId: "redstone-main-demo",
+  dataServiceId: "redstone-primary-demo",
   uniqueSignersCount: 1,
 };
 const DEFAULT_DATA_POINTS = [

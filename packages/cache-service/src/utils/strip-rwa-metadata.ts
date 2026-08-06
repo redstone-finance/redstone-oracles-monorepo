@@ -34,12 +34,6 @@ const MANIFEST_URLS: Record<string, Record<string, string[][]>> = {
         "https://d13fu63cj82rby.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary-ws.json",
       ],
     ],
-    "redstone-main-demo": [
-      [
-        "https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/main.json",
-        "https://d13fu63cj82rby.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/main.json",
-      ],
-    ],
     "redstone-hip3-demo": [
       [
         "https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/hip3-testnet.json",
@@ -59,7 +53,6 @@ const DATA_SERVICE_NODE_CLASS: Partial<Record<string, NodeClass>> = {
   "redstone-primary-demo": "primary",
   "redstone-arbitrum-demo": "primary",
   "redstone-avalanche-demo": "primary",
-  "redstone-main-demo": "primary",
   "redstone-hip3-demo": "hip3-node",
 };
 

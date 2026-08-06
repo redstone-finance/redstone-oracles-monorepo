@@ -20,7 +20,7 @@ export const BTC_PRICE = 23077.68;
 export const MULTI_POINT_DATA_PACKAGE_ID = "__MULTI__";
 export const BASE_CACHE_PARAMS = {
   authorizedSigners: ["0x01"],
-  dataServiceId: "redstone-main-demo",
+  dataServiceId: "redstone-primary-demo",
   uniqueSignersCount: 1,
 };
 
@@ -34,7 +34,7 @@ export const mockConfig = (overrideMockConfig: Partial<RelayerConfig> = {}) => {
     networkId: HARDHAT_CHAIN_ID,
     privateKey: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", // well-known private key for the first hardhat account
     adapterContractAddress: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-    dataServiceId: "redstone-main-demo",
+    dataServiceId: "redstone-primary-demo",
     dataFeeds: ["ETH", "BTC"],
     gasLimit: 1000000,
     rewardsPerBlockAggregationAlgorithm: Tx.RewardsPerBlockAggregationAlgorithm.Max,

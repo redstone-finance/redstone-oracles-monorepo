@@ -37,10 +37,7 @@ export const FILENAME_TO_NODE_TYPE: Record<string, NodeType> = {
   "primary-ws.json": "ws",
   "primary-fast.json": "fast",
   "megaeth-fast-multi-feed.json": "normal",
-  "main.json": "normal",
   "primary.json": "normal",
-  "arbitrum.json": "normal",
-  "avalanche.json": "normal",
   "hip3-testnet.json": "normal",
   "hip3-mainnet.json": "normal",
 };
