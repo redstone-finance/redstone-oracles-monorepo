@@ -153,6 +153,13 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "BRSRV_SOLANA_FUNDAMENTAL": {
+      "priceFeedAddress": "EENfiLjWUHmsFCerxTbLgSEofvbyj4WhSV42wSiHB9Jr",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }

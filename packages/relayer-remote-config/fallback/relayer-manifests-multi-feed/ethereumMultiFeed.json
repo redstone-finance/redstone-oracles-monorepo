@@ -524,6 +524,20 @@
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "BRSRV_ETHEREUM_FUNDAMENTAL": {
+      "priceFeedAddress": "0xC90Ddc83Be297b8C66aE7C3F92BA84cea9107eAA",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "thUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0x2d1910dCe2F154469Fd44e3FAe086C65D8b2BCc4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
