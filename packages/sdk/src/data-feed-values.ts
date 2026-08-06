@@ -5,14 +5,14 @@ import { requestDataPackages } from "./request-data-packages";
 
 export interface GetDataFeedValuesInput {
   aggregationAlgorithm?: "median" | "min" | "max"; // median by default
-  dataServiceId?: string; // "redstone-main-demo" by default
+  dataServiceId?: string; // "redstone-primary-demo" by default
   gatewayUrls?: string[]; // if not specified, use default for dataServiceId
   authenticatedGateways?: { url?: string; apiKey: string }[];
 }
 
 export type GetDataFeedValuesOutput = Record<string, number | undefined>;
 
-const DEFAULT_DATA_SERVICE_ID = "redstone-main-demo";
+const DEFAULT_DATA_SERVICE_ID = "redstone-primary-demo";
 const DEFAULT_AGGREGATION_ALGORITHM = "median";
 
 export const getDataFeedValues = async (

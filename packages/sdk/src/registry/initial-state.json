@@ -1,16 +1,5 @@
 {
   "nodes": {
-    "I-5rWUehEv-MjdK9gFw09RxfSLQX9DIHxG614Wf8qo0": {
-      "url": "https://redstone.finance",
-      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
-      "name": "redstone",
-      "ipAddress": "0.0.0.0",
-      "dataServiceId": "redstone-main-demo",
-      "evmAddress": "0x0C39486f770B26F5527BBBf942726537986Cd7eb",
-      "description": "Main RedStone Provider with all available tokens.",
-      "ecdsaPublicKey": "0x04009dd87eb41d96ce8ad94aa22ea8b0ba4ac20c45e42f71726d6b180f93c3f298e333ae7591fe1c9d88234575639be9e81e35ba2fe5ad2c2260f07db49ccb9d0d",
-      "dateAdded": "2024-01-01"
-    },
     "HebMpM4xI07ev3jbEWamFNmRxu2ojflQfh0b2lpjFoM": {
       "name": "redstone-primary-demo-node-1",
       "description": "Data feeds from primary redstone nodes - demo node 1",
@@ -554,13 +543,6 @@
   "evolve": null,
   "canEvolve": true,
   "dataServices": {
-    "redstone-main-demo": {
-      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
-      "name": "RedStone Main Demo",
-      "admin": "I-5rWUehEv-MjdK9gFw09RxfSLQX9DIHxG614Wf8qo0",
-      "description": "Main RedStone Provider with all available tokens.",
-      "manifestTxId": "kXYM3AezlROPoEDCt_802-k9ZxeceAWzHtrERmR2zEg"
-    },
     "redstone-primary-demo": {
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
       "name": "RedStone Primary Demo",
