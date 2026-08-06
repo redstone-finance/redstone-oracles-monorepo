@@ -858,9 +858,6 @@ describe("request-data-packages", () => {
       expect(resolveAuthenticatedGatewayUrls("redstone-primary-demo")).toEqual(
         DEV_AUTHENTICATED_GATEWAY_URLS
       );
-      expect(resolveAuthenticatedGatewayUrls("redstone-main-demo")).toEqual(
-        DEV_AUTHENTICATED_GATEWAY_URLS
-      );
     });
 
     it("should fall back to PROD URLs for unknown data service", () => {

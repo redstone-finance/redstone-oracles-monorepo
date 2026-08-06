@@ -22,10 +22,12 @@ network by end users. The information integrity is verified on-chain through sig
 Here also you can find the description of
 the [whole RedStone model](https://docs.redstone.finance/docs/introduction).
 
-- [👨‍💻 Code structure](#-code-structure)
-- [🔥 Connecting to the contract](#-connecting-to-the-contract)
-- [⚡ The TON Grants Program](#-the-ton-grants-program)
-- [📄 License](#-license)
+- [� @redstone-finance/ton-connector](#-redstone-financeton-connector)
+  - [👨‍💻 Code structure](#-code-structure)
+  - [🔥 Connecting to the contract](#-connecting-to-the-contract)
+    - [Installing the dependencies](#installing-the-dependencies)
+  - [⚡ The TON Grants Program](#-the-ton-grants-program)
+  - [📄 License](#-license)
 
 ## 👨‍💻 Code structure
 
@@ -62,9 +64,7 @@ import { TonPricesContractConnector } from "@redstone-finance/ton-connector";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 
 // Javascript
-const {
-  TonPricesContractConnector,
-} = require("@redstone-finance/ton-connector");
+const { TonPricesContractConnector } = require("@redstone-finance/ton-connector");
 const { ContractParamsProvider, getSignersForDataServiceId } = require("@redstone-finance/sdk");
 ```
 
@@ -75,10 +75,10 @@ selected [RedStone data service](https://app.redstone.finance) and requested dat
 const prices = new TonPricesContractConnector(network, yourContractAddress);
 
 const paramsProvider = new ContractParamsProvider({
-  dataServiceId: "redstone-main-demo",
+  dataServiceId: "redstone-primary-demo",
   uniqueSignersCount: 1,
   dataPackagesIds: ["ETH", "BTC"],
-  authorizedSigners: getSignersForDataServiceId("redstone-main-demo"),
+  authorizedSigners: getSignersForDataServiceId("redstone-primary-demo"),
 });
 ```
 

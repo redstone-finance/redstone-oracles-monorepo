@@ -219,7 +219,7 @@ describe("isConforming tests", () => {
     dataPackagesIds: ["ETH"],
     uniqueSignersCount: 1,
     ignoreMissingFeed: true,
-    authorizedSigners: getSignersForDataServiceId("redstone-main-demo"),
+    authorizedSigners: getSignersForDataServiceId("redstone-primary-demo"),
   };
 
   it("should return true if ignoreMissingFeed is true", () => {
@@ -310,7 +310,7 @@ describe("isConforming tests", () => {
   });
 
   it("should conform when authorizedSigners are in different order", () => {
-    const signers = getSignersForDataServiceId("redstone-main-demo");
+    const signers = getSignersForDataServiceId("redstone-primary-demo");
     expect(
       isConforming(
         { ...thisRequestParams, authorizedSigners: signers },
