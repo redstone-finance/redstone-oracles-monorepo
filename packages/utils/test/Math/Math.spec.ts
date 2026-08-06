@@ -126,6 +126,40 @@ describe("getMedian", () => {
     expect(getMedian([0, -3].map(createSafeNumber)).toString()).toEqual("-1.5");
     expect(getMedian([-7, -5, -4, -8].map(createSafeNumber)).toString()).toEqual("-6");
   });
+
+  it("should not lose values smaller than the last supported decimal place", () => {
+    const smallest = "0.00000000000001";
+    expect(getMedian([smallest, smallest].map(createSafeNumber)).toString()).toEqual("1e-14");
+    expect(getMedian([smallest, "0.00000000000003"].map(createSafeNumber)).toString()).toEqual(
+      "2e-14"
+    );
+    expect(getMedian([2450.12, 2450.18].map(createSafeNumber)).toString()).toEqual("2450.15");
+  });
+
+  it("should not overflow for values close to the maximal supported one", () => {
+    const nearMax = 9007199254740990;
+    expect(getMedian([nearMax, nearMax].map(createSafeNumber)).toString()).toEqual(
+      nearMax.toString()
+    );
+    expect(getMedian([-nearMax, nearMax].map(createSafeNumber)).toString()).toEqual("0");
+    expect(getMedian([-nearMax, nearMax - 1].map(createSafeNumber)).toString()).toEqual("-0.5");
+  });
+
+  it("should stay within one last supported place for values of opposite signs", () => {
+    const lastSupportedPlace = 1e-14;
+    const median = getMedian([-2450.18, 2450.12].map(createSafeNumber)).unsafeToNumber();
+    expect(Math.abs(median - -0.03)).toBeLessThanOrEqual(2 * lastSupportedPlace);
+
+    expect(
+      getMedian(["-0.00000000000001", "0.00000000000003"].map(createSafeNumber)).toString()
+    ).toEqual("1e-14");
+  });
+
+  it("should not reorder the given array", () => {
+    const prices = [42, 7, 100].map(createSafeNumber);
+    getMedian(prices);
+    expect(prices.map((price) => price.toString())).toEqual(["42", "7", "100"]);
+  });
 });
 
 describe("getWeightedMedian", () => {

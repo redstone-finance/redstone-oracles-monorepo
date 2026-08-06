@@ -37,12 +37,15 @@ export function getMedian(numbers: ISafeNumber[]): ISafeNumber {
     return numbers[0];
   }
 
-  numbers = numbers.length === 2 ? numbers : numbers.sort((a, b) => (a.lt(b) ? -1 : 1));
+  numbers =
+    numbers.length === 2 ? numbers : [...numbers].sort((a, b) => (a.lt(b) ? -1 : a.eq(b) ? 0 : 1));
 
   const middle = Math.floor(numbers.length / 2);
 
   if (numbers.length % 2 === 0) {
-    return numbers[middle].div(2).add(numbers[middle - 1].div(2));
+    const [left, right] = [numbers[middle - 1], numbers[middle]];
+
+    return left.lt(0) === right.lt(0) ? left.add(right.sub(left).div(2)) : left.add(right).div(2);
   } else {
     return numbers[middle];
   }
