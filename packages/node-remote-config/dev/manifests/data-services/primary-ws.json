@@ -989,6 +989,22 @@
         "rwa"
       ]
     },
+    "WTI.Y---PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "WTI.Y---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XAG_CURRENT": {
       "source": [],
       "broadcasters": [],
@@ -1463,6 +1479,22 @@
         "rwa"
       ]
     },
+    "USA100.Y---PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USA100.Y---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "USA500_CURRENT": {
       "source": [],
       "broadcasters": [],
@@ -1521,6 +1553,22 @@
       "redstoneXAggregatorConfig": {
         "priceValidationSources": []
       },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USA500.Y---PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USA500.Y---24_7": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
