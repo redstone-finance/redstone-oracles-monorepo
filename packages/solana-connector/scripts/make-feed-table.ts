@@ -60,4 +60,5 @@ void makeFeedTable([
   "JupUSD",
   "STAC_FUNDAMENTAL",
   "SECZ_EOD",
+  "BRSRV_SOLANA_FUNDAMENTAL",
 ]);
