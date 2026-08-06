@@ -43,10 +43,7 @@ export class RedStoneTxStatsInfluxService extends InfluxService {
       |> limit(n: ${limit})
       |> yield(name: "result")
       `;
-    const responseRows = (await this.query(query)) as {
-      gasCost: number;
-      _time: string;
-    }[];
+    const responseRows = await this.query<{ gasCost: number; _time: string }>(query);
 
     if (!responseRows.length) {
       return { mean: 0, stdDev: 0, median: 0, count: 0 };

@@ -22,10 +22,11 @@ export async function sendErrorLog(
   functionName: string,
   errorLog: string,
   severity?: ErrorSeverity,
+  uniqueId?: string,
   region?: string
 ) {
   try {
-    await invokeLambda(functionName, { message: errorLog, severity }, region);
+    await invokeLambda(functionName, { message: errorLog, severity, uniqueId }, region);
   } catch (e) {
     throw new Error(`Error sending error log: ${RedstoneCommon.stringifyError(e)}`, { cause: e });
   }

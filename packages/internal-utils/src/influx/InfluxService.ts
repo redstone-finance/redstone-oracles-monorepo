@@ -38,12 +38,12 @@ export class InfluxService {
     });
   }
 
-  public async query(queryParams: string, beforeQueryStatements = "") {
+  public async query<T = unknown>(queryParams: string, beforeQueryStatements = "") {
     const query = `${beforeQueryStatements}\n
       from(bucket: "${this.authParams.bucketName}") ${queryParams}`;
 
     return await RedstoneCommon.retry({
-      fn: async () => await this.getQueryApi().collectRows(query),
+      fn: async () => await this.getQueryApi().collectRows<T>(query),
       ...RETRY_CONFIG,
     })();
   }
