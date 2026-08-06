@@ -24,10 +24,12 @@ network by end users. The information integrity is verified on-chain through sig
 Here also you can find the description of
 the [whole RedStone model](https://docs.redstone.finance/docs/introduction).
 
-- [👨‍💻 Code structure](#-code-structure)
-- [🔥 Connecting to the contract](#-connecting-to-the-contract)
-- [⚡ The Fuel Grants Program](#-the-fuel-grants-program)
-- [📄 License](#-license)
+- [� @redstone-finance/fuel-connector](#-redstone-financefuel-connector)
+  - [👨‍💻 Code structure](#-code-structure)
+  - [🔥 Connecting to the contract](#-connecting-to-the-contract)
+    - [Installing the dependencies](#installing-the-dependencies)
+  - [⚡ The Fuel Grants Program](#-the-fuel-grants-program)
+  - [📄 License](#-license)
 
 ## 👨‍💻 Code structure
 
@@ -57,9 +59,7 @@ import { FuelPricesContractConnector } from "@redstone-finance/fuel-connector";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 
 // Javascript
-const {
-  FuelPricesContractConnector,
-} = require("@redstone-finance/fuel-connector");
+const { FuelPricesContractConnector } = require("@redstone-finance/fuel-connector");
 const { ContractParamsProvider, getSignersForDataServiceId } = require("@redstone-finance/sdk");
 ```
 
@@ -67,16 +67,13 @@ Then you can invoke the contract methods described above pointing to the
 selected [RedStone data service](https://app.redstone.finance) and requested data feeds.
 
 ```ts
-const prices = new FuelPricesContractConnector(
-  yourWalletOrProvider,
-  yourContractAddress
-);
+const prices = new FuelPricesContractConnector(yourWalletOrProvider, yourContractAddress);
 
 const paramsProvider = new ContractParamsProvider({
-  dataServiceId: "redstone-main-demo",
+  dataServiceId: "redstone-primary-demo",
   uniqueSignersCount: 1,
   dataPackagesIds: ["ETH", "BTC"],
-  authorizedSigners: getSignersForDataServiceId("redstone-main-demo"),
+  authorizedSigners: getSignersForDataServiceId("redstone-primary-demo"),
 });
 ```
 

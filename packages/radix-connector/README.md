@@ -24,16 +24,18 @@ network by end users. The information integrity is verified on-chain through sig
 Here also you can find the description of
 the [whole RedStone model](https://docs.redstone.finance/docs/introduction).
 
-- [👨‍💻 Code structure](#-code-structure)
-- [🔥 Connecting to the contract](#-connecting-to-the-contract)
-- [⚡ The Radix Grants Program](#-the-radix-grants-program)
-- [📄 License](#-license)
+- [🔗 @redstone-finance/radix-connector](#-redstone-financeradix-connector)
+  - [👨‍💻 Code structure](#-code-structure)
+  - [🔥 Connecting to the contract](#-connecting-to-the-contract)
+    - [Installing the dependencies](#installing-the-dependencies)
+  - [⚡ The Radix Grants Program](#-the-radix-grants-program)
+  - [📄 License](#-license)
 
 ## 👨‍💻 Code structure
 
 - [scrypto](scrypto) directory contains the radix-network on-chain libraries written in scrypto `1.3.0`.
   - There are also various tests of signature verification with the given signers, timestamp validation, value
-      aggregation as well as full data-processing tests with various configurations.
+    aggregation as well as full data-processing tests with various configurations.
   - You can find all the possibilities [here](scrypto/README.md).
   - You can read [here](scrypto/contracts/price_adapter/README.md) how the contract works.
 - [src](src) directory contains the TypeScript classes, useful for establishing a connection between TypeScript and
@@ -47,15 +49,15 @@ First, you need to import the connector code to your project
 
 ```ts
 // Typescript
-import {PriceAdapterRadixContractConnector, RadixClient} from "@redstone-finance/radix-connector";
-import {ContractParamsProvider, getSignersForDataServiceId} from "@redstone-finance/sdk";
+import { PriceAdapterRadixContractConnector, RadixClient } from "@redstone-finance/radix-connector";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 
 // Javascript
 const {
   PriceAdapterRadixContractConnector,
-  RadixClient
+  RadixClient,
 } = require("@redstone-finance/radix-connector");
-const {ContractParamsProvider, getSignersForDataServiceId} = require("@redstone-finance/sdk");
+const { ContractParamsProvider, getSignersForDataServiceId } = require("@redstone-finance/sdk");
 ```
 
 Then you can invoke the contract methods described above pointing to the
@@ -63,15 +65,15 @@ selected [RedStone data service](https://app.redstone.finance) and requested dat
 
 ```ts
 const client = new RadixClient(NetworkId.Stokenet, {
-  ed25519: yourWalletPrivateKey
+  ed25519: yourWalletPrivateKey,
 });
 const prices = new PriceAdapterRadixContractConnector(client, yourComponentId);
 
 const paramsProvider = new ContractParamsProvider({
-  dataServiceId: "redstone-main-demo",
+  dataServiceId: "redstone-primary-demo",
   uniqueSignersCount: 1,
   dataPackagesIds: ["ETH", "BTC"],
-  authorizedSigners: getSignersForDataServiceId("redstone-main-demo"),
+  authorizedSigners: getSignersForDataServiceId("redstone-primary-demo"),
 });
 ```
 

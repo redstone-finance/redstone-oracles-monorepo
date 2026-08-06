@@ -10,7 +10,6 @@ export const DEV_AUTHENTICATED_GATEWAY_URLS = ["https://oracle-gateway-api.b.red
 const AUTHENTICATED_GATEWAY_URLS_BY_DATA_SERVICE: Partial<Record<string, string[]>> = {
   "redstone-primary-prod": PROD_AUTHENTICATED_GATEWAY_URLS,
   "redstone-primary-demo": DEV_AUTHENTICATED_GATEWAY_URLS,
-  "redstone-main-demo": DEV_AUTHENTICATED_GATEWAY_URLS,
   "redstone-fast-demo": DEV_AUTHENTICATED_GATEWAY_URLS,
 };
 
@@ -54,7 +53,6 @@ const PROD_GWS = [allReadGateways.prod2_aws, allReadGateways.prod1_aws];
 const REDSTONE_DATA_SERVICES_URLS: Partial<Record<string, Gateway[]>> = {
   "redstone-primary-prod": PROD_GWS,
   "redstone-primary-demo": DEV_GWS,
-  "redstone-main-demo": DEV_GWS,
   "redstone-fast-demo": DEV_GWS,
   "mock-data-service": [allReadGateways.local],
   "mock-data-service-tests": [allReadGateways.unit_tests],

@@ -24,10 +24,12 @@ network by end users. The information integrity is verified on-chain through sig
 Here also you can find the description of
 the [whole RedStone Oracle model](https://docs.redstone.finance/docs/introduction).
 
-- [👨‍💻 Code structure](#-code-structure)
-- [🔥 Connecting to the contract](#-connecting-to-the-contract)
-- [⚡ The Casper Grant Program](#-the-casper-grant-program)
-- [📄 License](#-license)
+- [� @redstone-finance/casper-connector](#-redstone-financecasper-connector)
+  - [👨‍💻 Code structure](#-code-structure)
+  - [🔥 Connecting to the contract](#-connecting-to-the-contract)
+    - [Installing the dependencies](#installing-the-dependencies)
+  - [⚡ The Casper Grant Program](#-the-casper-grant-program)
+  - [📄 License](#-license)
 
 ## 👨‍💻 Code structure
 
@@ -84,10 +86,10 @@ yourWalletOrProvider,
 */
 
 const paramsProvider = new ContractParamsProvider({
-  dataServiceId: "redstone-main-demo",
+  dataServiceId: "redstone-primary-demo",
   uniqueSignersCount: 1,
   dataPackagesIds: ["ETH", "BTC"],
-  authorizedSigners: getSignersForDataServiceId("redstone-main-demo"),
+  authorizedSigners: getSignersForDataServiceId("redstone-primary-demo"),
 });
 ```
 
