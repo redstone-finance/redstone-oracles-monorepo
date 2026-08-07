@@ -5,6 +5,7 @@ import {
   type EvmProvider,
 } from "@redstone-finance/rpc-providers";
 import { isEvmNetworkId } from "@redstone-finance/utils";
+import { DEFAULT_PROVIDER_CONFIG } from "../provider/get-provider";
 import { EvmRelayerConfig } from "./partial-relayer-config";
 import { getRelayerMetricReporter } from "./rpc-metric-reporter";
 
@@ -51,6 +52,7 @@ export const getRelayerProvider = (relayerConfig: EvmRelayerConfig) => {
     network: { name: chainName, chainId: networkId },
     pollingInterval: ethersPollingIntervalInMs,
     blockNumberCacheOpts: { isCacheEnabled: false, ttl: 0 },
+    allowGzip: DEFAULT_PROVIDER_CONFIG.allowGzip,
   })
     .addDecorator(
       (factory) =>

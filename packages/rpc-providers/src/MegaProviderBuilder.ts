@@ -17,6 +17,7 @@ type MegaProviderOptions = {
   pollingInterval?: number;
   httpClient?: HttpClient;
   blockNumberCacheOpts?: { isCacheEnabled: boolean; ttl?: number };
+  allowGzip?: boolean;
 };
 
 type ProviderFactory = () => providers.Provider;
@@ -101,6 +102,7 @@ export class MegaProviderBuilder {
             user: url.username !== "" ? url.username : undefined,
             password: url.password !== "" ? url.password : undefined,
             url: rpcUrl,
+            allowGzip: this.options.allowGzip,
             timeout: this.options.timeout,
             throttleLimit: this.options.throttleLimit,
             throttleCallback: () => Promise.resolve(false), // blocks ethersJs retries on 429 responses - caused memory leak due to long retry-again in RPC (hypeRPC) api rate limit exceeded response

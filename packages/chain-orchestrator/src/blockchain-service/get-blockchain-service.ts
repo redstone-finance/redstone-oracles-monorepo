@@ -4,6 +4,7 @@ import { BlockchainService } from "@redstone-finance/multichain-kit";
 import { MegaProviderBuilder, type EvmProvider } from "@redstone-finance/rpc-providers";
 import { isNonEvmNetworkId } from "@redstone-finance/utils";
 import { MonitoringEnv } from "../monitoring-adapter/get-monitoring-contract-adapter";
+import { DEFAULT_PROVIDER_CONFIG } from "../provider/get-provider";
 import { getNonEvmBlockchainService } from "./get-non-evm-blockchain-service";
 
 const SINGLE_RPC_TIMEOUT_MILLISECONDS = 10_000;
@@ -26,6 +27,7 @@ export async function getBlockchainService(rpcUrls: string[], chainConfig: Chain
       chainId: chainConfig.networkId,
     },
     rpcUrls,
+    allowGzip: DEFAULT_PROVIDER_CONFIG.allowGzip,
   })
     .fallback(
       {

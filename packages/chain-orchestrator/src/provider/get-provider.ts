@@ -16,10 +16,12 @@ export const DEFAULT_PROVIDER_CONFIG: {
   allProvidersOperationTimeout: number;
   singleProviderOperationTimeout: number;
   useMulticall?: boolean;
+  allowGzip?: boolean;
 } = {
   allProvidersOperationTimeout: 30_000,
   singleProviderOperationTimeout: 5_000,
   useMulticall: RedstoneCommon.getFromEnv("USE_MULTICALL_PROVIDER", z.boolean().default(true)),
+  allowGzip: RedstoneCommon.getFromEnv("RPC_ENABLE_COMPRESSION", z.boolean().default(true)),
 };
 
 export const getProvider = async (
@@ -102,6 +104,7 @@ async function megaProviderBuilderFor(
       },
       throttleLimit: 1,
       timeout: config.singleProviderOperationTimeout,
+      allowGzip: config.allowGzip,
     }),
     chainConfig: getChainConfigByNetworkId(chainConfigs, networkId),
     chainConfigs,
