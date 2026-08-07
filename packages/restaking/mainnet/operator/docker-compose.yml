@@ -1,7 +1,7 @@
 services:
   operator-attester:
-    image: public.ecr.aws/y7v2w8b2/avs-othentic-client:45e26119
-    platform: linux/amd64
+    image: public.ecr.aws/z6z4q0a5/prod-avs-othentic-client:b52e8208
+    platform: linux/arm64
     command: [
         "node",
         "attester",
@@ -28,5 +28,5 @@ services:
     ports:
       - "3000:3000"
   operator-validation-api:
-    image: public.ecr.aws/y7v2w8b2/avs-validation-api:4fe497a6
-    platform: linux/amd64
+    image: public.ecr.aws/z6z4q0a5/prod-avs-validation-api:b52e8208
+    platform: linux/arm64
