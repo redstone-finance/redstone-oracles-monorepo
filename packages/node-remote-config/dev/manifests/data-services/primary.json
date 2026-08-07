@@ -5622,6 +5622,13 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "HYB_FUNDAMENTAL/USD": {
+      "source": [
+        "ethereum-evm-fetcher-centrifuge"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "XAUm_FUNDAMENTAL/USD": {
       "source": [
         "matrixdock"
