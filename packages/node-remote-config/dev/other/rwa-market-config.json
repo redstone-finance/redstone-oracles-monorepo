@@ -81,8 +81,6 @@
   "SK_HYNIX": "Krx",
   "HYUNDAI": "Krx",
   "KODEX200": "Krx",
-  "NIKKEI225": "CmeEquities",
-  "JP225": "CmeEquities",
   "KIOXIA": "Jpx",
   "FUJIKURA": "Jpx",
   "SOFTBANK": "Jpx",
@@ -164,6 +162,9 @@
   "USA100_D_RATE": "CmeEquities",
   "USA500_D_RATE": "CmeEquities",
   "ESU6": "CmeEquities",
+  "NIKKEI225": "CmeEquities",
+  "NIKKEI225.Y": "CmeEquities",
+  "JP225": "CmeEquities",
 
   "DNMR": "AlwaysOpen",
   "FTSE100": "AlwaysOpen",

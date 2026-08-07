@@ -553,6 +553,58 @@
         "rwa"
       ]
     },
+    "NIKKEI225_CURRENT": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NIKKEI225_CURRENT_SYMBOL": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NIKKEI225_FRONT": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NIKKEI225_FRONT_SYMBOL": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NIKKEI225.Y": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "URTH": {
       "source": [],
       "priceAggregator": "redstoneX",
