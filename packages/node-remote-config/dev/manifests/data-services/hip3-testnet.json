@@ -6545,37 +6545,17 @@
         "snoozed"
       ]
     },
-    "SPCX_PERP": {
+    "SPCX": {
       "source": [],
-      "priceAggregator": "geomean",
-      "geomeanAggregatorConfig": {
-        "medianClamps": 25
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "USD",
-      "rateFeed": false
-    },
-    "SPCX_SECONDARIES": {
-      "source": [
-        "hiive"
-      ],
-      "priceAggregator": "geomean",
-      "geomeanAggregatorConfig": {
-        "medianClamps": 25
-      },
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "SPCX_PRESTOCKS": {
-      "source": [
-        "jupiter",
-        "dex-screener"
-      ],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "jupiter"
-      },
-      "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "ORACLE_ani:CAT": {
       "source": [
@@ -6619,6 +6599,19 @@
         "ws-hydromancer-perps-ani": 1
       },
       "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
+    },
+    "MID_ani:CAT_EMA_HALF_3M": {
+      "source": [
+        "ema"
+      ],
       "broadcasters": [
         "influx"
       ],
@@ -6682,7 +6675,7 @@
     },
     "ani:CAT_MARK_0": {
       "source": [
-        "hip3-entropy-pre-ipo-testnet-fetcher"
+        "hip3-entropy-equity-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -6696,7 +6689,7 @@
     },
     "ani:CAT_MARK_1": {
       "source": [
-        "hip3-entropy-pre-ipo-testnet-fetcher"
+        "hip3-entropy-equity-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -6710,7 +6703,7 @@
     },
     "ani:CAT_EXT": {
       "source": [
-        "hip3-entropy-pre-ipo-testnet-fetcher"
+        "hip3-entropy-equity-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -6721,7 +6714,7 @@
     },
     "ani:CAT": {
       "source": [
-        "hip3-entropy-pre-ipo-testnet-fetcher"
+        "hip3-entropy-equity-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
