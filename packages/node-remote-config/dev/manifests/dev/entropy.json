@@ -12,6 +12,48 @@
   },
   "defaultBroadcasters": ["redstone-packages", "influx"],
   "tokens": {
+    "USDT": {
+      "source": ["bitstamp-usd", "coinbase-usd", "gemini-usd", "kraken-usd", "okx-usd"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": ["influx", "s3"]
+    },
+    "USDC": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitrue-usdt",
+        "bitstamp-usd",
+        "bybit-usdt",
+        "curve-ethereum-usdt",
+        "gate-usdt",
+        "gemini-usd",
+        "htx-usdt",
+        "kraken-usd",
+        "kraken-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "uniswap-v4-ethereum-usdt-10"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx", "s3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "OPENAI_PERP": {
       "source": ["ws-perp-binance-usdt", "ws-perp-coinbase-usdc", "ws-perp-mexc-usdt"],
       "priceAggregator": "geomean",
