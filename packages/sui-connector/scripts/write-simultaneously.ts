@@ -22,6 +22,7 @@ async function writeSimultaneouslyToSui() {
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
     enableEnhancedLogs: true,
+    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
   };
 
   const adapter = new SuiWriteContractAdapter(suiClient, makeSuiKeypair(), readSuiConfig(network));

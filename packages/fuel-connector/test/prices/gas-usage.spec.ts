@@ -1,5 +1,6 @@
 import { BigNumberish } from "@ethersproject/bignumber";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { sleep } from "fuels";
 import { IS_CI, provider } from "../common/provider";
 import { readProxyContractId } from "../common/read-proxy-contract-id";
@@ -48,6 +49,7 @@ describe("Gas Usage of integrated and initialized prices contract", () => {
       uniqueSignersCount: uniqueSignerCount,
       dataPackagesIds: dataFeeds,
       authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+      authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
     });
 
     let gasUsage = await adapter.getPricesFromPayload(paramsProvider);

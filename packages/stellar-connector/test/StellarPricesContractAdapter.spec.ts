@@ -1,4 +1,5 @@
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { Contract, Keypair } from "@stellar/stellar-sdk";
 import { makeServer, PRICE_ADAPTER, wasmFilePath } from "../scripts/utils";
 import {
@@ -47,12 +48,14 @@ describe("StellarPricesContractAdapter", () => {
       dataPackagesIds: ["LBTC"],
       uniqueSignersCount: 3,
       authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+      authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
     });
     paramsTwoFeeds = new ContractParamsProvider({
       dataServiceId: DATA_SERVICE_ID,
       dataPackagesIds: ["BTC", "ETH"],
       uniqueSignersCount: 3,
       authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+      authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
     });
   });
 

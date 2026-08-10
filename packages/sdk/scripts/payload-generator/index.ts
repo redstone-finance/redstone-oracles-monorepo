@@ -1,3 +1,4 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import * as fs from "node:fs";
 import path from "node:path";
 import {
@@ -19,6 +20,7 @@ async function requestPayloads(format: string, filenamePrefix?: string) {
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: UNIQUE_SIGNER_COUNT,
     authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
   };
 
   if (format === "all" && filenamePrefix) {

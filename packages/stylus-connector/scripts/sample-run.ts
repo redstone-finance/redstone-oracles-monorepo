@@ -17,6 +17,7 @@ async function main() {
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
     enableEnhancedLogs: true,
+    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
   };
 
   const contractAddress = RedstoneCommon.getFromEnv("CONTRACT_ADDRESS");

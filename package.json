@@ -31,6 +31,7 @@
     "global:prettier": "cd $INIT_CWD && prettier",
     "global:rollup": "cd $INIT_CWD && rollup",
     "global:tsx": "cd $INIT_CWD && tsx",
+    "global:with-auth-gateways": "cd $INIT_CWD && tsx \"$PROJECT_CWD\"/packages/internal-utils/src/scripts/with-auth-gateways.ts",
     "global:ecs-env-runner": "yarn global:tsx packages/ecs-env-runner/src/cli.ts --cwd $INIT_CWD ",
     "global:tsc": "cd $INIT_CWD && tsc",
     "global:lambda-key": "echo $PACKAGE_NAME.$(git log -1 --format=%h --abbrev=8).zip",
@@ -60,6 +61,7 @@
   "author": "hatskier <Suvorovalex1997@gmail.com> (https://hatskier.com/)",
   "license": "MIT",
   "devDependencies": {
+    "@aws-sdk/client-ssm": "^3.696.0",
     "@redstone-finance/eslint-plugin": "workspace:*",
     "@redstone-finance/jest-config": "workspace:*",
     "@redstone-finance/typescript-config": "workspace:*",

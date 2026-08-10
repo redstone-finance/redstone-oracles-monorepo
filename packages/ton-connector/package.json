@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "yarn global:ts-clean",
-    "run-script": "npx blueprint run --testnet --mnemonic",
+    "run-script": "yarn global:with-auth-gateways npx blueprint run --testnet --mnemonic",
     "build": "yarn global:tsc -p tsconfig.build.json",
     "build:turbo": "yarn global:turbo build",
     "typecheck": "yarn global:tsc --noEmit",
@@ -23,7 +23,7 @@
     "deploy-sample-consumers": "yarn run-script deploySampleConsumers",
     "fetch-data": "yarn run-script runPriceFeedFetchData",
     "get-data": "yarn run-script runPriceFeedGetData",
-    "get-prices": "yarn run-script runPriceManagerGetPrices",
+    "get-prices": "DATA_SERVICE_ID=redstone-primary-demo yarn run-script runPriceManagerGetPrices",
     "read-prices": "yarn run-script runPriceManagerReadPrices",
     "write-prices": "yarn run-script runPriceManagerWritePrices",
     "write-price": "yarn run-script runSingleFeedManWritePrice",
@@ -32,7 +32,7 @@
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "preversion": "yarn build",
-    "test": "yarn global:jest:cov"
+    "test": "yarn global:with-auth-gateways yarn global:jest:cov"
   },
   "dependencies": {
     "@ethersproject/bignumber": "^5.7.0",

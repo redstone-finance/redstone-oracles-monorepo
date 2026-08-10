@@ -37,6 +37,7 @@ export async function writeSimultaneously() {
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
     enableEnhancedLogs: true,
+    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
   };
 
   const adapter = new SolanaWriteContractAdapter(client, updater);
