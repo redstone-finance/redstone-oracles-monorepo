@@ -53,6 +53,7 @@ export function getContractParamsProvider(dataFeeds = ["ETH", "BTC", "AVAX", "US
     uniqueSignersCount: 4,
     dataPackagesIds: dataFeeds,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
   });
 }
 

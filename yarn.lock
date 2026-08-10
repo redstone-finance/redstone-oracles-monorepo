@@ -8627,6 +8627,7 @@ __metadata:
     "@redstone-finance/evm-adapters": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
     "@typechain/ethers-v5": "npm:^10.2.0"
     "@typechain/hardhat": "npm:^6.1.2"
     "@types/chai": "npm:^4.3.4"
@@ -10341,6 +10342,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/oracles-monorepo@workspace:."
   dependencies:
+    "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@redstone-finance/eslint-plugin": "workspace:*"
     "@redstone-finance/jest-config": "workspace:*"
     "@redstone-finance/typescript-config": "workspace:*"
