@@ -17,8 +17,8 @@
     "lint:fix": "yarn global:eslint --fix .",
     "test": "yarn global:jest:cov",
     "run-sig-der": "yarn global:tsx scripts/sig_der.ts",
-    "sample-run": "yarn build:turbo && node dist/scripts/sample-run.js",
-    "core-client-sample": "yarn build:turbo && node dist/scripts/core-client-sample.js",
+    "sample-run": "yarn build:turbo && yarn global:with-auth-gateways node dist/scripts/sample-run.js",
+    "core-client-sample": "yarn build:turbo && yarn global:with-auth-gateways node dist/scripts/core-client-sample.js",
     "clear-old-pills": "yarn global:tsx scripts/clear-old-pills.ts"
   },
   "dependencies": {

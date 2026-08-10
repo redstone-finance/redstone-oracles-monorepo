@@ -58,6 +58,7 @@ describe("MovePricesContractAdapter", () => {
         dataPackagesIds: DATA_PACKAGES_IDS,
         uniqueSignersCount: SIGNERS_COUNT,
         authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+        authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
       });
     });
 
@@ -81,6 +82,7 @@ describe("MovePricesContractAdapter", () => {
         dataPackagesIds: DATA_PACKAGES_IDS,
         uniqueSignersCount: SIGNERS_COUNT,
         authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+        authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
       });
     });
 

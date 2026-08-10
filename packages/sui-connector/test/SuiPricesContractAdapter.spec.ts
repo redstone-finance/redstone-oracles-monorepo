@@ -58,6 +58,7 @@ for (const [name, makeClient] of Object.entries(makeClients)) {
         dataPackagesIds: ["LBTC"],
         uniqueSignersCount: 3,
         authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+        authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
       });
     });
 
@@ -91,6 +92,7 @@ for (const [name, makeClient] of Object.entries(makeClients)) {
             dataPackagesIds: ["ETH", "BTC"],
             uniqueSignersCount: 3,
             authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+            authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
           });
 
           const result = await adapter.writePricesFromPayloadToContract(contractParamsProvider);
@@ -108,6 +110,7 @@ for (const [name, makeClient] of Object.entries(makeClients)) {
           dataPackagesIds: feedIds,
           uniqueSignersCount: 3,
           authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+          authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
         });
 
         const result = await adapter.readContractData(feedIds);

@@ -1,5 +1,6 @@
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import fs from "fs";
 import path from "path";
 
@@ -19,6 +20,7 @@ export function makeContractParamsProvider(
     uniqueSignersCount: uniqueSignerCount,
     dataPackagesIds: dataFeeds,
     authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
   });
 }
 

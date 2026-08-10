@@ -1,5 +1,6 @@
 import { sampleRun } from "@redstone-finance/multichain-kit-legacy";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { provider } from "./common/provider";
 import { readProxyContractId } from "./common/read-proxy-contract-id";
 import { connectPricesContract } from "./prices/prices-contract-test-utils";
@@ -12,6 +13,7 @@ async function main() {
     uniqueSignersCount: 5,
     dataPackagesIds: ["ETH", "BTC"],
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
   });
 
   const pricesConnector = await connectPricesContract(

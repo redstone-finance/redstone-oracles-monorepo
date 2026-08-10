@@ -108,6 +108,7 @@ async function main() {
     dataPackagesIds: useSmallFeedSet ? SMALL_FEED_SET : BIG_FEED_SET,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
     ignoreMissingFeed: true,
+    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
   });
 
   const suiClient = new SuiClientBuilder()

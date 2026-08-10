@@ -1,4 +1,5 @@
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { CoreClientCantonContractAdapter } from "../src";
 import { makeDefaultClient, makePartyId } from "./utils";
 
@@ -31,6 +32,7 @@ export async function coreClientSample() {
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
   });
 
   console.log(await adapter.getPricesFromPayload(paramsProvider));
