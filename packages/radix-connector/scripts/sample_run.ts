@@ -5,6 +5,7 @@ import {
 } from "@redstone-finance/multichain-kit";
 import { sampleRun } from "@redstone-finance/multichain-kit-legacy";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { PriceAdapterRadixContractConnector, PriceFeedRadixContractAdapter } from "../src";
 import {
   DATA_SERVICE_ID,
@@ -21,6 +22,7 @@ async function main() {
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
   });
 
   const client = makeRadixClient();

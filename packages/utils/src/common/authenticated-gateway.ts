@@ -24,3 +24,6 @@ export type AuthenticatedGateway = z.infer<typeof AuthenticatedGatewaySchema>;
 export const RawAuthenticatedGatewaySchema = authenticatedGatewayBaseSchema;
 
 export type RawAuthenticatedGateway = z.infer<typeof RawAuthenticatedGatewaySchema>;
+
+export const getAuthenticatedGatewaysFromEnv = () =>
+  getFromEnv("AUTHENTICATED_GATEWAYS", z.array(AuthenticatedGatewaySchema).nonempty().optional());

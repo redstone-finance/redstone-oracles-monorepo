@@ -13,8 +13,8 @@
     "typecheck:turbo": "yarn global:turbo typecheck",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
-    "test": "yarn global:jest:cov",
-    "sample-run": "yarn global:tsx test/e2e/sample-run.ts",
+    "test": "yarn global:with-auth-gateways yarn global:jest:cov",
+    "sample-run": "yarn global:with-auth-gateways yarn global:tsx test/e2e/sample-run.ts",
     "preversion": "yarn build",
     "pack-package": "yarn build && cd dist && npm pack"
   },

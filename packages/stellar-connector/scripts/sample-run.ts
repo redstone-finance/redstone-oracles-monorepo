@@ -1,6 +1,6 @@
 import { sampleRun } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
-import { RpcTelemetry } from "@redstone-finance/utils";
+import { RedstoneCommon, RpcTelemetry } from "@redstone-finance/utils";
 import {
   makeKeypair,
   PriceFeedStellarContractAdapter,
@@ -30,6 +30,7 @@ async function main() {
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
   });
 
   const ethPriceFeedConnector = new PriceFeedStellarContractAdapter(client, loadPriceFeedId());

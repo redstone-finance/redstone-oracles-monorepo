@@ -1,5 +1,6 @@
 import { NetworkId } from "@radixdlt/radix-engine-toolkit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import redstone from "redstone-api";
 import { loadAddress, PRICE_ADAPTER_NAME, PRIVATE_KEY } from "../scripts/constants";
@@ -31,6 +32,7 @@ describe("Integrated and initialized prices contract", () => {
       uniqueSignersCount: 2,
       dataPackagesIds: ["ETH", "BTC"],
       authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+      authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
     });
 
     await adapter.writePricesFromPayloadToContract(paramsProvider);
