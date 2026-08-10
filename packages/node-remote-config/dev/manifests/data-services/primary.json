@@ -2890,7 +2890,7 @@
     },
     "BTC.b_FUNDAMENTAL": {
       "source": [
-        "evm-fetcher-lombard-btcb"
+        "evm-fetcher-lombard-btcb-deferred"
       ],
       "denomination": "BTC",
       "rateFeed": true,
