@@ -2928,13 +2928,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "KING_FUNDAMENTAL": {
-      "source": [
-        "ethereum-evm-fetcher-king-protocol"
-      ],
-      "denomination": "USD",
-      "rateFeed": true
-    },
     "COMP": {
       "source": [
         "binance-usdc",
@@ -4636,19 +4629,6 @@
       ],
       "denomination": "avUSD",
       "rateFeed": true
-    },
-    "GUSD_FUNDAMENTAL/USD": {
-      "source": [
-        "ethereum-evm-fetcher-generic-gusd"
-      ],
-      "denomination": "USD",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 0.1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
     },
     "JITOSOL": {
       "source": [
