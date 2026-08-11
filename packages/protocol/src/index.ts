@@ -7,8 +7,6 @@ export * from "./data-point/StringDataPoint";
 export * from "./redstone-payload/RedstonePayload";
 export * from "./redstone-payload/RedstonePayloadParser";
 
-export * from "./UniversalSigner";
-
 export { Serializable } from "./common/Serializable";
 
 export * as consts from "./common/redstone-constants";

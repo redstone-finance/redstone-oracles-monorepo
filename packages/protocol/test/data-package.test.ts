@@ -1,6 +1,5 @@
 import { hexlify } from "@ethersproject/bytes";
-import { computePublicKey } from "@ethersproject/signing-key";
-import { Wallet } from "@ethersproject/wallet";
+import { UniversalSigner } from "@redstone-finance/signing";
 import { DataPackage, SignedDataPackage } from "../src/data-package/DataPackage";
 import { NumericDataPoint } from "../src/data-point/NumericDataPoint";
 
@@ -84,12 +83,12 @@ describe("Data package", () => {
     const signedDataPackage = new SignedDataPackage(dataPackage, "0x" + EXPECTED_SIGNATURE);
 
     // Check public key
-    const expectedPublicKey = computePublicKey(PRIVATE_KEY_FOR_TESTS);
+    const expectedPublicKey = UniversalSigner.publicKeyFromPrivateKey(PRIVATE_KEY_FOR_TESTS);
     const recoveredPublicKey = signedDataPackage.recoverSignerPublicKey();
     expect(hexlify(recoveredPublicKey)).toBe(expectedPublicKey);
 
     // Check address
-    const expectedAddress = new Wallet(PRIVATE_KEY_FOR_TESTS).address;
+    const expectedAddress = UniversalSigner.addressFromPrivateKey(PRIVATE_KEY_FOR_TESTS);
     const recoveredAddress = signedDataPackage.recoverSignerAddress();
     expect(recoveredAddress).toBe(expectedAddress);
   });

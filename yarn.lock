@@ -8346,6 +8346,7 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/express": "npm:^4.17.14"
     "@types/pako": "npm:^2.0.3"
@@ -8765,7 +8766,6 @@ __metadata:
     "@ethersproject/properties": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
     "@ethersproject/strings": "npm:^5.7.0"
-    "@ethersproject/wallet": "npm:^5.7.0"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
     "@nomicfoundation/hardhat-toolbox": "npm:^2.0.2"
@@ -8776,6 +8776,7 @@ __metadata:
     "@openzeppelin/contracts-upgradeable": "npm:^4.8.3"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@typechain/ethers-v5": "npm:^10.2.0"
     "@typechain/hardhat": "npm:^6.1.2"
@@ -8974,14 +8975,13 @@ __metadata:
   resolution: "@redstone-finance/hl-hip3@workspace:packages/hl-hip3"
   dependencies:
     "@ethersproject/bytes": "npm:^5.6.1"
-    "@ethersproject/hash": "npm:^5.7.0"
-    "@ethersproject/wallet": "npm:^5.7.0"
     "@msgpack/msgpack": "npm:^3.1.2"
     "@redstone-finance/agents": "workspace:*"
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     decimal.js: "npm:^10.4.3"
     zod: "npm:^4.1.12"
@@ -8992,13 +8992,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/hl-relayer@workspace:packages/hl-relayer"
   dependencies:
-    "@ethersproject/wallet": "npm:^5.7.0"
     "@redstone-finance/healthcheck": "workspace:*"
     "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/pub-sub": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@redstone-finance/ws": "workspace:*"
     axios: "npm:^1.19"
@@ -9484,6 +9484,7 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
+    "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     elliptic: "npm:^6.6.1"
     zod: "npm:^4.1.12"
@@ -9817,8 +9818,8 @@ __metadata:
   resolution: "@redstone-finance/lambda-private-key-generator@workspace:packages/lambda/lambda-private-key-generator"
   dependencies:
     "@aws-sdk/client-ssm": "npm:^3.696.0"
-    "@ethersproject/wallet": "npm:^5.7.0"
     "@redstone-finance/node-remote-config": "workspace:*"
+    "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
     elliptic: "npm:^6.6.1"
@@ -10230,6 +10231,7 @@ __metadata:
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
+    "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     async-mutex: "npm:^0.5.0"
     decimal.js: "npm:^10.4.3"
@@ -10298,7 +10300,6 @@ __metadata:
     "@ethersproject/logger": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
     "@ethersproject/strings": "npm:^5.7.0"
-    "@ethersproject/wallet": "npm:^5.7.0"
     "@googleapis/gmail": "npm:^16.1.1"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@metamask/eth-sig-util": "npm:^4.0.1"
@@ -10314,6 +10315,7 @@ __metadata:
     "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/express": "npm:^4.17.14"
     "@types/lodash": "npm:^4.14.195"
@@ -10414,18 +10416,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/protocol@workspace:packages/protocol"
   dependencies:
-    "@ethersproject/abstract-signer": "npm:^5.7.0"
     "@ethersproject/bignumber": "npm:^5.7.0"
     "@ethersproject/bytes": "npm:^5.6.1"
     "@ethersproject/keccak256": "npm:^5.7.0"
-    "@ethersproject/signing-key": "npm:^5.7.0"
     "@ethersproject/strings": "npm:^5.7.0"
-    "@ethersproject/transactions": "npm:^5.7.0"
     "@ethersproject/units": "npm:^5.7.0"
-    "@ethersproject/wallet": "npm:^5.7.0"
-    "@types/secp256k1": "npm:^4.0.6"
+    "@redstone-finance/signing": "workspace:*"
     decimal.js: "npm:^10.4.3"
-    secp256k1: "npm:^5.0.1"
   languageName: unknown
   linkType: soft
 
@@ -10544,6 +10541,7 @@ __metadata:
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/node-schedule": "npm:^2.1.0"
     "@types/xml2js": "npm:^0.4.14"
@@ -10614,6 +10612,24 @@ __metadata:
     lodash: "npm:^4.17.23"
     msw: "npm:^2.4.10"
     zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
+"@redstone-finance/signing@workspace:*, @redstone-finance/signing@workspace:packages/signing":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/signing@workspace:packages/signing"
+  dependencies:
+    "@ethersproject/abstract-provider": "npm:^5.7.0"
+    "@ethersproject/abstract-signer": "npm:^5.7.0"
+    "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/hash": "npm:^5.7.0"
+    "@ethersproject/keccak256": "npm:^5.7.0"
+    "@ethersproject/signing-key": "npm:^5.7.0"
+    "@ethersproject/strings": "npm:^5.7.0"
+    "@ethersproject/transactions": "npm:^5.7.0"
+    "@ethersproject/wallet": "npm:^5.7.0"
+    "@types/secp256k1": "npm:^4.0.6"
+    secp256k1: "npm:^5.0.1"
   languageName: unknown
   linkType: soft
 
