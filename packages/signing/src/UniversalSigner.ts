@@ -14,6 +14,7 @@ import { toUtf8Bytes } from "@ethersproject/strings";
 import { computeAddress } from "@ethersproject/transactions";
 import { verifyMessage } from "@ethersproject/wallet";
 import { ecdsaRecover } from "secp256k1";
+import { addressFromPrivateKey, publicKeyFromPrivateKey } from "./keys";
 
 const RS_SIGNATURE_LENGTH = 64;
 const ECDSA_N_DIV_2 = BigInt("0x7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0");
@@ -46,8 +47,12 @@ export class UniversalSigner {
     return splitSignature(signature);
   }
 
+  static publicKeyFromPrivateKey(privateKey: string) {
+    return publicKeyFromPrivateKey(privateKey);
+  }
+
   static addressFromPrivateKey(privateKey: string) {
-    return computeAddress(new SigningKey(privateKey).publicKey);
+    return addressFromPrivateKey(privateKey);
   }
 
   static recoverSigner(data: unknown, signature: SignatureLike) {

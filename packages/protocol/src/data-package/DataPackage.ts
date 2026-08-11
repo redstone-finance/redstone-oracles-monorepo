@@ -1,6 +1,7 @@
-import type { Signature } from "@ethersproject/bytes";
 import { arrayify, concat, hexlify } from "@ethersproject/bytes";
 import { keccak256 } from "@ethersproject/keccak256";
+import type { Signature } from "@redstone-finance/signing";
+import { UniversalSigner } from "@redstone-finance/signing";
 import { decodeBase64, encodeBase64 } from "../common/base64";
 import {
   DATA_POINT_VALUE_BYTE_SIZE_BS,
@@ -11,7 +12,6 @@ import { Serializable } from "../common/Serializable";
 import { assert, convertIntegerNumberToBytes } from "../common/utils";
 import { deserializeDataPointFromObj } from "../data-point/data-point-deserializer";
 import { DataPoint, DataPointPlainObj } from "../data-point/DataPoint";
-import { UniversalSigner } from "../UniversalSigner";
 
 export interface DataPackagePlainObj {
   dataPoints: DataPointPlainObj[];
