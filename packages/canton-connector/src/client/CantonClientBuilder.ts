@@ -130,6 +130,11 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
         exerciseChoices: MultiExecutor.ExecutionMode.FALLBACK,
         sendAmulet: MultiExecutor.ExecutionMode.FALLBACK,
         transfer: MultiExecutor.ExecutionMode.FALLBACK,
+        getActiveContractsData: MultiExecutor.ExecutionMode.FALLBACK,
+        getActiveContractData: MultiExecutor.ExecutionMode.FALLBACK,
+        getMostActiveContractData: MultiExecutor.ExecutionMode.FALLBACK,
+        getCreateContractEvents: MultiExecutor.ExecutionMode.FALLBACK,
+        getTransactionsForInterface: MultiExecutor.ExecutionMode.FALLBACK,
         // the following use scan-api:
         getRemainingTraffic: MultiExecutor.ExecutionMode.FALLBACK,
         getTotalConsumedTraffic: MultiExecutor.ExecutionMode.FALLBACK,
