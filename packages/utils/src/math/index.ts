@@ -43,6 +43,30 @@ export const getMedian = (numbers: ConvertibleToISafeNumber[]) =>
 export const getMedianOfBigNumbers = (numbers: BigNumberish[]) =>
   ISafeNumberMath.getMedian(numbers.map(BigNumber.from).map(castToISafeNumber)).unsafeToNumber();
 
+export const getMaxOfBigInts = (values: bigint[]) => {
+  assert(values.length > 0, "Cannot get max of an empty array");
+
+  return values.reduce((max, value) => (value > max ? value : max));
+};
+
+export const getMedianOfBigInts = (values: bigint[]) => {
+  assert(values.length > 0, "Cannot get median value of an empty array");
+
+  const sorted = [...values].sort((a, b) => (a < b ? -1 : 1));
+  const middle = Math.floor(sorted.length / 2);
+
+  if (sorted.length % 2 === 0) {
+    const [left, right] = [sorted[middle - 1], sorted[middle]];
+
+    return left / 2n + right / 2n + ((left % 2n) + (right % 2n)) / 2n;
+  } else {
+    return sorted[middle];
+  }
+};
+
+export const scaleBigInt = (value: bigint, multiplier: number) =>
+  BigInt(new Decimal(value.toString()).mul(multiplier).toFixed(0));
+
 export class PrecisionScaler {
   readonly tokenDecimalsScaler: Decimal;
 
