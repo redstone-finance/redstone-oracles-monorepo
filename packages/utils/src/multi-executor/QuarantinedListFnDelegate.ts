@@ -16,14 +16,18 @@ export class QuarantinedListFnDelegate implements FnDelegate {
     [p: string]: FnDelegateConfig | undefined;
   } = {};
 
-  static getCachedConfig(rpcUrls: string[], networkId: NetworkId) {
+  static getCachedConfig(
+    rpcUrls: string[],
+    networkId: NetworkId,
+    minimalProviderCount = MIN_PROVIDER_COUNT
+  ) {
     const urls = _.uniq(rpcUrls);
     const urlsKey = urls.toSorted();
-    const key = [networkId, ...urlsKey].join("|");
+    const key = [networkId, minimalProviderCount, ...urlsKey].join("|");
 
     this.configCache[key] ??= {
       descriptions: urls,
-      delegate: new QuarantinedListFnDelegate(urls, networkId),
+      delegate: new QuarantinedListFnDelegate(urls, networkId, minimalProviderCount),
     };
 
     return this.configCache[key];
@@ -32,14 +36,14 @@ export class QuarantinedListFnDelegate implements FnDelegate {
   constructor(
     identifiers: string[],
     networkId: NetworkId,
-    minimalProvidersCount = MIN_PROVIDER_COUNT
+    minimalProviderCount = MIN_PROVIDER_COUNT
   ) {
     this.lastListUpdateTimestamp = 0;
     this.healthyIdentifiers = identifiers;
     this.curatedList = new CuratedRpcList(
       {
         rpcIdentifiers: identifiers,
-        minimalProvidersCount,
+        minimalProvidersCount: minimalProviderCount,
         extendedLogs: true,
       },
       networkId
