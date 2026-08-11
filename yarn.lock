@@ -8456,7 +8456,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/chain-orchestrator@workspace:packages/chain-orchestrator"
   dependencies:
-    "@ethersproject/wallet": "npm:^5.7.0"
     "@redstone-finance/canton-connector": "workspace:*"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/evm-adapters": "workspace:*"
