@@ -9,8 +9,14 @@ import {
   limitWeights,
   NumberArg,
 } from "../../src/ISafeNumber";
-import { Clamper, filterOutliers } from "../../src/math";
-import { monotoneCubicInterpolation } from "../../src/math/monotonic-cubic-spline";
+import {
+  Clamper,
+  filterOutliers,
+  getMaxOfBigInts,
+  getMedianOfBigInts,
+  monotoneCubicInterpolation,
+  scaleBigInt,
+} from "../../src/math";
 
 describe("calculateSum", () => {
   it("Should properly calculate sum for empty array", () => {
@@ -159,6 +165,61 @@ describe("getMedian", () => {
     const prices = [42, 7, 100].map(createSafeNumber);
     getMedian(prices);
     expect(prices.map((price) => price.toString())).toEqual(["42", "7", "100"]);
+  });
+});
+
+describe("getMedianOfBigInts", () => {
+  it("should throw for empty array", () => {
+    expect(() => getMedianOfBigInts([])).toThrow();
+  });
+
+  it("should properly calculate median for odd number of elements", () => {
+    expect(getMedianOfBigInts([3n, 7n, 2n, 6n, 5n, 4n, 9n])).toEqual(5n);
+    expect(getMedianOfBigInts([30n, 10n, 20n])).toEqual(20n);
+  });
+
+  it("should properly calculate median for even number of elements", () => {
+    expect(getMedianOfBigInts([2n, 6n, 4n, 8n])).toEqual(5n);
+    expect(getMedianOfBigInts([10n, 30n])).toEqual(20n);
+    expect(getMedianOfBigInts([3n, 5n])).toEqual(4n);
+    expect(getMedianOfBigInts([3n, 6n])).toEqual(4n);
+    expect(getMedianOfBigInts([-7n, -5n, -4n, -8n])).toEqual(-6n);
+  });
+
+  it("should stay exact at the ends of the uint256 range", () => {
+    const maxUint256 = 2n ** 256n - 1n;
+    expect(getMedianOfBigInts([maxUint256, maxUint256])).toEqual(maxUint256);
+    expect(getMedianOfBigInts([maxUint256, maxUint256 - 2n])).toEqual(maxUint256 - 1n);
+    expect(getMedianOfBigInts([maxUint256, maxUint256 - 1n])).toEqual(maxUint256 - 1n);
+  });
+});
+
+describe("getMaxOfBigInts", () => {
+  it("should throw for empty array", () => {
+    expect(() => getMaxOfBigInts([])).toThrow();
+  });
+
+  it("should return the greatest value", () => {
+    expect(getMaxOfBigInts([16n, 40n, 30n])).toEqual(40n);
+    expect(getMaxOfBigInts([10n ** 18n, 10n ** 18n + 1n])).toEqual(10n ** 18n + 1n);
+  });
+});
+
+describe("scaleBigInt", () => {
+  it("should keep every digit of a fractional multiplier", () => {
+    expect(scaleBigInt(100_000n, 1.2345)).toEqual(123_450n);
+    expect(scaleBigInt(1_000_000_000n, 1.11)).toEqual(1_110_000_000n);
+    expect(scaleBigInt(10n ** 18n, 1.125)).toEqual(1_125_000_000_000_000_000n);
+  });
+
+  it("should round to the nearest wei", () => {
+    expect(scaleBigInt(3n, 1.5)).toEqual(5n);
+    expect(scaleBigInt(200n, 1.11)).toEqual(222n);
+  });
+
+  it("should handle an integer multiplier", () => {
+    expect(scaleBigInt(7n, 2)).toEqual(14n);
+    expect(scaleBigInt(7n, 1)).toEqual(7n);
   });
 });
 
