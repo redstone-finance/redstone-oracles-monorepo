@@ -1,5 +1,4 @@
 import { arrayify } from "@ethersproject/bytes";
-import { Wallet } from "@ethersproject/wallet";
 import {
   DataPackage,
   DataPoint,
@@ -10,6 +9,7 @@ import {
   StringDataPoint,
   utils,
 } from "@redstone-finance/protocol";
+import { createWallet } from "@redstone-finance/signing";
 import type { MockDataPackageConfig } from "../wrappers/MockWrapper";
 
 export const MAX_MOCK_SIGNERS_COUNT = 19;
@@ -153,11 +153,11 @@ MOCK_PRIVATE_KEYS[18] = "0xde9be858da4a475276426320d5e9262ecfc3ba460bfac56360bfa
 // Address: 0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199
 MOCK_PRIVATE_KEYS[19] = "0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e";
 
-export const MOCK_SIGNERS = MOCK_PRIVATE_KEYS.map((privateKey) => new Wallet(privateKey));
+export const MOCK_SIGNERS = MOCK_PRIVATE_KEYS.map(createWallet);
 
 export const getMockSignerPrivateKey = (mockSignerAddress: MockSignerAddress) => {
   for (const privateKey of MOCK_PRIVATE_KEYS) {
-    const address = new Wallet(privateKey).address;
+    const { address } = createWallet(privateKey);
     if (address === mockSignerAddress) {
       return privateKey;
     }
@@ -167,7 +167,7 @@ export const getMockSignerPrivateKey = (mockSignerAddress: MockSignerAddress) =>
 };
 
 export const getMockSignerAddress = (signerIndex: MockSignerIndex): MockSignerAddress => {
-  const address = new Wallet(MOCK_PRIVATE_KEYS[signerIndex]).address;
+  const { address } = createWallet(MOCK_PRIVATE_KEYS[signerIndex]);
 
   return address as MockSignerAddress;
 };
