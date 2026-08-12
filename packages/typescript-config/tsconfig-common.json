@@ -30,5 +30,14 @@
     "target": "es2022",
     "lib": ["ES2025"],
     "types": ["node", "jest", "mocha"]
-  }
+  },
+  "exclude": [
+    // build artifacts
+    "${configDir}/coverage",
+    "${configDir}/dist",
+    "${configDir}/node_modules",
+    "${configDir}/**/build",
+    "${configDir}/output",
+    "${configDir}/**/target"
+  ]
 }

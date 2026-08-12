@@ -1,4 +1,3 @@
 {
-  "extends": "@redstone-finance/typescript-config/tsconfig-common.json",
-  "exclude": ["node_modules", "dist", "**/target"]
+  "extends": "@redstone-finance/typescript-config/tsconfig-common.json"
 }
