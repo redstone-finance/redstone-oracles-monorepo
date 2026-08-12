@@ -1,5 +1,29 @@
 {
   "compilerOptions": {
     "tsBuildInfoFile": "${configDir}/dist/tsconfig.build.tsbuildinfo"
-  }
+  },
+  "exclude": [
+    // compilation artifacts
+    "${configDir}/dist",
+    "${configDir}/node_modules",
+    "${configDir}/**/build",
+    "${configDir}/output",
+    "${configDir}/**/target",
+    // tests-related
+    "${configDir}/.jest",
+    "${configDir}/benchmarks",
+    "${configDir}/coverage",
+    "${configDir}/jest.*.ts",
+    "${configDir}/test*",
+    "${configDir}/sample-data",
+    // contracts-related
+    "${configDir}/hardhat.config.ts",
+    "${configDir}/artifacts/build-info",
+    "${configDir}/artifacts/**/*.dbg.json",
+    // lambdas
+    "${configDir}/lambda-dist",
+    // build-time tooling
+    "${configDir}/scripts",
+    "${configDir}/tools"
+  ]
 }
