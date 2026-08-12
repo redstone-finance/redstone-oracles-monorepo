@@ -1,5 +1,11 @@
 import { graphql } from "@mysten/sui/graphql/schema";
 
+export const CHAIN_IDENTIFIER_QUERY = graphql(`
+  query {
+    chainIdentifier
+  }
+`);
+
 export const RECEIVED_TRANSACTIONS_QUERY = graphql(`
   query ReceivedTransactions($address: SuiAddress!, $first: Int, $after: String) {
     transactions(first: $first, after: $after, filter: { affectedAddress: $address }) {
