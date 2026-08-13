@@ -168,15 +168,34 @@ export function create<T extends object>(
   return new MultiExecutorFactory(instances, methodConfig, config).createProxy();
 }
 
+export function getSubInstances<T extends object>(subject: T) {
+  return getProxyMeta(subject)?.instances;
+}
+
+/** Makes a wrapper (e.g. a decorating proxy) transparent for getSubInstances
+ *  and createForSubInstances, which look the meta up by object identity. */
+export function propagateProxyMeta<T extends object>(source: T, target: object) {
+  const meta = getProxyMeta(source);
+  if (meta) {
+    PROXY_META.set(target, meta);
+  }
+
+  return target;
+}
+
 export function createForSubInstances<T extends object, U extends object>(
   subject: T,
   callback: (arg: T) => U,
   methodConfig: NestedMethodConfig<U> = {},
   config: MultiExecutorConfig = DEFAULT_CONFIG
 ) {
-  const meta = PROXY_META.get(subject) as ProxyMeta<T> | undefined;
+  const meta = getProxyMeta(subject);
   const instances = meta ? meta.instances.map(callback) : [callback(subject)];
   const mergedConfig = meta ? _.assign({}, meta.config, config) : config;
 
   return create(instances, methodConfig, mergedConfig);
+}
+
+function getProxyMeta<T extends object>(subject: T) {
+  return PROXY_META.get(subject) as ProxyMeta<T> | undefined;
 }

@@ -12,3 +12,4 @@ export * from "./MultiExecutorFactory";
 export * from "./ParallelExecutor";
 export * from "./QuarantinedListFnDelegate";
 export * from "./RaceExecutor";
+export * from "./UnsupportedMethodExecutor";
