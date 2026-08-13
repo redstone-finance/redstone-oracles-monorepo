@@ -5,6 +5,7 @@
   "main": "dist/src/index.js",
   "exports": "./dist/src/index.js",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "clean": "yarn global:ts-hardhat-clean",
     "build": " yarn global:tsc -p tsconfig.build.json",
@@ -76,8 +77,5 @@
     "dist",
     "contracts",
     "typechain-types"
-  ],
-  "publishConfig": {
-    "access": "public"
-  }
+  ]
 }
