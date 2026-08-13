@@ -66,7 +66,7 @@
         "https://avalanche-c-chain.publicnode.com"
       ],
       "etherScanApi": "https://api.snowtrace.io",
-      "avgBlockTimeMs": 2000,
+      "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
@@ -107,7 +107,7 @@
         "https://rpc-mainnet.matic.quiknode.pro",
         "https://polygon-public.nodies.app"
       ],
-      "avgBlockTimeMs": 2000,
+      "avgBlockTimeMs": 1500,
       "multicall3": {
         "address": "0x52f530e1d42BdFeF939729C341Ed714698a993f7",
         "type": "RedstoneMulticall3",
@@ -148,7 +148,7 @@
         "https://base.meowrpc.com",
         "https://base.llamarpc.com"
       ],
-      "avgBlockTimeMs": 5000,
+      "avgBlockTimeMs": 2000,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
@@ -254,7 +254,7 @@
       "networkId": 42793,
       "currencySymbol": "XTZ",
       "publicRpcUrls": ["https://node.mainnet.etherlink.com"],
-      "avgBlockTimeMs": 6000,
+      "avgBlockTimeMs": 1100,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
@@ -480,7 +480,7 @@
       "networkId": 1329,
       "currencySymbol": "SEI",
       "publicRpcUrls": ["https://evm-rpc.sei-apis.com", "https://sei.drpc.org"],
-      "avgBlockTimeMs": 500,
+      "avgBlockTimeMs": 400,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
@@ -783,7 +783,7 @@
       "networkId": 239,
       "currencySymbol": "TAC",
       "publicRpcUrls": ["https://rpc.ankr.com/tac", "https://rpc.tac.build"],
-      "avgBlockTimeMs": 1300,
+      "avgBlockTimeMs": 1600,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
@@ -904,7 +904,7 @@
         "https://rpc4.monad.xyz",
         "https://rpc-mainnet.monadinfra.com"
       ],
-      "avgBlockTimeMs": 400,
+      "avgBlockTimeMs": 300,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
@@ -1017,7 +1017,7 @@
         "https://sui-mainnet-endpoint.blockvision.org/",
         "https://endpoints.omniatech.io/v1/sui/mainnet/public"
       ],
-      "avgBlockTimeMs": 1000,
+      "avgBlockTimeMs": 200,
       "multicall3": {
         "address": "",
         "type": "Multicall3"
@@ -1045,7 +1045,7 @@
       "networkId": "aptos/1",
       "currencySymbol": "APT",
       "publicRpcUrls": ["https://api.mainnet.aptoslabs.com/v1"],
-      "avgBlockTimeMs": 130,
+      "avgBlockTimeMs": 30,
       "multicall3": {
         "address": "",
         "type": "Multicall3"
@@ -1133,7 +1133,7 @@
         "https://tokyo.mainnet.block-engine.jito.wtf#type=jito",
         "https://singapore.mainnet.block-engine.jito.wtf#type=jito"
       ],
-      "avgBlockTimeMs": 1000,
+      "avgBlockTimeMs": 400,
       "multicall3": {
         "address": "",
         "type": "Multicall3"
@@ -1170,7 +1170,7 @@
         "https://rpc.hyperlend.finance",
         "https://rpc.hypurrscan.io"
       ],
-      "avgBlockTimeMs": 2000,
+      "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
@@ -1249,7 +1249,7 @@
       "networkId": 16661,
       "currencySymbol": "0G",
       "publicRpcUrls": ["http://evmrpc.0g.ai"],
-      "avgBlockTimeMs": 400,
+      "avgBlockTimeMs": 900,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
@@ -1387,7 +1387,7 @@
       "networkId": 2818,
       "currencySymbol": "ETH",
       "publicRpcUrls": ["https://rpc-quicknode.morphl2.io", "https://rpc.morphl2.io"],
-      "avgBlockTimeMs": 4000,
+      "avgBlockTimeMs": 2000,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
@@ -1406,7 +1406,7 @@
         "decimals": 6
       },
       "publicRpcUrls": ["https://tempo-mainnet.drpc.org"],
-      "avgBlockTimeMs": 1000,
+      "avgBlockTimeMs": 500,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
