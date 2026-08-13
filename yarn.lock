@@ -8702,6 +8702,7 @@ __metadata:
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@typechain/ethers-v5": "npm:^10.2.0"
     "@typechain/hardhat": "npm:^6.1.2"
