@@ -3,9 +3,11 @@
     "name": "megaEthTestnet",
     "id": 6343
   },
-  "updateTriggers": {},
+  "updateTriggers": {
+    "timeSinceLastUpdateInMilliseconds": 0
+  },
   "adapterContract": "0x9f0B0AE7a3b6671129633121149b7059d004EDa4",
-  "adapterContractType": "multi-feed",
+  "adapterContractType": "fast-multi-feed",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {
