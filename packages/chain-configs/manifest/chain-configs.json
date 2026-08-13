@@ -176,41 +176,6 @@
       "twoDimensionalFees": false,
       "isMainnet": false
     },
-    "canto": {
-      "name": "Canto",
-      "networkId": 7700,
-      "currencySymbol": "CANTO",
-      "publicRpcUrls": ["https://canto-rpc.ansybl.io"],
-      "avgBlockTimeMs": 6000,
-      "multicall3": {
-        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "isAuctionModel": false,
-      "twoDimensionalFees": false,
-      "isMainnet": true
-    },
-    "manta": {
-      "name": "Manta Pacific Mainnet",
-      "networkId": 169,
-      "currencySymbol": "ETH",
-      "publicRpcUrls": [
-        "https://pacific-rpc.manta.network/http",
-        "https://1rpc.io/manta",
-        "https://manta-pacific-aperture.calderachain.xyz/http",
-        "https://manta-pacific-gascap.calderachain.xyz/http"
-      ],
-      "avgBlockTimeMs": 10000,
-      "multicall3": {
-        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "isAuctionModel": false,
-      "twoDimensionalFees": false,
-      "isMainnet": true
-    },
     "blast": {
       "name": "Blast Mainnet",
       "networkId": 81457,
@@ -261,22 +226,6 @@
         "gasLimitPerCall": 10000000
       },
       "isAuctionModel": true,
-      "twoDimensionalFees": false,
-      "isMainnet": true
-    },
-    "mode": {
-      "name": "Mode Mainnet",
-      "networkId": 34443,
-      "currencySymbol": "ETH",
-      "publicRpcUrls": ["https://mainnet.mode.network/", "https://1rpc.io/mode"],
-      "avgBlockTimeMs": 2000,
-      "multicall3": {
-        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "isAuctionModel": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": true
     },
@@ -427,22 +376,6 @@
       "twoDimensionalFees": false,
       "isMainnet": true
     },
-    "bob": {
-      "name": "BOB Mainnet",
-      "networkId": 60808,
-      "currencySymbol": "ETH",
-      "publicRpcUrls": ["https://rpc.gobob.xyz"],
-      "avgBlockTimeMs": 2500,
-      "multicall3": {
-        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "isAuctionModel": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
-      "twoDimensionalFees": false,
-      "isMainnet": true
-    },
     "blast-sepolia": {
       "name": "Blast sepolia",
       "networkId": 168587773,
@@ -456,24 +389,6 @@
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": false
-    },
-    "merlin": {
-      "name": "Merlin Mainnet",
-      "networkId": 4200,
-      "currencySymbol": "BTC",
-      "publicRpcUrls": [
-        "https://rpc.merlinchain.io",
-        "https://merlin.blockpi.network/v1/rpc/public"
-      ],
-      "avgBlockTimeMs": 1000,
-      "multicall3": {
-        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 200000
-      },
-      "isAuctionModel": true,
-      "twoDimensionalFees": false,
-      "isMainnet": true
     },
     "sei": {
       "name": "Sei Mainnet",
@@ -505,21 +420,6 @@
       "twoDimensionalFees": false,
       "isMainnet": false
     },
-    "cyber": {
-      "name": "Cyber",
-      "networkId": 7560,
-      "currencySymbol": "ETH",
-      "publicRpcUrls": ["https://cyber.alt.technology"],
-      "avgBlockTimeMs": 2000,
-      "multicall3": {
-        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "isAuctionModel": false,
-      "twoDimensionalFees": false,
-      "isMainnet": true
-    },
     "zksync": {
       "name": "zkSync",
       "networkId": 324,
@@ -534,37 +434,6 @@
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": true,
-      "isMainnet": true
-    },
-    "zkLink": {
-      "name": "zkLink",
-      "networkId": 810180,
-      "currencySymbol": "ETH",
-      "publicRpcUrls": ["https://rpc.zklink.io"],
-      "avgBlockTimeMs": 1000,
-      "multicall3": {
-        "address": "0x4a87b5ce9f56f353a4d6808BA3c012083912b8f2",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "isAuctionModel": false,
-      "twoDimensionalFees": true,
-      "isMainnet": true
-    },
-    "zircuit": {
-      "name": "Zircuit Mainnet",
-      "networkId": 48900,
-      "currencySymbol": "ETH",
-      "publicRpcUrls": ["https://zircuit-mainnet.drpc.org", "https://zircuit1-mainnet.p2pify.com"],
-      "avgBlockTimeMs": 2000,
-      "multicall3": {
-        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "fallbackToEthMaxPriorityFeePerGas": true,
-      "isAuctionModel": false,
-      "twoDimensionalFees": false,
       "isMainnet": true
     },
     "scroll": {
@@ -664,59 +533,6 @@
       "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": false
-    },
-    "taiko": {
-      "name": "Taiko Mainnet",
-      "networkId": 167000,
-      "currencySymbol": "ETH",
-      "publicRpcUrls": [
-        "https://rpc.mainnet.taiko.xyz",
-        "https://taiko.drpc.org",
-        "https://rpc.ankr.com/taiko",
-        "https://taiko-rpc.publicnode.com"
-      ],
-      "avgBlockTimeMs": 6000,
-      "multicall3": {
-        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "isAuctionModel": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
-      "twoDimensionalFees": false,
-      "isMainnet": true
-    },
-    "corn": {
-      "name": "Corn Maizenet",
-      "networkId": 21000000,
-      "currencySymbol": "BTCN",
-      "publicRpcUrls": ["https://rpc.ankr.com/corn_maizenet", "https://maizenet-rpc.usecorn.com"],
-      "avgBlockTimeMs": 60000,
-      "multicall3": {
-        "address": "0x0871f732A0DaAFe1E6a80A862878648a86dE1298",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "isAuctionModel": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
-      "twoDimensionalFees": false,
-      "isMainnet": true
-    },
-    "swellchain": {
-      "name": "Swellchain",
-      "networkId": 1923,
-      "currencySymbol": "ETH",
-      "publicRpcUrls": ["https://swell-mainnet.alt.technology", "https://rpc.ankr.com/swell"],
-      "avgBlockTimeMs": 2000,
-      "multicall3": {
-        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "isAuctionModel": false,
-      "twoDimensionalFees": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
-      "isMainnet": true
     },
     "hyperliquidTestnet": {
       "name": "Hyperliquid Testnet",
@@ -1046,34 +862,6 @@
       "currencySymbol": "APT",
       "publicRpcUrls": ["https://api.mainnet.aptoslabs.com/v1"],
       "avgBlockTimeMs": 30,
-      "multicall3": {
-        "address": "",
-        "type": "Multicall3"
-      },
-      "isAuctionModel": false,
-      "twoDimensionalFees": false,
-      "isMainnet": true
-    },
-    "radix-stokenet": {
-      "name": "Radix Stokenet",
-      "networkId": "radix/2",
-      "currencySymbol": "XRD",
-      "publicRpcUrls": ["https://stokenet.radixdlt.com"],
-      "avgBlockTimeMs": 1000,
-      "multicall3": {
-        "address": "",
-        "type": "Multicall3"
-      },
-      "isAuctionModel": false,
-      "twoDimensionalFees": false,
-      "isMainnet": false
-    },
-    "radix": {
-      "name": "Radix Mainnet",
-      "networkId": "radix/1",
-      "currencySymbol": "XRD",
-      "publicRpcUrls": ["https://mainnet.radixdlt.com"],
-      "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "",
         "type": "Multicall3"
