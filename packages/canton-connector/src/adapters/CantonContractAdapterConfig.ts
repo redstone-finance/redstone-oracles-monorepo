@@ -22,7 +22,8 @@ export const CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG: Pick<
   | "shouldAccumulateTraffic"
   | "useConstTrafficMeter"
 > = {
-  maxTxSendAttempts: 5,
+  // Canton has no fee escalation, so a re-submission would only race the pending one.
+  maxTxSendAttempts: 1,
   expectedTxDeliveryTimeInMs: RedstoneCommon.secsToMs(15),
   uniqueSignerThreshold: 3,
   shouldAccumulateTraffic: true,
