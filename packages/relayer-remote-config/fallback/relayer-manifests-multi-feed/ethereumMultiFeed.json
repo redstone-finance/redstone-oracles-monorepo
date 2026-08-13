@@ -538,6 +538,20 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "HYB_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0xc05B48bBa5C17c41BEAd97eC9D0D362132df7BEb",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "HINC_ETHEREUM_FUNDAMENTAL": {
+      "priceFeedAddress": "0x1969C04b3fACA070690d05FA3A7782Db8724762e",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
