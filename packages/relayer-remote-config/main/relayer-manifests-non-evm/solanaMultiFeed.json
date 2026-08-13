@@ -160,6 +160,13 @@
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "HINC_SOLANA_FUNDAMENTAL": {
+      "priceFeedAddress": "CGA7viued5yENTpmKEKwBgAfoUL41xjXKqRfJEzehHEh",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
