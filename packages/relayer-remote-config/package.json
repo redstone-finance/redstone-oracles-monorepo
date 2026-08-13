@@ -2,6 +2,7 @@
   "name": "@redstone-finance/relayer-remote-config",
   "version": "0.9.0",
   "description": "Configuration files for the relayers module",
+  "private": true,
   "scripts": {
     "lint": "yarn global:prettier --check .",
     "lint:fix": "yarn global:prettier --write ."
@@ -11,8 +12,5 @@
   "contributors": [
     "Jakub Wojciechowski <jakub@redstone.finance>",
     "Alex Suvorov <alex@redstone.finance>"
-  ],
-  "publishConfig": {
-    "access": "public"
-  }
+  ]
 }
