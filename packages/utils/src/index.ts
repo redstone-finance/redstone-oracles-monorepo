@@ -6,6 +6,7 @@ export * from "./curated-list";
 export * as FP from "./fp";
 export * as SafeNumber from "./ISafeNumber";
 export * from "./logger";
+export * from "./logger/sanitize-token";
 export * as MathUtils from "./math";
 export * from "./monitoring";
 export * as MultiExecutor from "./multi-executor";
