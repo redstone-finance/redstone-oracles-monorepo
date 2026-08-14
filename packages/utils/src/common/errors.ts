@@ -1,7 +1,8 @@
-import { ErrorCode } from "@ethersproject/logger";
 import axios, { AxiosError } from "axios";
 import { LogLevels } from "consola";
-import { getLogLevel, loggerFactory, sanitizeLogMessage } from "../logger";
+import { getLogLevel, loggerFactory } from "../logger";
+import { sanitizeLogMessage } from "../logger/sanitize-token";
+import { ETHERS_5_7_ERROR_PROPS, isEthers_5_7_Error, type Ethers_5_7_Error } from "./EthersError";
 import { JSONstringify, stringify } from "./misc";
 
 export class UnrecoverableError extends Error {
@@ -77,37 +78,11 @@ const showStack = (stack?: string) => {
   return "";
 };
 
-const ethers_5_7_errorCodes: string[] = Object.values(ErrorCode);
-
-function isEthers_5_7_Error(error: unknown): error is Ethers_5_7_Error {
-  return (
-    typeof error === "object" &&
-    error !== null &&
-    "code" in error &&
-    typeof error.code === "string" &&
-    ethers_5_7_errorCodes.includes(error.code)
-  );
+export function stringifyError(e: unknown, noStack = false) {
+  return sanitizeLogMessage(stringifyErrorUnsanitized(e, noStack));
 }
 
-const ethers_5_7_ErrorProps = [
-  "code",
-  "error",
-  "reason",
-  "url",
-  "requestBody",
-  "timeout",
-  "method",
-  "address",
-  "args",
-  "errorSignature",
-  "body",
-] as const;
-
-type Ethers_5_7_Error = {
-  [K in (typeof ethers_5_7_ErrorProps)[number]]?: string | number;
-} & Error;
-
-export function stringifyError(e: unknown, noStack = false): string {
+function stringifyErrorUnsanitized(e: unknown, noStack = false): string {
   try {
     const error = e as
       | AggregateError
@@ -122,13 +97,15 @@ export function stringifyError(e: unknown, noStack = false): string {
     } else if (typeof e === "string") {
       return e;
     } else if (error instanceof AggregateError) {
-      const errorMessages: string[] = error.errors.map((e) => stringifyError(e, noStack));
+      const errorMessages: string[] = error.errors.map((e) =>
+        stringifyErrorUnsanitized(e, noStack)
+      );
 
       return `AggregateError: ${error.message ? error.message : "<no message>"}, errors: ${errorMessages.join(
         "; "
       )}`;
     } else if (axios.isAxiosError<unknown>(error)) {
-      const urlAsString = `url: "${sanitizeLogMessage(JSONstringify(error.config?.url))}"`;
+      const urlAsString = `url: "${JSONstringify(error.config?.url)}"`;
       const dataAsString = `data: "${JSONstringify(error.response?.data)}"`;
       const message = `${urlAsString}, ${dataAsString}, ${error.message}`;
 
@@ -136,20 +113,15 @@ export function stringifyError(e: unknown, noStack = false): string {
     } else if (isEthers_5_7_Error(error)) {
       return (
         "[Ethers 5.7 Error]" +
-        ethers_5_7_ErrorProps
-          .filter((prop) => Object.hasOwn(error, prop))
-          .map((prop) =>
-            prop === "url"
-              ? `[${prop}: "${sanitizeLogMessage(JSONstringify(error[prop]))}"]`
-              : `[${prop}: "${error[prop]}"]`
-          )
+        ETHERS_5_7_ERROR_PROPS.filter((prop) => Object.hasOwn(error, prop))
+          .map((prop) => `[${prop}: "${error[prop]}"]`)
           .join("") +
         showStack(error.stack)
       );
     } else if (error instanceof Error) {
       const causeString = error.cause
         ? typeof error.cause === "object"
-          ? `cause: ${stringifyError(error.cause, noStack)}`
+          ? `cause: ${stringifyErrorUnsanitized(error.cause, noStack)}`
           : stringify(error.cause)
         : "";
       const stackString = noStack ? "" : showStack(error.stack);
@@ -165,15 +137,4 @@ export function stringifyError(e: unknown, noStack = false): string {
   } catch (handlingError) {
     return `StringifyError thrown error: ${stringify(handlingError)} when stringifying error :${stringify(e)}`;
   }
-}
-
-export interface EthersError {
-  code: ErrorCode;
-  message: string;
-}
-
-export function isEthersError(e: unknown): e is EthersError {
-  const error = e as Partial<EthersError>;
-
-  return !!error.code && !!error.message;
 }

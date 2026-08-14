@@ -1,5 +1,5 @@
 import { isDefined } from "../common";
-import { sanitizeLogMessage } from "../logger";
+import { sanitizeLogMessage } from "../logger/sanitize-token";
 import type { FnBox, FnDelegate } from "../multi-executor";
 import { NetworkId } from "../NetworkId";
 import { RpcOpNormalizer, RpcOpTelemetry } from "./RpcOpNormalizer";

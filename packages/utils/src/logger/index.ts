@@ -9,16 +9,11 @@ import { z } from "zod";
 import { getFromEnv } from "../common/env";
 import { JSONstringify, unescapeString } from "../common/misc";
 import { isNodeRuntime } from "../common/runtime";
+import { sanitizeLogMessage } from "./sanitize-token";
 
 const DEFAULT_ENABLE_JSON_LOGS = true;
 const DEFAULT_LOG_LEVEL = LogLevels.info;
 export const MAX_DEPTH = 5;
-
-const WHITELISTED_HOSTNAMES = new Set([
-  "github.com",
-  "raw.githubusercontent.com",
-  "api.github.com",
-]);
 
 export const SENSITIVE_KEYS = new Set([
   "apiKey",
@@ -26,6 +21,11 @@ export const SENSITIVE_KEYS = new Set([
   "privateKey",
   "telemetryUrl",
   "telemetryAuthorizationToken",
+  "authorization",
+  "Authorization",
+  "token",
+  "secret",
+  "password",
 ]);
 
 export type RedstoneLogger = ConsolaInstance | Console;
@@ -213,36 +213,8 @@ export function sanitizeValue<T>(value: T): T {
   return sanitize(value, seen) as T;
 }
 
-function sanitizePathComponent(value: string) {
-  return value.length > 4 ? `...${value.slice(-4)}` : value;
-}
-
 export function maskSensitiveValue(value: unknown): string {
   return typeof value === "string" && value.length > 16 ? `${value.slice(0, 4)}...` : "[Redacted]";
-}
-
-export function sanitizeLogMessage(message: string): string {
-  // Regex to find HTTP, HTTPS, and WSS URLs in a log message
-  const urlRegex = /(https?|wss):\/\/[A-Za-z0-9\-._~:/?#[\]@!$&'()*+,;=%]+/g;
-
-  return message.replace(urlRegex, (match) => {
-    try {
-      const parsedUrl = new URL(match);
-      if (WHITELISTED_HOSTNAMES.has(parsedUrl.hostname)) {
-        return match;
-      }
-      parsedUrl.password = "";
-      parsedUrl.username = "";
-      parsedUrl.pathname = parsedUrl.search
-        ? sanitizePathComponent(parsedUrl.search)
-        : sanitizePathComponent(parsedUrl.pathname);
-      parsedUrl.search = "";
-
-      return parsedUrl.toString().replace(/\/+$/, "");
-    } catch {
-      return match;
-    }
-  });
 }
 
 function parseLogLevels(): Record<string, LogLevel> | null {

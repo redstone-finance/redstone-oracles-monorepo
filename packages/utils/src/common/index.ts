@@ -11,6 +11,7 @@ export * from "./conversions";
 export * from "./date-utils";
 export * from "./env";
 export * from "./errors";
+export * from "./EthersError";
 export * from "./fetch-with-fallback";
 export * from "./Fetcher";
 export * from "./fs-path-safe";
