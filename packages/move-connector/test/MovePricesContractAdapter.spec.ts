@@ -53,12 +53,14 @@ describe("MovePricesContractAdapter", () => {
 
   describe("writePricesFromPayloadToContract", () => {
     beforeEach(() => {
+      const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
       contractParamsProviderMultiple = new ContractParamsProvider({
         dataServiceId: DATA_SERVICE_ID,
         dataPackagesIds: DATA_PACKAGES_IDS,
         uniqueSignersCount: SIGNERS_COUNT,
         authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
-        authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+        authenticatedGateways,
       });
     });
 
@@ -77,12 +79,14 @@ describe("MovePricesContractAdapter", () => {
 
   describe("readContractData", () => {
     beforeEach(() => {
+      const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
       contractParamsProviderMultiple = new ContractParamsProvider({
         dataServiceId: DATA_SERVICE_ID,
         dataPackagesIds: DATA_PACKAGES_IDS,
         uniqueSignersCount: SIGNERS_COUNT,
         authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
-        authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+        authenticatedGateways,
       });
     });
 

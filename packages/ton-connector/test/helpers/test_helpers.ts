@@ -48,12 +48,14 @@ export function createContractParamsProviderMock(
 }
 
 export function getContractParamsProvider(dataFeeds = ["ETH", "BTC", "AVAX", "USDT"]) {
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   return new ContractParamsProvider({
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 4,
     dataPackagesIds: dataFeeds,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   });
 }
 

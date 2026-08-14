@@ -27,12 +27,14 @@ describe("Integrated and initialized prices contract", () => {
     );
 
     const adapter = await connector.getAdapter();
+    const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
     const paramsProvider = new ContractParamsProvider({
       dataServiceId: "redstone-primary-prod",
       uniqueSignersCount: 2,
       dataPackagesIds: ["ETH", "BTC"],
       authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
-      authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+      authenticatedGateways,
     });
 
     await adapter.writePricesFromPayloadToContract(paramsProvider);
