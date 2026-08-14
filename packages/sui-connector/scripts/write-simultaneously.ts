@@ -16,13 +16,15 @@ async function writeSimultaneouslyToSui() {
   const rpcUrls = await getRpcUrls(network);
   const suiClient = new SuiClientBuilder().withSuiNetwork(network).withRpcUrls(rpcUrls).build();
 
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   const requestParams: DataPackagesRequestParams = {
     dataPackagesIds: ["ETH"],
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
     enableEnhancedLogs: true,
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   };
 
   const adapter = new SuiWriteContractAdapter(suiClient, makeSuiKeypair(), readSuiConfig(network));

@@ -44,12 +44,14 @@ describe("Gas Usage of integrated and initialized prices contract", () => {
     const adapter = await (
       await connectPricesContract(readProxyContractId(), true, await provider())
     ).getAdapter();
+    const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
     const paramsProvider = new ContractParamsProvider({
       dataServiceId: "redstone-primary-prod",
       uniqueSignersCount: uniqueSignerCount,
       dataPackagesIds: dataFeeds,
       authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
-      authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+      authenticatedGateways,
     });
 
     let gasUsage = await adapter.getPricesFromPayload(paramsProvider);

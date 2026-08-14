@@ -8,12 +8,14 @@ import { connectPricesContract } from "./prices/prices-contract-test-utils";
 const IS_LOCAL = true as boolean;
 
 async function main() {
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   const paramsProvider = new ContractParamsProvider({
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 5,
     dataPackagesIds: ["ETH", "BTC"],
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   });
 
   const pricesConnector = await connectPricesContract(

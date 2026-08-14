@@ -10,6 +10,8 @@ import "dotenv/config";
 import { PriceAdapterService } from "./PriceAdapterService";
 
 async function main() {
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   const dataPackagesIds = ["ETH", "BTC"];
   const requestParams: DataPackagesRequestParams = {
     dataPackagesIds,
@@ -17,7 +19,7 @@ async function main() {
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
     enableEnhancedLogs: true,
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   };
 
   const contractAddress = RedstoneCommon.getFromEnv("CONTRACT_ADDRESS");

@@ -14,12 +14,14 @@ export async function run(provider: NetworkProvider) {
   );
   const contract = await connector.getAdapter();
 
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   const paramsProvider = new ContractParamsProvider({
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 4,
     dataPackagesIds: ["ETH"],
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   });
 
   console.log(await contract.writePriceFromPayloadToContract(paramsProvider));

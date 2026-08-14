@@ -43,19 +43,21 @@ describe("StellarPricesContractAdapter", () => {
   }, DEPLOY_CONTRACT_TIMEOUT_MS);
 
   beforeEach(() => {
+    const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
     paramsOneFeed = new ContractParamsProvider({
       dataServiceId: DATA_SERVICE_ID,
       dataPackagesIds: ["LBTC"],
       uniqueSignersCount: 3,
       authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
-      authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+      authenticatedGateways,
     });
     paramsTwoFeeds = new ContractParamsProvider({
       dataServiceId: DATA_SERVICE_ID,
       dataPackagesIds: ["BTC", "ETH"],
       uniqueSignersCount: 3,
       authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
-      authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+      authenticatedGateways,
     });
   });
 
