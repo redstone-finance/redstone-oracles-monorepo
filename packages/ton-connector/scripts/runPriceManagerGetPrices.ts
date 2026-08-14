@@ -19,12 +19,14 @@ export async function run(provider: NetworkProvider) {
   const dataServiceId = (process.env["DATA_SERVICE_ID"] ??
     "redstone-primary-demo") as DataServiceIds;
 
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   const paramsProvider = new ContractParamsProvider({
     dataServiceId,
     uniqueSignersCount: 1,
     dataPackagesIds: ["BTC", "ETH", "BNB", "AR", "AVAX", "CELO"],
     authorizedSigners: getSignersForDataServiceId(dataServiceId),
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   });
 
   console.log(await contract.getPricesFromPayload(paramsProvider));

@@ -31,13 +31,15 @@ export async function writeSimultaneously() {
   const { client, jito } = new SolanaClientBuilder().withRpcUrls(rpcUrls).buildWithJito();
   const updater = makeSolanaUpdater({ client, jito }, readProgramAddress(readCluster()), keypair);
 
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   const requestParams: DataPackagesRequestParams = {
     dataPackagesIds: ["ETH"],
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
     enableEnhancedLogs: true,
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   };
 
   const adapter = new SolanaWriteContractAdapter(client, updater);

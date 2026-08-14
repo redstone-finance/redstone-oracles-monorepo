@@ -9,12 +9,14 @@ import { readObjectAddress } from "./deploy-utils";
 import { getEnvNetworkEnum } from "./get-env";
 
 async function main() {
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   const paramsProvider = new ContractParamsProvider({
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     dataPackagesIds: ["ETH"],
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   });
   const rpcUrls = RedstoneCommon.getFromEnv("RPC_URLS", z.array(z.url()).optional()) ?? [
     RedstoneCommon.getFromEnv("RPC_URL", z.url()),

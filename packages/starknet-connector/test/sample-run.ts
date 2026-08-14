@@ -6,12 +6,14 @@ import { PriceFeedStarknetContractAdapter } from "../src/prices/PriceFeedStarkne
 import { PRICE_ADAPTER_ADDRESS, PRICE_FEED_ADDRESS, config } from "./config";
 
 async function main(config: StarknetConfig) {
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   const paramsProvider = new ContractParamsProvider({
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 1,
     dataPackagesIds: ["ETH", "BTC"],
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   });
   const account = getAccount(config);
   const pricesConnector = new PriceAdapterStarknetContractConnector(account, PRICE_ADAPTER_ADDRESS);

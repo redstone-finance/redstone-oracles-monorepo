@@ -102,13 +102,15 @@ async function main() {
   const useSmallFeedSet = true as boolean;
   const rpcUrls = await getRpcUrls(network);
 
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   const paramsProvider = new ContractParamsProvider({
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     dataPackagesIds: useSmallFeedSet ? SMALL_FEED_SET : BIG_FEED_SET,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
     ignoreMissingFeed: true,
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   });
 
   const suiClient = new SuiClientBuilder()

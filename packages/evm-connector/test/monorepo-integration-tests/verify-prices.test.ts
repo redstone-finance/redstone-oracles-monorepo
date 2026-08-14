@@ -29,7 +29,8 @@ dynamicDescribe("verify prices test", function () {
       dataServiceId: "mock-data-service",
       uniqueSignersCount: 1,
       dataPackagesIds,
-      urls: getCacheServiceUrls(),
+      authenticatedGateways: getCacheServiceUrls().map((url) => ({ url, apiKey: "test-api-key" })),
+      urls: [],
       authorizedSigners: MOCK_SIGNERS.map((s) => s.address),
     });
     const oracleValues = await wrappedContract.extractOracleValuesView(bytes32Symbols);

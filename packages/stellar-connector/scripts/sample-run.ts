@@ -25,12 +25,14 @@ async function main() {
     .build();
   const adapter = new StellarWriteContractAdapter(client, adapterId, keypair);
 
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: FEEDS,
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   });
 
   const ethPriceFeedConnector = new PriceFeedStellarContractAdapter(client, loadPriceFeedId());

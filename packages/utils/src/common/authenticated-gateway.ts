@@ -27,3 +27,15 @@ export type RawAuthenticatedGateway = z.infer<typeof RawAuthenticatedGatewaySche
 
 export const getAuthenticatedGatewaysFromEnv = () =>
   getFromEnv("AUTHENTICATED_GATEWAYS", z.array(AuthenticatedGatewaySchema).nonempty().optional());
+
+export const AUTHENTICATED_GATEWAYS_REQUIRED_ERROR =
+  "AUTHENTICATED_GATEWAYS env variable must be configured";
+
+export const getRequiredAuthenticatedGatewaysFromEnv = (): AuthenticatedGateway[] => {
+  const authenticatedGateways = getAuthenticatedGatewaysFromEnv();
+  if (!authenticatedGateways) {
+    throw new Error(AUTHENTICATED_GATEWAYS_REQUIRED_ERROR);
+  }
+
+  return authenticatedGateways;
+};

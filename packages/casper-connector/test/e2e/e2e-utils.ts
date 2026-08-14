@@ -15,12 +15,14 @@ export function makeContractParamsProvider(
   dataFeeds = DATA_FEEDS,
   uniqueSignerCount = UNIQUE_SIGNER_COUNT
 ) {
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   return new ContractParamsProvider({
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: uniqueSignerCount,
     dataPackagesIds: dataFeeds,
     authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   });
 }
 

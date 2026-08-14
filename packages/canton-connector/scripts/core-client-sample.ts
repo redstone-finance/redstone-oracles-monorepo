@@ -27,12 +27,14 @@ export async function coreClientSample() {
     contractId,
     packageId
   );
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: ["ETH", "BTC"],
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   });
 
   console.log(await adapter.getPricesFromPayload(paramsProvider));
