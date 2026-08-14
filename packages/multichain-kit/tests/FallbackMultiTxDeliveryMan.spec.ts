@@ -9,6 +9,7 @@ describe("FallbackMultiTxDeliveryMan", () => {
     uniqueSignersCount: 1,
     authorizedSigners: [],
     dataPackagesIds: ["ETH"],
+    authenticatedGateways: [{ apiKey: "test-api-key" }],
   });
 
   const createDeliveryMan = (fallbackUpdater: FallbackUpdater, maxTxSendAttempts = 1) =>

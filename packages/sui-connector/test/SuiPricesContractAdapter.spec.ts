@@ -53,12 +53,14 @@ for (const [name, makeClient] of Object.entries(makeClients)) {
     }, WRITE_TEST_TIMEOUT);
 
     beforeEach(() => {
+      const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
       contractParamsProvider = new ContractParamsProvider({
         dataServiceId: DATA_SERVICE_ID,
         dataPackagesIds: ["LBTC"],
         uniqueSignersCount: 3,
         authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
-        authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+        authenticatedGateways,
       });
     });
 
@@ -87,12 +89,14 @@ for (const [name, makeClient] of Object.entries(makeClients)) {
       it(
         "should write prices with multiple feed IDs",
         async () => {
+          const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
           contractParamsProvider = new ContractParamsProvider({
             dataServiceId: DATA_SERVICE_ID,
             dataPackagesIds: ["ETH", "BTC"],
             uniqueSignersCount: 3,
             authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
-            authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+            authenticatedGateways,
           });
 
           const result = await adapter.writePricesFromPayloadToContract(contractParamsProvider);
@@ -105,12 +109,14 @@ for (const [name, makeClient] of Object.entries(makeClients)) {
     describe("readContractData", () => {
       it("should read prices, timestamps and block timestamps for multiple feed IDs", async () => {
         const feedIds = ["LBTC", "ETH", "BTC"];
+        const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
         contractParamsProvider = new ContractParamsProvider({
           dataServiceId: DATA_SERVICE_ID,
           dataPackagesIds: feedIds,
           uniqueSignersCount: 3,
           authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
-          authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+          authenticatedGateways,
         });
 
         const result = await adapter.readContractData(feedIds);

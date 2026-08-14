@@ -17,12 +17,14 @@ import {
 } from "./constants";
 
 async function main() {
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: ["XRD"],
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   });
 
   const client = makeRadixClient();
