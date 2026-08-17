@@ -77,6 +77,8 @@
   "SPCX": "UsEquity",
   "SMCI": "UsEquity",
   "SNDK": "UsEquity",
+  "AXTI": "UsEquity",
+  "DRAM": "UsEquity",
 
   "KOSPI": "Krx",
   "KOSPI200": "Krx",
