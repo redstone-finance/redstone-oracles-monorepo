@@ -172,9 +172,10 @@ export function getSubInstances<T extends object>(subject: T) {
   return getProxyMeta(subject)?.instances;
 }
 
-/** Makes a wrapper (e.g. a decorating proxy) transparent for getSubInstances
- *  and createForSubInstances, which look the meta up by object identity. */
-export function propagateProxyMeta<T extends object>(source: T, target: object) {
+export function propagateProxyMeta<T extends object, Target extends object>(
+  source: T,
+  target: Target
+) {
   const meta = getProxyMeta(source);
   if (meta) {
     PROXY_META.set(target, meta);
