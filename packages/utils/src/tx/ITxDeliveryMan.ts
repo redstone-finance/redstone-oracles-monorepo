@@ -6,4 +6,6 @@ export interface TxDeliveryManContext {
 
 export interface ITxDeliveryMan<Context extends TxDeliveryManContext = TxDeliveryManContext> {
   deliver(txDeliveryCall: TxDeliveryCall, context: Context): Promise<unknown>;
+
+  getSignerAddress?(): Promise<string>;
 }
