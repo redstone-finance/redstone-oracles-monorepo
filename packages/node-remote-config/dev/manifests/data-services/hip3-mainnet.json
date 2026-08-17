@@ -4769,7 +4769,8 @@
     "ANTHROPIC_SECONDARIES": {
       "source": [
         "notice",
-        "hiive"
+        "hiive",
+        "yahoo-finance-deferred"
       ],
       "priceAggregator": "geomean",
       "geomeanAggregatorConfig": {
