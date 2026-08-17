@@ -2725,6 +2725,21 @@
         "rwa"
       ]
     },
+    "KODEX200": {
+      "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "ORDI": {
       "source": [
         "ws-spot-binance-usdt",
