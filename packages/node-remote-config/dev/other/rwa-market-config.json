@@ -75,6 +75,8 @@
   "FGNX": "UsEquity",
   "FGNXP": "UsEquity",
   "SPCX": "UsEquity",
+  "SMCI": "UsEquity",
+  "SNDK": "UsEquity",
 
   "KOSPI": "Krx",
   "KOSPI200": "Krx",
