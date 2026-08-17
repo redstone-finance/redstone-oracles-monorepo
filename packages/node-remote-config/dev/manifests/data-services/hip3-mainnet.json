@@ -4936,6 +4936,189 @@
         }
       }
     },
+    "OPENAI_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-coinbase-usdc",
+        "ws-perp-mexc-usdt"
+      ],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPENAI_SECONDARIES": {
+      "source": [
+        "notice",
+        "hiive"
+      ],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPENAI_PRESTOCKS": {
+      "source": [
+        "jupiter",
+        "dex-screener"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "jupiter"
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_io:OAI": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-io": 10,
+        "ws-hydromancer-perps-io": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_io:OAI": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-io": 10,
+        "ws-hydromancer-perps-io": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_io:OAI": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-io": 10,
+        "ws-hydromancer-perps-io": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_io:OAI_EMA_HALF_5M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_io:OAI": {
+      "source": [
+        "ws-hyperliquid-perps-io"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_io:OAI_EMA_HALF_5M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_io:OAI_EMA_HALF_5D": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:OAI_MARK_0": {
+      "source": [
+        "hip3-entropy-pre-ipo-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:OAI_MARK_1": {
+      "source": [
+        "hip3-entropy-pre-ipo-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:OAI_EXT": {
+      "source": [
+        "hip3-entropy-pre-ipo-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:OAI": {
+      "source": [
+        "hip3-entropy-pre-ipo-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_io:OAI": {
+      "source": [
+        "ws-hyperliquid-perps-io"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
     "SMCI": {
       "source": [],
       "priceAggregator": "redstoneX",
@@ -5259,6 +5442,342 @@
       "rateFeed": false
     },
     "OPEN_INTEREST_io:SNDK": {
+      "source": [
+        "ws-hyperliquid-perps-io"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "AXTI": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ORACLE_io:AXTI": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-io": 10,
+        "ws-hydromancer-perps-io": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_io:AXTI": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-io": 10,
+        "ws-hydromancer-perps-io": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_io:AXTI": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-io": 10,
+        "ws-hydromancer-perps-io": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_io:AXTI_EMA_HALF_3M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_io:AXTI_EMA_HALF_5M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_io:AXTI": {
+      "source": [
+        "ws-hyperliquid-perps-io"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_io:AXTI_EMA_HALF_5M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_io:AXTI_EMA_HALF_5D": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:AXTI_MARK_0": {
+      "source": [
+        "hip3-entropy-equity-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:AXTI_MARK_1": {
+      "source": [
+        "hip3-entropy-equity-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:AXTI_EXT": {
+      "source": [
+        "hip3-entropy-equity-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:AXTI": {
+      "source": [
+        "hip3-entropy-equity-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_io:AXTI": {
+      "source": [
+        "ws-hyperliquid-perps-io"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "DRAM": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ORACLE_io:DRAM": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-io": 10,
+        "ws-hydromancer-perps-io": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_io:DRAM": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-io": 10,
+        "ws-hydromancer-perps-io": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_io:DRAM": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-io": 10,
+        "ws-hydromancer-perps-io": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_io:DRAM_EMA_HALF_3M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_io:DRAM_EMA_HALF_5M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_io:DRAM": {
+      "source": [
+        "ws-hyperliquid-perps-io"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_io:DRAM_EMA_HALF_5M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_io:DRAM_EMA_HALF_5D": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:DRAM_MARK_0": {
+      "source": [
+        "hip3-entropy-equity-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:DRAM_MARK_1": {
+      "source": [
+        "hip3-entropy-equity-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:DRAM_EXT": {
+      "source": [
+        "hip3-entropy-equity-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:DRAM": {
+      "source": [
+        "hip3-entropy-equity-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_io:DRAM": {
       "source": [
         "ws-hyperliquid-perps-io"
       ],
