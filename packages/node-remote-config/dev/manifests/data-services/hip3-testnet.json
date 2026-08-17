@@ -6575,6 +6575,16 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "binance:SPCX_ORACLE": {
+      "source": [
+        "ws-binance-index-price"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "MARK_ani:CAT": {
       "source": [
         "ws-hyperliquid-perps-ani",
@@ -7205,6 +7215,16 @@
         }
       }
     },
+    "binance:SMCI_ORACLE": {
+      "source": [
+        "ws-binance-index-price"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "SNDK": {
       "source": [],
       "priceAggregator": "redstoneX",
@@ -7372,6 +7392,16 @@
           "maxDelayMilliseconds": 1000
         }
       }
+    },
+    "binance:SNDK_ORACLE": {
+      "source": [
+        "ws-binance-index-price"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     },
     "AXTI": {
       "source": [],
@@ -7541,6 +7571,16 @@
         }
       }
     },
+    "binance:AXTI_ORACLE": {
+      "source": [
+        "ws-binance-index-price"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "DRAM": {
       "source": [],
       "priceAggregator": "redstoneX",
@@ -7708,6 +7748,16 @@
           "maxDelayMilliseconds": 1000
         }
       }
+    },
+    "binance:DRAM_ORACLE": {
+      "source": [
+        "ws-binance-index-price"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
