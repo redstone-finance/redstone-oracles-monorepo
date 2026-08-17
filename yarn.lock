@@ -8943,6 +8943,7 @@ __metadata:
     "@types/lodash": "npm:^4.14.195"
     axios: "npm:^1.19"
     dayjs: "npm:^1.11.12"
+    hyparquet-writer: "npm:^0.16.6"
     jsonc-parser: "npm:^3.3.1"
     lodash: "npm:^4.17.23"
     secp256k1: "npm:^5.0.1"
@@ -10197,6 +10198,7 @@ __metadata:
     ethers-v6: "npm:ethers@6.13.5"
     express: "npm:^4.18.1"
     google-auth-library: "npm:^10.3.0"
+    hyparquet: "npm:^1.27.1"
     jest-mock-extended: "npm:^4.0.1"
     jszip: "npm:^3.10.1"
     lodash: "npm:^4.17.23"
@@ -22660,6 +22662,22 @@ __metadata:
   dependencies:
     ms: "npm:^2.0.0"
   checksum: 10c0/f34a2c20161d02303c2807badec2f3b49cbfbbb409abd4f95a07377ae01cfe6b59e3d15ac609cffcd8f2521f0eb37b7e1091acf65da99aa2a4f1ad63c21e7e7a
+  languageName: node
+  linkType: hard
+
+"hyparquet-writer@npm:^0.16.6":
+  version: 0.16.6
+  resolution: "hyparquet-writer@npm:0.16.6"
+  dependencies:
+    hyparquet: "npm:1.28.1"
+  checksum: 10c0/cbac4e187e97314afe00e9e4b7365afa3c370198acd331cf492f5a609d48b20fede82855146db999e1298f87b778ac7a5f2f55af45cd66e6a4980c246cea544b
+  languageName: node
+  linkType: hard
+
+"hyparquet@npm:1.28.1, hyparquet@npm:^1.27.1":
+  version: 1.28.1
+  resolution: "hyparquet@npm:1.28.1"
+  checksum: 10c0/bf9b5871ab7eb770bb64bee08a29ac3bd03853d5e99a999f6194b26966dd2a4f0701e8b1b43fd02bb3a31316b94577045154c0aec69a0d75490d5199edb46677
   languageName: node
   linkType: hard
 
