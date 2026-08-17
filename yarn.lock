@@ -9109,6 +9109,7 @@ __metadata:
     ccxt: "npm:^4.5.33"
     dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.23"
+    protobufjs: "npm:^7"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
@@ -29471,7 +29472,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:^7.0.0, protobufjs@npm:^7.4.0, protobufjs@npm:^7.5.3":
+"protobufjs@npm:^7, protobufjs@npm:^7.0.0, protobufjs@npm:^7.4.0, protobufjs@npm:^7.5.3":
   version: 7.6.5
   resolution: "protobufjs@npm:7.6.5"
   dependencies:
