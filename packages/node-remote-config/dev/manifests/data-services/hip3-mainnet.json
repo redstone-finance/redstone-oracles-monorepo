@@ -4869,16 +4869,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ENTROPY_DEPTH_io:ANTH_EMA_HALF_5D": {
-      "source": [
-        "ema"
-      ],
-      "broadcasters": [
-        "influx"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "io:ANTH_MARK_0": {
       "source": [
         "hip3-entropy-pre-ipo-mainnet-fetcher"
@@ -5053,16 +5043,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ENTROPY_DEPTH_io:OAI_EMA_HALF_5D": {
-      "source": [
-        "ema"
-      ],
-      "broadcasters": [
-        "influx"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "io:OAI_MARK_0": {
       "source": [
         "hip3-entropy-pre-ipo-mainnet-fetcher"
@@ -5212,16 +5192,6 @@
       "rateFeed": false
     },
     "ENTROPY_DEPTH_io:SMCI_EMA_HALF_5M": {
-      "source": [
-        "ema"
-      ],
-      "broadcasters": [
-        "influx"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ENTROPY_DEPTH_io:SMCI_EMA_HALF_5D": {
       "source": [
         "ema"
       ],
@@ -5399,16 +5369,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ENTROPY_DEPTH_io:SNDK_EMA_HALF_5D": {
-      "source": [
-        "ema"
-      ],
-      "broadcasters": [
-        "influx"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "io:SNDK_MARK_0": {
       "source": [
         "hip3-entropy-equity-mainnet-fetcher"
@@ -5577,16 +5537,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ENTROPY_DEPTH_io:AXTI_EMA_HALF_5D": {
-      "source": [
-        "ema"
-      ],
-      "broadcasters": [
-        "influx"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "io:AXTI_MARK_0": {
       "source": [
         "hip3-entropy-equity-mainnet-fetcher"
@@ -5746,16 +5696,6 @@
       "rateFeed": false
     },
     "ENTROPY_DEPTH_io:DRAM_EMA_HALF_5M": {
-      "source": [
-        "ema"
-      ],
-      "broadcasters": [
-        "influx"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ENTROPY_DEPTH_io:DRAM_EMA_HALF_5D": {
       "source": [
         "ema"
       ],

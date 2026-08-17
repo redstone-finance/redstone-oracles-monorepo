@@ -132,12 +132,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ENTROPY_DEPTH_ani:DOG_EMA_HALF_5D": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "ani:DOG_MARK_0": {
       "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
