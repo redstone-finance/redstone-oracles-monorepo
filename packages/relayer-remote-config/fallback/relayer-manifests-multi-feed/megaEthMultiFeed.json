@@ -8,7 +8,7 @@
     "timeSinceLastUpdateInMilliseconds": 21600000
   },
   "adapterContract": "0x5ED849a45B4608952161f45483F4B95BCEa7f8f0",
-  "adapterContractType": "multi-feed",
+  "adapterContractType": "fast-multi-feed",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {
