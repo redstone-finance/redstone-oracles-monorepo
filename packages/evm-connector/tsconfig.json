@@ -1,5 +1,4 @@
 {
   "extends": "@redstone-finance/typescript-config/tsconfig-common.json",
-  "include": ["**/*", "package.json"],
-  "exclude": ["dist", "test-browser-compatibility/browser-bundle.js"]
+  "include": ["**/*", "package.json"]
 }

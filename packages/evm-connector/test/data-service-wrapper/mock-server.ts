@@ -17,30 +17,34 @@ const getValidDataPackagesResponse = () => ({
   BTC: getDataPackageResponse("BTC"),
 });
 
+const getInvalidDataPackagesResponse = () => ({
+  ETH: getDataPackageResponse("ETH").map((obj) => ({
+    ...obj,
+    dataPoints: [{ ...obj.dataPoints[0], value: 1 }],
+  })),
+  BTC: getDataPackageResponse("BTC").map((obj) => ({
+    ...obj,
+    dataPoints: [{ ...obj.dataPoints[0], value: 1 }],
+  })),
+});
+
 const handlers = [
-  http.get("http://valid-cache.com/v2/data-packages/latest/*", () =>
+  "/v2/data-packages/latest/*",
+  "/v2/data-packages/latest-by-data-feeds/*",
+  "/data-packages/latest/*",
+  "/data-packages/latest-by-data-feeds/*",
+].flatMap((path) => [
+  http.get(`http://valid-cache.com${path}`, () =>
     HttpResponse.json(getValidDataPackagesResponse())
   ),
-  http.get("http://valid-cache.com/data-packages/latest/*", () =>
-    HttpResponse.json(getValidDataPackagesResponse())
+  http.get(`http://invalid-cache.com${path}`, () =>
+    HttpResponse.json(getInvalidDataPackagesResponse())
   ),
-  http.get("http://invalid-cache.com/v2/data-packages/latest/*", () =>
-    HttpResponse.json({
-      ETH: getDataPackageResponse("ETH").map((obj) => ({
-        ...obj,
-        dataPoints: [{ ...obj.dataPoints[0], value: 1 }],
-      })),
-      BTC: getDataPackageResponse("BTC").map((obj) => ({
-        ...obj,
-        dataPoints: [{ ...obj.dataPoints[0], value: 1 }],
-      })),
-    })
-  ),
-  http.get("http://slower-cache.com/v2/data-packages/latest/*", async () => {
+  http.get(`http://slower-cache.com${path}`, async () => {
     await delay(200);
 
     return HttpResponse.json(getValidDataPackagesResponse());
   }),
-];
+]);
 
 export const server = setupServer(...handlers);
