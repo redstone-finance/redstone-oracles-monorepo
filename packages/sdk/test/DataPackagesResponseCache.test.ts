@@ -13,6 +13,7 @@ describe("DataPackagesResponseCache tests", () => {
     dataPackagesIds: ["ETH", "BTC"],
     uniqueSignersCount: 2,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+    authenticatedGateways: [{ apiKey: "test-api-key" }],
   };
 
   beforeEach(() => {
@@ -157,6 +158,7 @@ describe("DataPackagesResponseCache tests", () => {
       dataServiceId: mockRequestParams.dataServiceId,
       uniqueSignersCount: mockRequestParams.uniqueSignersCount,
       authorizedSigners: mockRequestParams.authorizedSigners,
+      authenticatedGateways: mockRequestParams.authenticatedGateways,
       returnAllPackages: true,
     };
     sut.update(mockSignedDataPackagesResponse, paramsWithReturnAll);
@@ -220,6 +222,7 @@ describe("isConforming tests", () => {
     uniqueSignersCount: 1,
     ignoreMissingFeed: true,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-demo"),
+    authenticatedGateways: [{ url: "http://valid-cache.com", apiKey: "test-api-key" }],
   };
 
   it("should return true if ignoreMissingFeed is true", () => {
@@ -301,7 +304,6 @@ describe("isConforming tests", () => {
   it("should return true if one of not important request params is not equal", () => {
     for (const otherPrams of [
       { ...thisRequestParams, waitForAllGatewaysTimeMs: 123 },
-      { ...thisRequestParams, urls: ["https://"] },
       { ...thisRequestParams, enableEnhancedLogs: true },
       { ...thisRequestParams, uniqueSignersCount: 1 },
     ]) {
