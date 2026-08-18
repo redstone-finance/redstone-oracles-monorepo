@@ -6214,6 +6214,19 @@
         "snoozed"
       ]
     },
+    "MID_ani:DOG_EMA_HALF_3M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
+    },
     "MID_ani:DOG_EMA_HALF_5M": {
       "source": [
         "ema"
@@ -6255,7 +6268,7 @@
     },
     "ani:DOG_MARK_0": {
       "source": [
-        "hip3-entropy-pre-ipo-testnet-fetcher"
+        "hip3-entropy-equity-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -6269,7 +6282,7 @@
     },
     "ani:DOG_MARK_1": {
       "source": [
-        "hip3-entropy-pre-ipo-testnet-fetcher"
+        "hip3-entropy-equity-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -6283,7 +6296,7 @@
     },
     "ani:DOG_EXT": {
       "source": [
-        "hip3-entropy-pre-ipo-testnet-fetcher"
+        "hip3-entropy-equity-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -6294,7 +6307,7 @@
     },
     "ani:DOG": {
       "source": [
-        "hip3-entropy-pre-ipo-testnet-fetcher"
+        "hip3-entropy-equity-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
