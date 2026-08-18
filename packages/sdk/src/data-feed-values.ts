@@ -1,13 +1,11 @@
 import { MathUtils, RedstoneCommon } from "@redstone-finance/utils";
-import { resolveDataServiceUrls } from "./data-services-urls";
 import { type DataServiceIds, getSignersForDataServiceId } from "./oracle-registry";
 import { requestDataPackages } from "./request-data-packages";
 
 export interface GetDataFeedValuesInput {
   aggregationAlgorithm?: "median" | "min" | "max"; // median by default
   dataServiceId?: string; // "redstone-primary-demo" by default
-  gatewayUrls?: string[]; // if not specified, use default for dataServiceId
-  authenticatedGateways?: { url?: string; apiKey: string }[];
+  authenticatedGateways: { url?: string; apiKey: string }[];
 }
 
 export type GetDataFeedValuesOutput = Record<string, number | undefined>;
@@ -16,17 +14,15 @@ const DEFAULT_DATA_SERVICE_ID = "redstone-primary-demo";
 const DEFAULT_AGGREGATION_ALGORITHM = "median";
 
 export const getDataFeedValues = async (
-  args: GetDataFeedValuesInput = {}
+  args: GetDataFeedValuesInput
 ): Promise<GetDataFeedValuesOutput> => {
   const dataServiceId = args.dataServiceId ?? DEFAULT_DATA_SERVICE_ID;
   const aggregationAlgorithm = args.aggregationAlgorithm ?? DEFAULT_AGGREGATION_ALGORITHM;
-  const gatewayUrls = args.gatewayUrls ?? resolveDataServiceUrls(dataServiceId);
 
   const packages = await requestDataPackages({
     dataServiceId,
     uniqueSignersCount: 1,
     authorizedSigners: getSignersForDataServiceId(dataServiceId as DataServiceIds),
-    urls: gatewayUrls,
     returnAllPackages: true,
     skipSignatureVerification: true,
     authenticatedGateways: args.authenticatedGateways,

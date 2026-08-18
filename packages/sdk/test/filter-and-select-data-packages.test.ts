@@ -10,6 +10,7 @@ const getReqParams = (): DataPackagesRequestParams => ({
   dataPackagesIds: ["BTC", "ETH"],
   dataServiceId: "mock-data-service-tests",
   uniqueSignersCount: 2,
+  authenticatedGateways: [{ apiKey: "test-api-key" }],
   authorizedSigners: [
     "0x4fE51A2963a44Cd3DABB05AEe14b9F9A4652fF6b",
     "0x799DFAfc2F6f5d90c3fEdD70ae037DBDaC201668",

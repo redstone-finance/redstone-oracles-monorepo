@@ -15,12 +15,14 @@ const UNIQUE_SIGNER_COUNT = 3;
 const scriptArgs = process.argv.slice(2);
 
 async function requestPayloads(format: string, filenamePrefix?: string) {
+  const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
+
   const reqParams = {
     dataPackagesIds: DATA_FEEDS,
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: UNIQUE_SIGNER_COUNT,
     authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
-    authenticatedGateways: RedstoneCommon.getAuthenticatedGatewaysFromEnv(),
+    authenticatedGateways,
   };
 
   if (format === "all" && filenamePrefix) {

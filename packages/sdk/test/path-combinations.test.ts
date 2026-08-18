@@ -1,12 +1,14 @@
 import axios from "axios";
 import { DataPackagesRequestParams, requestDataPackages } from "../src/request-data-packages";
 
-export const getReqParams = (urls?: string[]): DataPackagesRequestParams => {
+export const getReqParams = (
+  gatewayUrls: string[] = ["http://valid-cache.com"]
+): DataPackagesRequestParams => {
   return {
     dataPackagesIds: ["BTC", "ETH"],
     dataServiceId: "mock-data-service-tests",
     uniqueSignersCount: 2,
-    urls: urls!,
+    authenticatedGateways: gatewayUrls.map((url) => ({ url, apiKey: "test-api-key" })),
     authorizedSigners: [
       "0x19E7E376E7C213B7E7e7e46cc70A5dD086DAff2A",
       "0x00d40e37f53b10dc0D2C84733dc1744440F404f3",
@@ -25,25 +27,27 @@ describe("Path construction in requestDataPackages", () => {
   const testScenarios = [
     {
       params: { hideMetadata: false, historicalTimestamp: undefined },
-      expectedPaths: ["/data-packages/latest/:dataServiceId/show-metadata"],
+      expectedPaths: ["/data-packages/latest-by-data-feeds/:dataServiceId/show-metadata"],
     },
     {
       params: { historicalTimestamp: undefined },
-      expectedPaths: ["/data-packages/latest/:dataServiceId"],
+      expectedPaths: ["/data-packages/latest-by-data-feeds/:dataServiceId"],
     },
     {
       params: {
         hideMetadata: false,
         historicalTimestamp: HISTORICAL_TIMESTAMP,
       },
-      expectedPaths: ["/data-packages/historical/:dataServiceId/:timestamp/show-metadata"],
+      expectedPaths: [
+        "/data-packages/historical-by-data-feeds/:dataServiceId/:timestamp/show-metadata",
+      ],
     },
     {
       params: {
         hideMetadata: false,
         historicalTimestamp: HISTORICAL_TIMESTAMP,
       },
-      expectedPaths: ["/data-packages/historical/:dataServiceId/:timestamp"],
+      expectedPaths: ["/data-packages/historical-by-data-feeds/:dataServiceId/:timestamp"],
     },
   ];
 

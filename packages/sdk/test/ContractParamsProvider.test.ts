@@ -23,6 +23,7 @@ describe("ContractParamsProvider tests", () => {
     uniqueSignersCount: 2,
     dataPackagesIds: ["ETH", "BTC"],
     authorizedSigners: [],
+    authenticatedGateways: [{ apiKey: "mock-api-key" }],
   };
   let sut: ContractParamsProvider;
 
