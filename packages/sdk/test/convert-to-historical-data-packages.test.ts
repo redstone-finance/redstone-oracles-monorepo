@@ -15,6 +15,10 @@ describe("convertToHistoricalDataPackagesRequestParams", () => {
     dataPackagesIds: ["id1", "id2"],
     uniqueSignersCount: 2,
     authorizedSigners: [],
+    authenticatedGateways: [
+      { url: "https://auth-gateway1.com", apiKey: "key1" },
+      { url: "https://auth-gateway2.com", apiKey: "key2" },
+    ],
   };
 
   const mockRelayerConfig = {

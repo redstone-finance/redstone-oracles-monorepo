@@ -27,12 +27,19 @@ const OTHER_SIGNER = {
   address: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
 };
 
-const getReqParams = (urls?: string[]): DataPackagesRequestParams => {
+const TEST_API_KEY = "test-api-key";
+
+const toAuthenticatedGateways = (urls: string[]) =>
+  urls.map((url) => ({ url, apiKey: TEST_API_KEY }));
+
+const getReqParams = (
+  gatewayUrls: string[] = ["http://valid-cache.com"]
+): DataPackagesRequestParams => {
   return {
     dataPackagesIds: ["BTC", "ETH"],
     dataServiceId: "mock-data-service-tests",
     uniqueSignersCount: 2,
-    urls: urls!,
+    authenticatedGateways: toAuthenticatedGateways(gatewayUrls),
     authorizedSigners: [
       // signer addresses for mock data packages returned by the server
       "0x4fE51A2963a44Cd3DABB05AEe14b9F9A4652fF6b",
@@ -250,7 +257,7 @@ describe("request-data-packages", () => {
     const dataPackages = await requestDataPackages({
       ...getReqParams(),
       authorizedSigners: signerAddresses,
-      urls: ["1", "2"],
+      authenticatedGateways: toAuthenticatedGateways(["1", "2"]),
       uniqueSignersCount: 1,
       dataPackagesIds: ["ETH"],
       returnAllPackages: false,
@@ -305,7 +312,7 @@ describe("request-data-packages", () => {
     const dataPackages = await requestDataPackages({
       ...getReqParams(),
       authorizedSigners: signerAddresses,
-      urls: ["1", "2"],
+      authenticatedGateways: toAuthenticatedGateways(["1", "2"]),
       uniqueSignersCount: 1,
       dataPackagesIds: ["ETH"],
       returnAllPackages: false,
@@ -645,7 +652,7 @@ describe("request-data-packages", () => {
       const start = performance.now();
       await requestDataPackages({
         ...getReqParams(),
-        urls: ["1", "2", "3"],
+        authenticatedGateways: toAuthenticatedGateways(["1", "2", "3"]),
         uniqueSignersCount: 1,
         dataPackagesIds: ["ETH"],
         returnAllPackages: false,
@@ -665,7 +672,7 @@ describe("request-data-packages", () => {
       const start = performance.now();
       await requestDataPackages({
         ...getReqParams(),
-        urls: ["1", "2", "3"],
+        authenticatedGateways: toAuthenticatedGateways(["1", "2", "3"]),
         uniqueSignersCount: 1,
         dataPackagesIds: ["ETH"],
         returnAllPackages: false,
@@ -689,7 +696,7 @@ describe("request-data-packages", () => {
       void jest.advanceTimersByTimeAsync(1_200);
       await requestDataPackages({
         ...getReqParams(),
-        urls: ["1", "2", "3"],
+        authenticatedGateways: toAuthenticatedGateways(["1", "2", "3"]),
         uniqueSignersCount: 1,
         dataPackagesIds: ["ETH"],
         returnAllPackages: false,
@@ -710,7 +717,7 @@ describe("request-data-packages", () => {
       void jest.advanceTimersByTimeAsync(650);
       await requestDataPackages({
         ...getReqParams(),
-        urls: ["1", "2", "3"],
+        authenticatedGateways: toAuthenticatedGateways(["1", "2", "3"]),
         uniqueSignersCount: 1,
         dataPackagesIds: ["ETH"],
         returnAllPackages: false,
@@ -736,7 +743,7 @@ describe("request-data-packages", () => {
       const packagesPromise = flattenErrors(
         requestDataPackages({
           ...getReqParams(),
-          urls: ["1", "2", "3"],
+          authenticatedGateways: toAuthenticatedGateways(["1", "2", "3"]),
           uniqueSignersCount: 1,
           dataPackagesIds: ["ETH"],
           returnAllPackages: false,
@@ -766,7 +773,7 @@ describe("request-data-packages", () => {
       void jest.advanceTimersByTimeAsync(21_000);
       await requestDataPackages({
         ...getReqParams(),
-        urls: ["1", "2", "3"],
+        authenticatedGateways: toAuthenticatedGateways(["1", "2", "3"]),
         uniqueSignersCount: 1,
         dataPackagesIds: ["ETH"],
         returnAllPackages: false,
@@ -824,7 +831,9 @@ describe("request-data-packages", () => {
       await requestDataPackages({
         ...getReqParams(),
         storageInstance: storage,
-        urls: ["https://oracle-gateway-1.a.redstone.finance"],
+        authenticatedGateways: toAuthenticatedGateways([
+          "https://oracle-gateway-1.a.redstone.finance",
+        ]),
         historicalTimestamp: MOCK_TIMESTAMP,
       });
 
@@ -902,31 +911,13 @@ describe("request-data-packages", () => {
       expect(apiKey).toBe("my-secret-key");
     });
 
-    it("should fall back to public gateways when authenticated gateway fails", async () => {
-      const axiosGetSpy = jest.spyOn(axios, "get");
-      axiosGetSpy
-        .mockRejectedValueOnce(new Error("auth gw error"))
-        .mockResolvedValueOnce({ data: mockSignedDataPackages });
-
-      const result = await requestDataPackages({
-        ...getReqParams(),
-        authenticatedGateways: [{ url: "https://auth-gw.test", apiKey: "my-secret-key" }],
-        urls: ["https://public-gw.test"],
-      });
-
-      expect(result["ETH"]).toBeDefined();
-      expect(axiosGetSpy).toHaveBeenCalledTimes(2);
-      expect(getAxiosCall(axiosGetSpy, 1).url).toContain("public-gw.test");
-    });
-
-    it("should surface the authenticated gateway error instead of falling back when no public gateways are available (urls: [])", async () => {
+    it("should surface the authenticated gateway error", async () => {
       const axiosGetSpy = jest.spyOn(axios, "get");
       axiosGetSpy.mockRejectedValueOnce(new Error("auth gw 401 unauthorized"));
 
       const error = await requestDataPackages({
         ...getReqParams(),
         authenticatedGateways: [{ url: "https://auth-gw.test", apiKey: "my-secret-key" }],
-        urls: [],
       }).catch((e: unknown) => e);
 
       expect(RedstoneCommon.stringifyError(error)).toContain("auth gw 401 unauthorized");
@@ -1012,7 +1003,6 @@ describe("request-data-packages", () => {
               ...getReqParams(),
               uniqueSignersCount: 1,
               skipSignatureVerification: true,
-              urls: [],
               authenticatedGateways: [gateway],
             })
           )
@@ -1026,7 +1016,7 @@ describe("request-data-packages", () => {
         ]);
       });
 
-      it("should not serve an authenticated all-packages request from a concurrent public-gateway fetch", async () => {
+      it("should not dedup an all-packages request with a concurrent feeds-scoped request", async () => {
         const axiosGetSpy = mockDelayedResponse();
 
         await Promise.all([
@@ -1041,7 +1031,6 @@ describe("request-data-packages", () => {
             authorizedSigners: ["0x4fE51A2963a44Cd3DABB05AEe14b9F9A4652fF6b"],
             skipSignatureVerification: true,
             returnAllPackages: true,
-            urls: [],
             authenticatedGateways: [{ url: "https://auth-gw.test", apiKey: "admin-key" }],
           }),
         ]);
@@ -1058,7 +1047,6 @@ describe("request-data-packages", () => {
           ...getReqParams(),
           uniqueSignersCount: 1,
           skipSignatureVerification: true,
-          urls: [],
           authenticatedGateways: [{ url: "https://auth-gw.test", apiKey: "key" }],
         };
 
