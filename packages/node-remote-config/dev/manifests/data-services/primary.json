@@ -5693,6 +5693,48 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "nOPAL_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-nest"
+      ],
+      "denomination": "USDC",
+      "rateFeed": true
+    },
+    "nALPHA_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-nest"
+      ],
+      "denomination": "USDC",
+      "rateFeed": true
+    },
+    "nBASIS_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-nest"
+      ],
+      "denomination": "USDC",
+      "rateFeed": true
+    },
+    "nFALCON_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-nest"
+      ],
+      "denomination": "USDC",
+      "rateFeed": true
+    },
+    "nONRE_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-nest"
+      ],
+      "denomination": "USDC",
+      "rateFeed": true
+    },
+    "FACTOR_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-nest"
+      ],
+      "denomination": "USDC",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
