@@ -62,12 +62,6 @@
     "secp256k1": "^5.0.1",
     "zod": "^4.1.12"
   },
-  "overrides": {
-    "elliptic": "^6.6.1"
-  },
-  "resolutions": {
-    "elliptic": "^6.6.1"
-  },
   "files": [
     "src",
     "dist"
