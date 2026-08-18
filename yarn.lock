@@ -9234,7 +9234,6 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    elliptic: "npm:^6.6.1"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
@@ -9355,7 +9354,6 @@ __metadata:
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    elliptic: "npm:^6.6.1"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
@@ -9691,6 +9689,7 @@ __metadata:
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    "@types/elliptic": "npm:^6.4.18"
     dotenv: "npm:^16.0.3"
     elliptic: "npm:^6.6.1"
     zod: "npm:^4.1.12"
@@ -13072,7 +13071,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/elliptic@npm:^6.4.9":
+"@types/elliptic@npm:^6.4.18, @types/elliptic@npm:^6.4.9":
   version: 6.4.18
   resolution: "@types/elliptic@npm:6.4.18"
   dependencies:
@@ -19205,7 +19204,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"elliptic@npm:^6.6.1":
+"elliptic@npm:6.6.1, elliptic@npm:^6.4.1, elliptic@npm:^6.5.2, elliptic@npm:^6.5.4, elliptic@npm:^6.5.7, elliptic@npm:^6.6.1":
   version: 6.6.1
   resolution: "elliptic@npm:6.6.1"
   dependencies:
