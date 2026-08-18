@@ -35,9 +35,6 @@
     "TAC": {
       "priceFeedAddress": "0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D"
     },
-    "bmTON_FUNDAMENTAL": {
-      "priceFeedAddress": "0xBf3bA2b090188B40eF83145Be0e9F30C6ca63689"
-    },
     "gTAC_FUNDAMENTAL": {
       "priceFeedAddress": "0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b"
     }
