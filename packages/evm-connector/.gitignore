@@ -10,5 +10,3 @@ artifacts
 # Typechain
 typechain
 typechain-types
-
-test-browser-compatibility/browser-bundle.js

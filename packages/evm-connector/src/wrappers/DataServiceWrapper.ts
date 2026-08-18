@@ -1,10 +1,6 @@
 import { Contract } from "@ethersproject/contracts";
 import { SignedDataPackage } from "@redstone-finance/protocol";
-import {
-  DataPackagesRequestParams,
-  requestDataPackages,
-  resolveDataServiceUrls,
-} from "@redstone-finance/sdk";
+import { DataPackagesRequestParams, requestDataPackages } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { version } from "../../package.json";
 import { BaseWrapper } from "./BaseWrapper";
@@ -47,12 +43,12 @@ export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
       fetchedParams.dataServiceId = await this.getDataServiceIdFromContract();
     }
 
-    if (!this.dataPackagesRequestParams.urls) {
-      fetchedParams.urls = resolveDataServiceUrls(
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- add reason here, please
-        fetchedParams.dataServiceId ?? this.dataPackagesRequestParams.dataServiceId
+    if (!this.dataPackagesRequestParams.authenticatedGateways?.length) {
+      throw new Error(
+        "authenticatedGateways must be provided to DataServiceWrapper's dataPackagesRequestParams"
       );
     }
+    fetchedParams.urls = [];
 
     return fetchedParams;
   }

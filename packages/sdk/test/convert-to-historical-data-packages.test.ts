@@ -19,7 +19,6 @@ describe("convertToHistoricalDataPackagesRequestParams", () => {
 
   const mockRelayerConfig = {
     fallbackOffsetInMilliseconds: 15000,
-    historicalPackagesGateways: ["https://gateway1.com", "https://gateway2.com"],
   };
 
   beforeEach(() => {
@@ -41,29 +40,7 @@ describe("convertToHistoricalDataPackagesRequestParams", () => {
     );
   });
 
-  it("should throw an error if historicalPackagesGateways is not configured", () => {
-    expect(() =>
-      convertToHistoricalDataPackagesRequestParams(mockRequestParams, {
-        ...mockRelayerConfig,
-        historicalPackagesGateways: undefined,
-      })
-    ).toThrow(
-      "Historical packages fetcher for fallback deviation check is not properly configured"
-    );
-  });
-
-  it("should throw an error if historicalPackagesGateways is not an array or is empty", () => {
-    expect(() =>
-      convertToHistoricalDataPackagesRequestParams(mockRequestParams, {
-        ...mockRelayerConfig,
-        historicalPackagesGateways: [],
-      })
-    ).toThrow(
-      "Historical packages fetcher for fallback deviation check is not properly configured"
-    );
-  });
-
-  it("should return requestParams with historicalTimestamp and urls if valid config is provided", () => {
+  it("should return requestParams with historicalTimestamp if valid config is provided", () => {
     const result = convertToHistoricalDataPackagesRequestParams(
       mockRequestParams,
       mockRelayerConfig
@@ -72,7 +49,6 @@ describe("convertToHistoricalDataPackagesRequestParams", () => {
     expect(result).toEqual({
       ...mockRequestParams,
       historicalTimestamp: EXPECTED_HISTORICAL_TIME,
-      urls: mockRelayerConfig.historicalPackagesGateways,
     });
   });
 
@@ -86,7 +62,6 @@ describe("convertToHistoricalDataPackagesRequestParams", () => {
     expect(result).toEqual({
       ...mockRequestParams,
       historicalTimestamp: PREVIOUS_HISTORICAL_TIME,
-      urls: mockRelayerConfig.historicalPackagesGateways,
     });
   });
 
@@ -100,11 +75,10 @@ describe("convertToHistoricalDataPackagesRequestParams", () => {
     expect(result).toEqual({
       ...mockRequestParams,
       historicalTimestamp: PREVIOUS_HISTORICAL_TIME,
-      urls: mockRelayerConfig.historicalPackagesGateways,
     });
   });
 
-  it("should return requestParams with historicalTimestamp and urls if valid config is provided for given base timestamp", () => {
+  it("should return requestParams with historicalTimestamp if valid config is provided for given base timestamp", () => {
     jest.useRealTimers();
 
     const result = convertToHistoricalDataPackagesRequestParams(
@@ -117,7 +91,6 @@ describe("convertToHistoricalDataPackagesRequestParams", () => {
     expect(result).toEqual({
       ...mockRequestParams,
       historicalTimestamp: EXPECTED_HISTORICAL_TIME,
-      urls: mockRelayerConfig.historicalPackagesGateways,
     });
   });
 
@@ -134,7 +107,6 @@ describe("convertToHistoricalDataPackagesRequestParams", () => {
     expect(result).toEqual({
       ...mockRequestParams,
       historicalTimestamp: PREVIOUS_HISTORICAL_TIME,
-      urls: mockRelayerConfig.historicalPackagesGateways,
     });
   });
 });
