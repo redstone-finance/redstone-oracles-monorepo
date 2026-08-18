@@ -23,7 +23,7 @@ const getMockResponseObject = (url: string) => {
   }
 };
 
-export const handlers = [
+const GATEWAY_URLS = [
   "https://oracle-gateway-1.a.redstone.finance",
   "https://oracle-gateway-2.a.redstone.finance",
   "https://good-url-1.com",
@@ -31,14 +31,18 @@ export const handlers = [
   "https://bad-url-1.com",
   "https://bad-url-2.com",
   "http://valid-cache.com",
-].map((url) =>
-  http.get(url + "/v2/data-packages/latest/*", ({ request }) => {
-    if (new URL(request.url).origin.includes("bad-url")) {
-      return new HttpResponse(null, { status: 400 });
-    } else {
-      const responseObject = getMockResponseObject(url);
+];
 
-      return HttpResponse.json(responseObject);
-    }
-  })
+export const handlers = GATEWAY_URLS.flatMap((url) =>
+  ["/v2/data-packages/latest/*", "/v2/data-packages/latest-by-data-feeds/*"].map((path) =>
+    http.get(url + path, ({ request }) => {
+      if (new URL(request.url).origin.includes("bad-url")) {
+        return new HttpResponse(null, { status: 400 });
+      } else {
+        const responseObject = getMockResponseObject(url);
+
+        return HttpResponse.json(responseObject);
+      }
+    })
+  )
 );

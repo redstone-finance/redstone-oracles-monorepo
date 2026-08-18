@@ -2,7 +2,7 @@ import { SignedDataPackage, SignedDataPackagePlainObj } from "@redstone-finance/
 import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
 import { z } from "zod";
 import { RequestDataPackagesLogger } from "./RequestDataPackagesLogger";
-import { resolveAuthenticatedGatewayUrls, resolveDataServiceUrls } from "./data-services-urls";
+import { resolveAuthenticatedGatewayUrls } from "./data-services-urls";
 import { filterAndSelectDataPackages } from "./filter-and-select-data-packages";
 import type { DataPackagesRequestParams } from "./request-data-packages";
 import { DataPackagesResponse, getResponseTimestamp } from "./request-data-packages-common";
@@ -68,30 +68,17 @@ type GatewayTarget = {
 
 async function fetchInStages(reqParams: DataPackagesRequestParams) {
   const authTargets = getAuthGatewayTargets(reqParams);
-  const publicTargets = getUrlsForDataServiceId(reqParams).map<GatewayTarget>((url) => ({ url }));
 
-  if (authTargets.length) {
-    logger.info(
-      `Fetching data packages using ${RedstoneCommon.getNS(authTargets.length, "authenticated gateway")} for ${reqParams.dataServiceId}`
-    );
-    try {
-      return await fetchStaged(reqParams, authTargets);
-    } catch (e) {
-      if (!publicTargets.length) {
-        throw e;
-      }
-      logger.warn(
-        `All authenticated gateways failed, falling back to public gateways. Error: ${RedstoneCommon.stringifyError(e)}`
-      );
-    }
-  }
+  logger.info(
+    `Fetching data packages using ${RedstoneCommon.getNS(authTargets.length, "authenticated gateway")} for ${reqParams.dataServiceId}`
+  );
 
-  return await fetchStaged(reqParams, publicTargets);
+  return await fetchStaged(reqParams, authTargets);
 }
 
 async function fetchStaged(reqParams: DataPackagesRequestParams, targets: GatewayTarget[]) {
   if (targets.length === 0) {
-    throw new Error(`Empty urls array provided. Cannot fetch data packages.`);
+    throw new Error(`Empty authenticatedGateways array provided. Cannot fetch data packages.`);
   }
   if (reqParams.disableMultiPhaseFetching || targets.length === 1) {
     return await fetchWithLogger(reqParams, targets);
@@ -224,15 +211,13 @@ function getPathComponents(reqParams: DataPackagesRequestParams, byDataFeeds = f
 const joinSortedUnique = (values: string[]) => Array.from(new Set(values)).sort().join(",");
 
 function getTargetUrlsKey(reqParams: DataPackagesRequestParams) {
-  const urls = getAuthGatewayUrls(reqParams)
-    .map((url, i) => url ?? `<unresolved-gateway-${i}>`)
-    .concat(reqParams.urls ?? []);
+  const urls = getAuthGatewayUrls(reqParams).map((url, i) => url ?? `<unresolved-gateway-${i}>`);
 
   return `urls[${joinSortedUnique(urls)}]`;
 }
 
 function getScopeKey(reqParams: DataPackagesRequestParams) {
-  if (!reqParams.authenticatedGateways?.length || reqParams.returnAllPackages) {
+  if (!reqParams.authenticatedGateways.length || reqParams.returnAllPackages) {
     return "all-packages";
   }
 
@@ -245,7 +230,7 @@ const prepareDataPackagePromises = (
 ): Promise<DataPackagesResponse>[] => targets.map((t) => fetchFromGateway(t, reqParams));
 
 function getAuthGatewayUrls(reqParams: DataPackagesRequestParams): (string | undefined)[] {
-  if (!reqParams.authenticatedGateways?.length) {
+  if (!reqParams.authenticatedGateways.length) {
     return [];
   }
   const defaultUrls = resolveAuthenticatedGatewayUrls(reqParams.dataServiceId);
@@ -263,7 +248,7 @@ function getAuthGatewayTargets(reqParams: DataPackagesRequestParams): GatewayTar
 
     return {
       url,
-      headers: { "x-api-key": reqParams.authenticatedGateways![i].apiKey },
+      headers: { "x-api-key": reqParams.authenticatedGateways[i].apiKey },
       byDataFeeds: !reqParams.returnAllPackages,
     };
   });
@@ -287,16 +272,6 @@ const parseGwResponse = (responseData: unknown): DataPackagesResponse => {
         .filter(RedstoneCommon.isDefined);
 
       return [dataFeedId, signedDataPackages?.length ? signedDataPackages : undefined];
-    })
-  );
-};
-
-const getUrlsForDataServiceId = (reqParams: DataPackagesRequestParams): string[] => {
-  return (
-    reqParams.urls ??
-    resolveDataServiceUrls(reqParams.dataServiceId, {
-      historical: !!reqParams.historicalTimestamp,
-      metadata: reqParams.hideMetadata === false,
     })
   );
 };

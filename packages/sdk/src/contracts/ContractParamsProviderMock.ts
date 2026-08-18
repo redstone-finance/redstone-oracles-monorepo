@@ -17,6 +17,7 @@ export class ContractParamsProviderMock extends ContractParamsProvider {
       dataServiceId: "",
       dataPackagesIds: dataFeeds,
       authorizedSigners: [],
+      authenticatedGateways: [{ apiKey: "mock-api-key" }],
     });
   }
 

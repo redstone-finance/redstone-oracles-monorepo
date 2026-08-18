@@ -48,7 +48,6 @@ export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
         "authenticatedGateways must be provided to DataServiceWrapper's dataPackagesRequestParams"
       );
     }
-    fetchedParams.urls = [];
 
     return fetchedParams;
   }
