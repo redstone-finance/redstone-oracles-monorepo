@@ -313,6 +313,17 @@
         "s3"
       ],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:BTC-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_hyna:BTC": {
@@ -571,6 +582,17 @@
         "hyperliquid-hip3",
         "influx",
         "s3"
+      ],
+      "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:ETH-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -833,6 +855,17 @@
         "s3"
       ],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:BNB-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_hyna:BNB": {
@@ -1091,6 +1124,17 @@
         "hyperliquid-hip3",
         "influx",
         "s3"
+      ],
+      "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:HYPE-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1353,6 +1397,17 @@
         "s3"
       ],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:SOL-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_hyna:SOL": {
@@ -1611,6 +1666,17 @@
         "hyperliquid-hip3",
         "influx",
         "s3"
+      ],
+      "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:XRP-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1873,6 +1939,17 @@
         "s3"
       ],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:1000PEPE-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_hyna:1000PEPE": {
@@ -2131,6 +2208,17 @@
         "hyperliquid-hip3",
         "influx",
         "s3"
+      ],
+      "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:ZEC-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2393,6 +2481,17 @@
         "s3"
       ],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:FARTCOIN-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_hyna:FARTCOIN": {
@@ -2651,6 +2750,17 @@
         "hyperliquid-hip3",
         "influx",
         "s3"
+      ],
+      "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:LINK-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2913,6 +3023,17 @@
         "s3"
       ],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:SUI-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_hyna:SUI": {
@@ -3171,6 +3292,17 @@
         "hyperliquid-hip3",
         "influx",
         "s3"
+      ],
+      "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:DOGE-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3433,6 +3565,17 @@
         "s3"
       ],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:XPL-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_hyna:XPL": {
@@ -3693,6 +3836,17 @@
         "s3"
       ],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:ADA-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_hyna:ADA": {
@@ -3949,6 +4103,17 @@
         "hyperliquid-hip3",
         "influx",
         "s3"
+      ],
+      "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:PUMP-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4211,6 +4376,17 @@
         "s3"
       ],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:LTC-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_hyna:LTC": {
@@ -4469,6 +4645,17 @@
         "hyperliquid-hip3",
         "influx",
         "s3"
+      ],
+      "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:ENA-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4735,6 +4922,17 @@
         "hyperliquid-hip3",
         "influx",
         "s3"
+      ],
+      "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "hyna:BASED-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "broadcasters": [
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
