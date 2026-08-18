@@ -2060,19 +2060,6 @@
         }
       }
     },
-    "bmTON_FUNDAMENTAL": {
-      "source": [
-        "ton-staked"
-      ],
-      "denomination": "TON",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 0.1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
     "SWELL": {
       "source": [
         "bitget-usdt",

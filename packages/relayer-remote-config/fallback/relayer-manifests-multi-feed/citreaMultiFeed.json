@@ -20,13 +20,6 @@
     "USDT": {
       "priceFeedAddress": "0x4aF6b78d92432D32E3a635E824d3A541866f7a78"
     },
-    "aUSD": {
-      "priceFeedAddress": "0xf1454949C6dEdfb500ae63Aa6c784Aa1Dde08A6c",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
     "ETH": {
       "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc"
     }
