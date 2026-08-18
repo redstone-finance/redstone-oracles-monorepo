@@ -191,24 +191,16 @@ export function convertToHistoricalDataPackagesRequestParams(
   requestParams: DataPackagesRequestParams,
   config: {
     fallbackOffsetInMilliseconds: number;
-    historicalPackagesGateways?: string[];
   },
   latestDataPackagesTimestamp?: number,
   baseTimestamp?: number
 ) {
-  const { fallbackOffsetInMilliseconds, historicalPackagesGateways } = config;
+  const { fallbackOffsetInMilliseconds } = config;
 
-  if (
-    !fallbackOffsetInMilliseconds ||
-    !historicalPackagesGateways ||
-    !Array.isArray(historicalPackagesGateways) ||
-    !historicalPackagesGateways.length
-  ) {
+  if (!fallbackOffsetInMilliseconds) {
     throw new Error(
       `Historical packages fetcher for fallback deviation check is not properly configured: ` +
-        `offset=${fallbackOffsetInMilliseconds} milliseconds., gateways=${JSON.stringify(
-          historicalPackagesGateways
-        )}, isArray=${Array.isArray(historicalPackagesGateways)} `
+        `offset=${fallbackOffsetInMilliseconds} milliseconds.`
     );
   }
 
@@ -226,6 +218,5 @@ export function convertToHistoricalDataPackagesRequestParams(
   return {
     ...requestParams,
     historicalTimestamp,
-    urls: historicalPackagesGateways,
   };
 }
