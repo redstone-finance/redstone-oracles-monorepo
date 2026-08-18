@@ -20,9 +20,14 @@ const checkExpectedValues = async (contract: SampleRedstoneConsumerNumericMockMa
   expect(secondValueFromContract.toNumber()).to.be.equal(expectedNumericValues["BTC"]);
 };
 
+const DEFAULT_GATEWAY_URLS = ["http://valid-cache.com"];
+
+const toAuthenticatedGateways = (urls: string[]) =>
+  urls.map((url) => ({ url, apiKey: "test-api-key" }));
+
 const runTest = async (
   contract: SampleRedstoneConsumerNumericMockManyDataFeeds,
-  urls?: string[],
+  urls: string[] = [],
   dataServiceId?: string,
   uniqueSignersCount?: number,
   authorizedSigners?: string[]
@@ -31,7 +36,7 @@ const runTest = async (
     dataServiceId,
     uniqueSignersCount,
     dataPackagesIds: ["ETH", "BTC"],
-    urls,
+    authenticatedGateways: toAuthenticatedGateways(urls),
     authorizedSigners: authorizedSigners ?? MOCK_SIGNERS.map((s) => s.address),
   });
 
@@ -86,10 +91,6 @@ describe("DataServiceWrapper", () => {
       );
     });
 
-    it("Should get urls from @redstone-finance/protocol if not provided", async () => {
-      await runTest(contract, undefined, "mock-data-service-tests");
-    });
-
     it("Should fail if contract doesn't expose getDataServiceId and dataServiceId is not passed", async () => {
       await expect(runTest(contract, undefined, undefined)).rejectedWith();
     });
@@ -112,7 +113,7 @@ describe("DataServiceWrapper", () => {
         dataServiceId: "mock-data-service-tests",
         uniqueSignersCount: 10,
         dataPackagesIds: ["ETH", "BTC"],
-        urls: ["http://valid-cache.com"],
+        authenticatedGateways: toAuthenticatedGateways(DEFAULT_GATEWAY_URLS),
         authorizedSigners: MOCK_SIGNERS.map((s) => s.address),
       });
       const payload = await wrapper.getRedstonePayloadForManualUsage(contract);
@@ -135,18 +136,8 @@ describe("DataServiceWrapper", () => {
       await runTest(contract, ["http://valid-cache.com"]);
     });
 
-    it("Should work without passed urls", async () => {
-      await runTest(contract);
-    });
-
-    it("Should throw on not supported data-service id", async () => {
-      await expect(runTest(contract, undefined, "wrong-service-id")).rejectedWith(
-        "Data service wrong-service-id is not configured by RedStone protocol"
-      );
-    });
-
     it("Should work with dataServiceId passed explicit", async () => {
-      await runTest(contract, undefined, "mock-data-service-tests");
+      await runTest(contract, DEFAULT_GATEWAY_URLS, "mock-data-service-tests");
     });
 
     it("Should work with dataServiceId and urls passed explicit", async () => {
@@ -156,6 +147,7 @@ describe("DataServiceWrapper", () => {
     it("Should work with manual payload without passed params", async () => {
       const wrapper = new DataServiceWrapper({
         dataPackagesIds: ["ETH", "BTC"],
+        authenticatedGateways: toAuthenticatedGateways(DEFAULT_GATEWAY_URLS),
         authorizedSigners: MOCK_SIGNERS.map((s) => s.address),
       });
       const payload = await wrapper.getRedstonePayloadForManualUsage(contract);
