@@ -65,12 +65,6 @@
     "solidity-coverage": "^0.8.12",
     "typechain": "^8.1.1"
   },
-  "overrides": {
-    "elliptic": "^6.6.1"
-  },
-  "resolutions": {
-    "elliptic": "^6.6.1"
-  },
   "files": [
     "src",
     "dist",
