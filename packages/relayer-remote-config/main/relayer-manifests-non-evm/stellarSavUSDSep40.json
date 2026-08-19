@@ -1,0 +1,22 @@
+{
+  "adapterContractType": "multi-feed",
+  "chain": {
+    "name": "stellar-mainnet",
+    "id": "stellar/1"
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.2,
+    "timeSinceLastUpdateInMilliseconds": 43200000
+  },
+  "adapterContract": "CBVKPBQVZEG5OQFAAY3W4ISJ77BK76OWKUWXVEUFK2RMX6LT2Q6E2NA6",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "savUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "CBVKPBQVZEG5OQFAAY3W4ISJ77BK76OWKUWXVEUFK2RMX6LT2Q6E2NA6",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    }
+  }
+}
