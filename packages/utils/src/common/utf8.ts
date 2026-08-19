@@ -1,9 +1,8 @@
 import { arrayify, BytesLike, hexlify } from "./hex";
 
-const TRAILING_NULLS_REGEXP = /\0+$/;
 const BYTES32_LENGTH = 32;
 const UTF8_ENCODER = new TextEncoder();
-const UTF8_DECODER = new TextDecoder();
+const UTF8_DECODER = new TextDecoder("utf-8", { fatal: true });
 
 export function toUtf8Bytes(text: string) {
   return UTF8_ENCODER.encode(text);
@@ -14,7 +13,20 @@ export function toUtf8String(value: BytesLike) {
 }
 
 export function parseBytes32String(value: BytesLike) {
-  return toUtf8String(value).replace(TRAILING_NULLS_REGEXP, "");
+  const bytes = arrayify(value);
+  if (bytes.length !== BYTES32_LENGTH) {
+    throw new Error(`invalid bytes32 - not ${BYTES32_LENGTH} bytes long: ${hexlify(bytes)}`);
+  }
+  if (bytes[BYTES32_LENGTH - 1] !== 0) {
+    throw new Error(`invalid bytes32 string - no null terminator: ${hexlify(bytes)}`);
+  }
+
+  let length = BYTES32_LENGTH - 1;
+  while (bytes[length - 1] === 0) {
+    length--;
+  }
+
+  return toUtf8String(bytes.slice(0, length));
 }
 
 export function formatBytes32String(text: string) {

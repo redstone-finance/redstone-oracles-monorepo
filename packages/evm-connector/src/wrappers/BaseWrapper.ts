@@ -2,6 +2,7 @@ import { FunctionFragment } from "@ethersproject/abi";
 import { Signer } from "@ethersproject/abstract-signer";
 import { Contract } from "@ethersproject/contracts";
 import { RedstonePayload, SignedDataPackage } from "@redstone-finance/protocol";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { addContractWait } from "../helpers/add-contract-wait";
 
 interface OverwriteFunctionArgs<T extends Contract> {
@@ -13,7 +14,8 @@ interface OverwriteFunctionArgs<T extends Contract> {
 export type PopulatableContract = {
   populateTransaction: Record<
     string,
-    (...args: unknown[]) => Promise<{ to?: string; data: string }>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- narrower parameters stop concretely typed contract methods from satisfying the index signature
+    (...args: any[]) => Promise<{ to?: string; data?: string }>
   >;
 };
 
@@ -118,6 +120,10 @@ export abstract class BaseWrapper<T extends Contract> {
           (_target, functionName: string) =>
           async (...args: unknown[]) => {
             const originalTx = await contract.populateTransaction[functionName](...args);
+            RedstoneCommon.assert(
+              RedstoneCommon.isDefined(originalTx.data),
+              `populateTransaction.${functionName} returned no calldata`
+            );
             const dataToAppend = await this.getBytesDataForAppending();
 
             return { ...originalTx, data: originalTx.data + dataToAppend };

@@ -57,8 +57,16 @@ describe("utils/utf8", () => {
       expect(parseBytes32String(BYTES32_HEX)).toBe(TEXT);
     });
 
-    it("should leave an unpadded value untouched", () => {
-      expect(parseBytes32String(TEXT_HEX)).toBe(TEXT);
+    it("should throw when the value is not 32 bytes long", () => {
+      expect(() => parseBytes32String(TEXT_HEX)).toThrow("not 32 bytes long");
+    });
+
+    it("should throw when the value has no null terminator", () => {
+      expect(() => parseBytes32String(`0x${"41".repeat(32)}`)).toThrow("no null terminator");
+    });
+
+    it("should throw on invalid utf-8", () => {
+      expect(() => parseBytes32String(`0xff${"00".repeat(31)}`)).toThrow();
     });
   });
 });

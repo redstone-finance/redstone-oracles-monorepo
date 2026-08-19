@@ -23,6 +23,6 @@ describe("wrapPopulatableContract (v5/v6 abstraction path)", () => {
 
     expect(tx.to).to.equal(TARGET);
     expect(tx.data).to.equal(ORIGINAL_DATA + expectedPayload);
-    expect(tx.data.endsWith(REDSTONE_MARKER)).to.equal(true);
+    expect(tx.data?.endsWith(REDSTONE_MARKER)).to.equal(true);
   });
 });
