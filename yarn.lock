@@ -8337,6 +8337,7 @@ __metadata:
     "@redstone-finance/canton-connector": "workspace:*"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/evm-adapters": "workspace:*"
+    "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/move-connector": "workspace:*"
     "@redstone-finance/multichain-kit": "workspace:*"

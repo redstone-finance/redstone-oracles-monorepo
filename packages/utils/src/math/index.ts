@@ -67,6 +67,9 @@ export const getMedianOfBigInts = (values: bigint[]) => {
 export const scaleBigInt = (value: bigint, multiplier: number) =>
   BigInt(new Decimal(value.toString()).mul(multiplier).toFixed(0));
 
+export const scaleBigIntUp = (value: bigint, multiplier: number) =>
+  BigInt(new Decimal(value.toString()).mul(multiplier).toFixed(0, Decimal.ROUND_CEIL));
+
 export class PrecisionScaler {
   readonly tokenDecimalsScaler: Decimal;
 
