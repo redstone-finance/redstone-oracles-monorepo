@@ -11,13 +11,15 @@ export class UnrecoverableError extends Error {
 
 export function assert(value: unknown, errMsg: string, unrecoverable = false): asserts value {
   if (!value) {
-    throw new (unrecoverable ? UnrecoverableError : Error)(`Assertion failed: ${errMsg}`);
+    throw new (unrecoverable ? UnrecoverableError : Error)(
+      sanitizeLogMessage(`Assertion failed: ${errMsg}`)
+    );
   }
 }
 
 export function assertThenReturn<T>(value: T | undefined, errMsg: string) {
   if (!value) {
-    throw new Error(`Assertion failed: ${errMsg}`);
+    throw new Error(sanitizeLogMessage(`Assertion failed: ${errMsg}`));
   }
 
   return value;

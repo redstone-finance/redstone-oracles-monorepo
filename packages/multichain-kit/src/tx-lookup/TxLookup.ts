@@ -84,3 +84,7 @@ export interface TxLookup<C = unknown> {
 export interface BlockchainServiceWithTxLookup extends BlockchainService {
   readonly txLookup: TxLookup;
 }
+
+export function hasTxLookup(service: BlockchainService): service is BlockchainServiceWithTxLookup {
+  return "txLookup" in service;
+}
