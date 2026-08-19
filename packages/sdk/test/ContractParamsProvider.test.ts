@@ -55,6 +55,19 @@ describe("ContractParamsProvider tests", () => {
     ]);
   });
 
+  it("should unhexlify both unpadded and bytes32-padded feed IDs", () => {
+    const feedIds = sut.getDataFeedIds();
+
+    expect(
+      sut.getHexlifiedFeedIds().map((feedId) => ContractParamsProvider.unhexlifyFeedId(feedId))
+    ).toEqual(feedIds);
+    expect(
+      sut
+        .getHexlifiedFeedIdsAsBytes32()
+        .map((feedId) => ContractParamsProvider.unhexlifyFeedId(feedId))
+    ).toEqual(feedIds);
+  });
+
   it("should return data feed IDs", () => {
     expect(sut.getDataFeedIds()).toEqual(mockRequestParams.dataPackagesIds);
 

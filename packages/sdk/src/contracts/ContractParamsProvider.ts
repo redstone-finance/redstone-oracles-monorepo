@@ -17,6 +17,7 @@ import { convertDataPackagesResponse } from "../request-redstone-payload";
 export const DEFAULT_COMPONENT_NAME = "data-packages-wrapper";
 
 const BYTES32_HEX_LENGTH = 32 * 2 + "0x".length;
+const TRAILING_NULLS_REGEXP = /\0+$/;
 
 export type SplitPayloads<T> = {
   [p: string]: T;
@@ -90,7 +91,7 @@ export class ContractParamsProvider {
   }
 
   static unhexlifyFeedId(hexlifiedFeedId: RedstoneCommon.BytesLike) {
-    return RedstoneCommon.parseBytes32String(hexlifiedFeedId);
+    return RedstoneCommon.toUtf8String(hexlifiedFeedId).replace(TRAILING_NULLS_REGEXP, "");
   }
 
   static arrayifyFeedId(feedId: string) {
