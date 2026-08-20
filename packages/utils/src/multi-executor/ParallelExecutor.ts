@@ -8,16 +8,23 @@ export abstract class ParallelExecutor<R> extends Executor<R> {
     super();
   }
 
-  protected static getModes<R>(results: R[]) {
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- subclasses vote on a projection of the result
+  protected voteKey(result: R): unknown {
+    return result;
+  }
+
+  protected getModes(results: R[]) {
     if (results.length === 0) {
       return undefined;
     }
 
-    const uniqueElements = _.uniqWith(results, (left, right) => _.isEqual(left, right));
-    const counts = uniqueElements.map((item) => ({
-      item,
-      count: results.filter((d) => _.isEqual(d, item)).length,
-    }));
+    const keyed = results.map((item) => ({ item, key: this.voteKey(item) }));
+    const counts = _.uniqWith(keyed, (left, right) => _.isEqual(left.key, right.key)).map(
+      ({ item, key }) => ({
+        item,
+        count: keyed.filter((candidate) => _.isEqual(candidate.key, key)).length,
+      })
+    );
 
     const maxCount = _.maxBy(counts, "count")?.count ?? 0;
 
