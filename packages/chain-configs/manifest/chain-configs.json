@@ -1216,7 +1216,11 @@
         "address": "0x20c0000000000000000000000000000000000001",
         "decimals": 6
       },
-      "publicRpcUrls": ["https://rpc.moderato.tempo.xyz"],
+      "publicRpcUrls": [
+        "https://rpc.testnet.tempo.xyz",
+        "https://lb.routeme.sh/rpc/evm/42431",
+        "https://rpc.moderato.tempo.xyz"
+      ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "0x52f530e1d42BdFeF939729C341Ed714698a993f7",
