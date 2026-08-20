@@ -549,6 +549,48 @@
     "HINC_ETHEREUM_FUNDAMENTAL": {
       "priceFeedAddress": "0x1969C04b3fACA070690d05FA3A7782Db8724762e",
       "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "nOPAL_FUNDAMENTAL": {
+      "priceFeedAddress": "0x1b2aA45CC3e7a88Bb0496c1e3e389bA11C208389",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "nALPHA_FUNDAMENTAL": {
+      "priceFeedAddress": "0xbAacCa3D7E7056549a3654DbBe9e265aC0821920",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "nBASIS_FUNDAMENTAL": {
+      "priceFeedAddress": "0x8e08eCDD285EB3527Ce492e1922BF24853777fd5",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "nFALCON_FUNDAMENTAL": {
+      "priceFeedAddress": "0xa3b77dDB9c3e0F0C397625633Fc202537F35017d",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "nONRE_FUNDAMENTAL": {
+      "priceFeedAddress": "0x17D086063c1D990BC366fe6233ad502bd6E20131",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "FACTOR_FUNDAMENTAL": {
+      "priceFeedAddress": "0x2DcFC1DC51eD0d16334Ed81831d6a457f2c98650",
+      "updateTriggersOverrides": {
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
