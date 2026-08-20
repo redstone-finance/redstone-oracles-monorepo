@@ -124,8 +124,8 @@
     "HINC_AVALANCHE_FUNDAMENTAL": {
       "priceFeedAddress": "0xC9e11c60e24BEF478cC999fA9fA2d89cC098A86e",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 43200000
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
       }
     }
   }
