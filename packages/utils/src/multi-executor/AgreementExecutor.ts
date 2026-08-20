@@ -11,7 +11,7 @@ export class AgreementExecutor<R> extends ParallelExecutor<R> {
   }
 
   public override aggregate(results: R[]): R {
-    const modes = ParallelExecutor.getModes(results);
+    const modes = this.getModes(results);
     this.logger.debug(`Found modes: ${stringify(modes)}`);
 
     if (!modes) {
@@ -32,7 +32,7 @@ export class AgreementExecutor<R> extends ParallelExecutor<R> {
   }
 
   public verifySettlements(successfulResults: R[], errorResults: unknown[], totalLength: number) {
-    const modes = ParallelExecutor.getModes(successfulResults);
+    const modes = this.getModes(successfulResults);
     const quorum = this.getQuorum(totalLength);
     const maxCount = modes?.[0]?.count ?? 0;
     const isEnough = maxCount >= quorum;
