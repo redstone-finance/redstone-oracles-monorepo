@@ -78,6 +78,8 @@ export const msToMin = (ms: number) => ms / 60_000;
 export const hourToMin = (fullHour: number, minRemainder: number = 0) =>
   fullHour * 60 + minRemainder;
 
+export const secToMs = (sec: number) => sec * 1_000;
+
 export const minToMs = (min: number) => min * 60_000;
 
 export const hourToMs = (hours: number) => hours * 3_600_000;
