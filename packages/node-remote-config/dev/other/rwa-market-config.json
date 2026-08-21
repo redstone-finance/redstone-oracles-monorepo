@@ -81,6 +81,10 @@
   "AXTI": "UsEquity",
   "DRAM": "UsEquity",
 
+  "AAPL---EXTENDED": "UsEquityExtendedHours",
+  "TSLA---EXTENDED": "UsEquityExtendedHours",
+  "NVDA---EXTENDED": "UsEquityExtendedHours",
+
   "KOSPI": "Krx",
   "KOSPI200": "Krx",
   "SAMSUNG": "Krx",
