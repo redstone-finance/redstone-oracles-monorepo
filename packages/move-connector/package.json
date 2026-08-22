@@ -48,14 +48,6 @@
     "lodash": "^4.17.23",
     "zod": "^4.1.12"
   },
-  "devDependencies": {
-    "@ledgerhq/hw-app-aptos": "^6.31.0",
-    "@ledgerhq/hw-transport-node-hid": "^6.29.5",
-    "@types/chai": "^4.3.4",
-    "@types/prompts": "^2.4.2",
-    "chai": "^4.3.10",
-    "prompts": "^2.4.2"
-  },
   "files": [
     "src",
     "dist/src/**/*"

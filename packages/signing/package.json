@@ -28,9 +28,6 @@
     "@ethersproject/wallet": "^5.7.0",
     "secp256k1": "^5.0.1"
   },
-  "devDependencies": {
-    "@types/secp256k1": "^4.0.6"
-  },
   "files": [
     "src",
     "dist"

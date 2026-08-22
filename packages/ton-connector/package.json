@@ -50,11 +50,6 @@
     "@ton/sandbox": "^0.44.0",
     "@ton/ton": "^16.3.0"
   },
-  "devDependencies": {
-    "@tact-lang/compiler": "^1.6.13",
-    "@ton/test-utils": "^0.12.0",
-    "@ton/tolk-js": "^1.4.2"
-  },
   "files": [
     "src",
     "dist",

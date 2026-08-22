@@ -26,10 +26,6 @@
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*"
   },
-  "devDependencies": {
-    "@ethersproject/wallet": "^5.7.0",
-    "dotenv": "^16.0.3"
-  },
   "files": [
     "dist/src/**/*"
   ],
