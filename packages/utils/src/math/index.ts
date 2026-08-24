@@ -49,6 +49,12 @@ export const getMaxOfBigInts = (values: bigint[]) => {
   return values.reduce((max, value) => (value > max ? value : max));
 };
 
+export const getMinOfBigInts = (values: bigint[]) => {
+  assert(values.length > 0, "Cannot get min of an empty array");
+
+  return values.reduce((min, value) => (value < min ? value : min));
+};
+
 export const getMedianOfBigInts = (values: bigint[]) => {
   assert(values.length > 0, "Cannot get median value of an empty array");
 
