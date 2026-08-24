@@ -8316,7 +8316,7 @@ __metadata:
     chalk: "npm:^4.1.2"
     dayjs: "npm:^1.11.12"
     dotenv: "npm:^16.0.3"
-    ethers-v6: "npm:ethers@6.13.5"
+    ethers-v6: "npm:ethers@^6"
     lodash: "npm:^4.17.23"
     mocha: "npm:^11"
     zod: "npm:^4.1.12"
@@ -8561,7 +8561,7 @@ __metadata:
     chai: "npm:^4.3.10"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
-    ethers-v6: "npm:ethers@6.13.5"
+    ethers-v6: "npm:ethers@^6"
     hardhat: "npm:^2.28.6"
     msw: "npm:^2.4.10"
   languageName: unknown
