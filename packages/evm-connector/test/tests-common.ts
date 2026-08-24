@@ -93,8 +93,13 @@ export const expectedBytesValues = {
 export const UNAUTHORISED_SIGNER_INDEX = 19;
 
 export const getBlockTimestampMilliseconds = async () => {
-  const blockNum = await ethers.provider.getBlockNumber();
-  const block = await ethers.provider.getBlock(blockNum);
+  const provider = hardhatV5Provider();
+  const blockNum = await provider.getBlockNumber();
+  const block = await provider.getBlock(blockNum);
 
   return block.timestamp * 1000;
 };
+
+export function hardhatV5Provider() {
+  return ethers.provider;
+}

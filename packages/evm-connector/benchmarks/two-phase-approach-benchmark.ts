@@ -9,6 +9,7 @@ import {
 } from "../src/helpers/test-utils";
 import { WrapperBuilder } from "../src/index";
 import { MockDataPackageConfig } from "../src/wrappers/MockWrapper";
+import { hardhatV5Provider } from "../test/tests-common";
 import { HashCalldataModel, StorageStructureModel } from "../typechain-types";
 
 interface BenchmarkTestCaseParams {
@@ -182,8 +183,9 @@ describe("Benchmark", function () {
       const requestHashTx = await sendHashRequestFunction(...bytes32Symbols);
       const requestHashTxReceipt = await requestHashTx.wait();
 
-      const blockNumber = await ethers.provider.getBlockNumber();
-      const sender = await ethers.provider.getSigner(0).getAddress();
+      const provider = hardhatV5Provider();
+      const blockNumber = await provider.getBlockNumber();
+      const sender = await provider.getSigner(0).getAddress();
       const executeRequestHashTx = await executeHashRequestFunction(
         blockNumber,
         sender,
