@@ -1,4 +1,5 @@
 export * from "./keys";
+export * from "./parse-transaction";
 export * from "./personal-message";
 export * from "./signature";
 export * from "./transaction-signer";
