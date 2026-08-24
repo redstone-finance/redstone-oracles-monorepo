@@ -1,5 +1,5 @@
 import { arrayify, hexlify } from "@ethersproject/bytes";
-import { Wallet } from "@ethersproject/wallet";
+import { publicKeyFromPrivateKey } from "@redstone-finance/signing";
 import { publicKeyConvert } from "secp256k1";
 import { makeRadixClient, NETWORK, PRIVATE_KEY } from "./constants";
 
@@ -14,11 +14,9 @@ async function main() {
   console.log("Radix Public Key:", client.getPublicKeyHex());
   console.log("Radix Account Address:", await client.getAccountAddress());
 
-  const wallet = new Wallet(PRIVATE_KEY.value);
-  console.log("EVM Uncompressed Public Key:", wallet.publicKey);
-  const uncompressedPublicKey = hexlify(
-    publicKeyConvert(arrayify(wallet.publicKey), true)
-  ).substring(2);
+  const publicKey = publicKeyFromPrivateKey(PRIVATE_KEY.value);
+  console.log("EVM Uncompressed Public Key:", publicKey);
+  const uncompressedPublicKey = hexlify(publicKeyConvert(arrayify(publicKey), true)).substring(2);
   console.log("EVM Compressed Public Key:", uncompressedPublicKey);
 
   console.log(

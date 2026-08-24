@@ -4,7 +4,7 @@ import chaiAsPromised from "chai-as-promised";
 import { ethers } from "hardhat";
 import { WrapperBuilder } from "../../src/index";
 import { SampleRedstoneConsumerNumericMock } from "../../typechain-types";
-import { mockNumericPackages } from "../tests-common";
+import { hardhatV5Provider, mockNumericPackages } from "../tests-common";
 
 chai.use(chaiAsPromised);
 
@@ -21,7 +21,7 @@ describe("SignerOrProviderTest", function () {
   });
 
   it("Should call static function without signer", async () => {
-    const contract = deployedContract.connect(ethers.provider);
+    const contract = deployedContract.connect(hardhatV5Provider());
 
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
@@ -31,7 +31,7 @@ describe("SignerOrProviderTest", function () {
   });
 
   it("Should revert with non-static function without signer", async () => {
-    const contract = deployedContract.connect(ethers.provider);
+    const contract = deployedContract.connect(hardhatV5Provider());
 
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
