@@ -1,5 +1,4 @@
-import { parse } from "@ethersproject/transactions";
-import { addressFromPrivateKey, signTransaction } from "../src";
+import { addressFromPrivateKey, parseSignedTransaction, signTransaction } from "../src";
 
 const PRIVATE_KEY_FOR_TESTS = "0x1111111111111111111111111111111111111111111111111111111111111111";
 
@@ -17,7 +16,7 @@ describe("signTransaction", () => {
 
   test("Should sign a transaction recoverable to the private key address", async () => {
     const serialized = await signTransaction(transaction, PRIVATE_KEY_FOR_TESTS);
-    const parsed = parse(serialized);
+    const parsed = parseSignedTransaction(serialized);
 
     expect(parsed.from).toBe(addressFromPrivateKey(PRIVATE_KEY_FOR_TESTS));
     expect(parsed.to).toBe(transaction.to);

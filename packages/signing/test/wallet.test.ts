@@ -1,10 +1,10 @@
 import { arrayify } from "@ethersproject/bytes";
-import { parse } from "@ethersproject/transactions";
 import { Wallet as EthersWallet } from "@ethersproject/wallet";
 import {
   addressFromPrivateKey,
   createWallet,
   hashTypedData,
+  parseSignedTransaction,
   signTransaction,
   UniversalSigner,
 } from "../src";
@@ -80,7 +80,7 @@ describe("Wallet", () => {
     const serialized = await wallet.signTransaction(TRANSACTION);
 
     expect(serialized).toBe(await signTransaction(TRANSACTION, PRIVATE_KEY_FOR_TESTS));
-    expect(parse(serialized).from).toBe(wallet.address);
+    expect(parseSignedTransaction(serialized).from).toBe(wallet.address);
   });
 
   test("Should be immutable", () => {
