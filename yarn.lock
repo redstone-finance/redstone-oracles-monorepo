@@ -80,17 +80,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adraffy/ens-normalize@npm:1.10.1":
-  version: 1.10.1
-  resolution: "@adraffy/ens-normalize@npm:1.10.1"
-  checksum: 10c0/fdd647604e8fac6204921888aaf5a6bc65eabf0d2921bc5f93b64d01f4bc33ead167c1445f7de05468d05cd92ac31b74c68d2be840c62b79d73693308f885c06
-  languageName: node
-  linkType: hard
-
-"@adraffy/ens-normalize@npm:^1.10.1":
-  version: 1.11.0
-  resolution: "@adraffy/ens-normalize@npm:1.11.0"
-  checksum: 10c0/5111d0f1a273468cb5661ed3cf46ee58de8f32f84e2ebc2365652e66c1ead82649df94c736804e2b9cfa831d30ef24e1cc3575d970dbda583416d3a98d8870a6
+"@adraffy/ens-normalize@npm:1.11.1, @adraffy/ens-normalize@npm:^1.10.1":
+  version: 1.11.1
+  resolution: "@adraffy/ens-normalize@npm:1.11.1"
+  checksum: 10c0/b364e2a57131db278ebf2f22d1a1ac6d8aea95c49dd2bbbc1825870b38aa91fd8816aba580a1f84edc50a45eb6389213dacfd1889f32893afc8549a82d304767
   languageName: node
   linkType: hard
 
@@ -8232,7 +8225,7 @@ __metadata:
     class-transformer: "npm:^0.5.1"
     class-validator: "npm:^0.14.0"
     dotenv: "npm:^16.0.3"
-    ethers-v6: "npm:ethers@6.13.5"
+    ethers-v6: "npm:ethers@^6"
     express: "npm:^4.18.1"
     graphql: "npm:^16.8.1"
     graphql-request: "npm:^5.2.0"
@@ -10010,7 +10003,7 @@ __metadata:
     async-mutex: "npm:^0.5.0"
     decimal.js: "npm:^10.4.3"
     dotenv: "npm:^16.0.3"
-    ethers-v6: "npm:ethers@6.13.5"
+    ethers-v6: "npm:ethers@^6"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
@@ -10096,7 +10089,7 @@ __metadata:
     axios: "npm:^1.19"
     decimal.js: "npm:^10.4.3"
     dotenv: "npm:^16.0.3"
-    ethers-v6: "npm:ethers@6.13.5"
+    ethers-v6: "npm:ethers@^6"
     express: "npm:^4.18.1"
     google-auth-library: "npm:^10.3.0"
     hyparquet: "npm:^1.27.1"
@@ -10361,7 +10354,7 @@ __metadata:
     chai: "npm:^4.3.10"
     chai-as-promised: "npm:^7.1.1"
     ethers: "npm:^5.7.2"
-    ethers-v6: "npm:ethers@6.13.5"
+    ethers-v6: "npm:ethers@^6"
     hardhat: "npm:^2.28.6"
     hardhat-gas-reporter: "npm:^1.0.9"
     lodash: "npm:^4.17.23"
@@ -10550,7 +10543,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/node-schedule": "npm:^2.1.0"
     dotenv: "npm:^16.0.3"
-    ethers-v6: "npm:ethers@6.13.5"
+    ethers-v6: "npm:ethers@^6"
     node-schedule: "npm:^2.1.1"
     zod: "npm:^4.1.12"
   languageName: unknown
@@ -10618,7 +10611,7 @@ __metadata:
     "@types/express": "npm:^4.17.14"
     cors: "npm:^2.8.5"
     dotenv: "npm:^16.0.3"
-    ethers-v6: "npm:ethers@6.13.5"
+    ethers-v6: "npm:ethers@^6"
     express: "npm:^4.18.1"
     zod: "npm:^4.1.12"
   languageName: unknown
@@ -19957,18 +19950,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers-v6@npm:ethers@6.13.5":
-  version: 6.13.5
-  resolution: "ethers@npm:6.13.5"
+"ethers-v6@npm:ethers@^6, ethers@npm:^6.1.0, ethers@npm:^6.13.5, ethers@npm:^6.5.1":
+  version: 6.17.0
+  resolution: "ethers@npm:6.17.0"
   dependencies:
-    "@adraffy/ens-normalize": "npm:1.10.1"
+    "@adraffy/ens-normalize": "npm:1.11.1"
     "@noble/curves": "npm:1.2.0"
     "@noble/hashes": "npm:1.3.2"
     "@types/node": "npm:22.7.5"
     aes-js: "npm:4.0.0-beta.5"
     tslib: "npm:2.7.0"
-    ws: "npm:8.17.1"
-  checksum: 10c0/64bc7b8907de199392b8a88c15c9a085892919cff7efa2e5326abc7fe5c426001726c51d91e10c74e5fc5e2547188297ce4127f6e52ea42a97ade0b2ae474677
+    ws: "npm:8.21.0"
+  checksum: 10c0/0a75f3b4cedaaddb95ba31fecdfca04202735564e66512f202069dd1a11946e01c310a158e3a1299b994274e9d9fe11db10c6f7997222a28d79dfecb8f1fd162
   languageName: node
   linkType: hard
 
@@ -20007,21 +20000,6 @@ __metadata:
     "@ethersproject/web": "npm:5.8.0"
     "@ethersproject/wordlists": "npm:5.8.0"
   checksum: 10c0/8f187bb6af3736fbafcb613d8fb5be31fe7667a1bae480dd0a4c31b597ed47e0693d552adcababcb05111da39a059fac22e44840ce1671b1cc972de22d6d85d9
-  languageName: node
-  linkType: hard
-
-"ethers@npm:^6.1.0, ethers@npm:^6.13.5, ethers@npm:^6.5.1":
-  version: 6.14.1
-  resolution: "ethers@npm:6.14.1"
-  dependencies:
-    "@adraffy/ens-normalize": "npm:1.10.1"
-    "@noble/curves": "npm:1.2.0"
-    "@noble/hashes": "npm:1.3.2"
-    "@types/node": "npm:22.7.5"
-    aes-js: "npm:4.0.0-beta.5"
-    tslib: "npm:2.7.0"
-    ws: "npm:8.17.1"
-  checksum: 10c0/492bba4512b87475c9c4523d577eafa8bfe1b6d86afb78b4a0410acbf4966c1c121c2763478e9b1558460a725df5ba4f08d76ee74cb53e43cf5d8391f37079d0
   languageName: node
   linkType: hard
 
@@ -33774,6 +33752,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ws@npm:8.21.0, ws@npm:^8, ws@npm:^8.18.3, ws@npm:^8.5.0, ws@npm:^8.8.1, ws@npm:~8.21.0":
+  version: 8.21.0
+  resolution: "ws@npm:8.21.0"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 10c0/ef4a243476283fc49bc7550966c4af4aa0eef56273837211e700de3b664e08604a760cdddcb5ba43c049140e74ccfec5b0ee0bb439e08c2adf9138902fdde5f9
+  languageName: node
+  linkType: hard
+
 "ws@npm:^7, ws@npm:^7.0.0, ws@npm:^7.3.1, ws@npm:^7.4.0, ws@npm:^7.4.6, ws@npm:^7.5.10":
   version: 7.5.11
   resolution: "ws@npm:7.5.11"
@@ -33786,21 +33779,6 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 10c0/7972670b676fb1ccba73b0899ca3c2e04e8c2075629c2614cced7f556536f96a672bbf4619fc5a06c8b8720bb839a47ca88c69c95dc14c9c61a99fbecba1c866
-  languageName: node
-  linkType: hard
-
-"ws@npm:^8, ws@npm:^8.18.3, ws@npm:^8.5.0, ws@npm:^8.8.1, ws@npm:~8.21.0":
-  version: 8.21.0
-  resolution: "ws@npm:8.21.0"
-  peerDependencies:
-    bufferutil: ^4.0.1
-    utf-8-validate: ">=5.0.2"
-  peerDependenciesMeta:
-    bufferutil:
-      optional: true
-    utf-8-validate:
-      optional: true
-  checksum: 10c0/ef4a243476283fc49bc7550966c4af4aa0eef56273837211e700de3b664e08604a760cdddcb5ba43c049140e74ccfec5b0ee0bb439e08c2adf9138902fdde5f9
   languageName: node
   linkType: hard
 
