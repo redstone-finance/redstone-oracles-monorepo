@@ -43,6 +43,9 @@
     },
     "BTC": {
       "priceFeedAddress": "0x89621c11aAD52C1535E36EB9Dbf43E638E9A3E9a"
+    },
+    "kHYPE_FUNDAMENTAL": {
+      "priceFeedAddress": "0x81151Ceeb6F4918B49A5ADf4157038642D63173c"
     }
   }
 }
