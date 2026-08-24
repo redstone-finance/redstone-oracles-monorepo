@@ -1,6 +1,8 @@
 import { Executor } from "./Executor";
 import { FnBox } from "./FnBox";
 
+const FALLBACK_FAILED_MESSAGE = "All promises failed";
+
 export class FallbackExecutor<R> extends Executor<R> {
   constructor(private readonly timeoutMs?: number) {
     super();
@@ -17,6 +19,11 @@ export class FallbackExecutor<R> extends Executor<R> {
       }
     }
 
-    throw new AggregateError(errors, "All promises failed");
+    throw this.failure(errors);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- subclasses report the failure in the shape their callers match on
+  protected failure(errors: unknown[]): Error {
+    return new AggregateError(errors, FALLBACK_FAILED_MESSAGE);
   }
 }

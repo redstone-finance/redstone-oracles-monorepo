@@ -113,6 +113,12 @@ export class MultiExecutorFactory<T extends object> {
           return (target[key] as (...args: unknown[]) => unknown).call(target, ...args);
         };
       },
+
+      set(_target: T, prop: string | symbol): boolean {
+        throw new Error(
+          `Cannot assign ${String(prop)} on a multi-executor: the write would land on the first instance, whose call would re-enter the aggregate`
+        );
+      },
     });
 
     PROXY_META.set(proxy, { instances: this.instances, config: this.config });
