@@ -23,7 +23,7 @@ export type NestedMethodConfig<T> = {
 export type MultiExecutorConfig = {
   consensusQuorumRatio: number;
   agreementQuorumNumber: number;
-  defaultMode: ExecutionMode;
+  defaultMode: ExecutionMode | Executor<unknown>;
   singleExecutionTimeoutMs?: number;
   allExecutionsTimeoutMs?: number;
   multiAgreementShouldResolveUnagreedToUndefined: boolean;
