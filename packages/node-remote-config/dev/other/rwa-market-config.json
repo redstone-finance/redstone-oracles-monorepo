@@ -81,9 +81,15 @@
   "AXTI": "UsEquity",
   "DRAM": "UsEquity",
 
-  "AAPL---EXTENDED": "UsEquityExtendedHours",
-  "TSLA---EXTENDED": "UsEquityExtendedHours",
-  "NVDA---EXTENDED": "UsEquityExtendedHours",
+  "AAPL---PRE_AFTER": "UsEquityExtendedHours",
+  "TSLA---PRE_AFTER": "UsEquityExtendedHours",
+  "NVDA---PRE_AFTER": "UsEquityExtendedHours",
+  "SNDK---PRE_AFTER": "UsEquityExtendedHours",
+
+  "AAPL---OVERNIGHT": "UsEquityOvernight",
+  "TSLA---OVERNIGHT": "UsEquityOvernight",
+  "NVDA---OVERNIGHT": "UsEquityOvernight",
+  "SNDK---OVERNIGHT": "UsEquityOvernight",
 
   "KOSPI": "Krx",
   "KOSPI200": "Krx",

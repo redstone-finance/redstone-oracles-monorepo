@@ -7337,6 +7337,46 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "SNDK---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SNDK---OVERNIGHT": {
+      "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SNDK---EXTENDED": {
+      "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "AXTI": {
       "source": [],
       "priceAggregator": "redstoneX",
