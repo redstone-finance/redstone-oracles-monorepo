@@ -5528,6 +5528,7 @@
     "FGNX_EOD": {
       "source": [
         "polygon-eod-deferred",
+        "databento-eod-deferred",
         "financialmodelingprep-eod-deferred",
         "twelve-data-stocks-eod-deferred"
       ],
@@ -5541,6 +5542,7 @@
     "FGNXP_EOD": {
       "source": [
         "polygon-eod-deferred",
+        "databento-eod-deferred",
         "financialmodelingprep-eod-deferred",
         "twelve-data-stocks-eod-deferred"
       ],
@@ -5554,6 +5556,7 @@
     "CURR_EOD": {
       "source": [
         "polygon-eod-deferred",
+        "databento-eod-deferred",
         "financialmodelingprep-eod-deferred",
         "twelve-data-stocks-eod-deferred"
       ],
@@ -5567,6 +5570,7 @@
     "SECZ_EOD": {
       "source": [
         "polygon-eod-deferred",
+        "databento-eod-deferred",
         "financialmodelingprep-eod-deferred",
         "twelve-data-stocks-eod-deferred"
       ],
