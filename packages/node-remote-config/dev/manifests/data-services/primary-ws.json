@@ -3025,8 +3025,7 @@
       "source": [
         "ws-spot-binance-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-kucoin-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-kucoin-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -3188,7 +3187,6 @@
         "ws-spot-binance-usdt",
         "ws-spot-htx-usdt",
         "lbank_deferred-usdt",
-        "ws-spot-xt-usdt",
         "binance_deferred-usdc"
       ],
       "denomination": "USD",
@@ -3258,8 +3256,7 @@
         "ws-spot-bybit-usdt",
         "ws-spot-okx-usdt",
         "ws-spot-kucoin-usdt",
-        "ws-spot-gate-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-gate-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -3330,7 +3327,6 @@
         "ws-spot-bitget-usdt",
         "ws-spot-gate-usdt",
         "mexc_deferred-usdt",
-        "ws-spot-xt-usdt",
         "bingx_deferred-usdt"
       ],
       "denomination": "USD",
@@ -3358,7 +3354,6 @@
         "binancealpha_deferred-usdt",
         "lbank_deferred-usdt",
         "mexc_deferred-usdt",
-        "ws-spot-xt-usdt",
         "bingx_deferred-usdt"
       ],
       "denomination": "USD",
@@ -3511,8 +3506,7 @@
         "ws-spot-binance-usdt",
         "ws-spot-okx-usdt",
         "ws-spot-kucoin-usdt",
-        "ws-spot-kraken-usd",
-        "ws-spot-xt-usdt"
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -3611,7 +3605,6 @@
       "source": [
         "ws-spot-bybit-usdt",
         "binancealpha_deferred-usdt",
-        "ws-spot-xt-usdt",
         "ws-spot-bitget-usdt",
         "mexc_deferred-usdt",
         "bingx_deferred-usdt"
@@ -3952,8 +3945,7 @@
         "binancealpha_deferred-usdt",
         "coinbase_deferred-usd",
         "lbank_deferred-usdt",
-        "ws-spot-gate-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-gate-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -4244,8 +4236,7 @@
     "EVAA": {
       "source": [
         "binancealpha_deferred-usdt",
-        "ws-spot-gate-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-gate-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
