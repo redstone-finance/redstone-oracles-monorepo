@@ -5527,39 +5527,55 @@
     },
     "FGNX_EOD": {
       "source": [
-        "financialmodelingprep-eod-deferred",
         "polygon-eod-deferred",
+        "financialmodelingprep-eod-deferred",
         "twelve-data-stocks-eod-deferred"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
     },
     "FGNXP_EOD": {
       "source": [
-        "financialmodelingprep-eod-deferred",
         "polygon-eod-deferred",
+        "financialmodelingprep-eod-deferred",
         "twelve-data-stocks-eod-deferred"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
     },
     "CURR_EOD": {
       "source": [
-        "financialmodelingprep-eod-deferred",
         "polygon-eod-deferred",
+        "financialmodelingprep-eod-deferred",
         "twelve-data-stocks-eod-deferred"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
     },
     "SECZ_EOD": {
       "source": [
-        "financialmodelingprep-eod-deferred",
         "polygon-eod-deferred",
+        "financialmodelingprep-eod-deferred",
         "twelve-data-stocks-eod-deferred"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
     },
     "TTV_BASE_USDC_FUNDAMENTAL": {
       "source": [
