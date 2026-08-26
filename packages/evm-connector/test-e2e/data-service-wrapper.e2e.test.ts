@@ -1,13 +1,13 @@
+import { Contract } from "@ethersproject/contracts";
 import { consts } from "@redstone-finance/protocol";
 import { getSignersForDataServiceId } from "@redstone-finance/sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { RedstoneCommon, RedstoneConstants } from "@redstone-finance/utils";
 import { expect } from "chai";
-import { ethers } from "hardhat";
-import { WrapperBuilder } from "../src/index";
+import { WrapperBuilder } from "../src";
 
 describe("DataServiceWrapper against a real authenticated gateway", () => {
   it("fetches real data packages and builds a valid RedStone payload", async () => {
-    const contract = new ethers.Contract(ethers.constants.AddressZero, [
+    const contract = new Contract(RedstoneConstants.ADDRESS_ZERO, [
       "function updateDataFeedsValues(uint256 dataPackagesTimestamp) external",
     ]);
 

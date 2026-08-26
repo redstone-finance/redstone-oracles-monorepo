@@ -37,6 +37,7 @@
     "@ethersproject/bignumber": "^5.7.0",
     "@ethersproject/bytes": "^5.6.1",
     "@ethersproject/strings": "^5.7.0",
+    "@ethersproject/units": "^5.7.0",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
@@ -61,7 +62,6 @@
   "files": [
     "src",
     "dist",
-    "contracts",
-    "typechain-types"
+    "contracts"
   ]
 }
