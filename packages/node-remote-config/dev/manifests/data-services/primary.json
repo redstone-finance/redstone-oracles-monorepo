@@ -1291,27 +1291,6 @@
         "fluid-ethereum-eth",
         "uniswap-v4-arbitrumone-eth-500"
       ],
-      "localCacheTTL": "60m",
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ezETH/ETH": {
-      "source": [
-        "non-usd-based"
-      ],
-      "denomination": "ETH",
-      "rateFeed": false,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "ezETH-TWAP-60": {
-      "source": [
-        "twap-local"
-      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2020,19 +1999,6 @@
       ],
       "denomination": "USD",
       "rateFeed": false
-    },
-    "stTON_FUNDAMENTAL": {
-      "source": [
-        "ton-staked"
-      ],
-      "denomination": "TON",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
     },
     "tsTON_FUNDAMENTAL": {
       "source": [
