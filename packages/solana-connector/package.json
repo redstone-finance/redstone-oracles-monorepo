@@ -1,6 +1,6 @@
 {
   "name": "@redstone-finance/solana-connector",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "A tool to inject RedStone data into Solana compatible smart contracts",
   "main": "dist/src/index.js",
   "exports": "./dist/src/index.js",
@@ -15,8 +15,6 @@
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "test": "yarn global:jest:cov --runInBand",
-    "preversion": "yarn build",
-    "pack-package": "yarn build && cd dist && npm pack",
     "sample-run": "yarn build:turbo && yarn global:with-auth-gateways node dist/scripts/sample-run.js",
     "write-simultaneously": "yarn global:with-auth-gateways yarn global:tsx scripts/write-simultaneously.ts",
     "anchor-deploy": "yarn global:tsx scripts/anchor-deploy.ts",

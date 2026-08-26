@@ -1,6 +1,6 @@
 {
   "name": "@redstone-finance/starknet-connector",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "A tool to inject RedStone data into Starknet compatible smart contracts",
   "license": "MIT",
   "main": "dist/src/index.js",
@@ -13,8 +13,6 @@
     "typecheck": "yarn global:tsc --noEmit",
     "typecheck:turbo": "yarn global:turbo typecheck",
     "sample-run": "yarn global:with-auth-gateways yarn global:tsx test/sample-run.ts",
-    "preversion": "yarn build",
-    "pack-package": "yarn build && cd dist && npm pack",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix ."
   },
