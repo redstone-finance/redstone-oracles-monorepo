@@ -1,8 +1,8 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { WrapperBuilder } from "../../src";
-import { MockSignerIndex, getMockNumericPackage, getRange } from "../../src/helpers/test-utils";
+import { MockSignerIndex, WrapperBuilder, getMockNumericPackage, getRange } from "../../src";
 import { SampleStorageProxy, SampleStorageProxyConsumer } from "../../typechain-types";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
@@ -76,7 +76,7 @@ describe("SampleStorageProxy", function () {
 
     const fetchedValue = await wrappedContract.fetchStructUsingProxyDryRun(ethDataFeedId);
 
-    const expectedValue = ["sample", ethers.BigNumber.from(expectedNumericValues.ETH)];
+    const expectedValue = ["sample", BigNumber.from(expectedNumericValues.ETH)];
 
     expect(fetchedValue).to.deep.equal(expectedValue);
   });
@@ -87,9 +87,7 @@ describe("SampleStorageProxy", function () {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
-    const dataValues = dataPoints.map((dataPoint) =>
-      ethers.BigNumber.from(dataPoint.value * 10 ** 8)
-    );
+    const dataValues = dataPoints.map((dataPoint) => BigNumber.from(dataPoint.value * 10 ** 8));
 
     const fetchedValues = await wrappedContract.fetchValuesUsingProxyDryRun(dataFeedIdsBytes);
 
@@ -107,7 +105,7 @@ describe("SampleStorageProxy", function () {
 
     const dataValues = dataPoints.map((dataPoint) => [
       "sample",
-      ethers.BigNumber.from(dataPoint.value * 10 ** 8),
+      BigNumber.from(dataPoint.value * 10 ** 8),
     ]);
 
     expect(dataValues).to.deep.eq(fetchedValues);
@@ -123,7 +121,7 @@ describe("SampleStorageProxy", function () {
       await wrappedContract.fetchStructOfArraysUsingProxyDryRun(dataFeedIdsBytes);
 
     const names = dataPoints.map((_dataPoint) => "sample");
-    const values = dataPoints.map((dataPoint) => ethers.BigNumber.from(dataPoint.value * 10 ** 8));
+    const values = dataPoints.map((dataPoint) => BigNumber.from(dataPoint.value * 10 ** 8));
 
     const dataValuesArray = [names, values];
 
