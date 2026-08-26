@@ -1,9 +1,9 @@
 import { Signer } from "@ethersproject/abstract-signer";
+import { parseEther, parseUnits } from "@ethersproject/units";
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { getMockNumericPackage, getRange, MockSignerIndex } from "../../src/helpers/test-utils";
-import { WrapperBuilder } from "../../src/index";
+import { getMockNumericPackage, getRange, MockSignerIndex, WrapperBuilder } from "../../src";
 import { SampleSyntheticToken } from "../../typechain-types";
 import { NUMBER_OF_MOCK_NUMERIC_SIGNERS } from "../tests-common";
 
@@ -16,10 +16,10 @@ describe("SampleSyntheticToken", function () {
     address: string;
 
   const toEth = function (val: number) {
-    return ethers.utils.parseEther(val.toString());
+    return parseEther(val.toString());
   };
   const toVal = function (val: number) {
-    return ethers.utils.parseUnits(val.toString(), 26);
+    return parseUnits(val.toString(), 26);
   };
 
   beforeEach(async () => {

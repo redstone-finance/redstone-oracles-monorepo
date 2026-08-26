@@ -1,14 +1,15 @@
+import { parseUnits } from "@ethersproject/units";
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { WrapperBuilder } from "../../src";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
+  MockDataPackageConfig,
   MockSignerIndex,
+  WrapperBuilder,
   getMockNumericPackage,
   getRange,
-} from "../../src/helpers/test-utils";
-import { MockDataPackageConfig } from "../../src/wrappers/MockWrapper";
+} from "../../src";
 import { SampleProxyConnector } from "../../typechain-types";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
@@ -89,7 +90,7 @@ describe("SampleProxyConnector", function () {
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
     await expect(
       wrappedContract.requireValueForward({
-        value: ethers.utils.parseUnits("2137"),
+        value: parseUnits("2137"),
       })
     ).not.to.be.reverted;
   });
