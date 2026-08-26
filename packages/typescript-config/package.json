@@ -1,6 +1,6 @@
 {
   "name": "@redstone-finance/typescript-config",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "main": "./tsconfig-common.json",
   "exports": {
     ".": "./tsconfig-common.json",

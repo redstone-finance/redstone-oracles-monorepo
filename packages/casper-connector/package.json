@@ -1,6 +1,6 @@
 {
   "name": "@redstone-finance/casper-connector",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "main": "dist/src/index.js",
   "exports": "./dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -14,9 +14,7 @@
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "test": "yarn global:with-auth-gateways yarn global:jest:cov",
-    "sample-run": "yarn global:with-auth-gateways yarn global:tsx test/e2e/sample-run.ts",
-    "preversion": "yarn build",
-    "pack-package": "yarn build && cd dist && npm pack"
+    "sample-run": "yarn global:with-auth-gateways yarn global:tsx test/e2e/sample-run.ts"
   },
   "dependencies": {
     "@ethersproject/bignumber": "^5.7.0",

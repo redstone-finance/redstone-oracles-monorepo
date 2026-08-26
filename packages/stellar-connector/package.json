@@ -1,6 +1,6 @@
 {
   "name": "@redstone-finance/stellar-connector",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "A tool to inject RedStone data into Stellar compatible smart contracts",
   "main": "dist/src/index.js",
   "exports": "./dist/src/index.js",
@@ -16,8 +16,6 @@
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "test": "make build && yarn global:with-auth-gateways yarn global:jest:cov --runInBand",
-    "preversion": "yarn build",
-    "pack-package": "yarn build && cd dist && npm pack",
     "convert-keys": "yarn global:tsx scripts/convert-keys.ts",
     "sample-run": "yarn build:turbo && yarn global:with-auth-gateways node dist/scripts/sample-run.js",
     "sample-deploy": "yarn global:tsx scripts/sample-deploy.ts",
