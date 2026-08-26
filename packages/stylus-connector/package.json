@@ -6,6 +6,7 @@
   "exports": "./dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "clean": "yarn global:ts-clean",
     "build": "yarn global:tsc -p tsconfig.build.json",
@@ -32,8 +33,5 @@
   },
   "files": [
     "dist/src/**/*"
-  ],
-  "publishConfig": {
-    "access": "public"
-  }
+  ]
 }
