@@ -625,9 +625,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-ecr-public@npm:^3.696.0":
-  version: 3.1043.0
-  resolution: "@aws-sdk/client-ecr-public@npm:3.1043.0"
+"@aws-sdk/client-ecr@npm:^3.696.0":
+  version: 3.1044.0
+  resolution: "@aws-sdk/client-ecr@npm:3.1044.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:5.2.0"
     "@aws-crypto/sha256-js": "npm:5.2.0"
@@ -667,8 +667,9 @@ __metadata:
     "@smithy/util-middleware": "npm:^4.2.14"
     "@smithy/util-retry": "npm:^4.3.6"
     "@smithy/util-utf8": "npm:^4.2.2"
+    "@smithy/util-waiter": "npm:^4.3.0"
     tslib: "npm:^2.6.2"
-  checksum: 10c0/6b6c10a2f5649908c59f6c8b14f502ca88faae4d7f561d7bed3e0862e39d5a538cbf845f8d3293e0bd8e1bd22e094ba34cd0ad7d4e71e9f8008252173061358a
+  checksum: 10c0/5a2b38ea280cbc9976e3f782c2740d41d599d33a92cd8565c3a205c7b05ca4b7035b41d76fd3083dd463be0187907fbada634edc6cd9bc405c2ecf2632344268
   languageName: node
   linkType: hard
 
@@ -8866,7 +8867,7 @@ __metadata:
   dependencies:
     "@aws-sdk/client-cloudwatch": "npm:^3.696.0"
     "@aws-sdk/client-dynamodb": "npm:^3.696.0"
-    "@aws-sdk/client-ecr-public": "npm:^3.696.0"
+    "@aws-sdk/client-ecr": "npm:^3.696.0"
     "@aws-sdk/client-ecs": "npm:^3.696.0"
     "@aws-sdk/client-lambda": "npm:^3.696.0"
     "@aws-sdk/client-s3": "npm:^3.696.0"
