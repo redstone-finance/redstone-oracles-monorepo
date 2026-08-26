@@ -1,7 +1,7 @@
 {
   "name": "@redstone-finance/ton-connector",
   "description": "A tool to inject RedStone data into TON compatible smart contracts",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "main": "dist/src/index.js",
   "exports": "./dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -28,10 +28,8 @@
     "write-prices": "yarn run-script runPriceManagerWritePrices",
     "write-price": "yarn run-script runSingleFeedManWritePrice",
     "consume-data": "yarn run-script runSampleConsumersReadData",
-    "pack-package": "yarn build && npm pack",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
-    "preversion": "yarn build",
     "test": "yarn global:with-auth-gateways yarn global:jest:cov"
   },
   "dependencies": {
