@@ -1,6 +1,6 @@
 {
   "name": "@redstone-finance/multichain-kit-legacy",
-  "version": "0.10.0",
+  "version": "1.0.0",
   "main": "dist/src/index.js",
   "exports": "./dist/src/index.js",
   "types": "dist/src/index.d.ts",

@@ -1,6 +1,6 @@
 {
   "name": "@redstone-finance/solana-connection",
-  "version": "0.10.0",
+  "version": "1.0.0",
   "description": "Solana RPC connection layer for RedStone (read-only transport, no contract logic)",
   "main": "dist/src/index.js",
   "exports": "./dist/src/index.js",
