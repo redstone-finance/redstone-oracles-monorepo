@@ -82,6 +82,7 @@
   "DRAM": "UsEquity",
   "IONQ": "UsEquity",
   "EWY": "UsEquity",
+  "NBIS": "UsEquity",
 
   "AAPL---PRE_AFTER": "UsEquityExtendedHours",
   "TSLA---PRE_AFTER": "UsEquityExtendedHours",
@@ -93,6 +94,7 @@
   "DRAM---PRE_AFTER": "UsEquityExtendedHours",
   "IONQ---PRE_AFTER": "UsEquityExtendedHours",
   "EWY---PRE_AFTER": "UsEquityExtendedHours",
+  "NBIS---PRE_AFTER": "UsEquityExtendedHours",
 
   "AAPL---OVERNIGHT": "UsEquityOvernight",
   "TSLA---OVERNIGHT": "UsEquityOvernight",
@@ -104,6 +106,7 @@
   "DRAM---OVERNIGHT": "UsEquityOvernight",
   "IONQ---OVERNIGHT": "UsEquityOvernight",
   "EWY---OVERNIGHT": "UsEquityOvernight",
+  "NBIS---OVERNIGHT": "UsEquityOvernight",
 
   "KOSPI": "Krx",
   "KOSPI200": "Krx",
