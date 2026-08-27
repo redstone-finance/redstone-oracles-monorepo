@@ -5,7 +5,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { getMockNumericPackage, getRange, MockSignerIndex, WrapperBuilder } from "../../src";
 import { SampleSyntheticToken } from "../../typechain-types";
-import { NUMBER_OF_MOCK_NUMERIC_SIGNERS } from "../tests-common";
+import { deployContract, NUMBER_OF_MOCK_NUMERIC_SIGNERS } from "../tests-common";
 
 // TODO audit: measure how many bytes do we add to the consumer contracts
 
@@ -23,14 +23,13 @@ describe("SampleSyntheticToken", function () {
   };
 
   beforeEach(async () => {
-    const SampleSyntheticToken = await ethers.getContractFactory("SampleSyntheticToken");
-    sampleContract = await SampleSyntheticToken.deploy();
+    ({ contract: sampleContract } =
+      await deployContract<SampleSyntheticToken>("SampleSyntheticToken"));
     await sampleContract.initialize(
       utils.convertStringToBytes32("REDSTONE"),
       "SYNTH-REDSTONE",
       "SREDSTONE"
     );
-    await sampleContract.deployed();
     [signer] = await ethers.getSigners();
     address = await signer.getAddress();
 

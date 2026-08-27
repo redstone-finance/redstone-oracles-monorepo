@@ -1,13 +1,13 @@
 import { expect } from "chai";
-import { ethers } from "hardhat";
-import { WrapperBuilder } from "../../src";
 import {
   DEFAULT_DATA_FEED_ID_BYTES_32,
   getMockPackageWithOneBytesDataPoint,
   getRange,
   MockSignerIndex,
-} from "../../src/helpers/test-utils";
+  WrapperBuilder,
+} from "../../src";
 import { SampleRedstoneConsumerBytesMockStrings } from "../../typechain-types";
+import { deployContract } from "../tests-common";
 
 describe("Long Inputs", function () {
   let contract: SampleRedstoneConsumerBytesMockStrings;
@@ -25,11 +25,9 @@ describe("Long Inputs", function () {
   };
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
+    ({ contract } = await deployContract<SampleRedstoneConsumerBytesMockStrings>(
       "SampleRedstoneConsumerBytesMockStrings"
-    );
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ));
   });
 
   it("Should pass long bytes oracle value", async () => {

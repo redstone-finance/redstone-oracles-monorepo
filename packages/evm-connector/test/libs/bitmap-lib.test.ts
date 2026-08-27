@@ -1,7 +1,7 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { expect } from "chai";
-import { ethers } from "hardhat";
 import { SampleBitmapLib } from "../../typechain-types";
+import { deployContract } from "../tests-common";
 
 describe("SampleBitmapLib", function () {
   let contract: SampleBitmapLib,
@@ -23,9 +23,7 @@ describe("SampleBitmapLib", function () {
   };
 
   this.beforeAll(async () => {
-    const ContractFactory = await ethers.getContractFactory("SampleBitmapLib");
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ({ contract } = await deployContract<SampleBitmapLib>("SampleBitmapLib"));
   });
 
   it("Bitmap should be empty in the beginning", async () => {

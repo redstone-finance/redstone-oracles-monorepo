@@ -1,12 +1,12 @@
 import { DataPackage, NumericDataPoint, utils } from "@redstone-finance/protocol";
-import { ethers } from "hardhat";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
   MOCK_SIGNERS,
+  MockDataPackageConfig,
   MockSignerAddress,
-} from "../src/helpers/test-utils";
-import { WrapperBuilder } from "../src/index";
-import { MockDataPackageConfig } from "../src/wrappers/MockWrapper";
+  WrapperBuilder,
+} from "../src";
+import { deployContract } from "../test/tests-common";
 import { Benchmark } from "../typechain-types";
 
 interface BenchmarkTestCaseParams {
@@ -32,9 +32,7 @@ describe("Benchmark", function () {
   const fullGasReport: Record<string, GasReport> = {};
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory("Benchmark");
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ({ contract } = await deployContract<Benchmark>("Benchmark"));
   });
 
   this.afterAll(() => {

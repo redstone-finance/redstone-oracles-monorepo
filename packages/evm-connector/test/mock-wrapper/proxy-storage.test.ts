@@ -1,11 +1,11 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
-import { ethers } from "hardhat";
 import { MockSignerIndex, WrapperBuilder, getMockNumericPackage, getRange } from "../../src";
 import { SampleStorageProxy, SampleStorageProxyConsumer } from "../../typechain-types";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
+  deployContract,
   expectedNumericValues,
   mockNumericPackages,
 } from "../tests-common";
@@ -47,16 +47,12 @@ describe("SampleStorageProxy", function () {
   const ethDataFeedId = utils.convertStringToBytes32("ETH");
 
   this.beforeEach(async () => {
-    const SampleStorageFactory = await ethers.getContractFactory("SampleStorageProxy");
-    contract = await SampleStorageFactory.deploy();
-    await contract.deployed();
+    ({ contract } = await deployContract<SampleStorageProxy>("SampleStorageProxy"));
 
-    const SampleStorageProxyConsumer = await ethers.getContractFactory(
-      "SampleStorageProxyConsumer"
-    );
-
-    consumerContract = await SampleStorageProxyConsumer.deploy(contract.address);
-    await consumerContract.deployed();
+    ({ contract: consumerContract } = await deployContract<SampleStorageProxyConsumer>(
+      "SampleStorageProxyConsumer",
+      contract.address
+    ));
 
     await contract.register(consumerContract.address);
   });

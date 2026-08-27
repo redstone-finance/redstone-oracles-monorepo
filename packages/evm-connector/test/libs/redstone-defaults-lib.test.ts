@@ -1,8 +1,7 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { expect } from "chai";
-import { ethers } from "hardhat";
 import { SampleRedstoneDefaultsLib } from "../../typechain-types";
-import { getBlockTimestampMilliseconds } from "../tests-common";
+import { deployContract, getBlockTimestampMilliseconds } from "../tests-common";
 
 const MILLISECONDS_IN_MINUTE = 60 * 1000;
 
@@ -10,9 +9,7 @@ describe("SampleRedstoneDefaultsLib", function () {
   let contract: SampleRedstoneDefaultsLib;
 
   beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory("SampleRedstoneDefaultsLib");
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ({ contract } = await deployContract<SampleRedstoneDefaultsLib>("SampleRedstoneDefaultsLib"));
   });
 
   it("Should properly validate valid timestamps", async () => {

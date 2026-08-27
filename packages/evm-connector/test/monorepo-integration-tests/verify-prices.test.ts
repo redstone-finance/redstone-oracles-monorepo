@@ -1,9 +1,9 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { formatBytes32String } from "@ethersproject/strings";
 import { expect } from "chai";
-import { ethers } from "hardhat";
-import { MOCK_SIGNERS, WrapperBuilder } from "../../src/index";
+import { MOCK_SIGNERS, WrapperBuilder } from "../../src";
 import { SampleForLocalhostMockTest } from "../../typechain-types";
+import { deployContract } from "../tests-common";
 
 const dynamicDescribe = process.env.MONOREPO_INTEGRATION_TEST === "true" ? describe : describe.skip;
 
@@ -51,9 +51,7 @@ dynamicDescribe("verify prices test", function () {
   };
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory("SampleForLocalhostMockTest");
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ({ contract } = await deployContract<SampleForLocalhostMockTest>("SampleForLocalhostMockTest"));
   });
 
   it("Should properly extract prices with small data packages", async () => {

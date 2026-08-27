@@ -1,9 +1,8 @@
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
-import { ethers } from "hardhat";
-import { DEFAULT_TIMESTAMP_FOR_TESTS } from "../../src/helpers/test-utils";
-import { WrapperBuilder } from "../../src/index";
+import { DEFAULT_TIMESTAMP_FOR_TESTS, WrapperBuilder } from "../../src";
 import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../../typechain-types";
+import { deployContract } from "../tests-common";
 
 const dataPoints = [
   { dataFeedId: "ETH", value: 42 },
@@ -14,11 +13,9 @@ describe("Simple Mock Numeric Wrapper", function () {
   let contract: SampleRedstoneConsumerNumericMockManyDataFeeds;
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
+    ({ contract } = await deployContract<SampleRedstoneConsumerNumericMockManyDataFeeds>(
       "SampleRedstoneConsumerNumericMockManyDataFeeds"
-    );
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ));
   });
 
   it("Should properly execute on contract wrapped using simple numeric mock", async () => {

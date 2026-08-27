@@ -1,15 +1,17 @@
 import { DataPackage, NumericDataPoint, utils } from "@redstone-finance/protocol";
-import { ethers } from "hardhat";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
   MOCK_SIGNERS,
+  MockDataPackageConfig,
   MockSignerAddress,
-} from "../src/helpers/test-utils";
-import { WrapperBuilder } from "../src/index";
-import { MockDataPackageConfig } from "../src/wrappers/MockWrapper";
+  WrapperBuilder,
+} from "../src";
+import { deployContract } from "../test/tests-common";
 import {
+  SampleChainableProxyConnector,
   SampleChainableStorageProxy,
   SampleChainableStorageProxyConsumer,
+  SampleProxyConnectorConsumer,
 } from "../typechain-types";
 interface BenchmarkTestCaseParams {
   requiredSignersCount: number;
@@ -43,27 +45,28 @@ describe("Benchmark", function () {
   });
 
   const initializeStorageProxyChain = async (chainLength: number, requiredSignersCount: number) => {
-    const StorageProxyFactory = await ethers.getContractFactory("SampleChainableStorageProxy");
-
-    const StorageProxyConsumer = await ethers.getContractFactory(
-      "SampleChainableStorageProxyConsumer"
+    const { contract: initialProxy } = await deployContract<SampleChainableStorageProxy>(
+      "SampleChainableStorageProxy"
     );
-    const initialProxy = await StorageProxyFactory.deploy();
-    await initialProxy.deployed();
 
     await initialProxy.updateUniqueSignersThreshold(requiredSignersCount);
 
     let currentProxy: SampleChainableStorageProxy | SampleChainableStorageProxyConsumer =
       initialProxy;
     for (let i = 0; i < chainLength - 2; i++) {
-      const nextProxy = await StorageProxyConsumer.deploy(initialProxy.address);
-      await nextProxy.deployed();
+      const { contract: nextProxy } = await deployContract<SampleChainableStorageProxyConsumer>(
+        "SampleChainableStorageProxyConsumer",
+        initialProxy.address
+      );
       await currentProxy.register(nextProxy.address);
       currentProxy = nextProxy;
     }
 
-    const customerContract = await StorageProxyConsumer.deploy(initialProxy.address);
-    await customerContract.deployed();
+    const { contract: customerContract } =
+      await deployContract<SampleChainableStorageProxyConsumer>(
+        "SampleChainableStorageProxyConsumer",
+        initialProxy.address
+      );
     await currentProxy.register(customerContract.address);
 
     return initialProxy;
@@ -73,22 +76,22 @@ describe("Benchmark", function () {
     chainLength: number,
     requiredSignersCount: number
   ) => {
-    const ProxyConnectorFactory = await ethers.getContractFactory("SampleChainableProxyConnector");
-
-    const ProxyConnectorConsumer = await ethers.getContractFactory("SampleProxyConnectorConsumer");
-    const initialProxy = await ProxyConnectorFactory.deploy();
-    await initialProxy.deployed();
+    const { contract: initialProxy } = await deployContract<SampleChainableProxyConnector>(
+      "SampleChainableProxyConnector"
+    );
 
     let currentProxy = initialProxy;
     for (let i = 0; i < chainLength - 2; i++) {
-      const nextProxy = await ProxyConnectorFactory.deploy();
-      await nextProxy.deployed();
+      const { contract: nextProxy } = await deployContract<SampleChainableProxyConnector>(
+        "SampleChainableProxyConnector"
+      );
       await currentProxy.registerNextConnector(nextProxy.address);
       currentProxy = nextProxy;
     }
 
-    const consumerContract = await ProxyConnectorConsumer.deploy();
-    await consumerContract.deployed();
+    const { contract: consumerContract } = await deployContract<SampleProxyConnectorConsumer>(
+      "SampleProxyConnectorConsumer"
+    );
     await consumerContract.updateUniqueSignersThreshold(requiredSignersCount);
 
     await currentProxy.registerConsumer(consumerContract.address);
