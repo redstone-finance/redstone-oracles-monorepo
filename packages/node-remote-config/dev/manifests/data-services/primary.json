@@ -5722,13 +5722,6 @@
       ],
       "denomination": "EUR",
       "rateFeed": true
-    },
-    "earnUSDC_FUNDAMENTAL": {
-      "source": [
-        "earn-usdc"
-      ],
-      "denomination": "USDC",
-      "rateFeed": true
     }
   },
   "multiPointPackages": {
