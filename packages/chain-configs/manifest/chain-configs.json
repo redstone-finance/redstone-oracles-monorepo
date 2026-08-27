@@ -1364,26 +1364,6 @@
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": true
-    },
-    "near": {
-      "name": "NEAR",
-      "networkId": "near/1",
-      "currencySymbol": "NEAR",
-      "publicRpcUrls": [
-        "https://free.rpc.fastnear.com",
-        "https://archival-rpc.mainnet.near.org",
-        "https://1rpc.io/near",
-        "https://near.blockpi.network/v1/rpc/public",
-        "https://near.drpc.org"
-      ],
-      "avgBlockTimeMs": 1000,
-      "multicall3": {
-        "address": "",
-        "type": "Multicall3"
-      },
-      "isAuctionModel": false,
-      "twoDimensionalFees": false,
-      "isMainnet": true
     }
   },
   "temporaryConfigUpdates": {
