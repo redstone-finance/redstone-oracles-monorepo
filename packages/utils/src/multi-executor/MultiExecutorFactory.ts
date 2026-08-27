@@ -1,14 +1,15 @@
 import _ from "lodash";
 import { getNS, stringify, throwUnsupportedParamError, timeoutOrResult } from "../common";
 import { loggerFactory } from "../logger";
+import { acceptsAbortSignal } from "./abort-signal";
 import { AgreementExecutor } from "./AgreementExecutor";
+import { DEFAULT_CONFIG, ExecutionMode, MultiExecutorConfig, NestedMethodConfig } from "./config";
 import { AllEqualConsensusExecutor, MedianConsensusExecutor } from "./ConsensusExecutor";
 import { Executor } from "./Executor";
 import { FallbackExecutor } from "./FallbackExecutor";
 import { FnBox } from "./FnBox";
 import { MultiAgreementExecutor } from "./MultiAgreementExecutor";
 import { RaceExecutor } from "./RaceExecutor";
-import { DEFAULT_CONFIG, ExecutionMode, MultiExecutorConfig, NestedMethodConfig } from "./config";
 
 interface ProxyMeta<T extends object> {
   instances: T[];
@@ -134,13 +135,17 @@ export class MultiExecutorFactory<T extends object> {
     key: keyof T,
     args: unknown[]
   ): FnBox<unknown> {
+    const method = instance[key] as (...args: unknown[]) => unknown;
+    const abortArgs = (shouldAbort: () => boolean) =>
+      acceptsAbortSignal(instance, name) ? [shouldAbort] : [];
+
     return {
       name,
       description: config.descriptions?.[index],
       index,
       delegate: config.delegate,
-      fn: () =>
-        Promise.resolve((instance[key] as (...args: unknown[]) => unknown).call(instance, ...args)),
+      fn: (shouldAbort) =>
+        Promise.resolve(method.call(instance, ...args, ...abortArgs(shouldAbort))),
     };
   }
 

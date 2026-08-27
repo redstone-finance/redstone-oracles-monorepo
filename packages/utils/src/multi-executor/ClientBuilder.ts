@@ -6,6 +6,7 @@ import { CompositeFnDelegate } from "./CompositeFnDelegate";
 import { DEFAULT_CONFIG, makeBaseConfig, MultiExecutorConfig, NestedMethodConfig } from "./config";
 import { create, createForSubInstances } from "./MultiExecutorFactory";
 import { QuarantinedListFnDelegate } from "./QuarantinedListFnDelegate";
+import { SuccessRateFnDelegate } from "./SuccessRateFnDelegate";
 
 export const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
 export const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
@@ -110,13 +111,17 @@ export abstract class ClientBuilder<C, URL extends string | undefined = string> 
   }
 
   private makeFnDelegates(urls: URL[], networkId: NetworkId) {
+    const definedUrls = urls.filter(isDefined);
     const quarantineDelegate = this.isQuarantineEnabled
-      ? QuarantinedListFnDelegate.getCachedConfig(urls.filter(isDefined), networkId).delegate
+      ? QuarantinedListFnDelegate.getCachedConfig(definedUrls, networkId).delegate
+      : undefined;
+    const successRateDelegate = this.isQuarantineEnabled
+      ? SuccessRateFnDelegate.getCachedConfig(definedUrls, networkId).delegate
       : undefined;
     const telemetryDelegate = this.telemetryReporter
       ? new TelemetryFnDelegate(networkId, this.telemetryReporter, this.telemetryOpNormalizer)
       : undefined;
 
-    return [quarantineDelegate, telemetryDelegate].filter(isDefined);
+    return [quarantineDelegate, successRateDelegate, telemetryDelegate].filter(isDefined);
   }
 }

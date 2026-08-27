@@ -1,11 +1,17 @@
 import { stringify, stringifyError, timeoutOrResult } from "../common";
 import { loggerFactory } from "../logger";
+import { ExecutionAbortedError } from "./ExecutionAbortedError";
 import { FnBox } from "./FnBox";
 
 const logger = loggerFactory("executor");
+const NEVER_ABORTS = () => false;
 
 export abstract class Executor<R> {
   protected readonly logger = logger;
+
+  static inDelegateOrder<R>(functions: FnBox<R>[]) {
+    return functions[0]?.delegate?.order?.(functions) ?? functions;
+  }
 
   static getPromises<R>(functions: FnBox<R>[], timeoutMs?: number) {
     const result = functions
@@ -28,7 +34,11 @@ export abstract class Executor<R> {
 
     const start = performance.now();
     try {
-      const result = await timeoutOrResult(func.fn(), timeoutMs, "timed out");
+      const result = await timeoutOrResult(
+        func.fn(func.shouldAbort ?? NEVER_ABORTS),
+        timeoutMs,
+        "timed out"
+      );
       const durationMs = performance.now() - start;
       logger.trace(`${message("returns", durationMs)}: ${stringify(result)}${suffix}`);
       func.delegate?.didSucceed?.(func, result, durationMs);
@@ -36,6 +46,11 @@ export abstract class Executor<R> {
       return result;
     } catch (error) {
       const durationMs = performance.now() - start;
+      if (error instanceof ExecutionAbortedError) {
+        logger.debug(`${message("aborted", durationMs)}: ${error.message}${suffix}`);
+
+        throw error;
+      }
       logger.warn(`${message("failed", durationMs)}: ${stringifyError(error)}${suffix}`, error);
       func.delegate?.didFail?.(func, error, durationMs);
 
