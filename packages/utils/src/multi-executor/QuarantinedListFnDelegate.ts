@@ -33,7 +33,7 @@ export class QuarantinedListFnDelegate implements FnDelegate {
     return this.configCache[key];
   }
 
-  constructor(
+  private constructor(
     identifiers: string[],
     networkId: NetworkId,
     minimalProviderCount = MIN_PROVIDER_COUNT

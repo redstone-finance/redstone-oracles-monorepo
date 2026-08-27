@@ -1,9 +1,11 @@
+export * from "./abort-signal";
 export * from "./AgreementExecutor";
 export * from "./CeilMedianConsensusExecutor";
 export * from "./ClientBuilder";
 export * from "./CompositeFnDelegate";
 export * from "./config";
 export * from "./ConsensusExecutor";
+export * from "./ExecutionAbortedError";
 export * from "./Executor";
 export * from "./FallbackExecutor";
 export * from "./FnBox";
@@ -12,4 +14,5 @@ export * from "./MultiExecutorFactory";
 export * from "./ParallelExecutor";
 export * from "./QuarantinedListFnDelegate";
 export * from "./RaceExecutor";
+export * from "./SuccessRateFnDelegate";
 export * from "./UnsupportedMethodExecutor";

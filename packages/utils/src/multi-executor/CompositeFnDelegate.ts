@@ -18,4 +18,11 @@ export class CompositeFnDelegate implements FnDelegate {
   isQuarantined<R>(fnBox: FnBox<R>) {
     return this.delegates.some((delegate) => delegate.isQuarantined?.(fnBox) ?? false);
   }
+
+  order<R>(fnBoxes: FnBox<R>[]) {
+    return this.delegates.reduce(
+      (ordered, delegate) => delegate.order?.(ordered) ?? ordered,
+      fnBoxes
+    );
+  }
 }
