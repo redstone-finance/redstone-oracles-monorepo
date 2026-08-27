@@ -11,7 +11,7 @@ export class FallbackExecutor<R> extends Executor<R> {
   public async execute(functions: FnBox<R>[]): Promise<R> {
     const errors = [];
 
-    for (const func of functions) {
+    for (const func of Executor.inDelegateOrder(functions)) {
       try {
         return await Executor.execFn(func, this.timeoutMs);
       } catch (error) {
