@@ -1,0 +1,18 @@
+{
+  "chain": {
+    "name": "filecoinCalibrationTestnet",
+    "id": 314159
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0xB08342D907D2df47B6F73e25F4fa033978B344B1",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "FIL": {
+      "priceFeedAddress": "0xe1df239Ac22E8a873B2a4dF975C8dfc3249350e4"
+    }
+  }
+}
