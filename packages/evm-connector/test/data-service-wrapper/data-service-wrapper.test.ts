@@ -1,11 +1,12 @@
 import { utils } from "@redstone-finance/protocol";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { ethers } from "hardhat";
-import { MOCK_SIGNERS, WrapperBuilder } from "../../src/index";
-import { DataServiceWrapper } from "../../src/wrappers/DataServiceWrapper";
-import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../../typechain-types";
-import { expectedNumericValues } from "../tests-common";
+import { DataServiceWrapper, MOCK_SIGNERS, WrapperBuilder } from "../../src";
+import {
+  SampleRedstoneConsumerNumericMockManyDataFeeds,
+  SampleRedstoneDataServiceConsumerMock,
+} from "../../typechain-types";
+import { deployContract, expectedNumericValues } from "../tests-common";
 import { server } from "./mock-server";
 
 chai.use(chaiAsPromised);
@@ -64,11 +65,9 @@ describe("DataServiceWrapper", () => {
     let contract: SampleRedstoneConsumerNumericMockManyDataFeeds;
 
     beforeEach(async () => {
-      const ContractFactory = await ethers.getContractFactory(
+      ({ contract } = await deployContract<SampleRedstoneConsumerNumericMockManyDataFeeds>(
         "SampleRedstoneConsumerNumericMockManyDataFeeds"
-      );
-      contract = await ContractFactory.deploy();
-      await contract.deployed();
+      ));
     });
 
     it("Should properly execute with one valid cache", async () => {
@@ -122,14 +121,12 @@ describe("DataServiceWrapper", () => {
   });
 
   describe("With RedstoneDataServiceConsumer contract", () => {
-    let contract: SampleRedstoneConsumerNumericMockManyDataFeeds;
+    let contract: SampleRedstoneDataServiceConsumerMock;
 
     beforeEach(async () => {
-      const ContractFactory = await ethers.getContractFactory(
+      ({ contract } = await deployContract<SampleRedstoneDataServiceConsumerMock>(
         "SampleRedstoneDataServiceConsumerMock"
-      );
-      contract = await ContractFactory.deploy();
-      await contract.deployed();
+      ));
     });
 
     it("Should work with passed urls", async () => {

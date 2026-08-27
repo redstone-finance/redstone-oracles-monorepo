@@ -9,6 +9,7 @@ export * from "./CacheWithTtl";
 export * from "./clone";
 export * from "./conversions";
 export * from "./date-utils";
+export * from "./deploy-contract";
 export * from "./env";
 export * from "./errors";
 export * from "./EthersError";

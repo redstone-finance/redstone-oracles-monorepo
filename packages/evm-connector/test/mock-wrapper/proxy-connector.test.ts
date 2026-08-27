@@ -1,7 +1,6 @@
 import { parseUnits } from "@ethersproject/units";
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
-import { ethers } from "hardhat";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
   MockDataPackageConfig,
@@ -14,6 +13,7 @@ import { SampleProxyConnector } from "../../typechain-types";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
   UNAUTHORISED_SIGNER_INDEX,
+  deployContract,
   expectedNumericValues,
   mockNumericPackageConfigs,
   mockNumericPackages,
@@ -35,9 +35,7 @@ describe("SampleProxyConnector", function () {
   };
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory("SampleProxyConnector");
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ({ contract } = await deployContract<SampleProxyConnector>("SampleProxyConnector"));
   });
 
   it("Should return correct oracle value for one asset", async () => {

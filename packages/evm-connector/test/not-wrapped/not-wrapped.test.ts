@@ -1,15 +1,15 @@
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
-import { ethers } from "hardhat";
 import { SampleRedstoneConsumerNumericMock } from "../../typechain-types";
+import { deployContract } from "../tests-common";
 
 describe("Not Wrapped Contract", function () {
   let contract: SampleRedstoneConsumerNumericMock;
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory("SampleRedstoneConsumerNumericMock");
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ({ contract } = await deployContract<SampleRedstoneConsumerNumericMock>(
+      "SampleRedstoneConsumerNumericMock"
+    ));
   });
 
   it("Should revert if contract was not wrapped", async () => {
