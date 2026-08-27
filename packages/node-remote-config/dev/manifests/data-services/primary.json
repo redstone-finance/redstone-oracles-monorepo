@@ -5708,6 +5708,20 @@
       ],
       "denomination": "USDC",
       "rateFeed": true
+    },
+    "oTFY_FUNDAMENTAL": {
+      "source": [
+        "obligate-otfy-api"
+      ],
+      "denomination": "USDC",
+      "rateFeed": true
+    },
+    "oTFYe_FUNDAMENTAL": {
+      "source": [
+        "obligate-otfye-api"
+      ],
+      "denomination": "EUR",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
