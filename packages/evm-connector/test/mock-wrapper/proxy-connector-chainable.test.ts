@@ -1,11 +1,10 @@
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
-import { ethers } from "hardhat";
-import { WrapperBuilder } from "../../src";
-import { MockSignerIndex, getMockNumericPackage, getRange } from "../../src/helpers/test-utils";
+import { MockSignerIndex, WrapperBuilder, getMockNumericPackage, getRange } from "../../src";
 import { SampleChainableProxyConnector, SampleProxyConnectorConsumer } from "../../typechain-types";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
+  deployContract,
   expectedNumericValues,
   mockNumericPackages,
 } from "../tests-common";
@@ -29,18 +28,19 @@ describe("SampleChainableProxyConnector", function () {
   const ethDataFeedId = utils.convertStringToBytes32("ETH");
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory("SampleChainableProxyConnector");
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ({ contract } = await deployContract<SampleChainableProxyConnector>(
+      "SampleChainableProxyConnector"
+    ));
 
-    const contractB = await ContractFactory.deploy();
-    await contractB.deployed();
+    const { contract: contractB } = await deployContract<SampleChainableProxyConnector>(
+      "SampleChainableProxyConnector"
+    );
 
     await contract.registerNextConnector(contractB.address);
 
-    const ConsumerContractFactory = await ethers.getContractFactory("SampleProxyConnectorConsumer");
-    consumerContract = await ConsumerContractFactory.deploy();
-    await consumerContract.deployed();
+    ({ contract: consumerContract } = await deployContract<SampleProxyConnectorConsumer>(
+      "SampleProxyConnectorConsumer"
+    ));
 
     await contractB.registerConsumer(consumerContract.address);
   });

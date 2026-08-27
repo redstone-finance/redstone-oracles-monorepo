@@ -1,15 +1,14 @@
 import { expect } from "chai";
-import { ethers } from "hardhat";
 import {
   DEFAULT_DATA_FEED_ID_BYTES_32,
+  MockDataPackageConfig,
   MockSignerIndex,
+  WrapperBuilder,
   getMockPackageWithOneBytesDataPoint,
   getRange,
-} from "../../src/helpers/test-utils";
-import { WrapperBuilder } from "../../src/index";
-import { MockDataPackageConfig } from "../../src/wrappers/MockWrapper";
+} from "../../src";
 import { SampleRedstoneConsumerBytesMockStrings } from "../../typechain-types";
-import { UNAUTHORISED_SIGNER_INDEX } from "../tests-common";
+import { UNAUTHORISED_SIGNER_INDEX, deployContract } from "../tests-common";
 
 describe("SampleRedstoneConsumerBytesMockStrings", function () {
   let contract: SampleRedstoneConsumerBytesMockStrings;
@@ -47,11 +46,9 @@ describe("SampleRedstoneConsumerBytesMockStrings", function () {
   };
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
+    ({ contract } = await deployContract<SampleRedstoneConsumerBytesMockStrings>(
       "SampleRedstoneConsumerBytesMockStrings"
-    );
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ));
   });
 
   it("Should properly execute transaction on RedstoneConsumerBase contract", async () => {

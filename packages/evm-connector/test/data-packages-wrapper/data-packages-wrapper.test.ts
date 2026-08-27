@@ -1,11 +1,9 @@
 import { utils } from "@redstone-finance/protocol";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { ethers } from "hardhat";
-import { WrapperBuilder } from "../../src/index";
-import { DataPackagesWrapper } from "../../src/wrappers/DataPackagesWrapper";
+import { DataPackagesWrapper, WrapperBuilder } from "../../src";
 import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../../typechain-types";
-import { expectedNumericValues } from "../tests-common";
+import { deployContract, expectedNumericValues } from "../tests-common";
 import { getValidDataPackagesResponse } from "./helpers";
 
 chai.use(chaiAsPromised);
@@ -23,11 +21,9 @@ describe("DataPackagesWrapper", () => {
   };
 
   beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
+    ({ contract } = await deployContract<SampleRedstoneConsumerNumericMockManyDataFeeds>(
       "SampleRedstoneConsumerNumericMockManyDataFeeds"
-    );
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ));
   });
 
   it("Should properly execute", async () => {

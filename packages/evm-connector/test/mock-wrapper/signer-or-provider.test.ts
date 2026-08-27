@@ -1,10 +1,9 @@
 import { utils } from "@redstone-finance/protocol";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { ethers } from "hardhat";
-import { WrapperBuilder } from "../../src/index";
+import { WrapperBuilder } from "../../src";
 import { SampleRedstoneConsumerNumericMock } from "../../typechain-types";
-import { hardhatV5Provider, mockNumericPackages } from "../tests-common";
+import { deployContract, hardhatV5Provider, mockNumericPackages } from "../tests-common";
 
 chai.use(chaiAsPromised);
 
@@ -15,9 +14,9 @@ describe("SignerOrProviderTest", function () {
   let deployedContract: SampleRedstoneConsumerNumericMock;
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory("SampleRedstoneConsumerNumericMock");
-    deployedContract = await ContractFactory.deploy();
-    await deployedContract.deployed();
+    ({ contract: deployedContract } = await deployContract<SampleRedstoneConsumerNumericMock>(
+      "SampleRedstoneConsumerNumericMock"
+    ));
   });
 
   it("Should call static function without signer", async () => {

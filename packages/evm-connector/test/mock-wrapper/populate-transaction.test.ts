@@ -1,15 +1,15 @@
 import { consts, utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
-import { ethers } from "hardhat";
-import { WrapperBuilder } from "../../src/index";
-import { mockNumericPackages } from "../tests-common";
+import { WrapperBuilder } from "../../src";
+import { SampleRedstoneConsumerNumericMock } from "../../typechain-types";
+import { deployContract, mockNumericPackages } from "../tests-common";
 
 describe("PopulateTransactionTest", function () {
   it("Should overwrite populateTransaction", async () => {
     // Deploying the contract
-    const ContractFactory = await ethers.getContractFactory("SampleRedstoneConsumerNumericMock");
-    const contract = await ContractFactory.deploy();
-    await contract.deployed();
+    const { contract } = await deployContract<SampleRedstoneConsumerNumericMock>(
+      "SampleRedstoneConsumerNumericMock"
+    );
 
     // Wrapping the contract
     const wrappedContract =

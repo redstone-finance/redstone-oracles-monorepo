@@ -1,11 +1,9 @@
 import { Contract } from "@ethersproject/contracts";
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
-import { ethers } from "hardhat";
-import { WrapperBuilder } from "../../src/index";
-import { BaseWrapper } from "../../src/wrappers/BaseWrapper";
+import { BaseWrapper, WrapperBuilder } from "../../src";
 import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../../typechain-types";
-import { expectedNumericValues, mockNumericPackages } from "../tests-common";
+import { deployContract, expectedNumericValues, mockNumericPackages } from "../tests-common";
 
 class CustomPayloadWrapper<T extends Contract> extends BaseWrapper<T> {
   constructor(private readonly customRedstonePayload: string) {
@@ -44,11 +42,9 @@ describe("Corrupted payload", function () {
   };
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
+    ({ contract } = await deployContract<SampleRedstoneConsumerNumericMockManyDataFeeds>(
       "SampleRedstoneConsumerNumericMockManyDataFeeds"
-    );
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ));
   });
 
   it("Should work properly with the correct redstone payload", async () => {

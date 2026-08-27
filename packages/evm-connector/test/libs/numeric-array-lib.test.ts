@@ -1,8 +1,8 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { expect } from "chai";
-import { ethers } from "hardhat";
-import { getRange } from "../../src/helpers/test-utils";
+import { getRange } from "../../src";
 import { SampleNumericArrayLib } from "../../typechain-types";
+import { deployContract } from "../tests-common";
 
 describe("SampleNumericArrayLib", function () {
   let contract: SampleNumericArrayLib;
@@ -15,9 +15,7 @@ describe("SampleNumericArrayLib", function () {
   };
 
   beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory("SampleNumericArrayLib");
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ({ contract } = await deployContract<SampleNumericArrayLib>("SampleNumericArrayLib"));
   });
 
   it("Should store array in storage", async () => {

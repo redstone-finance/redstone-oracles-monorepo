@@ -1,3 +1,5 @@
+import { Contract } from "@ethersproject/contracts";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { ethers } from "hardhat";
 import {
   getMockNumericPackage,
@@ -102,4 +104,16 @@ export const getBlockTimestampMilliseconds = async () => {
 
 export function hardhatV5Provider() {
   return ethers.provider;
+}
+
+export async function deployContract<Deployed extends Contract = Contract>(
+  contractName: string,
+  ...args: unknown[]
+) {
+  const contractFactory = await ethers.getContractFactory(contractName);
+  const { contract, address } = await RedstoneCommon.awaitDeployment(
+    await contractFactory.deploy(...args)
+  );
+
+  return { contract: contract as Deployed, address };
 }

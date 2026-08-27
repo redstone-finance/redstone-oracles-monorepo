@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { ContractTransaction } from "@ethersproject/contracts";
 import { DataPackage, NumericDataPoint, utils } from "@redstone-finance/protocol";
-import { ethers } from "hardhat";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
   MOCK_SIGNERS,
+  MockDataPackageConfig,
   MockSignerAddress,
-} from "../src/helpers/test-utils";
-import { WrapperBuilder } from "../src/index";
-import { MockDataPackageConfig } from "../src/wrappers/MockWrapper";
-import { hardhatV5Provider } from "../test/tests-common";
+  WrapperBuilder,
+} from "../src";
+import { deployContract, hardhatV5Provider } from "../test/tests-common";
 import { HashCalldataModel, StorageStructureModel } from "../typechain-types";
 
 interface BenchmarkTestCaseParams {
@@ -44,15 +43,11 @@ describe("Benchmark", function () {
   const fullGasReport: Record<string, GasReport> = {};
 
   this.beforeEach(async () => {
-    const StorageStructureFactory = await ethers.getContractFactory("StorageStructureModel");
+    ({ contract: storageStructureModel } =
+      await deployContract<StorageStructureModel>("StorageStructureModel"));
 
-    const HashCalldataFactory = await ethers.getContractFactory("HashCalldataModel");
-
-    storageStructureModel = await StorageStructureFactory.deploy();
-    await storageStructureModel.deployed();
-
-    hashCalldataModel = await HashCalldataFactory.deploy();
-    await hashCalldataModel.deployed();
+    ({ contract: hashCalldataModel } =
+      await deployContract<HashCalldataModel>("HashCalldataModel"));
   });
 
   this.afterAll(() => {

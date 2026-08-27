@@ -1,12 +1,14 @@
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
-import { ethers } from "hardhat";
-import { DEFAULT_TIMESTAMP_FOR_TESTS, getMockStringPackage } from "../../src/helpers/test-utils";
-
-import { WrapperBuilder } from "../../src/index";
-import { MockDataPackageConfig } from "../../src/wrappers/MockWrapper";
+import {
+  DEFAULT_TIMESTAMP_FOR_TESTS,
+  getMockStringPackage,
+  MockDataPackageConfig,
+  WrapperBuilder,
+} from "../../src";
 import { SampleRedstoneConsumerBytesMockManyDataFeeds } from "../../typechain-types";
 import {
+  deployContract,
   expectedBytesValues,
   mockBytesPackageConfigs,
   mockBytesPackages,
@@ -53,11 +55,9 @@ describe("SampleRedstoneConsumerBytesMockManyDataFeeds", function () {
   };
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
+    ({ contract } = await deployContract<SampleRedstoneConsumerBytesMockManyDataFeeds>(
       "SampleRedstoneConsumerBytesMockManyDataFeeds"
-    );
-    contract = await ContractFactory.deploy();
-    await contract.deployed();
+    ));
   });
 
   it("Should properly execute transaction on RedstoneConsumerBase contract (order: ETH, BTC)", async () => {

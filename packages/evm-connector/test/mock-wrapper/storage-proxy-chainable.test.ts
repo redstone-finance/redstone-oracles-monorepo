@@ -1,14 +1,13 @@
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
-import { ethers } from "hardhat";
-import { WrapperBuilder } from "../../src";
-import { MockSignerIndex, getMockNumericPackage, getRange } from "../../src/helpers/test-utils";
+import { MockSignerIndex, WrapperBuilder, getMockNumericPackage, getRange } from "../../src";
 import {
   SampleChainableStorageProxy,
   SampleChainableStorageProxyConsumer,
 } from "../../typechain-types";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
+  deployContract,
   expectedNumericValues,
   mockNumericPackages,
 } from "../tests-common";
@@ -32,21 +31,19 @@ describe("SampleChainableStorageProxy", function () {
   const ethDataFeedId = utils.convertStringToBytes32("ETH");
 
   this.beforeEach(async () => {
-    const SampleChainableStorageFactory = await ethers.getContractFactory(
+    ({ contract } = await deployContract<SampleChainableStorageProxy>(
       "SampleChainableStorageProxy"
+    ));
+
+    const { contract: contractB } = await deployContract<SampleChainableStorageProxyConsumer>(
+      "SampleChainableStorageProxyConsumer",
+      contract.address
     );
-    contract = await SampleChainableStorageFactory.deploy();
-    await contract.deployed();
 
-    const SampleChainableStorageProxyConsumer = await ethers.getContractFactory(
-      "SampleChainableStorageProxyConsumer"
-    );
-
-    const contractB = await SampleChainableStorageProxyConsumer.deploy(contract.address);
-    await contractB.deployed();
-
-    consumerContract = await SampleChainableStorageProxyConsumer.deploy(contract.address);
-    await consumerContract.deployed();
+    ({ contract: consumerContract } = await deployContract<SampleChainableStorageProxyConsumer>(
+      "SampleChainableStorageProxyConsumer",
+      contract.address
+    ));
 
     await contract.register(contractB.address);
     await contractB.register(consumerContract.address);
