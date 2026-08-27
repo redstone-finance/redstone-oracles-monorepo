@@ -1384,6 +1384,21 @@
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": true
+    },
+    "filecoinCalibrationTestnet": {
+      "name": "Filecoin Calibration Testnet",
+      "networkId": 314159,
+      "currencySymbol": "tFIL",
+      "publicRpcUrls": ["https://api.calibration.node.glif.io/rpc/v1"],
+      "avgBlockTimeMs": 30000,
+      "multicall3": {
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 50000000
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": false
     }
   },
   "temporaryConfigUpdates": {
