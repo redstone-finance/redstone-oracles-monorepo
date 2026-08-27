@@ -136,8 +136,8 @@
     "JupUSD": {
       "priceFeedAddress": "TJ1xyzZhUX8H8thjF5Uc9DANrSw5zfBNiUrCjw9DCmJ",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 21600000
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 60000
       }
     },
     "STAC_FUNDAMENTAL": {
