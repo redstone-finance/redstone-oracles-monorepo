@@ -9,6 +9,7 @@ export const NonEvmChainTypeEnum = z.enum([
   "aptos",
   "stellar",
   "canton",
+  "near",
 ]);
 
 export type NonEvmChainType = z.infer<typeof NonEvmChainTypeEnum>;
