@@ -373,6 +373,18 @@
         "rwa"
       ]
     },
+    "VSXY---OVERNIGHT": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
     "TSLA---OVERNIGHT": {
       "source": [],
       "denomination": "USD",
@@ -389,6 +401,18 @@
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "IONQ---OVERNIGHT": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "types": [
         "rwa"
       ]
