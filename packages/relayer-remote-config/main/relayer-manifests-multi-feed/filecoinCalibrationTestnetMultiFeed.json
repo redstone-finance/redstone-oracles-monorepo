@@ -5,7 +5,7 @@
   },
   "updateTriggers": {
     "deviationPercentage": 0.5,
-    "timeSinceLastUpdateInMilliseconds": 21600000
+    "timeSinceLastUpdateInMilliseconds": 14400000
   },
   "adapterContract": "0xB08342D907D2df47B6F73e25F4fa033978B344B1",
   "adapterContractType": "multi-feed",
