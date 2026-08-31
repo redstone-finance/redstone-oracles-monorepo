@@ -5338,6 +5338,13 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "PGNGI+_FUNDAMENTAL": {
+      "source": [
+        "sync-nav-api"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "CHECK": {
       "source": [
         "bingx-usdt",
