@@ -2359,7 +2359,6 @@
     "USDT0": {
       "source": [
         "camelot-v3-arbitrumone-usdc-deferred",
-        "curve-arbitrumone-wbtc-deferred",
         "hyperliquid-api-fetcher-usdc-deferred",
         "hyperswap-hyperevm-whype-500-deferred",
         "kumbaya-megaeth-weth-3000-deferred",
