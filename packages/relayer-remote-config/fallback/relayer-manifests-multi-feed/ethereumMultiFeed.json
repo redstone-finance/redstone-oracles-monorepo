@@ -594,6 +594,20 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "oTFY_FUNDAMENTAL": {
+      "priceFeedAddress": "0xdC9CCB370b1f0285986a8e41521fcbAA72bF0650",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "oTFYe_FUNDAMENTAL": {
+      "priceFeedAddress": "0x62C69EE85613942D53cC16Fc480E0606c7611b5d",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }

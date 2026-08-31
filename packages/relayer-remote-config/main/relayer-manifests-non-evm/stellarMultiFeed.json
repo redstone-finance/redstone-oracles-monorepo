@@ -200,6 +200,13 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "USDT0": {
+      "priceFeedAddress": "CDMB5QA5QXXSTKYK5FDIL5UCZ5SDW4THIZ3RUJ5J22ZVVGXXOYCDBJYN",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
