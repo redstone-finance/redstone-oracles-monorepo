@@ -3788,7 +3788,6 @@
     "USDT0": {
       "source": [
         "camelot-v3-arbitrumone-usdc",
-        "curve-arbitrumone-wbtc",
         "fluid-arbitrumone-susde",
         "hyperliquid-api-fetcher-usdc",
         "hyperswap-hyperevm-whype-500",
