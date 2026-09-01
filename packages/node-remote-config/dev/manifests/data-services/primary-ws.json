@@ -230,25 +230,20 @@
     },
     "BTC": {
       "source": [
-        "binance_deferred-usdc",
-        "bingx_deferred-usdc",
-        "bingx_deferred-usdt",
-        "bitget_deferred-usdc",
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
-        "bitrue_deferred-usdc",
-        "bitrue_deferred-usdt",
-        "bitstamp_deferred-usd",
-        "ws-spot-htx-usdt",
-        "kraken_deferred-usd",
-        "kucoin_deferred-usdt",
-        "lbank_deferred-usdc",
-        "lbank_deferred-usdt",
-        "mexc_deferred-usdc",
-        "mexc_deferred-usdt",
-        "okx_deferred-usd",
-        "xt_deferred-usdc",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -259,25 +254,20 @@
     },
     "ETH": {
       "source": [
-        "binance_deferred-usdt",
-        "bingx_deferred-usdc",
-        "bingx_deferred-usdt",
-        "bitget_deferred-usdc",
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
-        "bitrue_deferred-usdc",
-        "bitrue_deferred-usdt",
-        "bitstamp_deferred-usd",
-        "bybit_deferred-usdc",
-        "ws-spot-htx-usdt",
-        "kraken_deferred-eur",
-        "kraken_deferred-usd",
-        "lbank_deferred-usdc",
-        "lbank_deferred-usdt",
-        "mexc_deferred-usdt",
-        "okx_deferred-usd",
-        "okx_deferred-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -289,11 +279,18 @@
     "XRP": {
       "source": [
         "ws-spot-binance-usdt",
-        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
         "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-okx-usdt": 2
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1821,26 +1818,20 @@
     },
     "SOL": {
       "source": [
-        "binance_deferred-usdc",
-        "binance_deferred-usdt",
-        "bingx_deferred-usdc",
-        "bingx_deferred-usdt",
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
-        "bitrue_deferred-usdc",
-        "bitrue_deferred-usdt",
-        "bitstamp_deferred-usd",
-        "bybit_deferred-usdt",
-        "coinbase_deferred-usd",
-        "ws-spot-htx-usdt",
-        "kraken_deferred-eur",
-        "kraken_deferred-usd",
-        "lbank_deferred-usdc",
-        "lbank_deferred-usdt",
-        "mexc_deferred-usdc",
-        "mexc_deferred-usdt",
-        "okx_deferred-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1850,11 +1841,20 @@
     "HYPE": {
       "source": [
         "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-htx-usdt",
-        "hyperliquid-api-fetcher-usdc-deferred",
-        "ws-spot-xt-usdt"
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt",
+        "hyperliquid-api-fetcher-usdc-deferred"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1863,14 +1863,20 @@
     },
     "XAUT": {
       "source": [
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-kraken-usd",
-        "ws-spot-kucoin-usdt",
+        "ws-spot-htx-usdt",
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1879,12 +1885,20 @@
     },
     "ZEC": {
       "source": [
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt",
         "uniswap-v3-bnb-btcb-3000-deferred"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-kucoin-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1906,9 +1920,12 @@
     },
     "BNB": {
       "source": [
-        "ws-spot-bitget-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
         "ws-spot-htx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
@@ -1919,11 +1936,20 @@
     },
     "XPL": {
       "source": [
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1932,26 +1958,19 @@
     },
     "SUI": {
       "source": [
-        "binance_deferred-usdc",
-        "binance_deferred-usdt",
-        "bingx_deferred-usdc",
-        "bingx_deferred-usdt",
-        "bitget_deferred-usdc",
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
-        "bitrue_deferred-usdc",
-        "bitrue_deferred-usdt",
-        "bitstamp_deferred-usd",
-        "bybit_deferred-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "kraken_deferred-eur",
-        "kraken_deferred-usd",
-        "kucoin_deferred-usdt",
-        "lbank_deferred-usdt",
-        "mexc_deferred-usdc",
-        "mexc_deferred-usdt",
-        "okx_deferred-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1961,21 +1980,20 @@
     "MON": {
       "source": [
         "ws-spot-bitget-usdt",
-        "bitrue_deferred-usdt",
-        "bybit_deferred-usdt",
-        "coinbase_deferred-usd",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "kraken_deferred-eur",
-        "kraken_deferred-usd",
-        "kucoin_deferred-usdt",
-        "lbank_deferred-usdt",
-        "mexc_deferred-usdc",
-        "mexc_deferred-usdt",
-        "okx_deferred-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt",
         "uniswap-v4-monad-usdc-500-deferred",
         "uniswap-v4-monad-wbtc-500-deferred"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1987,8 +2005,16 @@
         "ws-spot-bitget-usdt",
         "ws-spot-gate-usdt",
         "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-kraken-usd": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1997,26 +2023,20 @@
     },
     "TAO": {
       "source": [
-        "binance_deferred-usdc",
-        "binance_deferred-usdt",
-        "bingx_deferred-usdt",
-        "bitget_deferred-usdc",
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
-        "bitrue_deferred-usdc",
-        "bitrue_deferred-usdt",
-        "bitstamp_deferred-usd",
-        "coinbase_deferred-usd",
         "ws-spot-gate-usdt",
-        "kraken_deferred-eur",
-        "kraken_deferred-usd",
-        "kucoin_deferred-usdc",
-        "kucoin_deferred-usdt",
-        "lbank_deferred-usdt",
-        "mexc_deferred-usdc",
-        "mexc_deferred-usdt",
-        "xt_deferred-usdc",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-kraken-usd": 2,
+        "ws-spot-kucoin-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2025,12 +2045,21 @@
     },
     "PUMP": {
       "source": [
-        "ws-spot-bitget-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-htx-usdt",
-        "hyperliquid-api-fetcher-usdc-deferred",
-        "ws-spot-xt-usdt"
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt",
+        "hyperliquid-api-fetcher-usdc-deferred"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2039,25 +2068,20 @@
     },
     "DOGE": {
       "source": [
-        "binance_deferred-usdt",
-        "bingx_deferred-usdc",
-        "bingx_deferred-usdt",
-        "bitget_deferred-usdc",
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
-        "bitrue_deferred-usdc",
-        "bitrue_deferred-usdt",
-        "bitstamp_deferred-usd",
-        "bybit_deferred-usdt",
-        "coinbase_deferred-usd",
-        "ws-spot-htx-usdt",
-        "kraken_deferred-usd",
-        "kraken_deferred-usdt",
-        "kucoin_deferred-usdt",
-        "lbank_deferred-usdt",
-        "mexc_deferred-usdt",
-        "okx_deferred-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2066,11 +2090,20 @@
     },
     "ONDO": {
       "source": [
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-htx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2079,11 +2112,20 @@
     },
     "PENGU": {
       "source": [
-        "ws-spot-bitget-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2092,26 +2134,20 @@
     },
     "WLFI": {
       "source": [
-        "binance_deferred-usdc",
-        "binance_deferred-usdt",
-        "bingx_deferred-usdt",
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
-        "bitrue_deferred-usdc",
-        "bitrue_deferred-usdt",
-        "bitstamp_deferred-usd",
-        "bybit_deferred-usdt",
-        "coinbase_deferred-usd",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "kraken_deferred-usd",
-        "kucoin_deferred-usdt",
-        "lbank_deferred-usdt",
-        "mexc_deferred-usdc",
-        "mexc_deferred-usdt",
-        "okx_deferred-usdt",
-        "xt_deferred-usdc",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt",
         "uniswap-v3-ethereum-usdt-10000-deferred"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2120,11 +2156,20 @@
     },
     "AVAX": {
       "source": [
-        "ws-spot-bitget-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-kucoin-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2133,11 +2178,19 @@
     },
     "BCH": {
       "source": [
-        "ws-spot-bitget-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2146,26 +2199,20 @@
     },
     "LTC": {
       "source": [
-        "binance_deferred-usdc",
-        "binance_deferred-usdt",
-        "bingx_deferred-usdc",
-        "bingx_deferred-usdt",
-        "ws-spot-bitget-usdt",
-        "bitrue_deferred-usdc",
-        "bitrue_deferred-usdt",
-        "bitstamp_deferred-eur",
-        "bybit_deferred-usdt",
-        "coinbase_deferred-usd",
-        "ws-spot-htx-usdt",
-        "kraken_deferred-eur",
-        "kraken_deferred-usd",
-        "kucoin_deferred-usdt",
-        "lbank_deferred-usdt",
-        "mexc_deferred-usdc",
-        "mexc_deferred-usdt",
-        "okx_deferred-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2175,10 +2222,18 @@
     "LIT": {
       "source": [
         "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-htx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2187,11 +2242,20 @@
     },
     "JUP": {
       "source": [
-        "ws-spot-bitget-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2200,27 +2264,21 @@
     },
     "AAVE": {
       "source": [
-        "binance_deferred-usdc",
-        "binance_deferred-usdt",
-        "bingx_deferred-usdt",
-        "bitget_deferred-usdc",
-        "ws-spot-bitget-usdt",
-        "bitrue_deferred-usdc",
-        "bitrue_deferred-usdt",
-        "bitstamp_deferred-usd",
-        "bybit_deferred-usdt",
-        "coinbase_deferred-usd",
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "kraken_deferred-eur",
-        "kraken_deferred-usd",
-        "kucoin_deferred-usdt",
-        "lbank_deferred-usdt",
-        "mexc_deferred-usdc",
-        "mexc_deferred-usdt",
-        "okx_deferred-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt",
         "uniswap-v3-ethereum-weth-3000-deferred"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-kucoin-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2229,13 +2287,22 @@
     },
     "LINK": {
       "source": [
-        "ws-spot-bitget-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt",
         "uniswap-v3-ethereum-weth-3000-deferred",
         "uniswap-v4-ethereum-eth-3000-deferred"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-kucoin-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2244,11 +2311,19 @@
     },
     "ENA": {
       "source": [
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-htx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2257,28 +2332,22 @@
     },
     "UNI": {
       "source": [
-        "binance_deferred-usdc",
-        "binance_deferred-usdt",
-        "bingx_deferred-usdc",
-        "bingx_deferred-usdt",
-        "bitget_deferred-usdc",
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
-        "bitrue_deferred-usdc",
-        "bitrue_deferred-xrp",
-        "bitstamp_deferred-usd",
-        "bybit_deferred-usdt",
-        "coinbase_deferred-usd",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "kraken_deferred-eur",
-        "kraken_deferred-usd",
-        "lbank_deferred-usdt",
-        "mexc_deferred-usdc",
-        "mexc_deferred-usdt",
-        "okx_deferred-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt",
         "uniswap-v2-ethereum-weth-deferred",
         "uniswap-v3-ethereum-weth-3000-deferred"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-kucoin-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2287,12 +2356,21 @@
     },
     "ASTER": {
       "source": [
-        "ws-spot-bitget-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
         "ws-spot-htx-usdt",
-        "pancake-swap-bnb-usdt-500-deferred",
-        "ws-spot-xt-usdt"
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt",
+        "pancake-swap-bnb-usdt-500-deferred"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-kucoin-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2301,10 +2379,20 @@
     },
     "ZRO": {
       "source": [
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2320,6 +2408,12 @@
         "kucoin_deferred-usdt",
         "mexc_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "binance_deferred-usdt": 3,
+        "bybit_deferred-usdt": 2,
+        "mexc_deferred-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2386,27 +2480,21 @@
     },
     "PEPE": {
       "source": [
-        "binance_deferred-usdc",
-        "binance_deferred-usdt",
-        "bingx_deferred-usdc",
-        "bingx_deferred-usdt",
-        "bitget_deferred-usdc",
-        "ws-spot-bitget-usdt",
-        "bitrue_deferred-usdc",
-        "bitrue_deferred-usdt",
-        "bitstamp_deferred-usd",
-        "bybit_deferred-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "kraken_deferred-eur",
-        "kraken_deferred-usd",
-        "kucoin_deferred-usdt",
-        "lbank_deferred-usdt",
-        "mexc_deferred-usdc",
-        "mexc_deferred-usdt",
-        "okx_deferred-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
         "ws-spot-xt-usdt",
         "uniswap-v2-ethereum-weth-deferred"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2415,11 +2503,18 @@
     },
     "BONK": {
       "source": [
-        "ws-spot-bitget-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-htx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2492,6 +2587,12 @@
         "uniswap-v4-ethereum-usdt-10-deferred",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "binance_deferred-usdc": 3,
+        "binance_deferred-usdt": 3,
+        "bybit_deferred-usdt": 2
+      },
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 2,
@@ -2883,6 +2984,11 @@
         "ws-spot-bybit-usdt",
         "ws-spot-htx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2897,6 +3003,12 @@
         "mexc_deferred-usdt",
         "lbank_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "mexc_deferred-usdt": 2,
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-bybit-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2912,6 +3024,12 @@
         "coinbase_deferred-usd",
         "ws-spot-bitget-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "coinbase_deferred-usd": 2,
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-bybit-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2945,13 +3063,17 @@
     },
     "BASED": {
       "source": [
-        "ws-spot-okx-usdt",
+        "binancealpha_deferred-usdt",
+        "coinbase_deferred-usd",
         "ws-spot-bybit-usdt",
         "ws-spot-kucoin-usdt",
-        "binancealpha_deferred-usdt",
-        "ws-spot-htx-usdt",
-        "coinbase_deferred-usd"
+        "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2966,6 +3088,12 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-kraken-usd"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2980,6 +3108,11 @@
         "ws-spot-bybit-usdt",
         "ws-spot-htx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3010,6 +3143,12 @@
         "coinbase_deferred-usd",
         "binance_deferred-usdc"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "binance_deferred-usdc": 3,
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3038,6 +3177,11 @@
         "ws-spot-xt-usdt",
         "bingx_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-kucoin-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3047,9 +3191,16 @@
     "ZBT": {
       "source": [
         "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
+        "ws-spot-htx-usdt",
         "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3091,6 +3242,7 @@
       "source": [
         "ws-spot-binance-usdt",
         "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
         "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
@@ -3102,10 +3254,16 @@
     "DOGS": {
       "source": [
         "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-bybit-usdt"
+        "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-kucoin-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3130,9 +3288,10 @@
     "SPK": {
       "source": [
         "ws-spot-binance-usdt",
-        "ws-spot-okx-usdt",
+        "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -3175,6 +3334,11 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-htx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3227,6 +3391,12 @@
         "mexc_deferred-usdc",
         "coinbase_deferred-usd"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "coinbase_deferred-usd": 2,
+        "mexc_deferred-usdt": 2,
+        "ws-spot-bitget-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3255,6 +3425,11 @@
         "ws-spot-okx-usdt",
         "ws-spot-gate-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-kucoin-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3281,6 +3456,12 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-gate-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3295,6 +3476,12 @@
         "ws-spot-bitget-usdt",
         "bingx_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "mexc_deferred-usdt": 2,
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3320,9 +3507,16 @@
       "source": [
         "ws-spot-binance-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-okx-usdt",
-        "ws-spot-gate-usdt"
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3352,6 +3546,12 @@
         "mexc_deferred-usdt",
         "bingx_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "mexc_deferred-usdt": 2,
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3360,10 +3560,11 @@
     },
     "LAYER": {
       "source": [
+        "lbank_deferred-usdt",
         "ws-spot-binance-usdt",
-        "ws-spot-okx-usdt",
         "ws-spot-bybit-usdt",
-        "lbank_deferred-usdt"
+        "ws-spot-htx-usdt",
+        "ws-spot-okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -3409,6 +3610,12 @@
         "coinbase_deferred-usd",
         "lbank_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "coinbase_deferred-usd": 2,
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3417,10 +3624,18 @@
     },
     "STORJ": {
       "source": [
+        "lbank_deferred-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-gate-usdt",
         "ws-spot-kucoin-usdt",
-        "ws-spot-okx-usdt",
-        "lbank_deferred-usdt"
+        "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3435,6 +3650,12 @@
         "ws-spot-bitget-usdt",
         "mexc_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "mexc_deferred-usdt": 2,
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3444,10 +3665,17 @@
     "CHZ": {
       "source": [
         "ws-spot-binance-usdt",
-        "ws-spot-okx-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-htx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-kucoin-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3462,6 +3690,12 @@
         "ws-spot-gate-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "mexc_deferred-usdt": 2,
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-kucoin-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3476,6 +3710,12 @@
         "ws-spot-bybit-usdt",
         "ws-spot-bitget-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3490,6 +3730,12 @@
         "ws-spot-bitget-usdt",
         "mexc_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "mexc_deferred-usdt": 2,
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3504,6 +3750,12 @@
         "ws-spot-okx-usdt",
         "ws-spot-htx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3518,6 +3770,12 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-htx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3527,10 +3785,17 @@
     "BABY": {
       "source": [
         "ws-spot-binance-usdt",
-        "ws-spot-okx-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
-        "ws-spot-kraken-usd"
+        "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3545,6 +3810,11 @@
         "ws-spot-gate-usdt",
         "ws-spot-bitget-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3591,6 +3861,12 @@
         "lbank_deferred-usdt",
         "coinbase_deferred-usd"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "coinbase_deferred-usd": 2,
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3600,10 +3876,17 @@
     "RENDER": {
       "source": [
         "ws-spot-binance-usdt",
-        "ws-spot-kucoin-usdt",
         "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3618,6 +3901,11 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3632,6 +3920,12 @@
         "mexc_deferred-usdt",
         "bingx_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "mexc_deferred-usdt": 2,
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-bybit-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3641,10 +3935,16 @@
     "ETC": {
       "source": [
         "ws-spot-binance-usdt",
-        "ws-spot-okx-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-gate-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3654,12 +3954,17 @@
     "ALGO": {
       "source": [
         "ws-spot-binance-usdt",
-        "ws-spot-kraken-usd",
         "ws-spot-bybit-usdt",
-        "ws-spot-okx-usdt",
+        "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
-        "ws-spot-htx-usdt"
+        "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3689,6 +3994,11 @@
         "ws-spot-okx-usdt",
         "ws-spot-htx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3703,6 +4013,11 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-htx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3733,6 +4048,12 @@
         "binance_deferred-usdc",
         "coinbase_deferred-usd"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "binance_deferred-usdc": 3,
+        "coinbase_deferred-usd": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3753,13 +4074,18 @@
     },
     "FHE": {
       "source": [
-        "ws-spot-bybit-usdt",
         "binancealpha_deferred-usdt",
         "lbank_deferred-usdt",
-        "ws-spot-htx-usdt",
+        "mexc_deferred-usdt",
         "ws-spot-bitget-usdt",
-        "mexc_deferred-usdt"
+        "ws-spot-bybit-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "mexc_deferred-usdt": 2,
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-bybit-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3775,6 +4101,12 @@
         "ws-spot-kraken-usd",
         "ws-spot-htx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3785,9 +4117,15 @@
       "source": [
         "ws-spot-binance-usdt",
         "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
         "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3815,6 +4153,12 @@
         "coinbase_deferred-usd",
         "lbank_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "coinbase_deferred-usd": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3838,13 +4182,12 @@
     },
     "FIDA": {
       "source": [
+        "bingx_deferred-usdt",
+        "coinbase_deferred-usd",
+        "lbank_deferred-usdt",
         "ws-spot-binance-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-kraken-usd",
-        "ws-spot-kucoin-usdt",
-        "lbank_deferred-usdt",
-        "coinbase_deferred-usd",
-        "bingx_deferred-usdt"
+        "ws-spot-kucoin-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -3855,10 +4198,10 @@
     "KITE": {
       "source": [
         "ws-spot-binance-usdt",
-        "ws-spot-okx-usdt",
+        "ws-spot-gate-usdt",
         "ws-spot-kucoin-usdt",
-        "ws-spot-htx-usdt",
-        "ws-spot-gate-usdt"
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -3874,6 +4217,11 @@
         "ws-spot-htx-usdt",
         "ws-spot-gate-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3902,6 +4250,12 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3916,6 +4270,11 @@
         "mexc_deferred-usdt",
         "bingx_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "mexc_deferred-usdt": 2,
+        "ws-spot-bitget-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3925,10 +4284,16 @@
     "SAND": {
       "source": [
         "ws-spot-binance-usdt",
-        "ws-spot-okx-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-htx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3943,6 +4308,11 @@
         "ws-spot-bybit-usdt",
         "ws-spot-htx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3952,8 +4322,9 @@
     "CGPT": {
       "source": [
         "ws-spot-binance-usdt",
-        "ws-spot-kucoin-usdt",
         "ws-spot-bybit-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
@@ -3970,6 +4341,12 @@
         "lbank_deferred-usdt",
         "ws-spot-gate-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "coinbase_deferred-usd": 2,
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-kucoin-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3979,9 +4356,10 @@
     "ARC": {
       "source": [
         "binancealpha_deferred-usdt",
+        "lbank_deferred-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-xt-usdt",
-        "lbank_deferred-usdt"
+        "ws-spot-htx-usdt",
+        "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -3991,12 +4369,18 @@
     },
     "HIVE": {
       "source": [
-        "ws-spot-xt-usdt",
-        "binance_deferred-usdc",
+        "mexc_deferred-usdc",
         "mexc_deferred-usdt",
+        "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
-        "mexc_deferred-usdc"
+        "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "mexc_deferred-usdc": 2,
+        "mexc_deferred-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4011,6 +4395,11 @@
         "ws-spot-bybit-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4019,13 +4408,18 @@
     },
     "VIC": {
       "source": [
-        "ws-spot-binance-usdt",
-        "ws-spot-bybit-usdt",
-        "mexc_deferred-usdt",
         "bingx_deferred-usdt",
-        "ws-spot-gate-usdt",
-        "ws-spot-bitget-usdt"
+        "mexc_deferred-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4034,10 +4428,11 @@
     },
     "OPEN": {
       "source": [
-        "ws-spot-kucoin-usdt",
         "lbank_deferred-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
         "ws-spot-htx-usdt",
-        "ws-spot-bitget-usdt"
+        "ws-spot-kucoin-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -4053,6 +4448,12 @@
         "ws-spot-htx-usdt",
         "ws-spot-gate-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4063,9 +4464,16 @@
       "source": [
         "ws-spot-binance-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-okx-usdt",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-gate-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4116,9 +4524,15 @@
       "source": [
         "ws-spot-binance-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-okx-usdt",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-htx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4133,6 +4547,11 @@
         "binance_deferred-usdc",
         "mexc_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "binance_deferred-usdc": 3,
+        "ws-spot-binance-usdt": 3
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4141,11 +4560,17 @@
     },
     "AKT": {
       "source": [
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
-        "ws-spot-htx-usdt",
-        "ws-spot-gate-usdt"
+        "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-kraken-usd": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4154,10 +4579,18 @@
     },
     "STABLE": {
       "source": [
+        "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4172,6 +4605,12 @@
         "mexc_deferred-usdt",
         "bingx_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "mexc_deferred-usdt": 2,
+        "ws-spot-gate-usdt": 2,
+        "ws-spot-kucoin-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4186,6 +4625,12 @@
         "mexc_deferred-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "mexc_deferred-usdt": 2,
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4194,11 +4639,17 @@
     },
     "XEC": {
       "source": [
-        "ws-spot-kucoin-usdt",
+        "bingx_deferred-usdt",
         "lbank_deferred-usdt",
         "mexc_deferred-usdt",
-        "bingx_deferred-usdt"
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "mexc_deferred-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4223,6 +4674,11 @@
         "ws-spot-bitget-usdt",
         "mexc_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-bybit-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4252,6 +4708,12 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-bitget-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-kucoin-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4261,6 +4723,7 @@
     "EVAA": {
       "source": [
         "binancealpha_deferred-usdt",
+        "ws-spot-bitget-usdt",
         "ws-spot-gate-usdt"
       ],
       "denomination": "USD",
@@ -4301,6 +4764,11 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-htx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4309,10 +4777,11 @@
     },
     "TURBO": {
       "source": [
+        "lbank_deferred-usdt",
         "ws-spot-binance-usdt",
-        "ws-spot-okx-usdt",
+        "ws-spot-htx-usdt",
         "ws-spot-kucoin-usdt",
-        "lbank_deferred-usdt"
+        "ws-spot-okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -4335,6 +4804,12 @@
     },
     "W": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4349,6 +4824,11 @@
         "ws-spot-xt-usdt",
         "binance_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "binance_deferred-usdt": 3,
+        "ws-spot-binance-usdt": 3
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4363,6 +4843,12 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-bitget-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4371,11 +4857,17 @@
     },
     "DEEP": {
       "source": [
+        "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-kucoin-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-bitget-usdt"
+        "ws-spot-kucoin-usdt",
+        "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4390,6 +4882,12 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-gate-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4404,6 +4902,11 @@
         "ws-spot-htx-usdt",
         "lbank_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4432,6 +4935,12 @@
         "ws-spot-bitget-usdt",
         "mexc_deferred-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "mexc_deferred-usdt": 2,
+        "ws-spot-bitget-usdt": 2,
+        "ws-spot-gate-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4447,6 +4956,12 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-htx-usdt"
       ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4458,11 +4973,10 @@
         "ws-hyperliquid-perps-xyz",
         "ws-hydromancer-perps-xyz"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-xyz": 10,
-        "ws-hydromancer-perps-xyz": 1
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-xyz"
       },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx",
         "s3"
@@ -4475,11 +4989,10 @@
         "ws-hyperliquid-perps-xyz",
         "ws-hydromancer-perps-xyz"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-xyz": 10,
-        "ws-hydromancer-perps-xyz": 1
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-xyz"
       },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx",
         "s3"
@@ -4492,11 +5005,10 @@
         "ws-hyperliquid-perps-xyz",
         "ws-hydromancer-perps-xyz"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-xyz": 10,
-        "ws-hydromancer-perps-xyz": 1
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-xyz"
       },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4508,11 +5020,10 @@
         "ws-hyperliquid-perps-xyz",
         "ws-hydromancer-perps-xyz"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-xyz": 10,
-        "ws-hydromancer-perps-xyz": 1
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-xyz"
       },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
