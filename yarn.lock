@@ -8847,7 +8847,6 @@ __metadata:
     "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/oracle-node": "workspace:*"
-    "@redstone-finance/oracles-smartweave-contracts": "npm:0.5.4"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/pub-sub": "workspace:*"
     "@redstone-finance/remote-config": "workspace:*"
@@ -10173,13 +10172,6 @@ __metadata:
       built: true
   languageName: unknown
   linkType: soft
-
-"@redstone-finance/oracles-smartweave-contracts@npm:0.5.4":
-  version: 0.5.4
-  resolution: "@redstone-finance/oracles-smartweave-contracts@npm:0.5.4"
-  checksum: 10c0/d2ebd58c556e1d221c5ac1bc6c5b81d5145a71139c398db870dfe2c900deb81ab4b4f03ec67504e78d7d99aaf46eea30cd97c017abbb424b117e537da397fb19
-  languageName: node
-  linkType: hard
 
 "@redstone-finance/protocol@workspace:*, @redstone-finance/protocol@workspace:packages/protocol":
   version: 0.0.0-use.local
