@@ -53,38 +53,6 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "eBTC/WBTC": {
-      "priceFeedAddress": "0x09639692CE6ff12A06CA3AE9A24b3Aae4CD80DC8"
-    },
-    "pumpBTC/BTC": {
-      "priceFeedAddress": "0x83c6f7F61A55Fc7A1337AbD45733AD9c1c68076D"
-    },
-    "STONE": {
-      "priceFeedAddress": "0x6A1c87d11dDe3D1d52c24f8EC59B91019f14170D",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
-    "LBTC_FUNDAMENTAL": {
-      "priceFeedAddress": "0x84AD474c33c9cCefB1a2D8b77Bdd88bDc592f96b"
-    },
-    "rsETH_FUNDAMENTAL": {
-      "priceFeedAddress": "0xe7f71d6a24EBc391f5ee57B867ED429EB7Bd74f4",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
-    "weETH_FUNDAMENTAL": {
-      "priceFeedAddress": "0x65eD6a4ac085620eE943c0B15525C4428D23e4Db"
-    },
-    "SolvBTC.BBN_FUNDAMENTAL": {
-      "priceFeedAddress": "0x24eDD61cdA334bFf871A80DEB135073a7d7a9187"
-    },
-    "rswETH_FUNDAMENTAL": {
-      "priceFeedAddress": "0xddE3b77040cee3387C0cA661d1b619C3acA203b0"
-    },
     "HONEY": {
       "priceFeedAddress": "0x2D4f3199a80b848F3d094745F3Bbd4224892654e",
       "updateTriggersOverrides": {
@@ -94,13 +62,6 @@
     },
     "BERA": {
       "priceFeedAddress": "0x29d2fEC890B037B2d34f061F9a50f76F85ddBcAE",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 21600000
-      }
-    },
-    "ylstETH_FUNDAMENTAL": {
-      "priceFeedAddress": "0x607eb00a05b849A663C909285337e51C2C6F58d0",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 21600000
@@ -120,13 +81,6 @@
       "priceFeedAddress": "0x2b9824644D9c03FDa5fddc40A7AeAB282b867c23",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.05,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
-    "SolvBTC_FUNDAMENTAL": {
-      "priceFeedAddress": "0x4E202A7E713d00804F9cE397260362bF5E0EaaA8",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
