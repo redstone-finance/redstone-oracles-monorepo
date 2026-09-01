@@ -6563,46 +6563,6 @@
         "rwa"
       ]
     },
-    "VSXY---PRE_AFTER": {
-      "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
-      },
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "VSXY---OVERNIGHT": {
-      "source": [],
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "VSXY---EXTENDED": {
-      "source": [],
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "ORACLE_io:VSXY": {
       "source": [
         "ws-hyperliquid-perps-io",
@@ -6690,7 +6650,7 @@
     },
     "io:VSXY_MARK_0": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-equity-regular-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -6701,7 +6661,7 @@
     },
     "io:VSXY_MARK_1": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-equity-regular-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -6712,7 +6672,7 @@
     },
     "io:VSXY_EXT": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-equity-regular-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -6723,7 +6683,7 @@
     },
     "io:VSXY": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-equity-regular-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -6733,6 +6693,177 @@
       "rateFeed": false
     },
     "OPEN_INTEREST_io:VSXY": {
+      "source": [
+        "ws-hyperliquid-perps-io"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "GPRO": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GPRO---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ORACLE_io:GPRO": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-io"
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_io:GPRO": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-io"
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_io:GPRO": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-io"
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_io:GPRO_EMA_HALF_3M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_io:GPRO_EMA_HALF_5M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_io:GPRO": {
+      "source": [
+        "ws-hyperliquid-perps-io"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENTROPY_DEPTH_io:GPRO_EMA_HALF_5M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:GPRO_MARK_0": {
+      "source": [
+        "hip3-entropy-equity-pre-after-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:GPRO_MARK_1": {
+      "source": [
+        "hip3-entropy-equity-pre-after-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:GPRO_EXT": {
+      "source": [
+        "hip3-entropy-equity-pre-after-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "io:GPRO": {
+      "source": [
+        "hip3-entropy-equity-pre-after-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_io:GPRO": {
       "source": [
         "ws-hyperliquid-perps-io"
       ],

@@ -84,6 +84,7 @@
   "EWY": "UsEquity",
   "NBIS": "UsEquity",
   "VSXY": "UsEquity",
+  "GPRO": "UsEquity",
 
   "AAPL---PRE_AFTER": "UsEquityExtendedHours",
   "TSLA---PRE_AFTER": "UsEquityExtendedHours",
@@ -97,6 +98,7 @@
   "EWY---PRE_AFTER": "UsEquityExtendedHours",
   "NBIS---PRE_AFTER": "UsEquityExtendedHours",
   "VSXY---PRE_AFTER": "UsEquityExtendedHours",
+  "GPRO---PRE_AFTER": "UsEquityExtendedHours",
 
   "AAPL---OVERNIGHT": "UsEquityOvernight",
   "TSLA---OVERNIGHT": "UsEquityOvernight",
