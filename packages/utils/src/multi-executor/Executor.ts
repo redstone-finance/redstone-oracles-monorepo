@@ -51,7 +51,7 @@ export abstract class Executor<R> {
 
         throw error;
       }
-      logger.warn(`${message("failed", durationMs)}: ${stringifyError(error)}${suffix}`, error);
+      logger.warn(`${message("failed", durationMs)}: ${stringifyError(error)}${suffix}`);
       func.delegate?.didFail?.(func, error, durationMs);
 
       throw error;
