@@ -83,33 +83,30 @@
     },
     "ORACLE_ani:DOG": {
       "source": ["ws-hyperliquid-perps-ani", "ws-hydromancer-perps-ani"],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-ani": 10,
-        "ws-hydromancer-perps-ani": 1
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-ani"
       },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "MARK_ani:DOG": {
       "source": ["ws-hyperliquid-perps-ani", "ws-hydromancer-perps-ani"],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-ani": 10,
-        "ws-hydromancer-perps-ani": 1
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-ani"
       },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "MID_ani:DOG": {
       "source": ["ws-hyperliquid-perps-ani", "ws-hydromancer-perps-ani"],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-ani": 10,
-        "ws-hydromancer-perps-ani": 1
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-ani"
       },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
