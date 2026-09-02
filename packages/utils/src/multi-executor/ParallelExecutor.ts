@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { stringify } from "../common";
+import { isTraceEnabled } from "../logger";
 import { Executor } from "./Executor";
 import { FnBox } from "./FnBox";
 
@@ -86,7 +87,9 @@ export abstract class ParallelExecutor<R> extends Executor<R> {
 
       if (isEnough) {
         const value = this.aggregate(successfulResults);
-        this.logger.trace(`Resolving with ${stringify(value)}`);
+        if (isTraceEnabled()) {
+          this.logger.trace(`Resolving with ${stringify(value)}`);
+        }
         resolve(value);
       }
 
