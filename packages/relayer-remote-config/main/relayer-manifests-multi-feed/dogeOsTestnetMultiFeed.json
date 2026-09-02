@@ -1,0 +1,21 @@
+{
+  "chain": {
+    "name": "dogeOsTestnet",
+    "id": 6281971
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "adapterContract": "0xB08342D907D2df47B6F73e25F4fa033978B344B1",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "BTC": {
+      "priceFeedAddress": "0xe1df239Ac22E8a873B2a4dF975C8dfc3249350e4"
+    },
+    "DOGE": {
+      "priceFeedAddress": "0x434F8D17c0301cfEa143dba912972E24B827C968"
+    }
+  }
+}
