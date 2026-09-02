@@ -1,5 +1,6 @@
 import { ChainTypeEnum, MultiExecutor } from "@redstone-finance/utils";
 import { Cluster, Commitment, Connection, ConnectionConfig } from "@solana/web3.js";
+import { makeAgentFetch } from "./agent-fetch";
 import { connectToCluster } from "./cluster";
 import { getSolanaChainId, getSolanaCluster } from "./network-ids";
 import { RedStoneConnection } from "./RedStoneConnection";
@@ -54,7 +55,7 @@ export class SolanaConnectionBuilder extends MultiExecutor.ClientBuilder<Connect
     const commitmentOrConfig = {
       commitment: "confirmed" as Commitment,
       disableRetryOnRateLimit: true,
-      ...(this.httpAgent && { httpAgent: this.httpAgent }),
+      ...(this.httpAgent && { fetch: makeAgentFetch(this.httpAgent) }),
     };
 
     if (this.shouldUseRedStoneConnection) {
