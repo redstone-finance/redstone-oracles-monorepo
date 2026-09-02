@@ -2000,6 +2000,29 @@
         "crypto"
       ]
     },
+    "MEGA": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-spot-binance-usdt": 3,
+        "ws-spot-bybit-usdt": 2,
+        "ws-spot-kucoin-usdt": 2,
+        "ws-spot-okx-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
     "FARTCOIN": {
       "source": [
         "ws-spot-bitget-usdt",
