@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { getNS, stringify, throwUnsupportedParamError, timeoutOrResult } from "../common";
-import { loggerFactory } from "../logger";
+import { isTraceEnabled, loggerFactory } from "../logger";
 import { acceptsAbortSignal } from "./abort-signal";
 import { AgreementExecutor } from "./AgreementExecutor";
 import { DEFAULT_CONFIG, ExecutionMode, MultiExecutorConfig, NestedMethodConfig } from "./config";
@@ -161,7 +161,9 @@ export class MultiExecutorFactory<T extends object> {
 
     const result = this.getExecutor<R>(mode).execute(functions);
     const value = await timeoutOrResult(result, this.config.allExecutionsTimeoutMs);
-    this.logger.trace(`[${stringify(key)}] Returning ${stringify(value)}`);
+    if (isTraceEnabled()) {
+      this.logger.trace(`[${stringify(key)}] Returning ${stringify(value)}`);
+    }
 
     return value;
   }

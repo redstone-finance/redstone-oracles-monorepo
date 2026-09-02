@@ -1,5 +1,5 @@
 import { stringify, stringifyError, timeoutOrResult } from "../common";
-import { loggerFactory } from "../logger";
+import { isTraceEnabled, loggerFactory } from "../logger";
 import { ExecutionAbortedError } from "./ExecutionAbortedError";
 import { FnBox } from "./FnBox";
 
@@ -40,7 +40,9 @@ export abstract class Executor<R> {
         "timed out"
       );
       const durationMs = performance.now() - start;
-      logger.trace(`${message("returns", durationMs)}: ${stringify(result)}${suffix}`);
+      if (isTraceEnabled()) {
+        logger.trace(`${message("returns", durationMs)}: ${stringify(result)}${suffix}`);
+      }
       func.delegate?.didSucceed?.(func, result, durationMs);
 
       return result;
