@@ -2,6 +2,12 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import { FetchFn } from "@solana/web3.js";
 import { Agent as HttpAgent, IncomingMessage, request as httpRequest } from "node:http";
 import { Agent as HttpsAgent, request as httpsRequest } from "node:https";
+import { Readable } from "node:stream";
+import { createBrotliDecompress, createGunzip, createInflate } from "node:zlib";
+
+const ACCEPT_ENCODING = "gzip, deflate, br";
+const DECODED_ENCODINGS = ["gzip", "deflate", "br"];
+const DECODED_AWAY_HEADERS = ["content-encoding", "content-length"];
 
 export function makeAgentFetch(agent: HttpAgent | HttpsAgent): FetchFn {
   return (input, init) =>
@@ -20,11 +26,14 @@ export function makeAgentFetch(agent: HttpAgent | HttpsAgent): FetchFn {
         {
           agent: overTls === agent instanceof HttpsAgent ? agent : undefined,
           method: init?.method ?? "GET",
-          headers: Object.fromEntries(new Headers(init?.headers)),
+          headers: {
+            "accept-encoding": ACCEPT_ENCODING,
+            ...Object.fromEntries(new Headers(init?.headers)),
+          },
         },
         (response) => {
           response.on("error", reject);
-          collectResponseBody(response).then(
+          collectResponseBody(decodeResponse(response)).then(
             (body) =>
               resolve(
                 new Response(body, {
@@ -77,21 +86,42 @@ function readBody(init?: RequestInit) {
   throw new Error(`agent fetch supports only string bodies, got ${typeof init.body}`);
 }
 
-function collectResponseBody(response: IncomingMessage) {
+function decodeResponse(response: IncomingMessage) {
+  switch (response.headers["content-encoding"]) {
+    case "gzip":
+      return response.pipe(createGunzip());
+    case "deflate":
+      return response.pipe(createInflate());
+    case "br":
+      return response.pipe(createBrotliDecompress());
+    default:
+      return response;
+  }
+}
+
+function isDecoded(response: IncomingMessage) {
+  return DECODED_ENCODINGS.includes(String(response.headers["content-encoding"]));
+}
+
+function collectResponseBody(body: Readable) {
   return new Promise<Buffer | null>((resolve, reject) => {
     const chunks: Buffer[] = [];
-    response.on("data", (chunk: Buffer) => chunks.push(chunk));
-    response.on("error", reject);
-    response.on("end", () => resolve(chunks.length ? Buffer.concat(chunks) : null));
+    body.on("data", (chunk: Buffer) => chunks.push(chunk));
+    body.on("error", reject);
+    body.on("end", () => resolve(chunks.length ? Buffer.concat(chunks) : null));
   });
 }
 
 function readResponseHeaders(response: IncomingMessage) {
+  const dropped = isDecoded(response) ? DECODED_AWAY_HEADERS : [];
+
   return new Headers(
-    Object.entries(response.headers).flatMap(([name, value]) =>
-      (Array.isArray(value) ? value : [value])
-        .filter(RedstoneCommon.isDefined)
-        .map((single) => <[string, string]>[name, single])
-    )
+    Object.entries(response.headers)
+      .filter(([name]) => !dropped.includes(name))
+      .flatMap(([name, value]) =>
+        (Array.isArray(value) ? value : [value])
+          .filter(RedstoneCommon.isDefined)
+          .map((single) => <[string, string]>[name, single])
+      )
   );
 }

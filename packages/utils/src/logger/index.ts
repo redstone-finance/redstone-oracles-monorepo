@@ -9,11 +9,13 @@ import { z } from "zod";
 import { getFromEnv } from "../common/env";
 import { JSONstringify, unescapeString } from "../common/misc";
 import { isNodeRuntime } from "../common/runtime";
-import { sanitizeLogMessage } from "./sanitize-token";
+import { keepLastCharacters, sanitizeLogMessage } from "./sanitize-token";
 
 const DEFAULT_ENABLE_JSON_LOGS = true;
 const DEFAULT_LOG_LEVEL = LogLevels.info;
 export const MAX_DEPTH = 5;
+
+const NUMERIC_LABEL = /^\d+$/;
 
 export const SENSITIVE_KEYS = new Set([
   "apiKey",
@@ -215,6 +217,15 @@ export function sanitizeValue<T>(value: T): T {
 
 export function maskSensitiveValue(value: unknown): string {
   return typeof value === "string" && value.length > 16 ? `${value.slice(0, 4)}...` : "[Redacted]";
+}
+
+export function maskHostname(host: string): string {
+  const labels = host.split(".");
+  if (labels.length <= 2 || labels.every((label) => NUMERIC_LABEL.test(label))) {
+    return host;
+  }
+
+  return [keepLastCharacters(labels[0]), ...labels.slice(1)].join(".");
 }
 
 function parseLogLevels(): Record<string, LogLevel> | null {

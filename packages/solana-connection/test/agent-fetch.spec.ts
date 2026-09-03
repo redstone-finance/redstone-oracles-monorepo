@@ -1,11 +1,14 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { Agent, createServer, IncomingMessage, Server, ServerResponse } from "node:http";
 import { Agent as HttpsAgent } from "node:https";
 import { AddressInfo } from "node:net";
+import { gzipSync } from "node:zlib";
 import { makeAgentFetch } from "../src/agent-fetch";
 
 const RESPONSE_STATUS = 418;
 const RESPONSE_HEADER = "x-redstone-test";
 const HOLD = "hold";
+const GZIP = "gzip";
 const POLL_INTERVAL_MS = 10;
 const POLL_LIMIT = 200;
 
@@ -13,7 +16,12 @@ describe("makeAgentFetch", () => {
   let server: Server;
   let agent: Agent;
   let url: string;
-  let received: { method: string; body: string; contentType?: string }[];
+  let received: {
+    method: string;
+    body: string;
+    contentType?: string;
+    acceptEncoding?: string;
+  }[];
 
   beforeEach(async () => {
     received = [];
@@ -23,8 +31,18 @@ describe("makeAgentFetch", () => {
           method: request.method!,
           body,
           contentType: request.headers["content-type"],
+          acceptEncoding: request.headers["accept-encoding"],
         });
         if (body === HOLD) {
+          return;
+        }
+        if (body === GZIP) {
+          response.writeHead(RESPONSE_STATUS, {
+            [RESPONSE_HEADER]: "yes",
+            "content-encoding": "gzip",
+          });
+          response.end(gzipSync(Buffer.from(`answer ${GZIP}`)));
+
           return;
         }
         response.writeHead(RESPONSE_STATUS, { [RESPONSE_HEADER]: "yes" });
@@ -53,7 +71,12 @@ describe("makeAgentFetch", () => {
 
     expect(createConnection).toHaveBeenCalledTimes(1);
     expect(received).toEqual([
-      { method: "POST", body: '{"method":"getSlot"}', contentType: "application/json" },
+      {
+        method: "POST",
+        body: '{"method":"getSlot"}',
+        contentType: "application/json",
+        acceptEncoding: "gzip, deflate, br",
+      },
     ]);
     expect(response.status).toBe(RESPONSE_STATUS);
     expect(response.headers.get(RESPONSE_HEADER)).toBe("yes");
@@ -112,26 +135,38 @@ describe("makeAgentFetch", () => {
     tlsAgent.destroy();
   });
 
+  it("asks for compression, unpacks a gzipped response and drops the headers of the packed one", async () => {
+    const response = await makeAgentFetch(agent)(url, { method: "POST", body: GZIP });
+
+    expect(received[0].acceptEncoding).toContain("gzip");
+    expect(await response.text()).toBe(`answer ${GZIP}`);
+    expect(response.headers.get("content-encoding")).toBeNull();
+    expect(response.headers.get("content-length")).toBeNull();
+    expect(response.headers.get(RESPONSE_HEADER)).toBe("yes");
+  });
+
   it("rejects a body it cannot send", async () => {
     await expect(
       makeAgentFetch(agent)(url, { method: "POST", body: new ArrayBuffer(8) })
     ).rejects.toThrow("agent fetch supports only string bodies");
   });
 
-  async function waitForRequest() {
-    for (let attempt = 0; attempt < POLL_LIMIT && received.length === 0; attempt++) {
-      await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
-    }
+  function waitForRequest() {
+    return RedstoneCommon.waitForSuccess(
+      () => Promise.resolve(received.length > 0),
+      POLL_LIMIT,
+      "the server never got the request",
+      POLL_INTERVAL_MS
+    );
   }
 
-  async function waitForReleasedSockets() {
-    for (
-      let attempt = 0;
-      attempt < POLL_LIMIT && Object.keys(agent.sockets).length > 0;
-      attempt++
-    ) {
-      await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
-    }
+  function waitForReleasedSockets() {
+    return RedstoneCommon.waitForSuccess(
+      () => Promise.resolve(Object.keys(agent.sockets).length === 0),
+      POLL_LIMIT,
+      "the aborted socket stayed in the pool",
+      POLL_INTERVAL_MS
+    );
   }
 });
 

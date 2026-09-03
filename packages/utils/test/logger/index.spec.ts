@@ -1,5 +1,5 @@
 import { type ConsolaInstance } from "consola";
-import { createSanitizedLogger, MAX_DEPTH, sanitizeValue } from "../../src";
+import { createSanitizedLogger, maskHostname, MAX_DEPTH, sanitizeValue } from "../../src";
 
 const createMockLogger = () => {
   const capturedArgs: unknown[][] = [];
@@ -342,6 +342,20 @@ describe("Logger Sanitization Logic", () => {
       nested: "[Max Depth Reached]",
       url: "https://example.com/...ret2",
       value: 2,
+    });
+  });
+
+  describe("maskHostname", () => {
+    test("keeps the last characters of the leftmost label, where providers put keys", () => {
+      expect(maskHostname("black-withered-diamond.near-mainnet.quiknode.pro")).toBe(
+        "...mond.near-mainnet.quiknode.pro"
+      );
+      expect(maskHostname("eth82120.allnodes.me")).toBe("...2120.allnodes.me");
+    });
+
+    test("keeps a bare domain and an address", () => {
+      expect(maskHostname("mevblocker.io")).toBe("mevblocker.io");
+      expect(maskHostname("127.0.0.1")).toBe("127.0.0.1");
     });
   });
 });
