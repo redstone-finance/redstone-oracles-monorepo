@@ -101,6 +101,24 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "strUSD_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "etrUSD_FUNDAMENTAL/USD": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "trUSD_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
