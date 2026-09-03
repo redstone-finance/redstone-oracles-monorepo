@@ -7429,6 +7429,86 @@
         "crypto"
       ]
     },
+    "BTC_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BTC_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BTC_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GRVT_FAIR_BTC": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GRVT_FAIR_BTC_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GRVT_FAIR_CAPPED_BTC": {
+      "source": [
+        "grvt-cap"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GRVT_FAIR_CAPPED_BTC_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
     "TUT": {
       "source": [
         "ws-spot-binance-usdt",
