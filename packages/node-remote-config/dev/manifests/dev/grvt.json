@@ -1,0 +1,126 @@
+{
+  "interval": 1000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 8000,
+  "minValidSourcesPercentage": 1,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 1000000000,
+      "maxDelayMilliseconds": 1000
+    }
+  },
+  "defaultBroadcasters": ["redstone-packages", "influx"],
+  "tokens": {
+    "USDT": {
+      "source": ["bitstamp-usd", "coinbase-usd", "gemini-usd", "kraken-usd", "okx-usd"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": ["influx", "s3"]
+    },
+    "USDC": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitrue-usdt",
+        "bitstamp-usd",
+        "bybit-usdt",
+        "curve-ethereum-usdt",
+        "gate-usdt",
+        "gemini-usd",
+        "htx-usdt",
+        "kraken-usd",
+        "kraken-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "uniswap-v4-ethereum-usdt-10"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx", "s3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BTC": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-htx-usdt"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["crypto"]
+    },
+    "BTC_EMA_150S": {
+      "source": ["ema"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["crypto"]
+    },
+    "BTC_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["crypto"]
+    },
+    "BTC_PERP_EMA_30S": {
+      "source": ["ema"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["crypto"]
+    },
+    "GRVT_FAIR_BTC": {
+      "source": ["ws-grvt"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["crypto"]
+    },
+    "GRVT_FAIR_BTC_EMA_30S": {
+      "source": ["ema"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["crypto"]
+    },
+    "GRVT_FAIR_CAPPED_BTC": {
+      "source": ["grvt-cap"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["crypto"]
+    },
+    "GRVT_FAIR_CAPPED_BTC_EMA_150S": {
+      "source": ["ema"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["crypto"]
+    }
+  }
+}
