@@ -116,6 +116,10 @@ export function sanitizeLogMessage(message: string): string {
   return sanitizeToken(withSanitizedUrls);
 }
 
+export function keepLastCharacters(value: string) {
+  return value.length > KEPT_CHARACTERS ? `...${value.slice(-KEPT_CHARACTERS)}` : value;
+}
+
 function redactUrlSecrets(url: string) {
   const schemeEnd = url.indexOf(URL_MARKER) + URL_MARKER.length;
   const rest = url.slice(schemeEnd);
@@ -145,8 +149,4 @@ function redactPath(path: string) {
         : segment;
     })
     .join(PATH_SEPARATOR);
-}
-
-function keepLastCharacters(value: string) {
-  return value.length > KEPT_CHARACTERS ? `...${value.slice(-KEPT_CHARACTERS)}` : value;
 }
