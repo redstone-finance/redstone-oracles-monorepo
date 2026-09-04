@@ -1,4 +1,4 @@
-import { splitSignature } from "@ethersproject/bytes";
+import { hexlify, splitSignature } from "@ethersproject/bytes";
 import { Wallet } from "@ethersproject/wallet";
 import { UniversalSigner } from "../src";
 
@@ -17,7 +17,9 @@ describe("UniversalSigner", () => {
 
   test("Should correctly calculate digest for data", () => {
     const digest = UniversalSigner.getDigestForData(stringifiableData);
-    expect(digest).toBe("0x230a650f45bd2fb93390f0e372a77022536e6d9da6408aa3f1b2f28e04fb2011");
+    expect(hexlify(digest)).toBe(
+      "0x230a650f45bd2fb93390f0e372a77022536e6d9da6408aa3f1b2f28e04fb2011"
+    );
   });
 
   test("Should properly sign and verify stringifiable data", () => {

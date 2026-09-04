@@ -8,15 +8,15 @@ import {
   SignatureLike,
   splitSignature,
 } from "@ethersproject/bytes";
-import { keccak256 } from "@ethersproject/keccak256";
 import { SigningKey } from "@ethersproject/signing-key";
-import { toUtf8Bytes } from "@ethersproject/strings";
 import { computeAddress } from "@ethersproject/transactions";
 import { verifyMessage } from "@ethersproject/wallet";
 import { ecdsaRecover } from "secp256k1";
+import { keccak256 } from "./keccak";
 import { addressFromPrivateKey, publicKeyFromPrivateKey } from "./keys";
 
 const RS_SIGNATURE_LENGTH = 64;
+const UTF8_ENCODER = new TextEncoder();
 const ECDSA_N_DIV_2 = BigInt("0x7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0");
 
 export class UniversalSigner {
@@ -26,7 +26,7 @@ export class UniversalSigner {
   static getDigestForData(data: unknown) {
     const message = JSON.stringify(data);
 
-    return keccak256(toUtf8Bytes(message));
+    return keccak256(UTF8_ENCODER.encode(message));
   }
 
   static signStringifiableData(data: unknown, privateKey: string): string {
@@ -56,9 +56,7 @@ export class UniversalSigner {
   }
 
   static recoverSigner(data: unknown, signature: SignatureLike) {
-    const digest = arrayify(UniversalSigner.getDigestForData(data));
-
-    return UniversalSigner.recoverAddress(digest, signature);
+    return UniversalSigner.recoverAddress(UniversalSigner.getDigestForData(data), signature);
   }
 
   static recoverAddress(digest: Uint8Array, signature: SignatureLike) {
