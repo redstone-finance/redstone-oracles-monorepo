@@ -10380,6 +10380,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/nodes-data-archiver@workspace:packages/nodes-data-archiver":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/nodes-data-archiver@workspace:packages/nodes-data-archiver"
+  dependencies:
+    "@aws-sdk/client-s3": "npm:^3.696.0"
+    "@redstone-finance/utils": "workspace:*"
+    zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/on-chain-relayer-common@workspace:*, @redstone-finance/on-chain-relayer-common@workspace:packages/on-chain-relayer-common":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/on-chain-relayer-common@workspace:packages/on-chain-relayer-common"
