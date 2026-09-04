@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@ethersproject/bignumber": "^5.7.0",
-    "@ethersproject/keccak256": "^5.7.0",
     "@ethersproject/logger": "^5.7.0",
     "@ethersproject/sha2": "^5.7.0",
     "@types/lodash": "^4.14.195",

@@ -1,7 +1,6 @@
 import { arrayify, concat, hexlify } from "@ethersproject/bytes";
-import { keccak256 } from "@ethersproject/keccak256";
 import type { Signature } from "@redstone-finance/signing";
-import { UniversalSigner } from "@redstone-finance/signing";
+import { keccak256, UniversalSigner } from "@redstone-finance/signing";
 import { decodeBase64, encodeBase64 } from "../common/base64";
 import {
   DATA_POINT_VALUE_BYTE_SIZE_BS,
@@ -83,10 +82,7 @@ export class DataPackage extends Serializable {
   }
 
   getSignableHash(): Uint8Array {
-    const serializedDataPackage = this.toBytes();
-    const signableHashHex = keccak256(serializedDataPackage);
-
-    return arrayify(signableHashHex);
+    return keccak256(this.toBytes());
   }
 
   sign(privateKey: string): SignedDataPackage {

@@ -1,15 +1,15 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { BytesLike, arrayify, hexlify, isHexString, zeroPad } from "@ethersproject/bytes";
-import { keccak256 } from "@ethersproject/keccak256";
-import { formatBytes32String, toUtf8Bytes } from "@ethersproject/strings";
+import { formatBytes32String } from "@ethersproject/strings";
 import { parseUnits } from "@ethersproject/units";
+import { keccak256 } from "@redstone-finance/signing";
 import Decimal from "decimal.js";
 
-const ZERO_EX_PREFIX_LENGTH = 2; // length of string "0x"
-
 export type NumberLike = number | string;
-
 export type ConvertibleToBytes32 = string;
+
+const ZERO_EX_PREFIX_LENGTH = 2; // length of string "0x"
+const UTF8_ENCODER = new TextEncoder();
 
 export const assert = (condition: boolean, errMsg?: string) => {
   if (!condition) {
@@ -19,16 +19,10 @@ export const assert = (condition: boolean, errMsg?: string) => {
   }
 };
 
-export const convertStringToBytes32 = (str: string): Uint8Array => {
-  let bytes32Str: string;
-  if (str.length > 31) {
-    bytes32Str = keccak256(isHexString(str) ? str : toUtf8Bytes(str));
-  } else {
-    bytes32Str = formatBytes32String(str);
-  }
-
-  return arrayify(bytes32Str);
-};
+export const convertStringToBytes32 = (str: string): Uint8Array =>
+  str.length > 31
+    ? keccak256(isHexString(str) ? str : UTF8_ENCODER.encode(str))
+    : arrayify(formatBytes32String(str));
 
 export const convertNumberToBytes = (
   value: NumberLike,

@@ -1,3 +1,4 @@
+export * from "./keccak";
 export * from "./keys";
 export * from "./parse-transaction";
 export * from "./personal-message";
