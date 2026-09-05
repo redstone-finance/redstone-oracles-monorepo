@@ -28,14 +28,6 @@
     "decimal.js": "^10.4.3",
     "lodash": "^4.17.23"
   },
-  "devDependencies": {
-    "@redstone-finance/internal-utils": "workspace:*",
-    "axios": "^1.19",
-    "dotenv": "^16.0.3",
-    "openapi-typescript-codegen": "^0.29.0",
-    "secp256k1": "^5.0.1",
-    "zod": "^4.1.12"
-  },
   "files": [
     "src",
     "dist"
