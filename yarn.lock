@@ -8581,6 +8581,7 @@ __metadata:
     "@canton-network/wallet-sdk": "npm:1.2.1"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/multichain-kit": "workspace:*"
+    "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     axios: "npm:^1.19"
