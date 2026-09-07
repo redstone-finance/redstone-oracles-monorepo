@@ -11,7 +11,7 @@ import { makeAptos } from "../scripts/utils";
 import { makeAptosAccount, MoveClient, MovePricesContractAdapter } from "../src";
 import { FAKE_PRIVKEY_SECP256K1, NETWORK, REST_NODE_LOCALNET_URL } from "./helpers";
 
-const TEST_FILE_TIMEOUT = 60_000;
+const TEST_FILE_TIMEOUT = RedstoneCommon.minToMs(1);
 const WRITE_TEST_TIMEOUT = 20_000;
 const WAIT_TS = 5_000;
 const HOUR_MS = 3_600_000;
