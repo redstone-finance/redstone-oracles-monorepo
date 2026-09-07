@@ -16,6 +16,13 @@
     },
     "USDC": {
       "priceFeedAddress": "0xab6982a14e811DF558F49C79923723281D0DD16A"
+    },
+    "PGNGI+_FUNDAMENTAL": {
+      "priceFeedAddress": "0x8cD527bC37526E0A380309C869834f45595bb3Ca",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
