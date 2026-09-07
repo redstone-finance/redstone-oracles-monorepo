@@ -1,3 +1,4 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   DataPackagesResponse,
   DataPackagesResponseStorage,
@@ -160,7 +161,10 @@ describe("DataPackagesResponseStorage", () => {
     let latestSut: DataPackagesResponseStorage;
 
     beforeEach(() => {
-      latestSut = new DataPackagesResponseStorage({ ttlMs: 60_000, latestTtlMs: 16_000 });
+      latestSut = new DataPackagesResponseStorage({
+        ttlMs: RedstoneCommon.minToMs(1),
+        latestTtlMs: RedstoneCommon.secToMs(16),
+      });
     });
 
     it("should return latest entry when latestTtlMs is configured and no historicalTimestamp", () => {
@@ -172,7 +176,7 @@ describe("DataPackagesResponseStorage", () => {
     });
 
     it("should return undefined when latestTtlMs is not configured and no historicalTimestamp", () => {
-      const noLatestSut = new DataPackagesResponseStorage({ ttlMs: 60_000 });
+      const noLatestSut = new DataPackagesResponseStorage({ ttlMs: RedstoneCommon.minToMs(1) });
       noLatestSut.set(mockSignedDataPackagesResponse, makeReqParams());
 
       const result = noLatestSut.get(makeReqParams({ historicalTimestamp: undefined }));
@@ -201,7 +205,7 @@ describe("DataPackagesResponseStorage", () => {
     it("should return undefined when latest entry exceeds latestTtlMs", () => {
       latestSut.set(mockSignedDataPackagesResponse, makeReqParams());
 
-      jest.spyOn(Date, "now").mockReturnValue(MOCK_TIMESTAMP + 20_000);
+      jest.spyOn(Date, "now").mockReturnValue(MOCK_TIMESTAMP + RedstoneCommon.secToMs(20));
 
       const result = latestSut.get(makeReqParams({ historicalTimestamp: undefined }));
 
@@ -211,7 +215,7 @@ describe("DataPackagesResponseStorage", () => {
     it("should return latest entry when within latestTtlMs", () => {
       latestSut.set(mockSignedDataPackagesResponse, makeReqParams());
 
-      jest.spyOn(Date, "now").mockReturnValue(MOCK_TIMESTAMP + 10_000);
+      jest.spyOn(Date, "now").mockReturnValue(MOCK_TIMESTAMP + RedstoneCommon.secToMs(10));
 
       const result = latestSut.get(makeReqParams({ historicalTimestamp: undefined }));
 

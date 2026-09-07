@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { assert, getFromEnv, setUnrefInterval, TimerId } from "../common";
+import { assert, getFromEnv, minToMs, secToMs, setUnrefInterval, TimerId } from "../common";
 import { loggerFactory, RedstoneLogger } from "../logger";
 import { weightedRandom } from "../math";
 import { NetworkId } from "../NetworkId";
@@ -16,18 +16,16 @@ type ScoreReport = {
 };
 
 const CuratedRpcListConfigSchema = z.object({
-  resetQuarantineInterval: z.number().default(() =>
-    getFromEnv(
-      "RPC_CURATED_LIST_RESET_QUARANTINE_INTERVAL",
-      z.number().default(60_000) // every 1 min
-    )
-  ),
-  evaluationInterval: z.number().default(() =>
-    getFromEnv(
-      "RPC_CURATED_LIST_EVALUATION_INTERVAL",
-      z.number().default(30_000) // every 30 seconds
-    )
-  ),
+  resetQuarantineInterval: z
+    .number()
+    .default(() =>
+      getFromEnv("RPC_CURATED_LIST_RESET_QUARANTINE_INTERVAL", z.number().default(minToMs(1)))
+    ),
+  evaluationInterval: z
+    .number()
+    .default(() =>
+      getFromEnv("RPC_CURATED_LIST_EVALUATION_INTERVAL", z.number().default(secToMs(30)))
+    ),
   maxErrorRate: z
     .number()
     .min(0)
