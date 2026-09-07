@@ -19,6 +19,13 @@
     },
     "EUROC": {
       "priceFeedAddress": "0x7C687d7Cf9d2899326d868Fdd33D75F270525d4c"
+    },
+    "PGNGI+_FUNDAMENTAL": {
+      "priceFeedAddress": "0xAafe039e92123CbB1A798138165F72565AbB6B9e",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
