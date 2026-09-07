@@ -1,3 +1,5 @@
+import "./memoize-program-address";
+
 export * from "./cluster";
 export * from "./GetAccountsInfoRequestCollector";
 export * from "./GetTransactionsRequestCollector";
