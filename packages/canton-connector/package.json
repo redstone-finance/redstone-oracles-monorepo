@@ -17,7 +17,8 @@
     "run-sig-der": "yarn global:tsx scripts/sig_der.ts",
     "sample-run": "yarn build:turbo && yarn global:with-auth-gateways node dist/scripts/sample-run.js",
     "core-client-sample": "yarn build:turbo && yarn global:with-auth-gateways node dist/scripts/core-client-sample.js",
-    "clear-old-pills": "yarn global:tsx scripts/clear-old-pills.ts"
+    "clear-old-pills": "yarn global:tsx scripts/clear-old-pills.ts",
+    "measure-canton-latency": "yarn global:tsx scripts/measure-canton-latency.ts"
   },
   "dependencies": {
     "@canton-network/core-token-standard-service": "^1.2.3",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@redstone-finance/internal-utils": "workspace:*",
+    "@redstone-finance/protocol": "workspace:*",
     "axios": "^1.19",
     "dotenv": "^16.0.3",
     "openapi-typescript-codegen": "^0.29.0",
