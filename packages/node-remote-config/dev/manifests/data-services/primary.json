@@ -3994,6 +3994,13 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "HYBOND": {
+      "source": [
+        "openeden"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "SPKCC_NAV": {
       "source": [
         "spiko"
