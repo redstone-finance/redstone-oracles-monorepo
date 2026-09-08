@@ -235,6 +235,13 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "HYBOND_NAV": {
+      "priceFeedAddress": "0xD6BcbbC87bFb6c8964dDc73DC3EaE6d08865d51C",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
