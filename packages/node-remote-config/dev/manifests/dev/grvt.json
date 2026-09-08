@@ -1,7 +1,9 @@
 {
   "interval": 1000,
   "priceAggregator": "median",
-  "defaultSource": ["coingecko"],
+  "defaultSource": [
+    "coingecko"
+  ],
   "sourceTimeout": 8000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
@@ -10,10 +12,19 @@
       "maxDelayMilliseconds": 1000
     }
   },
-  "defaultBroadcasters": ["redstone-packages", "influx"],
+  "defaultBroadcasters": [
+    "redstone-packages",
+    "influx"
+  ],
   "tokens": {
     "USDT": {
-      "source": ["bitstamp-usd", "coinbase-usd", "gemini-usd", "kraken-usd", "okx-usd"],
+      "source": [
+        "bitstamp-usd",
+        "coinbase-usd",
+        "gemini-usd",
+        "kraken-usd",
+        "okx-usd"
+      ],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -22,7 +33,10 @@
       },
       "denomination": "USD",
       "rateFeed": false,
-      "broadcasters": ["influx", "s3"]
+      "broadcasters": [
+        "influx",
+        "s3"
+      ]
     },
     "USDC": {
       "source": [
@@ -50,7 +64,10 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": ["influx", "s3"],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -66,13 +83,9 @@
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
-      "types": ["crypto"]
-    },
-    "BTC_EMA_150S": {
-      "source": ["ema"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["crypto"]
+      "types": [
+        "crypto"
+      ]
     },
     "BTC_PERP": {
       "source": [
@@ -90,37 +103,211 @@
       },
       "denomination": "USD",
       "rateFeed": false,
-      "types": ["crypto"]
+      "types": [
+        "crypto"
+      ]
     },
     "BTC_PERP_EMA_30S": {
-      "source": ["ema"],
+      "source": [
+        "ema"
+      ],
       "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "rateFeed": false,
-      "types": ["crypto"]
+      "types": [
+        "crypto"
+      ]
     },
     "GRVT_FAIR_BTC": {
-      "source": ["ws-grvt"],
+      "source": [
+        "ws-grvt"
+      ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": ["crypto"]
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
     },
     "GRVT_FAIR_BTC_EMA_30S": {
-      "source": ["ema"],
+      "source": [
+        "ema"
+      ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": ["crypto"]
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
     },
-    "GRVT_FAIR_CAPPED_BTC": {
-      "source": ["grvt-cap"],
+    "grvt:BTC_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": ["crypto"]
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
     },
-    "GRVT_FAIR_CAPPED_BTC_EMA_150S": {
-      "source": ["ema"],
+    "grvt:BTC_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BTC_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ANTHROPIC_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-coinbase-usdc",
+        "ws-perp-mexc-usdt"
+      ],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ANTHROPIC_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ANTHROPIC": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ANTHROPIC_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ANTHROPIC_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ANTHROPIC_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ANTHROPIC_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TSLA": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
-      "types": ["crypto"]
+      "types": [
+        "rwa"
+      ]
+    },
+    "TSLA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_TSLA": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_TSLA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:TSLA_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:TSLA_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:TSLA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
