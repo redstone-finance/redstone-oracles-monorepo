@@ -6,6 +6,8 @@ import type { Right } from './Right';
 export type RevokeUserRightsResponse = {
     /**
      * The rights that were actually revoked by the request.
+     *
+     * Optional: can be empty
      */
     newlyRevokedRights?: Array<Right>;
 };

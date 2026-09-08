@@ -5,12 +5,16 @@
 export type GetPackageStatusResponse = {
     /**
      * The status of the package.
+     *
+     * Required
      */
     packageStatus: GetPackageStatusResponse.packageStatus;
 };
 export namespace GetPackageStatusResponse {
     /**
      * The status of the package.
+     *
+     * Required
      */
     export enum packageStatus {
         PACKAGE_STATUS_UNSPECIFIED = 'PACKAGE_STATUS_UNSPECIFIED',

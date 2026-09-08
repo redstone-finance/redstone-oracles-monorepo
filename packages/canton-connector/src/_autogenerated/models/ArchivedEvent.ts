@@ -10,19 +10,24 @@ export type ArchivedEvent = {
      * The offset of origin.
      * Offsets are managed by the participant nodes.
      * Transactions can thus NOT be assumed to have the same offsets on different participant nodes.
-     * Required, it is a valid absolute offset (positive integer)
+     * It is a valid absolute offset (positive integer)
+     *
+     * Required
      */
     offset: number;
     /**
      * The position of this event in the originating transaction or reassignment.
      * Node IDs are not necessarily equal across participants,
      * as these may see different projections/parts of transactions.
-     * Required, must be valid node ID (non-negative integer)
+     * Must be valid node ID (non-negative integer)
+     *
+     * Required
      */
     nodeId: number;
     /**
      * The ID of the archived contract.
      * Must be a valid LedgerString (as described in ``value.proto``).
+     *
      * Required
      */
     contractId: string;
@@ -44,11 +49,13 @@ export type ArchivedEvent = {
      * the contract.
      * Each one of its elements must be a valid PartyIdString (as described
      * in ``value.proto``).
-     * Required
+     *
+     * Required: must be non-empty
      */
-    witnessParties?: Array<string>;
+    witnessParties: Array<string>;
     /**
      * The package name of the contract.
+     *
      * Required
      */
     packageName: string;
@@ -59,7 +66,7 @@ export type ArchivedEvent = {
      *
      * If defined, the identifier uses the package-id reference format.
      *
-     * Optional
+     * Optional: can be empty
      */
     implementedInterfaces?: Array<string>;
 };

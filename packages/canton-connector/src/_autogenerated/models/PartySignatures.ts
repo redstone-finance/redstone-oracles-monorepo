@@ -9,8 +9,9 @@ import type { SinglePartySignatures } from './SinglePartySignatures';
 export type PartySignatures = {
     /**
      * Additional signatures provided by all individual parties
-     * Required
+     *
+     * Required: must be non-empty
      */
-    signatures?: Array<SinglePartySignatures>;
+    signatures: Array<SinglePartySignatures>;
 };
 

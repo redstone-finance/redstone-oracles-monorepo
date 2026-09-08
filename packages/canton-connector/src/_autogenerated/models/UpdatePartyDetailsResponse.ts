@@ -6,7 +6,9 @@ import type { PartyDetails } from './PartyDetails';
 export type UpdatePartyDetailsResponse = {
     /**
      * Updated party details
+     *
+     * Required
      */
-    partyDetails?: PartyDetails;
+    partyDetails: PartyDetails;
 };
 

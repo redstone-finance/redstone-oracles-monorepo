@@ -3,6 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type CanReadAs1 = {
+    /**
+     * The right to read ledger data visible to this party.
+     *
+     * Required
+     */
     party: string;
 };
 

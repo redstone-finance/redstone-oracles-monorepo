@@ -309,12 +309,12 @@ function fromCreatedEvents(
 }
 
 function extractSample(response: JsGetUpdatesResponse): Sample | undefined {
-  if (!("Transaction" in response.update)) {
+  if (!response.update || !("Transaction" in response.update)) {
     return undefined;
   }
 
   const transaction = response.update.Transaction.value;
-  const events = transaction.events ?? [];
+  const events = transaction.events;
   const recordTimeMs = Date.parse(transaction.recordTime);
   const writtenFeeds = extractWrittenFeeds(events);
 
@@ -595,7 +595,13 @@ async function main() {
     "getCurrentOffset"
   );
 
-  const samples = await collectSamples(api, partyId, interfaceId, ledgerEnd, readTargetUpdates());
+  const samples = await collectSamples(
+    api,
+    partyId,
+    interfaceId,
+    ledgerEnd ?? 0,
+    readTargetUpdates()
+  );
 
   if (!samples.length) {
     throw new Error(

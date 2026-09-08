@@ -3,6 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ParticipantAdmin1 } from './ParticipantAdmin1';
+/**
+ * The right to administer the participant node.
+ */
 export type ParticipantAdmin = {
     value: ParticipantAdmin1;
 };

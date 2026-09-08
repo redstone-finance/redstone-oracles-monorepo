@@ -10,10 +10,11 @@ import type { User } from './User';
 export type UpdateUserRequest = {
     /**
      * The user to update.
-     * Required,
      * Modifiable
+     *
+     * Required
      */
-    user?: User;
+    user: User;
     /**
      * An update mask specifies how and which properties of the ``User`` message are to be updated.
      * An update mask consists of a set of update paths.
@@ -33,8 +34,9 @@ export type UpdateUserRequest = {
      * Examples of valid update paths: 'primary_party', 'metadata', 'metadata.annotations'.
      * For additional information see the documentation for standard protobuf3's ``google.protobuf.FieldMask``.
      * For similar Ledger API see ``com.daml.ledger.api.v2.admin.UpdatePartyDetailsRequest``.
+     *
      * Required
      */
-    updateMask?: FieldMask;
+    updateMask: FieldMask;
 };
 

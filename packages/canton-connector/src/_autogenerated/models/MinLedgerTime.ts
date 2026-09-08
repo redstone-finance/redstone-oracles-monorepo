@@ -4,6 +4,6 @@
 /* eslint-disable */
 import type { Time } from './Time';
 export type MinLedgerTime = {
-    time: Time;
+    time?: Time;
 };
 

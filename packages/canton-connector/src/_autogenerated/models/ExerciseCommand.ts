@@ -18,17 +18,20 @@ export type ExerciseCommand = {
     /**
      * The ID of the contract the client wants to exercise upon.
      * Must be a valid LedgerString (as described in ``value.proto``).
+     *
      * Required
      */
     contractId: string;
     /**
      * The name of the choice the client wants to exercise.
      * Must be a valid NameString (as described in ``value.proto``)
+     *
      * Required
      */
     choice: string;
     /**
      * The argument for this choice.
+     *
      * Required
      */
     choiceArgument: any;

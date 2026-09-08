@@ -10,13 +10,15 @@ import type { ReassignmentCommands } from './ReassignmentCommands';
 export type SubmitAndWaitForReassignmentRequest = {
     /**
      * The reassignment commands to be submitted.
+     *
      * Required
      */
-    reassignmentCommands?: ReassignmentCommands;
+    reassignmentCommands: ReassignmentCommands;
     /**
-     * Optional
      * If no event_format provided, the result will contain no events.
      * The events in the result, will take shape TRANSACTION_SHAPE_ACS_DELTA.
+     *
+     * Optional
      */
     eventFormat?: EventFormat;
 };

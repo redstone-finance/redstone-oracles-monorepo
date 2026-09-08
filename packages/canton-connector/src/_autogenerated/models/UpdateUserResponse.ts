@@ -6,7 +6,9 @@ import type { User } from './User';
 export type UpdateUserResponse = {
     /**
      * Updated user
+     *
+     * Required
      */
-    user?: User;
+    user: User;
 };
 

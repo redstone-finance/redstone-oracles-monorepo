@@ -5,6 +5,9 @@
 import type { Empty6 } from './Empty6';
 import type { NoPrior } from './NoPrior';
 import type { Prior } from './Prior';
+/**
+ * Optional
+ */
 export type Serial = ({
     Empty: Empty6;
 } | {

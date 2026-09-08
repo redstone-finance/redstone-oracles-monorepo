@@ -4,6 +4,11 @@
 /* eslint-disable */
 import type { PartyDetails } from './PartyDetails';
 export type AllocatePartyResponse = {
-    partyDetails?: PartyDetails;
+    /**
+     * The allocated party details
+     *
+     * Required
+     */
+    partyDetails: PartyDetails;
 };
 

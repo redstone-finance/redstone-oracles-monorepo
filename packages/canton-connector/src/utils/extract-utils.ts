@@ -64,23 +64,24 @@ export function extractCreatedEvents(
 ) {
   const transactions = contracts
     .map((contract) =>
-      isTransactionUpdate(contract.update) ? contract.update.Transaction : undefined
+      RedstoneCommon.isDefined(contract.update) && isTransactionUpdate(contract.update)
+        ? contract.update.Transaction
+        : undefined
     )
     .filter(RedstoneCommon.isDefined);
 
   const archivedContractIds = excludeArchived
     ? new Set(
         transactions
-          .flatMap((transaction) => transaction.value.events ?? [])
+          .flatMap((transaction) => transaction.value.events)
           .filter((event) => "ArchivedEvent" in event)
           .map((event) => event.ArchivedEvent.contractId)
       )
     : new Set();
 
   const createdEvents = transactions
-    .map((transaction) => transaction.value.events?.filter((event) => isCreatedEvent(event)))
-    .filter((list) => list?.length)
-    .filter(RedstoneCommon.isDefined);
+    .map((transaction) => transaction.value.events.filter((event) => isCreatedEvent(event)))
+    .filter((list) => list.length > 0);
 
   return createdEvents
     .flat()
@@ -99,7 +100,7 @@ export function extractUpdateMetadata(
   method: string
 ) {
   const priceEvents = extractPriceEvents(allEvents);
-  const events = transaction.value.events ?? [];
+  const events = transaction.value.events;
 
   const createdEvent = events.find((e) => "CreatedEvent" in e)?.CreatedEvent;
   const adapterId =
@@ -122,7 +123,7 @@ export function extractUpdateMetadata(
     const block = event.ExercisedEvent.offset;
     const timeSecs = RedstoneCommon.msToSecs(Date.parse(transaction.value.recordTime));
     const to = adapterId;
-    const from = event.ExercisedEvent.actingParties?.join(SENDER_SEPARATOR) ?? "";
+    const from = event.ExercisedEvent.actingParties.join(SENDER_SEPARATOR);
 
     const updateId = transaction.value.updateId;
     const cost = transaction.value.paidTrafficCost;

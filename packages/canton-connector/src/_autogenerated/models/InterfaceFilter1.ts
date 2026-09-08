@@ -15,19 +15,21 @@ export type InterfaceFilter1 = {
      *
      * Required
      */
-    interfaceId?: string;
+    interfaceId: string;
     /**
      * Whether to include the interface view on the contract in the returned ``CreatedEvent``.
      * Use this to access contract data in a uniform manner in your API client.
+     *
      * Optional
      */
-    includeInterfaceView: boolean;
+    includeInterfaceView?: boolean;
     /**
      * Whether to include a ``created_event_blob`` in the returned ``CreatedEvent``.
      * Use this to access the contract create event payload in your API client
      * for submitting it as a disclosed contract with future commands.
+     *
      * Optional
      */
-    includeCreatedEventBlob: boolean;
+    includeCreatedEventBlob?: boolean;
 };
 

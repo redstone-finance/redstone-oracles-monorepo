@@ -18,18 +18,21 @@
 export type VettedPackagesRef = {
     /**
      * Package's package id must be the same as this field.
+     *
      * Optional
      */
-    packageId: string;
+    packageId?: string;
     /**
      * Package's name must be the same as this field.
+     *
      * Optional
      */
-    packageName: string;
+    packageName?: string;
     /**
      * Package's version must be the same as this field.
+     *
      * Optional
      */
-    packageVersion: string;
+    packageVersion?: string;
 };
 

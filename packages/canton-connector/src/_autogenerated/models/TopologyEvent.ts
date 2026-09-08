@@ -4,6 +4,6 @@
 /* eslint-disable */
 import type { TopologyEventEvent } from './TopologyEventEvent';
 export type TopologyEvent = {
-    event: TopologyEventEvent;
+    event?: TopologyEventEvent;
 };
 

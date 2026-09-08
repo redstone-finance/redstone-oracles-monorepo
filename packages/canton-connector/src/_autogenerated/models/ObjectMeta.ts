@@ -23,9 +23,10 @@ export type ObjectMeta = {
      * Concurrent change control is optional. It will be applied only if you include a resource version in an update request.
      * When creating a new instance of a resource you must leave the resource version empty.
      * Its value will be populated by the participant server upon successful resource creation.
+     *
      * Optional
      */
-    resourceVersion: string;
+    resourceVersion?: string;
     /**
      * A set of modifiable key-value pairs that can be used to represent arbitrary, client-specific metadata.
      * Constraints:
@@ -47,9 +48,10 @@ export type ObjectMeta = {
      * Use the resource's update RPC to update its annotations.
      * In order to add a new annotation or update an existing one using an update RPC, provide the desired annotation in the update request.
      * In order to remove an annotation using an update RPC, provide the target annotation's key but set its value to the empty string in the update request.
-     * Optional
      * Modifiable
+     *
+     * Optional: can be empty
      */
-    annotations: Map_String;
+    annotations?: Map_String;
 };
 

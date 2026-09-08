@@ -4,6 +4,6 @@
 /* eslint-disable */
 import type { Command1 } from './Command1';
 export type ReassignmentCommand = {
-    command: Command1;
+    command?: Command1;
 };
 

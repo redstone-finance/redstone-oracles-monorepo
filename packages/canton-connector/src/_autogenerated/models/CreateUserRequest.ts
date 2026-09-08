@@ -12,13 +12,15 @@ import type { User } from './User';
 export type CreateUserRequest = {
     /**
      * The user to create.
+     *
      * Required
      */
-    user?: User;
+    user: User;
     /**
      * The rights to be assigned to the user upon creation,
      * which SHOULD include appropriate rights for the ``user.primary_party``.
-     * Optional
+     *
+     * Optional: can be empty
      */
     rights?: Array<Right>;
 };

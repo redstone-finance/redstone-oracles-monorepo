@@ -10,10 +10,11 @@ import type { PartyDetails } from './PartyDetails';
 export type UpdatePartyDetailsRequest = {
     /**
      * Party to be updated
-     * Required,
      * Modifiable
+     *
+     * Required
      */
-    partyDetails?: PartyDetails;
+    partyDetails: PartyDetails;
     /**
      * An update mask specifies how and which properties of the ``PartyDetails`` message are to be updated.
      * An update mask consists of a set of update paths.
@@ -35,8 +36,9 @@ export type UpdatePartyDetailsRequest = {
      * Examples of update paths: 'local_metadata.annotations', 'local_metadata'.
      * For additional information see the documentation for standard protobuf3's ``google.protobuf.FieldMask``.
      * For similar Ledger API see ``com.daml.ledger.api.v2.admin.UpdateUserRequest``.
+     *
      * Required
      */
-    updateMask?: FieldMask;
+    updateMask: FieldMask;
 };
 

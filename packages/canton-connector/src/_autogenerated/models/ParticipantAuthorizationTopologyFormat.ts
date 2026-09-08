@@ -9,6 +9,8 @@ export type ParticipantAuthorizationTopologyFormat = {
     /**
      * List of parties for which the topology transactions should be sent.
      * Empty means: for all parties.
+     *
+     * Optional: can be empty
      */
     parties?: Array<string>;
 };

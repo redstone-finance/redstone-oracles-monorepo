@@ -44,6 +44,7 @@ describe("extractExercisedResultsFromEvents", () => {
       contractId: CID.ethNewPill,
       synchronizerId: "sync-primary",
       createdEventBlob: BLOB.ethNewPill,
+      createArgument: {},
     });
   });
 
@@ -66,6 +67,7 @@ describe("extractExercisedResultsFromEvents", () => {
       contractId: CID.btcResolved,
       synchronizerId: "sync-1",
       createdEventBlob: BLOB.btc,
+      createArgument: {},
     });
   });
 

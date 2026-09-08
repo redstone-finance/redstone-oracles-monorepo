@@ -5,8 +5,13 @@
 export type TraceContext = {
     /**
      * https://www.w3.org/TR/trace-context/
+     *
+     * Optional
      */
     traceparent?: string;
+    /**
+     * Optional
+     */
     tracestate?: string;
 };
 

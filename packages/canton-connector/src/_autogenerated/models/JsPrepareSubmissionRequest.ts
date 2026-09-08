@@ -13,15 +13,17 @@ export type JsPrepareSubmissionRequest = {
      * Must be a valid UserIdString (as described in ``value.proto``).
      * Required unless authentication is used with a user token.
      * In that case, the token's user-id will be used for the request's user_id.
+     *
      * Optional
      */
-    userId: string;
+    userId?: string;
     /**
      * Uniquely identifies the command.
      * The triple (user_id, act_as, command_id) constitutes the change ID for the intended ledger change,
      * where act_as is interpreted as a set of party names.
      * The change ID can be used for matching the intended ledger changes with all their completions.
      * Must be a valid LedgerString (as described in ``value.proto``).
+     *
      * Required
      */
     commandId: string;
@@ -29,9 +31,10 @@ export type JsPrepareSubmissionRequest = {
      * Individual elements of this atomic command. Must be non-empty.
      * Limitation: Only single command transaction are currently supported by the API.
      * The field is marked as repeated in preparation for future support of multiple commands.
-     * Required
+     *
+     * Required: must be non-empty
      */
-    commands?: Array<Command>;
+    commands: Array<Command>;
     /**
      * Optional
      */
@@ -43,9 +46,10 @@ export type JsPrepareSubmissionRequest = {
      * and does not execute it. Therefore read authorization is sufficient even for actAs parties.
      * Note: This may change, and more specific authorization scope may be introduced in the future.
      * Each element must be a valid PartyIdString (as described in ``value.proto``).
-     * Required, must be non-empty.
+     *
+     * Required: must be non-empty
      */
-    actAs?: Array<string>;
+    actAs: Array<string>;
     /**
      * Set of parties on whose behalf (in addition to all parties listed in ``act_as``) contracts can be retrieved.
      * This affects Daml operations such as ``fetch``, ``fetchByKey``, ``lookupByKey``, ``exercise``, and ``exerciseByKey``.
@@ -54,38 +58,44 @@ export type JsPrepareSubmissionRequest = {
      * rules for fetch operations.
      * If ledger API authorization is enabled, then the authorization metadata must authorize the sender of the request
      * to read contract data on behalf of each of the given parties.
-     * Optional
+     *
+     * Optional: can be empty
      */
     readAs?: Array<string>;
     /**
      * Additional contracts used to resolve contract & contract key lookups.
-     * Optional
+     *
+     * Optional: can be empty
      */
     disclosedContracts?: Array<DisclosedContract>;
     /**
      * Must be a valid synchronizer id
      * If not set, a suitable synchronizer that this node is connected to will be chosen
+     *
      * Optional
      */
-    synchronizerId: string;
+    synchronizerId?: string;
     /**
      * The package-id selection preference of the client for resolving
      * package names and interface instances in command submission and interpretation
-     * Optional
+     *
+     * Optional: can be empty
      */
     packageIdSelectionPreference?: Array<string>;
     /**
      * When true, the response will contain additional details on how the transaction was encoded and hashed
      * This can be useful for troubleshooting of hash mismatches. Should only be used for debugging.
-     * Optional, default to false
+     * Defaults to false
+     *
+     * Optional
      */
-    verboseHashing: boolean;
+    verboseHashing?: boolean;
     /**
      * Fetches the contract keys into the caches to speed up the command processing.
      * Should only contain contract keys that are expected to be resolved during interpretation of the commands.
      * Keys of disclosed contracts do not need prefetching.
      *
-     * Optional
+     * Optional: can be empty
      */
     prefetchContractKeys?: Array<PrefetchContractKey>;
     /**
@@ -96,6 +106,7 @@ export type JsPrepareSubmissionRequest = {
      * which is useful to know when it can definitely not be accepted
      * anymore and resorting to preparing another transaction for the same
      * intent is safe again.
+     *
      * Optional
      */
     maxRecordTime?: string;
@@ -106,9 +117,40 @@ export type JsPrepareSubmissionRequest = {
      * Request amplification is not accounted for in the estimation: each amplified request will
      * result in the cost of the confirmation request to be charged additionally.
      *
-     * Optional - Traffic cost estimation is enabled by default if this field is not set
+     * Traffic cost estimation is enabled by default if this field is not set
      * To turn off cost estimation, set the CostEstimationHints#disabled field to true
+     *
+     * Optional
      */
     estimateTrafficCost?: CostEstimationHints;
+    /**
+     * The maximum number of passes for the Topology-Aware Package Selection (TAPS).
+     * Higher values can increase the chance of successful package selection for routing of interpreted transactions.
+     * If unset, this defaults to the value defined in the participant configuration.
+     * The provided value must not exceed the limit specified in the participant configuration.
+     *
+     * Optional
+     */
+    tapsMaxPasses?: number;
+    /**
+     * The hashing scheme version to be used when building the hash.
+     * Defaults to HASHING_SCHEME_VERSION_V2.
+     *
+     * Optional
+     */
+    hashingSchemeVersion?: JsPrepareSubmissionRequest.hashingSchemeVersion;
 };
+export namespace JsPrepareSubmissionRequest {
+    /**
+     * The hashing scheme version to be used when building the hash.
+     * Defaults to HASHING_SCHEME_VERSION_V2.
+     *
+     * Optional
+     */
+    export enum hashingSchemeVersion {
+        HASHING_SCHEME_VERSION_UNSPECIFIED = 'HASHING_SCHEME_VERSION_UNSPECIFIED',
+        HASHING_SCHEME_VERSION_V2 = 'HASHING_SCHEME_VERSION_V2',
+        HASHING_SCHEME_VERSION_V3 = 'HASHING_SCHEME_VERSION_V3',
+    }
+}
 
