@@ -1283,17 +1283,6 @@
       "denomination": "ETH",
       "rateFeed": false
     },
-    "ezETH": {
-      "source": [
-        "aerodrome-cl-base-weth",
-        "curve-fraxtal-wfrxeth",
-        "fluid-arbitrumone-eth",
-        "fluid-ethereum-eth",
-        "uniswap-v4-arbitrumone-eth-500"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "crvUSD": {
       "source": [
         "curve-arbitrumone-wbtc",
@@ -3083,36 +3072,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "tacETH_FUNDAMENTAL": {
-      "source": [
-        "ethereum-evm-fetcher-turtle-tac"
-      ],
-      "denomination": "ETH",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      },
-      "isHidden": true
-    },
-    "tacUSD_FUNDAMENTAL": {
-      "source": [
-        "ethereum-evm-fetcher-turtle-tac"
-      ],
-      "denomination": "USDC",
-      "rateFeed": true,
-      "isHidden": true
-    },
-    "tacBTC_FUNDAMENTAL": {
-      "source": [
-        "ethereum-evm-fetcher-turtle-tac"
-      ],
-      "denomination": "BTC",
-      "rateFeed": true,
-      "isHidden": true
-    },
     "UBTC": {
       "source": [
         "hyperliquid-api-fetcher-usdc",
@@ -3938,19 +3897,6 @@
         "sushiswap-v3-hemi-usdc.e-500",
         "sushiswap-v3-hemi-usdt-500"
       ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "USDH": {
-      "source": [
-        "alias"
-      ],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 2,
-          "maxDelayMilliseconds": 120000
-        }
-      },
       "denomination": "USD",
       "rateFeed": false
     },

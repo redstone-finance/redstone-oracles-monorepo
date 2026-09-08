@@ -157,22 +157,6 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "EIGEN": {
-      "priceFeedAddress": "0x2ee5Ce6556599E16c226579BA14F94926d8Cb86d",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
-    "tacETH_FUNDAMENTAL": {
-      "priceFeedAddress": "0x9D0aB80d6B68144a6BBb5c7447Eb84EdaaC18519"
-    },
-    "tacUSD_FUNDAMENTAL": {
-      "priceFeedAddress": "0xa90E0136cB598E1cEf28dc54932C17033B54538C"
-    },
-    "tacBTC_FUNDAMENTAL": {
-      "priceFeedAddress": "0x0A6FD5820f797e517297fEFf90AaEcD8e2Dc77b3"
-    },
     "swETH_FUNDAMENTAL": {
       "priceFeedAddress": "0x061bB36F8b67bB922937C102092498dcF4619F86",
       "updateTriggersOverrides": {
