@@ -8,6 +8,9 @@
     "s3"
   ],
   "sourceTimeout": 7000,
+  "sourceTimeoutOverride": {
+    "lbank": 3000
+  },
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
     "deviationWithRecentValues": {
@@ -716,7 +719,6 @@
     },
     "BRL": {
       "source": [
-        "lbank-usdt",
         "mexc-usdt",
         "binance-btc-reversed",
         "binance-usdt-reversed",
