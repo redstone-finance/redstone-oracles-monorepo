@@ -4,6 +4,6 @@
 /* eslint-disable */
 import type { Update } from './Update';
 export type JsGetUpdatesResponse = {
-    update: Update;
+    update?: Update;
 };
 

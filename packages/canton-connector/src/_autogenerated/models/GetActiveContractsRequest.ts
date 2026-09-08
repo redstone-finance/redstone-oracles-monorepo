@@ -23,13 +23,15 @@ export type GetActiveContractsRequest = {
      * In particular, setting the verbose flag to true triggers the ledger to include labels for record fields.
      * Optional, if specified event_format must be unset.
      */
-    verbose: boolean;
+    verbose?: boolean;
     /**
      * The offset at which the snapshot of the active contracts will be computed.
      * Must be no greater than the current ledger end offset.
      * Must be greater than or equal to the last pruning offset.
-     * Required, must be a valid absolute offset (positive integer) or ledger begin offset (zero).
+     * Must be a valid absolute offset (positive integer) or ledger begin offset (zero).
      * If zero, the empty set will be returned.
+     *
+     * Required
      */
     activeAtOffset: number;
     /**
@@ -42,5 +44,21 @@ export type GetActiveContractsRequest = {
      * - verbose is the verbose field from this request
      */
     eventFormat?: EventFormat;
+    /**
+     * Opaque representation of a continuation token defining a position in the active contracts snapshot.
+     * The prefix of the active contracts snapshot will be omitted up to and including the element from which
+     * the continuation token was read.
+     * To reuse the continuation token from a `GetActiveContractsPageResponse`:
+     *
+     * - subsequent request must be executed on the same participant with the same version of canton,
+     * - subsequent request must have the same active_at_offset,
+     * - subsequent request must have the same event_format
+     * - and the participant must not have been pruned after the active_at_offset.
+     *
+     * If not specified, the whole active contracts snapshot will be returned.
+     *
+     * Optional: can be empty
+     */
+    streamContinuationToken?: string;
 };
 

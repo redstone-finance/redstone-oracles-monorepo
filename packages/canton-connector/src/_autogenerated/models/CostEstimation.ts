@@ -11,20 +11,28 @@
 export type CostEstimation = {
     /**
      * Timestamp at which the estimation was made
+     *
+     * Required
      */
-    estimationTimestamp?: string;
+    estimationTimestamp: string;
     /**
      * Estimated traffic cost of the confirmation request associated with the transaction
+     *
+     * Required
      */
     confirmationRequestTrafficCostEstimation: number;
     /**
      * Estimated traffic cost of the confirmation response associated with the transaction
      * This field can also be used as an indication of the cost that other potential confirming nodes
      * of the party will incur to approve or reject the transaction
+     *
+     * Required
      */
     confirmationResponseTrafficCostEstimation: number;
     /**
      * Sum of the fields above
+     *
+     * Required
      */
     totalTrafficCostEstimation: number;
 };

@@ -18,6 +18,7 @@ export type JsInterfaceView = {
      * Whether the view was successfully computed, and if not,
      * the reason for the error. The error is reported using the same rules
      * for error codes and messages as the errors returned for API requests.
+     *
      * Required
      */
     viewStatus: JsStatus;
@@ -25,8 +26,19 @@ export type JsInterfaceView = {
      * The value of the interface's view method on this event.
      * Set if it was requested in the ``InterfaceFilter`` and it could be
      * successfully computed.
+     *
      * Optional
      */
     viewValue?: any;
+    /**
+     * The package defining the interface implementation used to compute the view.
+     * Can be different from the package that was used to create the contract itself,
+     * as the contract arguments can be upgraded or downgraded using smart-contract upgrading
+     * as part of computing the interface view.
+     * Populated if the view computation is successful, otherwise empty.
+     *
+     * Optional
+     */
+    implementationPackageId?: string;
 };
 

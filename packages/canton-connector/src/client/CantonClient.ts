@@ -52,8 +52,13 @@ export class CantonClient {
   }
 
   async getCurrentOffset() {
-    return (await this.api.performRequest(DefaultService.getV2StateLedgerEnd, "getCurrentOffset"))
-      .offset;
+    const { offset } = await this.api.performRequest(
+      DefaultService.getV2StateLedgerEnd,
+      "getCurrentOffset"
+    );
+
+    // the offset is omitted when the participant view of the ledger is empty
+    return offset ?? 0;
   }
 
   async getTotalConsumedTraffic() {
@@ -113,7 +118,7 @@ export class CantonClient {
       () => DefaultService.getV2AuthenticatedUser(),
       "getAuthenticatedPartyId"
     );
-    const party = response.user?.primaryParty;
+    const party = response.user.primaryParty;
     if (!party) {
       throw new Error("No primary party found for authenticated user");
     }
@@ -337,7 +342,7 @@ export class CantonClient {
     const updates = [];
 
     for (const { update } of result) {
-      if (!("Transaction" in update)) {
+      if (!RedstoneCommon.isDefined(update) || !("Transaction" in update)) {
         continue;
       }
 
@@ -361,8 +366,8 @@ export class CantonClient {
       );
 
       const allEvents =
-        "update" in fullUpdate && "Transaction" in fullUpdate.update
-          ? (fullUpdate.update.Transaction.value.events ?? [])
+        RedstoneCommon.isDefined(fullUpdate.update) && "Transaction" in fullUpdate.update
+          ? fullUpdate.update.Transaction.value.events
           : [];
 
       const extracted = extractUpdateMetadata(allEvents, update.Transaction, method);

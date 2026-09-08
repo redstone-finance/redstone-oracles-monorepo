@@ -8,6 +8,8 @@ import type { Empty } from './Empty';
 /**
  * Specifies the deduplication period for the change ID.
  * If omitted, the participant will assume the configured maximum deduplication time.
+ *
+ * Optional
  */
 export type DeduplicationPeriod = ({
     DeduplicationDuration: DeduplicationDuration;

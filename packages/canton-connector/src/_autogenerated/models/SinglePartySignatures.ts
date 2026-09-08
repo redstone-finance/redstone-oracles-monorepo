@@ -9,13 +9,15 @@ import type { Signature } from './Signature';
 export type SinglePartySignatures = {
     /**
      * Submitting party
+     *
      * Required
      */
     party: string;
     /**
      * Signatures
-     * Required
+     *
+     * Required: must be non-empty
      */
-    signatures?: Array<Signature>;
+    signatures: Array<Signature>;
 };
 

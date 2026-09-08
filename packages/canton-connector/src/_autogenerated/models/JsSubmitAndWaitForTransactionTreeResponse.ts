@@ -7,6 +7,6 @@ import type { JsTransactionTree } from './JsTransactionTree';
  * Provided for backwards compatibility, it will be removed in the Canton version 3.5.0.
  */
 export type JsSubmitAndWaitForTransactionTreeResponse = {
-    transactionTree: JsTransactionTree;
+    transactionTree?: JsTransactionTree;
 };
 

@@ -21,20 +21,22 @@ export type EventFormat = {
      * 2. For **transaction and active-contract-set streams** create and archive events are returned for all contracts whose
      * stakeholders include at least one of the listed parties and match the per-party filter.
      *
-     * Optional
+     * Optional: can be empty
      */
-    filtersByParty: Map_Filters;
+    filtersByParty?: Map_Filters;
     /**
      * Wildcard filters that apply to all the parties existing on the participant. The interpretation of the filters is the same
      * with the per-party filter as described above.
+     *
      * Optional
      */
     filtersForAnyParty?: Filters;
     /**
      * If enabled, values served over the API will contain more information than strictly necessary to interpret the data.
      * In particular, setting the verbose flag to true triggers the ledger to include labels for record fields.
+     *
      * Optional
      */
-    verbose: boolean;
+    verbose?: boolean;
 };
 

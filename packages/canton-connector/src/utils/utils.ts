@@ -99,8 +99,8 @@ export function isJsActiveContract(response: JsGetActiveContractsResponse): resp
   return isJsActiveContractEntry(response.contractEntry);
 }
 
-function isJsActiveContractEntry(contractEntry: JsContractEntry) {
-  return "JsActiveContract" in contractEntry;
+function isJsActiveContractEntry(contractEntry?: JsContractEntry) {
+  return RedstoneCommon.isDefined(contractEntry) && "JsActiveContract" in contractEntry;
 }
 
 export function isTransactionUpdate(update: Update): update is { Transaction: Transaction } {

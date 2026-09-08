@@ -12,9 +12,16 @@ import type { SynchronizerTime } from './SynchronizerTime';
 export type OffsetCheckpoint1 = {
     /**
      * The participant's offset, the details of the offset field are described in ``community/ledger-api/README.md``.
-     * Required, must be a valid absolute offset (positive integer).
+     * Must be a valid absolute offset (positive integer).
+     *
+     * Required
      */
     offset: number;
+    /**
+     * The times associated with each synchronizer at this offset.
+     *
+     * Optional: can be empty
+     */
     synchronizerTimes?: Array<SynchronizerTime>;
 };
 

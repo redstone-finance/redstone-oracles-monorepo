@@ -7,13 +7,15 @@ export type GetUpdateByOffsetRequest = {
     /**
      * The offset of the update being looked up.
      * Must be a valid absolute offset (positive integer).
+     *
      * Required
      */
     offset: number;
     /**
      * The format for the update.
+     *
      * Required
      */
-    updateFormat?: UpdateFormat;
+    updateFormat: UpdateFormat;
 };
 

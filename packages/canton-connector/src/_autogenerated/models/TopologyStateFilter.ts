@@ -20,11 +20,15 @@ export type TopologyStateFilter = {
      * listed in this field match the filter.
      * Query the current Ledger API's participant's ID via the public
      * ``GetParticipantId`` command in ``PartyManagementService``.
+     *
+     * Optional: can be empty
      */
     participantIds?: Array<string>;
     /**
      * If this list is non-empty, only vetted packages from the topology state of
      * the synchronizers in this list match the filter.
+     *
+     * Optional: can be empty
      */
     synchronizerIds?: Array<string>;
 };

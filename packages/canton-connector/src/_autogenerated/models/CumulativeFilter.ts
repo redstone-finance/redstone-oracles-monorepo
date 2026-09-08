@@ -8,6 +8,6 @@ import type { IdentifierFilter } from './IdentifierFilter';
  * the ``template_filters`` or that match one of the ``interface_filters``.
  */
 export type CumulativeFilter = {
-    identifierFilter: IdentifierFilter;
+    identifierFilter?: IdentifierFilter;
 };
 

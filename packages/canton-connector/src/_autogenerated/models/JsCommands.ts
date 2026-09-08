@@ -13,15 +13,17 @@ import type { PrefetchContractKey } from './PrefetchContractKey';
 export type JsCommands = {
     /**
      * Individual elements of this atomic command. Must be non-empty.
-     * Required
+     *
+     * Required: must be non-empty
      */
-    commands?: Array<Command>;
+    commands: Array<Command>;
     /**
      * Uniquely identifies the command.
      * The triple (user_id, act_as, command_id) constitutes the change ID for the intended ledger change,
      * where act_as is interpreted as a set of party names.
      * The change ID can be used for matching the intended ledger changes with all their completions.
      * Must be a valid LedgerString (as described in ``value.proto``).
+     *
      * Required
      */
     commandId: string;
@@ -30,14 +32,17 @@ export type JsCommands = {
      * If ledger API authorization is enabled, then the authorization metadata must authorize the sender of the request
      * to act on behalf of each of the given parties.
      * Each element must be a valid PartyIdString (as described in ``value.proto``).
-     * Required, must be non-empty.
+     *
+     * Required: must be non-empty
      */
-    actAs?: Array<string>;
+    actAs: Array<string>;
     /**
      * Uniquely identifies the participant user that issued the command.
      * Must be a valid UserIdString (as described in ``value.proto``).
      * Required unless authentication is used with a user token.
      * In that case, the token's user-id will be used for the request's user_id.
+     *
+     * Optional
      */
     userId?: string;
     /**
@@ -49,12 +54,14 @@ export type JsCommands = {
      * rules for fetch operations.
      * If ledger API authorization is enabled, then the authorization metadata must authorize the sender of the request
      * to read contract data on behalf of each of the given parties.
-     * Optional
+     *
+     * Optional: can be empty
      */
     readAs?: Array<string>;
     /**
      * Identifier of the on-ledger workflow that this command is a part of.
      * Must be a valid LedgerString (as described in ``value.proto``).
+     *
      * Optional
      */
     workflowId?: string;
@@ -65,12 +72,14 @@ export type JsCommands = {
      * Use this property if you expect that command interpretation will take a considerate amount of time, such that by
      * the time the resulting transaction is sequenced, its assigned ledger time is not valid anymore.
      * Must not be set at the same time as min_ledger_time_rel.
+     *
      * Optional
      */
     minLedgerTimeAbs?: string;
     /**
      * Same as min_ledger_time_abs, but specified as a duration, starting from the time the command is received by the server.
      * Must not be set at the same time as min_ledger_time_abs.
+     *
      * Optional
      */
     minLedgerTimeRel?: Duration;
@@ -81,31 +90,47 @@ export type JsCommands = {
      * Must be a valid LedgerString (as described in ``value.proto``).
      *
      * If omitted, the participant or the committer may set a value of their choice.
+     *
      * Optional
      */
     submissionId?: string;
     /**
      * Additional contracts used to resolve contract & contract key lookups.
-     * Optional
+     *
+     * Optional: can be empty
      */
     disclosedContracts?: Array<DisclosedContract>;
     /**
      * Must be a valid synchronizer id
+     *
      * Optional
      */
     synchronizerId?: string;
     /**
      * The package-id selection preference of the client for resolving
      * package names and interface instances in command submission and interpretation
+     *
+     * Optional: can be empty
      */
     packageIdSelectionPreference?: Array<string>;
     /**
      * Fetches the contract keys into the caches to speed up the command processing.
-     * Should only contain contract keys that are expected to be resolved during interpretation of the commands.
-     * Keys of disclosed contracts do not need prefetching.
+     * Each entry specifies a key and a limit on how many contracts to prefetch for that key.
+     * The limit does not count disclosed contracts, and should reflect the number of
+     * additional contracts expected to be resolved during interpretation of the commands.
+     * If a key appears multiple times, the last entry's limit wins.
+     *
+     * Optional: can be empty
+     */
+    prefetchContractKeys?: Array<PrefetchContractKey>;
+    /**
+     * The maximum number of passes for the Topology-Aware Package Selection (TAPS).
+     * Higher values can increase the chance of successful package selection for routing of interpreted transactions.
+     * If unset, this defaults to the value defined in the participant configuration.
+     * The provided value must not exceed the limit specified in the participant configuration.
      *
      * Optional
      */
-    prefetchContractKeys?: Array<PrefetchContractKey>;
+    tapsMaxPasses?: number;
 };
 

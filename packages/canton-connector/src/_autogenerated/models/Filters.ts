@@ -14,8 +14,10 @@ export type Filters = {
      * also be accumulated.
      * A template or an interface SHOULD NOT appear twice in the accumulative field.
      * A wildcard filter SHOULD NOT be defined more than once in the accumulative field.
-     * Optional, if no ``CumulativeFilter`` defined, the default of a single ``WildcardFilter`` with
+     * If no ``CumulativeFilter`` defined, the default of a single ``WildcardFilter`` with
      * include_created_event_blob unset is used.
+     *
+     * Optional: can be empty
      */
     cumulative?: Array<CumulativeFilter>;
 };

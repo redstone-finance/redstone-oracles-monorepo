@@ -16,17 +16,20 @@ export type ExerciseByKeyCommand = {
     templateId: string;
     /**
      * The key of the contract the client wants to exercise upon.
+     *
      * Required
      */
     contractKey: any;
     /**
      * The name of the choice the client wants to exercise.
      * Must be a valid NameString (as described in ``value.proto``)
+     *
      * Required
      */
     choice: string;
     /**
      * The argument for this choice.
+     *
      * Required
      */
     choiceArgument: any;

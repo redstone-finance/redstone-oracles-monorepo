@@ -7,6 +7,7 @@ export type JsSubmitAndWaitForReassignmentResponse = {
     /**
      * The reassignment that resulted from the submitted reassignment command.
      * The reassignment might contain no events (request conditions result in filtering out all of them).
+     *
      * Required
      */
     reassignment: JsReassignment;

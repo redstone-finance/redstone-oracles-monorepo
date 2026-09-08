@@ -5,6 +5,9 @@
 import type { Empty9 } from './Empty9';
 import type { MinLedgerTimeAbs } from './MinLedgerTimeAbs';
 import type { MinLedgerTimeRel } from './MinLedgerTimeRel';
+/**
+ * Required
+ */
 export type Time = ({
     Empty: Empty9;
 } | {

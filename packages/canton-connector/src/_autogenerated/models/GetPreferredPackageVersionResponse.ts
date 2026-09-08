@@ -6,6 +6,7 @@ import type { PackagePreference } from './PackagePreference';
 export type GetPreferredPackageVersionResponse = {
     /**
      * Not populated when no preferred package is found
+     *
      * Optional
      */
     packagePreference?: PackagePreference;

@@ -6,6 +6,9 @@
  * Whether the Ledger API supports command inspection service
  */
 export type ExperimentalCommandInspectionService = {
+    /**
+     * Required
+     */
     supported: boolean;
 };
 

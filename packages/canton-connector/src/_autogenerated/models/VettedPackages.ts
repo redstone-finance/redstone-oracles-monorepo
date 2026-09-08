@@ -13,19 +13,27 @@ export type VettedPackages = {
     /**
      * Sorted by package_name and package_version where known, and package_id as a
      * last resort.
+     *
+     * Required: must be non-empty
      */
-    packages?: Array<VettedPackage>;
+    packages: Array<VettedPackage>;
     /**
-     * Participant on which these packages are vetted. Always present.
+     * Participant on which these packages are vetted.
+     *
+     * Required
      */
     participantId: string;
     /**
-     * Synchronizer on which these packages are vetted. Always present.
+     * Synchronizer on which these packages are vetted.
+     *
+     * Required
      */
     synchronizerId: string;
     /**
      * Serial of last ``VettedPackages`` topology transaction of this participant
-     * and on this synchronizer. Always present.
+     * and on this synchronizer.
+     *
+     * Required
      */
     topologySerial: number;
 };

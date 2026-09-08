@@ -7,10 +7,11 @@ import type { IdentityProviderConfig } from './IdentityProviderConfig';
 export type UpdateIdentityProviderConfigRequest = {
     /**
      * The identity provider config to update.
-     * Required,
      * Modifiable
+     *
+     * Required
      */
-    identityProviderConfig?: IdentityProviderConfig;
+    identityProviderConfig: IdentityProviderConfig;
     /**
      * An update mask specifies how and which properties of the ``IdentityProviderConfig`` message are to be updated.
      * An update mask consists of a set of update paths.
@@ -22,8 +23,9 @@ export type UpdateIdentityProviderConfigRequest = {
      *
      * Fields that can be updated are marked as ``Modifiable``.
      * For additional information see the documentation for standard protobuf3's ``google.protobuf.FieldMask``.
+     *
      * Required
      */
-    updateMask?: FieldMask;
+    updateMask: FieldMask;
 };
 

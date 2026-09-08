@@ -13,29 +13,39 @@ export type FeaturesDescriptor = {
      * for ledger implementation testing purposes only.
      *
      * Daml applications SHOULD not depend on these in production.
+     *
+     * Required
      */
-    experimental?: ExperimentalFeatures;
+    experimental: ExperimentalFeatures;
     /**
      * If set, then the Ledger API server supports user management.
      * It is recommended that clients query this field to gracefully adjust their behavior for
      * ledgers that do not support user management.
+     *
+     * Required
      */
-    userManagement?: UserManagementFeature;
+    userManagement: UserManagementFeature;
     /**
      * If set, then the Ledger API server supports party management configurability.
      * It is recommended that clients query this field to gracefully adjust their behavior to
      * maximum party page size.
+     *
+     * Required
      */
-    partyManagement?: PartyManagementFeature;
+    partyManagement: PartyManagementFeature;
     /**
      * It contains the timeouts related to the periodic offset checkpoint emission
+     *
+     * Required
      */
-    offsetCheckpoint?: OffsetCheckpointFeature;
+    offsetCheckpoint: OffsetCheckpointFeature;
     /**
      * If set, then the Ledger API server supports package listing
      * configurability. It is recommended that clients query this field to
      * gracefully adjust their behavior to maximum package listing page size.
+     *
+     * Required
      */
-    packageFeature?: PackageFeature;
+    packageFeature: PackageFeature;
 };
 

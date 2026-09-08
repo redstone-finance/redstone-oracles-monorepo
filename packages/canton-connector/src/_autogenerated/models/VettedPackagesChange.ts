@@ -7,6 +7,6 @@ import type { Operation } from './Operation';
  * A change to the set of vetted packages.
  */
 export type VettedPackagesChange = {
-    operation: Operation;
+    operation?: Operation;
 };
 

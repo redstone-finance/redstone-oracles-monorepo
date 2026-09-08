@@ -8,11 +8,13 @@
 export type PackageVettingRequirement = {
     /**
      * The parties whose participants' vetting state should be considered when resolving the preferred package.
-     * Required
+     *
+     * Required: must be non-empty
      */
-    parties?: Array<string>;
+    parties: Array<string>;
     /**
      * The package-name for which the preferred package should be resolved.
+     *
      * Required
      */
     packageName: string;

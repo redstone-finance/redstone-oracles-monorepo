@@ -3,7 +3,18 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { VettedPackagesRef } from './VettedPackagesRef';
+/**
+ * Remove packages from the set of vetted packages
+ */
 export type Unvet1 = {
-    packages?: Array<VettedPackagesRef>;
+    /**
+     * Packages to be unvetted.
+     *
+     * If a reference in this list matches multiple packages, they are all
+     * unvetted.
+     *
+     * Required: must be non-empty
+     */
+    packages: Array<VettedPackagesRef>;
 };
 

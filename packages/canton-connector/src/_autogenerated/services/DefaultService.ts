@@ -17,7 +17,9 @@ import type { ExecuteSubmissionAndWaitResponse } from '../models/ExecuteSubmissi
 import type { ExecuteSubmissionResponse } from '../models/ExecuteSubmissionResponse';
 import type { GenerateExternalPartyTopologyRequest } from '../models/GenerateExternalPartyTopologyRequest';
 import type { GenerateExternalPartyTopologyResponse } from '../models/GenerateExternalPartyTopologyResponse';
+import type { GetActiveContractsPageRequest } from '../models/GetActiveContractsPageRequest';
 import type { GetActiveContractsRequest } from '../models/GetActiveContractsRequest';
+import type { GetCompletionsRequest } from '../models/GetCompletionsRequest';
 import type { GetConnectedSynchronizersResponse } from '../models/GetConnectedSynchronizersResponse';
 import type { GetContractRequest } from '../models/GetContractRequest';
 import type { GetContractResponse } from '../models/GetContractResponse';
@@ -36,6 +38,7 @@ import type { GetTransactionByIdRequest } from '../models/GetTransactionByIdRequ
 import type { GetTransactionByOffsetRequest } from '../models/GetTransactionByOffsetRequest';
 import type { GetUpdateByIdRequest } from '../models/GetUpdateByIdRequest';
 import type { GetUpdateByOffsetRequest } from '../models/GetUpdateByOffsetRequest';
+import type { GetUpdatesPageRequest } from '../models/GetUpdatesPageRequest';
 import type { GetUpdatesRequest } from '../models/GetUpdatesRequest';
 import type { GetUserResponse } from '../models/GetUserResponse';
 import type { GrantUserRightsRequest } from '../models/GrantUserRightsRequest';
@@ -46,11 +49,13 @@ import type { JsExecuteSubmissionAndWaitForTransactionRequest } from '../models/
 import type { JsExecuteSubmissionAndWaitForTransactionResponse } from '../models/JsExecuteSubmissionAndWaitForTransactionResponse';
 import type { JsExecuteSubmissionAndWaitRequest } from '../models/JsExecuteSubmissionAndWaitRequest';
 import type { JsExecuteSubmissionRequest } from '../models/JsExecuteSubmissionRequest';
+import type { JsGetActiveContractsPageResponse } from '../models/JsGetActiveContractsPageResponse';
 import type { JsGetActiveContractsResponse } from '../models/JsGetActiveContractsResponse';
 import type { JsGetEventsByContractIdResponse } from '../models/JsGetEventsByContractIdResponse';
 import type { JsGetTransactionResponse } from '../models/JsGetTransactionResponse';
 import type { JsGetTransactionTreeResponse } from '../models/JsGetTransactionTreeResponse';
 import type { JsGetUpdateResponse } from '../models/JsGetUpdateResponse';
+import type { JsGetUpdatesPageResponse } from '../models/JsGetUpdatesPageResponse';
 import type { JsGetUpdatesResponse } from '../models/JsGetUpdatesResponse';
 import type { JsGetUpdateTreesResponse } from '../models/JsGetUpdateTreesResponse';
 import type { JsPrepareSubmissionRequest } from '../models/JsPrepareSubmissionRequest';
@@ -89,7 +94,8 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class DefaultService {
     /**
-     * Submit a batch of commands and wait for the completion details
+     * Submits a single composite command and waits for its result.
+     * Propagates the gRPC error of failed submissions including Daml interpretation errors.
      * @param requestBody
      * @returns SubmitAndWaitResponse
      * @returns JsCantonError
@@ -104,12 +110,13 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Submit a batch of commands and wait for the transaction response
+     * Submits a single composite command, waits for its result, and returns the transaction.
+     * Propagates the gRPC error of failed submissions including Daml interpretation errors.
      * @param requestBody
      * @returns JsSubmitAndWaitForTransactionResponse
      * @returns JsCantonError
@@ -124,12 +131,13 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Submit a batch of reassignment commands and wait for the reassignment response
+     * Submits a single composite reassignment command, waits for its result, and returns the reassignment.
+     * Propagates the gRPC error of failed submission.
      * @param requestBody
      * @returns JsSubmitAndWaitForReassignmentResponse
      * @returns JsCantonError
@@ -144,7 +152,7 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
@@ -165,12 +173,12 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Submit a command asynchronously
+     * Submit a single composite command.
      * @param requestBody
      * @returns SubmitResponse
      * @returns JsCantonError
@@ -185,12 +193,12 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Submit reassignment command asynchronously
+     * Submit a single reassignment.
      * @param requestBody
      * @returns SubmitReassignmentResponse
      * @returns JsCantonError
@@ -205,12 +213,15 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
      * Query completions list (blocking call)
+     *
+     * Deprecated: please use ``GetCompletions`` instead.
+     * Subscribe to command completion events.
      * Notice: This endpoint should be used for small results set.
      * When number of results exceeded node configuration limit (`http-list-max-elements-limit`)
      * there will be an error (`413 Content Too Large`) returned.
@@ -238,12 +249,51 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms`,
             },
         });
     }
     /**
-     * Get events by contract Id
+     * Query completions list (blocking call)
+     *
+     * Subscribe to command completion events.
+     * This streaming endpoint provides more flexibility in filtering than the predecessor ``CompletionStream``.
+     * Notice: This endpoint should be used for small results set.
+     * When number of results exceeded node configuration limit (`http-list-max-elements-limit`)
+     * there will be an error (`413 Content Too Large`) returned.
+     * Increasing this limit may lead to performance issues and high memory consumption.
+     * Consider using websockets (asyncapi) for better efficiency with larger results.
+     * @param requestBody
+     * @param limit maximum number of elements to return, this param is ignored if is bigger than server setting
+     * @param streamIdleTimeoutMs timeout to complete and send result if no new elements are received (for open ended streams)
+     * @returns CompletionStreamResponse
+     * @returns JsCantonError
+     * @throws ApiError
+     */
+    public static postV2CommandsCommandCompletions(
+        requestBody: GetCompletionsRequest,
+        limit?: number,
+        streamIdleTimeoutMs?: number,
+    ): CancelablePromise<Array<CompletionStreamResponse> | JsCantonError> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/v2/commands/command-completions',
+            query: {
+                'limit': limit,
+                'stream_idle_timeout_ms': streamIdleTimeoutMs,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Invalid value, Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms`,
+            },
+        });
+    }
+    /**
+     * Get the create and the consuming exercise event for the contract with the provided ID.
+     * No events will be returned for contracts that have been pruned because they
+     * have already been archived before the latest pruning offset.
+     * If the contract cannot be found for the request, or all the contract-events are filtered, a CONTRACT_EVENTS_NOT_FOUND error will be raised.
      * @param requestBody
      * @returns JsGetEventsByContractIdResponse
      * @returns JsCantonError
@@ -258,12 +308,12 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Get the version details of the participant node
+     * Read the Ledger API version
      * @returns GetLedgerApiVersionResponse
      * @returns JsCantonError
      * @throws ApiError
@@ -273,12 +323,17 @@ export class DefaultService {
             method: 'GET',
             url: '/v2/version',
             errors: {
-                400: `Invalid value for: headers`,
+                400: `Invalid value`,
             },
         });
     }
     /**
-     * Validates a DAR for upgrade-compatibility against the current vetting state on the target synchronizer
+     * Validates the DAR and checks the upgrade compatibility of the DAR's packages
+     * with the set of the already vetted packages on the target vetting synchronizer.
+     * See ValidateDarFileRequest for details regarding the target vetting synchronizer.
+     *
+     * The operation has no effect on the state of the participant or the Canton ledger:
+     * the DAR payload and its packages are not persisted neither are the packages vetted.
      * @param requestBody
      * @param synchronizerId
      * @returns any
@@ -298,7 +353,7 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/octet-stream',
             errors: {
-                400: `Invalid value for: body, Invalid value for: query parameter synchronizerId, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body, Invalid value for: query parameter synchronizerId`,
             },
         });
     }
@@ -326,12 +381,12 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/octet-stream',
             errors: {
-                400: `Invalid value for: body, Invalid value for: query parameter vetAllPackages, Invalid value for: query parameter synchronizerId, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body, Invalid value for: query parameter vetAllPackages, Invalid value for: query parameter synchronizerId`,
             },
         });
     }
     /**
-     * List all packages uploaded on the participant node
+     * Returns the identifiers of all supported packages.
      * @returns ListPackagesResponse
      * @returns JsCantonError
      * @throws ApiError
@@ -341,12 +396,17 @@ export class DefaultService {
             method: 'GET',
             url: '/v2/packages',
             errors: {
-                400: `Invalid value for: headers`,
+                400: `Invalid value`,
             },
         });
     }
     /**
-     * Upload a DAR to the participant node. Behaves the same as /dars. This endpoint will be deprecated and removed in a future release.
+     * Behaves the same as /dars. This endpoint will be deprecated and removed in a future release.
+     * Upload a DAR file to the participant.
+     *
+     * If vetting is enabled in the request, the DAR is checked for upgrade compatibility
+     * with the set of the already vetted packages on the target vetting synchronizer
+     * See UploadDarFileRequest for details regarding vetting and the target vetting synchronizer.
      * @param requestBody
      * @param vetAllPackages
      * @param synchronizerId
@@ -369,12 +429,12 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/octet-stream',
             errors: {
-                400: `Invalid value for: body, Invalid value for: query parameter vetAllPackages, Invalid value for: query parameter synchronizerId, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body, Invalid value for: query parameter vetAllPackages, Invalid value for: query parameter synchronizerId`,
             },
         });
     }
     /**
-     * Download the package for the requested package-id
+     * Returns the contents of a single package.
      * @param packageId
      * @returns binary
      * @returns JsCantonError
@@ -390,12 +450,12 @@ export class DefaultService {
                 'package-id': packageId,
             },
             errors: {
-                400: `Invalid value for: headers`,
+                400: `Invalid value`,
             },
         });
     }
     /**
-     * Get package status
+     * Returns the status of a single package.
      * @param packageId
      * @returns GetPackageStatusResponse
      * @returns JsCantonError
@@ -411,12 +471,14 @@ export class DefaultService {
                 'package-id': packageId,
             },
             errors: {
-                400: `Invalid value for: headers`,
+                400: `Invalid value`,
             },
         });
     }
     /**
-     * List vetted packages
+     * @deprecated
+     * Lists which participant node vetted what packages on which synchronizer.
+     * This endpoint (GET /package-vetting) is deprecated and will be removed in a future release. Please use POST /package-vetting/list instead.
      * @param requestBody
      * @returns ListVettedPackagesResponse
      * @returns JsCantonError
@@ -431,12 +493,14 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Update vetted packages
+     * @deprecated
+     * Update the vetted packages of this participant
+     * This endpoint (POST /package-vetting) is deprecated and will be removed in a future release. Please use POST /package-vetting/update instead.
      * @param requestBody
      * @returns UpdateVettedPackagesResponse
      * @returns JsCantonError
@@ -451,12 +515,55 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * List all known parties.
+     * Lists which participant node vetted what packages on which synchronizer.
+     * Can be called by any authenticated user.
+     * @param requestBody
+     * @returns ListVettedPackagesResponse
+     * @returns JsCantonError
+     * @throws ApiError
+     */
+    public static postV2PackageVettingList(
+        requestBody: ListVettedPackagesRequest,
+    ): CancelablePromise<ListVettedPackagesResponse | JsCantonError> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/v2/package-vetting/list',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Invalid value, Invalid value for: body`,
+            },
+        });
+    }
+    /**
+     * Update the vetted packages of this participant
+     * @param requestBody
+     * @returns UpdateVettedPackagesResponse
+     * @returns JsCantonError
+     * @throws ApiError
+     */
+    public static postV2PackageVettingUpdate(
+        requestBody: UpdateVettedPackagesRequest,
+    ): CancelablePromise<UpdateVettedPackagesResponse | JsCantonError> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/v2/package-vetting/update',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Invalid value, Invalid value for: body`,
+            },
+        });
+    }
+    /**
+     * List the parties known by the participant.
+     * The list returned contains parties whose ledger access is facilitated by
+     * the participant and the ones maintained elsewhere.
      * @param identityProviderId
      * @param filterParty
      * @param pageSize maximum number of elements in a returned page
@@ -481,12 +588,28 @@ export class DefaultService {
                 'pageToken': pageToken,
             },
             errors: {
-                400: `Invalid value for: query parameter identity-provider-id, Invalid value for: query parameter filter-party, Invalid value for: query parameter pageSize, Invalid value for: query parameter pageToken, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: query parameter identity-provider-id, Invalid value for: query parameter filter-party, Invalid value for: query parameter pageSize, Invalid value for: query parameter pageToken`,
             },
         });
     }
     /**
-     * Allocate a new party to the participant node
+     * Allocates a new party on a ledger and adds it to the set managed by the participant.
+     * Caller specifies a party identifier suggestion, the actual identifier
+     * allocated might be different and is implementation specific.
+     * Caller can specify party metadata that is stored locally on the participant.
+     * This call may:
+     *
+     * - Succeed, in which case the actual allocated identifier is visible in
+     * the response.
+     * - Respond with a gRPC error
+     *
+     * daml-on-kv-ledger: suggestion's uniqueness is checked by the validators in
+     * the consensus layer and call rejected if the identifier is already present.
+     * canton: completely different globally unique identifier is allocated.
+     * Behind the scenes calls to an internal protocol are made. As that protocol
+     * is richer than the surface protocol, the arguments take implicit values
+     * The party identifier suggestion must be a valid party name. Party names are required to be non-empty US-ASCII strings built from letters, digits, space,
+     * colon, minus and underscore limited to 255 chars
      * @param requestBody
      * @returns AllocatePartyResponse
      * @returns JsCantonError
@@ -501,12 +624,20 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Allocate a new external party
+     * The external party must be hosted (at least) on this node with either confirmation or observation permissions
+     * It can optionally be hosted on other nodes (then called a multi-hosted party).
+     * If hosted on additional nodes, explicit authorization of the hosting relationship must be performed on those nodes
+     * before the party can be used.
+     * Decentralized namespaces are supported but must be provided fully authorized by their owners.
+     * The individual owner namespace transactions can be submitted in the same call (fully authorized as well).
+     * In the simple case of a non-multi hosted, non-decentralized party, the RPC will return once the party is
+     * effectively allocated and ready to use, similarly to the AllocateParty behavior.
+     * For more complex scenarios applications may need to query the party status explicitly (only through the admin API as of now).
      * @param requestBody
      * @returns AllocateExternalPartyResponse
      * @returns JsCantonError
@@ -521,12 +652,15 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Get participant id
+     * Return the identifier of the participant.
+     * All horizontally scaled replicas should return the same id.
+     * daml-on-kv-ledger: returns an identifier supplied on command line at launch time
+     * canton: returns globally unique identifier of the participant
      * @returns GetParticipantIdResponse
      * @returns JsCantonError
      * @throws ApiError
@@ -536,12 +670,13 @@ export class DefaultService {
             method: 'GET',
             url: '/v2/parties/participant-id',
             errors: {
-                400: `Invalid value for: headers`,
+                400: `Invalid value`,
             },
         });
     }
     /**
-     * Get party details
+     * Get the party details of the given parties. Only known parties will be
+     * returned in the list.
      * @param party
      * @param identityProviderId
      * @param parties
@@ -565,12 +700,13 @@ export class DefaultService {
                 'parties': parties,
             },
             errors: {
-                400: `Invalid value for: query parameter identity-provider-id, Invalid value for: query parameter parties, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: query parameter identity-provider-id, Invalid value for: query parameter parties`,
             },
         });
     }
     /**
-     * Allocate a new party to the participant node
+     * Update selected modifiable participant-local attributes of a party details resource.
+     * Can update the participant's local information for local parties.
      * @param party
      * @param requestBody
      * @returns UpdatePartyDetailsResponse
@@ -590,12 +726,17 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Generate a topology for an external party
+     * You may use this endpoint to generate the common external topology transactions
+     * which can be signed externally and uploaded as part of the allocate party process
+     *
+     * Note that this request will create a normal namespace using the same key for the
+     * identity as for signing. More elaborate schemes such as multi-signature
+     * or decentralized parties require you to construct the topology transactions yourself.
      * @param requestBody
      * @returns GenerateExternalPartyTopologyResponse
      * @returns JsCantonError
@@ -610,7 +751,7 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
@@ -620,6 +761,12 @@ export class DefaultService {
      * Consider querying active contracts initially (for a given offset)
      * and then repeatedly call one of `/v2/updates/...`endpoints  to get subsequent modifications.
      * You can also use websockets to get updates with better performance.
+     *
+     * Returns a stream of the snapshot of the active contracts and incomplete (un)assignments at a ledger offset.
+     * Once the stream of GetActiveContractsResponses completes,
+     * the client SHOULD begin streaming updates from the update service,
+     * starting at the GetActiveContractsRequest.active_at_offset specified in this request.
+     * Clients SHOULD NOT assume that the set of active contracts they receive reflects the state at the ledger end.
      *
      * Notice: This endpoint should be used for small results set.
      * When number of results exceeded node configuration limit (`http-list-max-elements-limit`)
@@ -648,12 +795,36 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms`,
             },
         });
     }
     /**
-     * Get connected synchronizers
+     * Returns a page of the snapshot of the active contracts and incomplete (un)assignments at a ledger offset.
+     * Once all pages are fetched by repeated calls to ``GetActiveContractsPage``,
+     * the client SHOULD begin retrieving updates from the update service,
+     * starting at the ``GetActiveContractsPageResponse``.``active_at_offset`` specified in this request.
+     * Clients SHOULD NOT assume that the set of active contracts they receive reflects the state at the ledger end.
+     * @param requestBody
+     * @returns JsGetActiveContractsPageResponse
+     * @returns JsCantonError
+     * @throws ApiError
+     */
+    public static getV2StateActiveContractsPage(
+        requestBody: GetActiveContractsPageRequest,
+    ): CancelablePromise<JsGetActiveContractsPageResponse | JsCantonError> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/v2/state/active-contracts-page',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Invalid value, Invalid value for: body`,
+            },
+        });
+    }
+    /**
+     * Get the list of connected synchronizers at the time of the query.
      * @param party
      * @param participantId
      * @param identityProviderId
@@ -675,12 +846,13 @@ export class DefaultService {
                 'identityProviderId': identityProviderId,
             },
             errors: {
-                400: `Invalid value for: query parameter party, Invalid value for: query parameter participantId, Invalid value for: query parameter identityProviderId, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: query parameter party, Invalid value for: query parameter participantId, Invalid value for: query parameter identityProviderId`,
             },
         });
     }
     /**
-     * Get ledger end
+     * Get the current ledger end.
+     * Subscriptions started with the returned offset will serve events after this RPC was called.
      * @returns GetLedgerEndResponse
      * @returns JsCantonError
      * @throws ApiError
@@ -690,12 +862,12 @@ export class DefaultService {
             method: 'GET',
             url: '/v2/state/ledger-end',
             errors: {
-                400: `Invalid value for: headers`,
+                400: `Invalid value`,
             },
         });
     }
     /**
-     * Get latest pruned offsets
+     * Get the latest successfully pruned ledger offsets
      * @returns GetLatestPrunedOffsetsResponse
      * @returns JsCantonError
      * @throws ApiError
@@ -705,12 +877,17 @@ export class DefaultService {
             method: 'GET',
             url: '/v2/state/latest-pruned-offsets',
             errors: {
-                400: `Invalid value for: headers`,
+                400: `Invalid value`,
             },
         });
     }
     /**
-     * Query updates list (blocking call)
+     * Read the ledger's filtered update stream for the specified contents and filters.
+     * It returns the event types in accordance with the stream contents selected. Also the selection criteria
+     * for individual events depends on the transaction shape chosen.
+     *
+     * - ACS delta: a requesting party must be a stakeholder of an event for it to be included.
+     * - ledger effects: a requesting party must be a witness of an event for it to be included.
      * Notice: This endpoint should be used for small results set.
      * When number of results exceeded node configuration limit (`http-list-max-elements-limit`)
      * there will be an error (`413 Content Too Large`) returned.
@@ -738,7 +915,7 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms`,
             },
         });
     }
@@ -772,7 +949,7 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms`,
             },
         });
     }
@@ -806,7 +983,7 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms`,
             },
         });
     }
@@ -833,7 +1010,7 @@ export class DefaultService {
                 'parties': parties,
             },
             errors: {
-                400: `Invalid value for: path parameter offset, Invalid value for: query parameter parties, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: path parameter offset, Invalid value for: query parameter parties`,
             },
         });
     }
@@ -854,12 +1031,13 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Get update by offset
+     * Lookup an update by its offset.
+     * If there is no update with this offset, or all the events are filtered, an UPDATE_NOT_FOUND error will be raised.
      * @param requestBody
      * @returns JsGetUpdateResponse
      * @returns JsCantonError
@@ -874,7 +1052,7 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
@@ -895,12 +1073,13 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Get update by id
+     * Lookup an update by its ID.
+     * If there is no update with this ID, or all the events are filtered, an UPDATE_NOT_FOUND error will be raised.
      * @param requestBody
      * @returns JsGetUpdateResponse
      * @returns JsCantonError
@@ -915,7 +1094,7 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
@@ -942,12 +1121,37 @@ export class DefaultService {
                 'parties': parties,
             },
             errors: {
-                400: `Invalid value for: query parameter parties, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: query parameter parties`,
             },
         });
     }
     /**
-     * List all users.
+     * Read a page of ledger's filtered updates. It returns the event types in accordance with
+     * the specified contents and filters.
+     * Additionally, the selection criteria for individual events depends on the transaction shape chosen.
+     *
+     * - ACS delta: an event is included only if the requesting party is a stakeholder.
+     * - ledger effects: an event is included if the requesting party is a witness.
+     * @param requestBody
+     * @returns JsGetUpdatesPageResponse
+     * @returns JsCantonError
+     * @throws ApiError
+     */
+    public static postV2UpdatesGetUpdatesPage(
+        requestBody: GetUpdatesPageRequest,
+    ): CancelablePromise<JsGetUpdatesPageResponse | JsCantonError> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/v2/updates/get-updates-page',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Invalid value, Invalid value for: body`,
+            },
+        });
+    }
+    /**
+     * List all existing users.
      * @param pageSize maximum number of elements in a returned page
      * @param pageToken token - to continue results from a given page, leave empty to start from the beginning of the list, obtain token from the result of previous page
      * @returns ListUsersResponse
@@ -966,12 +1170,12 @@ export class DefaultService {
                 'pageToken': pageToken,
             },
             errors: {
-                400: `Invalid value for: query parameter pageSize, Invalid value for: query parameter pageToken, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: query parameter pageSize, Invalid value for: query parameter pageToken`,
             },
         });
     }
     /**
-     * Create user.
+     * Create a new user.
      * @param requestBody
      * @returns CreateUserResponse
      * @returns JsCantonError
@@ -986,12 +1190,12 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Get user details.
+     * Get the user data of a specific user or the authenticated user.
      * @param userId
      * @param identityProviderId
      * @returns GetUserResponse
@@ -1012,12 +1216,12 @@ export class DefaultService {
                 'identity-provider-id': identityProviderId,
             },
             errors: {
-                400: `Invalid value for: query parameter identity-provider-id, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: query parameter identity-provider-id`,
             },
         });
     }
     /**
-     * Delete user.
+     * Delete an existing user and all its rights.
      * @param userId
      * @returns any
      * @returns JsCantonError
@@ -1033,12 +1237,12 @@ export class DefaultService {
                 'user-id': userId,
             },
             errors: {
-                400: `Invalid value for: headers`,
+                400: `Invalid value`,
             },
         });
     }
     /**
-     * Update  user.
+     * Update selected modifiable attribute of a user resource described by the ``User`` message.
      * @param userId
      * @param requestBody
      * @returns UpdateUserResponse
@@ -1058,12 +1262,12 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Get current user details (uses user for JWT).
+     * Get the user data of the current authenticated user.
      * @param identityProviderId
      * @returns GetUserResponse
      * @returns JsCantonError
@@ -1079,12 +1283,12 @@ export class DefaultService {
                 'identity-provider-id': identityProviderId,
             },
             errors: {
-                400: `Invalid value for: query parameter identity-provider-id, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: query parameter identity-provider-id`,
             },
         });
     }
     /**
-     * List user rights.
+     * List the set of all rights granted to a user.
      * @param userId
      * @returns ListUserRightsResponse
      * @returns JsCantonError
@@ -1100,12 +1304,13 @@ export class DefaultService {
                 'user-id': userId,
             },
             errors: {
-                400: `Invalid value for: headers`,
+                400: `Invalid value`,
             },
         });
     }
     /**
-     * Grant user rights.
+     * Grant rights to a user.
+     * Granting rights does not affect the resource version of the corresponding user.
      * @param userId
      * @param requestBody
      * @returns GrantUserRightsResponse
@@ -1125,12 +1330,13 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Revoke user rights.
+     * Revoke rights from a user.
+     * Revoking rights does not affect the resource version of the corresponding user.
      * @param userId
      * @param requestBody
      * @returns RevokeUserRightsResponse
@@ -1150,12 +1356,12 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Update user identity provider.
+     * Update the assignment of a user from one IDP to another.
      * @param userId
      * @param requestBody
      * @returns UpdateUserIdentityProviderIdResponse
@@ -1175,12 +1381,12 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * List all identity provider configs
+     * List all existing identity provider configurations.
      * @returns ListIdentityProviderConfigsResponse
      * @returns JsCantonError
      * @throws ApiError
@@ -1190,12 +1396,13 @@ export class DefaultService {
             method: 'GET',
             url: '/v2/idps',
             errors: {
-                400: `Invalid value for: headers`,
+                400: `Invalid value`,
             },
         });
     }
     /**
-     * Create identity provider configs
+     * Create a new identity provider configuration.
+     * The request will fail if the maximum allowed number of separate configurations is reached.
      * @param requestBody
      * @returns CreateIdentityProviderConfigResponse
      * @returns JsCantonError
@@ -1210,12 +1417,12 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Get identity provider config
+     * Get the identity provider configuration data by id.
      * @param idpId
      * @returns GetIdentityProviderConfigResponse
      * @returns JsCantonError
@@ -1231,12 +1438,12 @@ export class DefaultService {
                 'idp-id': idpId,
             },
             errors: {
-                400: `Invalid value for: headers`,
+                400: `Invalid value`,
             },
         });
     }
     /**
-     * Delete identity provider config
+     * Delete an existing identity provider configuration.
      * @param idpId
      * @returns DeleteIdentityProviderConfigResponse
      * @returns JsCantonError
@@ -1252,12 +1459,13 @@ export class DefaultService {
                 'idp-id': idpId,
             },
             errors: {
-                400: `Invalid value for: headers`,
+                400: `Invalid value`,
             },
         });
     }
     /**
-     * Update identity provider config
+     * Update selected modifiable attribute of an identity provider config resource described
+     * by the ``IdentityProviderConfig`` message.
      * @param idpId
      * @param requestBody
      * @returns UpdateIdentityProviderConfigResponse
@@ -1277,12 +1485,12 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Prepare commands for signing
+     * Requires `readAs` scope for the submitting party when LAPI User authorization is enabled
      * @param requestBody
      * @returns JsPrepareSubmissionResponse
      * @returns JsCantonError
@@ -1297,12 +1505,14 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Execute a signed transaction
+     * Execute a prepared submission _asynchronously_ on the ledger.
+     * Requires `actAs` or `executeAs` scope for the submitting party when LAPI User authorization is enabled
+     * Requires a signature of the transaction from the submitting external party.
      * @param requestBody
      * @returns ExecuteSubmissionResponse
      * @returns JsCantonError
@@ -1317,12 +1527,12 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Execute a signed transaction and wait for its completion
+     * Similar to ExecuteSubmission but _synchronously_ wait for the completion of the transaction
      * @param requestBody
      * @returns ExecuteSubmissionAndWaitResponse
      * @returns JsCantonError
@@ -1337,12 +1547,12 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Execute a signed transaction and wait for the transaction response
+     * Similar to ExecuteSubmissionAndWait but additionally returns the transaction
      * @param requestBody
      * @returns JsExecuteSubmissionAndWaitForTransactionResponse
      * @returns JsCantonError
@@ -1357,12 +1567,23 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
     /**
-     * Get the preferred package version for constructing a command submission
+     * A preferred package is the highest-versioned package for a provided package-name
+     * that is vetted by all the participants hosting the provided parties.
+     *
+     * Ledger API clients should use this endpoint for constructing command submissions
+     * that are compatible with the provided preferred package, by making informed decisions on:
+     * - which are the compatible packages that can be used to create contracts
+     * - which contract or exercise choice argument version can be used in the command
+     * - which choices can be executed on a template or interface of a contract
+     *
+     * Can be accessed by any Ledger API client with a valid token when Ledger API authorization is enabled.
+     *
+     * Provided for backwards compatibility, it will be removed in the Canton version 3.4.0
      * @param packageName
      * @param parties
      * @param vettingValidAt
@@ -1387,12 +1608,27 @@ export class DefaultService {
                 'synchronizer-id': synchronizerId,
             },
             errors: {
-                400: `Invalid value for: query parameter parties, Invalid value for: query parameter package-name, Invalid value for: query parameter vetting_valid_at, Invalid value for: query parameter synchronizer-id, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: query parameter parties, Invalid value for: query parameter package-name, Invalid value for: query parameter vetting_valid_at, Invalid value for: query parameter synchronizer-id`,
             },
         });
     }
     /**
-     * Get the version of preferred packages for constructing a command submission
+     * Compute the preferred packages for the vetting requirements in the request.
+     * A preferred package is the highest-versioned package for a provided package-name
+     * that is vetted by all the participants hosting the provided parties.
+     *
+     * Ledger API clients should use this endpoint for constructing command submissions
+     * that are compatible with the provided preferred packages, by making informed decisions on:
+     * - which are the compatible packages that can be used to create contracts
+     * - which contract or exercise choice argument version can be used in the command
+     * - which choices can be executed on a template or interface of a contract
+     *
+     * If the package preferences could not be computed due to no selection satisfying the requirements,
+     * a `FAILED_PRECONDITION` error will be returned.
+     *
+     * Can be accessed by any Ledger API client with a valid token when Ledger API authorization is enabled.
+     *
+     * Experimental API: this endpoint is not guaranteed to provide backwards compatibility in future releases
      * @param requestBody
      * @returns GetPreferredPackagesResponse
      * @returns JsCantonError
@@ -1407,7 +1643,37 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
+            },
+        });
+    }
+    /**
+     * Checks if the service is alive
+     * @returns any OK: service is alive
+     * @returns JsCantonError
+     * @throws ApiError
+     */
+    public static getLivez(): CancelablePromise<any | JsCantonError> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/livez',
+            errors: {
+                400: `Invalid value`,
+            },
+        });
+    }
+    /**
+     * Checks if the service is ready to serve requests
+     * @returns string OK: readiness message
+     * @returns JsCantonError
+     * @throws ApiError
+     */
+    public static getReadyz(): CancelablePromise<string | JsCantonError> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/readyz',
+            errors: {
+                400: `Invalid value`,
             },
         });
     }
@@ -1416,7 +1682,6 @@ export class DefaultService {
      * This endpoint is experimental / alpha, therefore no backwards compatibility is guaranteed.
      * This endpoint must not be used to look up contracts which entered the participant via party replication
      * or repair service.
-     *
      * @param requestBody
      * @returns GetContractResponse
      * @returns JsCantonError
@@ -1431,7 +1696,7 @@ export class DefaultService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Invalid value for: body, Invalid value for: headers`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }

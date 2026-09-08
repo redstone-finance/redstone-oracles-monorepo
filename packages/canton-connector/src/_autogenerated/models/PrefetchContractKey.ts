@@ -13,11 +13,22 @@ export type PrefetchContractKey = {
      *
      * Required
      */
-    templateId?: string;
+    templateId: string;
     /**
      * The key of the contract the client wants to prefetch.
+     *
      * Required
      */
     contractKey: any;
+    /**
+     * The number of contracts to prefetch for this key, if available.
+     * This is in addition to disclosed contracts.
+     * - for backward compatibility reason, absence is interpreted as 1
+     * - 0 is forbidden
+     * - capped at 2^31 - 1. The system may impose further limits.
+     *
+     * Optional
+     */
+    limit?: number;
 };
 

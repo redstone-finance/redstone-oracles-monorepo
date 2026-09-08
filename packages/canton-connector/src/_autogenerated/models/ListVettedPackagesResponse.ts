@@ -8,12 +8,16 @@ export type ListVettedPackagesResponse = {
      * All ``VettedPackages`` that contain at least one ``VettedPackage`` matching
      * both a ``PackageMetadataFilter`` and a ``TopologyStateFilter``.
      * Sorted by synchronizer_id then participant_id.
+     *
+     * Optional: can be empty
      */
     vettedPackages?: Array<VettedPackages>;
     /**
      * Pagination token to retrieve the next page.
      * Empty string if there are no further results.
+     *
+     * Optional
      */
-    nextPageToken: string;
+    nextPageToken?: string;
 };
 

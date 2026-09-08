@@ -6,6 +6,8 @@ import type { Right } from './Right';
 export type GrantUserRightsResponse = {
     /**
      * The rights that were newly granted by the request.
+     *
+     * Optional: can be empty
      */
     newlyGrantedRights?: Array<Right>;
 };

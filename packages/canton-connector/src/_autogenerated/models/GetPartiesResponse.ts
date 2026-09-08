@@ -7,8 +7,9 @@ export type GetPartiesResponse = {
     /**
      * The details of the requested Daml parties by the participant, if known.
      * The party details may not be in the same order as requested.
-     * Required
+     *
+     * Required: must be non-empty
      */
-    partyDetails?: Array<PartyDetails>;
+    partyDetails: Array<PartyDetails>;
 };
 

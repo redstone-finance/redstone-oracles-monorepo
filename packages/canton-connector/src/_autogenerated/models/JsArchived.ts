@@ -9,8 +9,9 @@ export type JsArchived = {
      */
     archivedEvent: ArchivedEvent;
     /**
-     * Required
      * The synchronizer which sequenced the archival of the contract
+     *
+     * Required
      */
     synchronizerId: string;
 };
