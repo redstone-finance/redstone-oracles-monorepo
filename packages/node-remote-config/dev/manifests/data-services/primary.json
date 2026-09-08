@@ -3940,7 +3940,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "HYBOND": {
+    "HYBOND_NAV": {
       "source": [
         "openeden"
       ],
