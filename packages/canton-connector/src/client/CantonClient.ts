@@ -221,6 +221,55 @@ export class CantonClient {
     return makeActiveContractData<T>(createdEvent, synchronizerId);
   }
 
+  async getCreatedContractData<T = unknown>(
+    actAs: string,
+    interfaceId: string,
+    contractId: string,
+    filter?: ContractFilter,
+    atOffset?: number
+  ) {
+    const filtersByParty = makeInterfaceFilterByParty(interfaceId, actAs);
+    const result = await this.api.performRequestCollected(
+      () =>
+        DefaultService.postV2EventsEventsByContractId({
+          contractId,
+          eventFormat: { filtersByParty, verbose: false },
+        }),
+      `postV2EventsEventsByContractId {contractId: ${contractId}, party: ${actAs}}`
+    );
+
+    if (!result.created) {
+      return undefined;
+    }
+
+    const { createdEvent, synchronizerId } = result.created;
+    const isActive = CantonClient.isActiveAtOffset(
+      createdEvent.offset,
+      result.archived?.archivedEvent.offset,
+      atOffset
+    );
+
+    if (!isActive || !RedstoneCommon.isDefined(createdEvent.createArgument)) {
+      return undefined;
+    }
+
+    if (filter && !filter(createdEvent.createArgument, createdEvent.signatories)) {
+      return undefined;
+    }
+
+    return makeActiveContractData<T>(createdEvent, synchronizerId);
+  }
+
+  private static isActiveAtOffset(createdAt: number, archivedAt?: number, atOffset?: number) {
+    if (!RedstoneCommon.isDefined(atOffset)) {
+      return !RedstoneCommon.isDefined(archivedAt);
+    }
+
+    return (
+      createdAt <= atOffset && (!RedstoneCommon.isDefined(archivedAt) || archivedAt > atOffset)
+    );
+  }
+
   async getMostActiveContractData<T = unknown>(
     actAs: string,
     interfaceId: string,
