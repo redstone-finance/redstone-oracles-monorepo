@@ -5740,7 +5740,7 @@
       "source": [
         "earn-usdc"
       ],
-      "denomination": "USDC",
+      "denomination": "USD",
       "rateFeed": true
     }
   },
