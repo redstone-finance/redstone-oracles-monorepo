@@ -44,12 +44,37 @@ export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implement
   }
 
   protected async readFeedData(offset?: number): Promise<DamlFeedData> {
-    const { createArgument } = await this.fetchContractWithPayload<RedStoneAdapterPayload>(
+    const { createArgument } = await this.fetchAdapterContractData(offset);
+
+    return createArgument.feedData;
+  }
+
+  private async fetchAdapterContractData(offset?: number) {
+    const knownContractId = this.activeContractData?.contractId;
+
+    if (knownContractId) {
+      const contractData = await this.client.getCreatedContractData<RedStoneAdapterPayload>(
+        this.config.viewerPartyId,
+        this.getInterfaceId(),
+        knownContractId,
+        this.getCombinedSignatoryContractFilter(),
+        offset
+      );
+
+      if (contractData) {
+        return contractData;
+      }
+
+      this.activeContractData = undefined;
+    }
+
+    const contractData = await this.fetchContractWithPayload<RedStoneAdapterPayload>(
       this.config.viewerPartyId,
       offset
     );
+    this.activeContractData = contractData;
 
-    return createArgument.feedData;
+    return contractData;
   }
 
   getUniqueSignerThreshold(_offset?: number) {
