@@ -11,7 +11,9 @@ export type CreatedEvent = {
      * The offset of origin, which has contextual meaning, please see description at messages that include a CreatedEvent.
      * Offsets are managed by the participant nodes.
      * Transactions can thus NOT be assumed to have the same offsets on different participant nodes.
-     * Required, it is a valid absolute offset (positive integer)
+     * It is a valid absolute offset (positive integer)
+     *
+     * Required
      */
     offset: number;
     /**
@@ -19,12 +21,15 @@ export type CreatedEvent = {
      * The origin has contextual meaning, please see description at messages that include a CreatedEvent.
      * Node IDs are not necessarily equal across participants,
      * as these may see different projections/parts of transactions.
-     * Required, must be valid node ID (non-negative integer)
+     * Must be valid node ID (non-negative integer)
+     *
+     * Required
      */
     nodeId: number;
     /**
      * The ID of the created contract.
      * Must be a valid LedgerString (as described in ``value.proto``).
+     *
      * Required
      */
     contractId: string;
@@ -38,17 +43,31 @@ export type CreatedEvent = {
     /**
      * The key of the created contract.
      * This will be set if and only if ``template_id`` defines a contract key.
+     *
      * Optional
      */
     contractKey?: any;
-    createArgument?: any;
+    /**
+     * The hash of contract_key.
+     * This will be set if and only if ``template_id`` defines a contract key.
+     *
+     * Optional: can be empty
+     */
+    contractKeyHash?: string;
+    /**
+     * The arguments that have been used to create the contract.
+     *
+     * Required
+     */
+    createArgument: any;
     /**
      * Opaque representation of contract create event payload intended for forwarding
      * to an API server as a contract disclosed as part of a command
      * submission.
-     * Optional
+     *
+     * Optional: can be empty
      */
-    createdEventBlob: string;
+    createdEventBlob?: string;
     /**
      * Interface views specified in the transaction filter.
      * Includes an ``InterfaceView`` for each interface for which there is a ``InterfaceFilter`` with
@@ -57,7 +76,7 @@ export type CreatedEvent = {
      * - and which is implemented by the template of this event,
      * - and which has ``include_interface_view`` set.
      *
-     * Optional
+     * Optional: can be empty
      */
     interfaceViews?: Array<JsInterfaceView>;
     /**
@@ -87,27 +106,32 @@ export type CreatedEvent = {
      * ``UpdateFormat``.  Using these events, query the ACS as-of an offset where the
      * party is hosted on the participant node, and ignore create events at offsets
      * where the party is not hosted on the participant node.
-     * Required
+     *
+     * Required: must be non-empty
      */
-    witnessParties?: Array<string>;
+    witnessParties: Array<string>;
     /**
      * The signatories for this contract as specified by the template.
-     * Required
+     *
+     * Required: must be non-empty
      */
-    signatories?: Array<string>;
+    signatories: Array<string>;
     /**
      * The observers for this contract as specified explicitly by the template or implicitly as choice controllers.
      * This field never contains parties that are signatories.
-     * Required
+     *
+     * Optional: can be empty
      */
     observers?: Array<string>;
     /**
      * Ledger effective time of the transaction that created the contract.
+     *
      * Required
      */
     createdAt: string;
     /**
      * The package name of the created contract.
+     *
      * Required
      */
     packageName: string;
@@ -124,6 +148,7 @@ export type CreatedEvent = {
     /**
      * Whether this event would be part of respective ACS_DELTA shaped stream,
      * and should therefore considered when tracking contract activeness on the client-side.
+     *
      * Required
      */
     acsDelta: boolean;

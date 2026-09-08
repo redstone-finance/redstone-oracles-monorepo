@@ -116,6 +116,7 @@ describe("makeActiveContractData", () => {
       contractId: CID.eth,
       synchronizerId: "sync-primary",
       createdEventBlob: BLOB.eth,
+      createArgument: {},
     });
   });
 

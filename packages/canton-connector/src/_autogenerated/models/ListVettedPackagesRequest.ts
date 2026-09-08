@@ -7,11 +7,13 @@ import type { TopologyStateFilter } from './TopologyStateFilter';
 export type ListVettedPackagesRequest = {
     /**
      * The package metadata filter the returned vetted packages set must satisfy.
+     *
      * Optional
      */
     packageMetadataFilter?: PackageMetadataFilter;
     /**
      * The topology filter the returned vetted packages set must satisfy.
+     *
      * Optional
      */
     topologyStateFilter?: TopologyStateFilter;
@@ -30,7 +32,7 @@ export type ListVettedPackagesRequest = {
      *
      * Optional
      */
-    pageToken: string;
+    pageToken?: string;
     /**
      * Maximum number of ``VettedPackages`` results to return in a single page.
      *
@@ -45,6 +47,6 @@ export type ListVettedPackagesRequest = {
      *
      * Optional
      */
-    pageSize: number;
+    pageSize?: number;
 };
 

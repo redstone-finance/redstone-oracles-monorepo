@@ -11,18 +11,24 @@ import type { TransactionFormat } from './TransactionFormat';
 export type UpdateFormat = {
     /**
      * Include Daml transactions in streams.
-     * Optional, if unset, no transactions are emitted in the stream.
+     * If unset, no transactions are emitted in the stream.
+     *
+     * Optional
      */
     includeTransactions?: TransactionFormat;
     /**
      * Include (un)assignments in the stream.
      * The events in the result take the shape TRANSACTION_SHAPE_ACS_DELTA.
-     * Optional, if unset, no (un)assignments are emitted in the stream.
+     * If unset, no (un)assignments are emitted in the stream.
+     *
+     * Optional
      */
     includeReassignments?: EventFormat;
     /**
      * Include topology events in streams.
-     * Optional, if unset no topology events are emitted in the stream.
+     * If unset no topology events are emitted in the stream.
+     *
+     * Optional
      */
     includeTopologyEvents?: TopologyFormat;
 };

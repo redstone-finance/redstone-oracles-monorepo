@@ -7,13 +7,15 @@ export type GetUpdateByIdRequest = {
     /**
      * The ID of a particular update.
      * Must be a valid LedgerString (as described in ``value.proto``).
+     *
      * Required
      */
     updateId: string;
     /**
      * The format for the update.
+     *
      * Required
      */
-    updateFormat?: UpdateFormat;
+    updateFormat: UpdateFormat;
 };
 

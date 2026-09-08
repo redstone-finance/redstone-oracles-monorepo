@@ -4,6 +4,9 @@
 /* eslint-disable */
 import type { ConnectedSynchronizer } from './ConnectedSynchronizer';
 export type GetConnectedSynchronizersResponse = {
+    /**
+     * Optional: can be empty
+     */
     connectedSynchronizers?: Array<ConnectedSynchronizer>;
 };
 

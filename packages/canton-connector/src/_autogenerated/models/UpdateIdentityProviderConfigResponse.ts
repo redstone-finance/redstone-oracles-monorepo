@@ -6,7 +6,9 @@ import type { IdentityProviderConfig } from './IdentityProviderConfig';
 export type UpdateIdentityProviderConfigResponse = {
     /**
      * Updated identity provider config
+     *
+     * Required
      */
-    identityProviderConfig?: IdentityProviderConfig;
+    identityProviderConfig: IdentityProviderConfig;
 };
 

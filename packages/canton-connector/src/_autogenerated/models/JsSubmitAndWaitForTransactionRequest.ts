@@ -10,6 +10,7 @@ import type { TransactionFormat } from './TransactionFormat';
 export type JsSubmitAndWaitForTransactionRequest = {
     /**
      * The commands to be submitted.
+     *
      * Required
      */
     commands: JsCommands;
@@ -17,6 +18,7 @@ export type JsSubmitAndWaitForTransactionRequest = {
      * If no ``transaction_format`` is provided, a default will be used where ``transaction_shape`` is set to
      * TRANSACTION_SHAPE_ACS_DELTA, ``event_format`` is defined with ``filters_by_party`` containing wildcard-template
      * filter for all original ``act_as`` and ``read_as`` parties and the ``verbose`` flag is set.
+     *
      * Optional
      */
     transactionFormat?: TransactionFormat;

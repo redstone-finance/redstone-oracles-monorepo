@@ -6,18 +6,22 @@ import type { TransactionFilter } from './TransactionFilter';
 import type { UpdateFormat } from './UpdateFormat';
 export type GetUpdatesRequest = {
     /**
-     * Beginning of the requested ledger section (non-negative integer).
+     * Exclusive lower bound offset of the requested ledger section (non-negative integer).
      * The response will only contain transactions whose offset is strictly greater than this.
-     * If zero, the stream will start from the beginning of the ledger.
-     * If positive, the streaming will start after this absolute offset.
-     * If the ledger has been pruned, this parameter must be specified and be greater than the pruning offset.
+     * If set to zero, the lower bound is set to the beginning of the ledger.
+     * If the participant has been pruned, this parameter must be greater or equal than the pruning offset.
+     * Required
      */
     beginExclusive: number;
     /**
-     * End of the requested ledger section.
-     * The response will only contain transactions whose offset is less than or equal to this.
-     * Optional, if empty, the stream will not terminate.
-     * If specified, the stream will terminate after this absolute offset (positive integer) is reached.
+     * Inclusive higher bound offset of the requested ledger section.
+     * If specified the response will only contain transactions whose offset is less than or equal to this.
+     * If not specified,
+     *
+     * - the descending_order must not be selected,
+     * - the stream will not terminate.
+     *
+     * Optional
      */
     endInclusive?: number;
     /**
@@ -34,7 +38,7 @@ export type GetUpdatesRequest = {
      * for record fields.
      * Optional for backwards compatibility, if defined update_format must be unset
      */
-    verbose: boolean;
+    verbose?: boolean;
     /**
      * Must be unset for GetUpdateTrees request.
      * Optional for backwards compatibility for GetUpdates request: defaults to an UpdateFormat where:
@@ -48,5 +52,11 @@ export type GetUpdatesRequest = {
      * - include_topology_events.include_participant_authorization_events.parties = all the parties specified in filter
      */
     updateFormat?: UpdateFormat;
+    /**
+     * If set, the stream will populate the elements in descending order.
+     *
+     * Optional
+     */
+    descendingOrder?: boolean;
 };
 

@@ -6,6 +6,8 @@ import type { Right } from './Right';
 export type ListUserRightsResponse = {
     /**
      * All rights of the user.
+     *
+     * Optional: can be empty
      */
     rights?: Array<Right>;
 };

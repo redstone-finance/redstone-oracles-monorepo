@@ -6,6 +6,9 @@
  * Ledger is in the static time mode and exposes a time service.
  */
 export type ExperimentalStaticTime = {
+    /**
+     * Required
+     */
     supported: boolean;
 };
 

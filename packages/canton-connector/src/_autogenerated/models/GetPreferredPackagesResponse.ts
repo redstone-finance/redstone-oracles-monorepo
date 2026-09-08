@@ -13,12 +13,13 @@ export type GetPreferredPackagesResponse = {
      * in the ``package_id_selection_preference`` of the command submission to
      * avoid race conditions with concurrent changes of the on-ledger package vetting state.
      *
-     * Required
+     * Required: must be non-empty
      */
-    packageReferences?: Array<PackageReference>;
+    packageReferences: Array<PackageReference>;
     /**
      * The synchronizer for which the package preferences are computed.
      * If the synchronizer_id was specified in the request, then it matches the request synchronizer_id.
+     *
      * Required
      */
     synchronizerId: string;

@@ -20,18 +20,18 @@ export type JsTransactionTree = {
      * Must be a valid LedgerString (as described in ``value.proto``).
      * Optional
      */
-    commandId: string;
+    commandId?: string;
     /**
      * The workflow ID used in command submission. Only set if the ``workflow_id`` for the command was set.
      * Must be a valid LedgerString (as described in ``value.proto``).
      * Optional
      */
-    workflowId: string;
+    workflowId?: string;
     /**
      * Ledger effective time.
      * Required
      */
-    effectiveAt?: string;
+    effectiveAt: string;
     /**
      * The absolute offset. The details of this field are described in ``community/ledger-api/README.md``.
      * Required, it is a valid absolute offset (positive integer).

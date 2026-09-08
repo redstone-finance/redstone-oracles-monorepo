@@ -9,7 +9,9 @@ import type { ParticipantAuthorizationTopologyFormat } from './ParticipantAuthor
 export type TopologyFormat = {
     /**
      * Include participant authorization topology events in streams.
-     * Optional, if unset no participant authorization topology events are emitted in the stream.
+     * If unset, no participant authorization topology events are emitted in the stream.
+     *
+     * Optional
      */
     includeParticipantAuthorizationEvents?: ParticipantAuthorizationTopologyFormat;
 };

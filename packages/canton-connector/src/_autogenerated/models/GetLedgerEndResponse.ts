@@ -7,7 +7,9 @@ export type GetLedgerEndResponse = {
      * It will always be a non-negative integer.
      * If zero, the participant view of the ledger is empty.
      * If positive, the absolute offset of the ledger as viewed by the participant.
+     *
+     * Optional
      */
-    offset: number;
+    offset?: number;
 };
 

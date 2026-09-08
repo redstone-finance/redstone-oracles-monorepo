@@ -11,18 +11,22 @@ import type { Right } from './Right';
 export type RevokeUserRightsRequest = {
     /**
      * The user from whom to revoke rights.
+     *
      * Required
      */
     userId: string;
     /**
      * The rights to revoke.
-     * Optional
+     *
+     * Optional: can be empty
      */
     rights?: Array<Right>;
     /**
      * The id of the ``Identity Provider``
-     * Optional, if not set, assume the user is managed by the default identity provider.
+     * If not set, assume the user is managed by the default identity provider.
+     *
+     * Optional
      */
-    identityProviderId: string;
+    identityProviderId?: string;
 };
 

@@ -12,6 +12,8 @@ import type { JsIncompleteUnassigned } from './JsIncompleteUnassigned';
  * A contract_entry is included in the result, if and only if there is at least one stakeholder party of the contract
  * that is hosted on the synchronizer at the time of the event and the party satisfies the
  * ``TransactionFilter`` in the query.
+ *
+ * Required
  */
 export type JsContractEntry = ({
     JsActiveContract: JsActiveContract;

@@ -8,7 +8,13 @@ import type { ExperimentalStaticTime } from './ExperimentalStaticTime';
  * See the feature message definitions for descriptions.
  */
 export type ExperimentalFeatures = {
+    /**
+     * Optional
+     */
     staticTime?: ExperimentalStaticTime;
+    /**
+     * Optional
+     */
     commandInspectionService?: ExperimentalCommandInspectionService;
 };
 

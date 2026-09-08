@@ -9,16 +9,21 @@ export type UpdateVettedPackagesRequest = {
      * Changes to apply to the current vetting state of the participant on the
      * specified synchronizer. The changes are applied in order.
      * Any package not changed will keep their previous vetting state.
+     *
+     * Required: must be non-empty
      */
-    changes?: Array<VettedPackagesChange>;
+    changes: Array<VettedPackagesChange>;
     /**
      * If dry_run is true, then the changes are only prepared, but not applied. If
      * a request would trigger an error when run (e.g. TOPOLOGY_DEPENDENCIES_NOT_VETTED),
      * it will also trigger an error when dry_run.
      *
      * Use this flag to preview a change before applying it.
+     * Defaults to false.
+     *
+     * Optional
      */
-    dryRun: boolean;
+    dryRun?: boolean;
     /**
      * If set, the requested changes will take place on the specified
      * synchronizer. If synchronizer_id is unset and the participant is only
@@ -29,7 +34,7 @@ export type UpdateVettedPackagesRequest = {
      *
      * Optional
      */
-    synchronizerId: string;
+    synchronizerId?: string;
     /**
      * The serial of the last ``VettedPackages`` topology transaction of this
      * participant and on this synchronizer.
@@ -46,7 +51,7 @@ export type UpdateVettedPackagesRequest = {
     /**
      * Controls whether potentially unsafe vetting updates are allowed.
      *
-     * Optional, defaults to FORCE_FLAG_UNSPECIFIED.
+     * Optional: can be empty
      */
     updateVettedPackagesForceFlags?: Array<'UPDATE_VETTED_PACKAGES_FORCE_FLAG_UNSPECIFIED' | 'UPDATE_VETTED_PACKAGES_FORCE_FLAG_ALLOW_VET_INCOMPATIBLE_UPGRADES' | 'UPDATE_VETTED_PACKAGES_FORCE_FLAG_ALLOW_UNVETTED_DEPENDENCIES'>;
 };

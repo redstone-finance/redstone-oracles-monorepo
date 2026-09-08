@@ -5,6 +5,8 @@
 export type PartyManagementFeature = {
     /**
      * The maximum number of parties the server can return in a single response (page).
+     *
+     * Required
      */
     maxPartiesPageSize: number;
 };

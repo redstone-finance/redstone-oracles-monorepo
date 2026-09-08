@@ -9,30 +9,38 @@
  */
 export type VettedPackage = {
     /**
-     * Package ID of this package. Always present.
+     * Package ID of this package
+     *
+     * Required
      */
     packageId: string;
     /**
      * The time from which this package is vetted. Empty if vetting time has no
      * lower bound.
+     *
+     * Optional
      */
     validFromInclusive?: string;
     /**
      * The time until which this package is vetted. Empty if vetting time has no
      * upper bound.
+     *
+     * Optional
      */
     validUntilExclusive?: string;
     /**
      * Name of this package.
      * Only available if the package has been uploaded to the current participant.
-     * If unavailable, is empty string.
+     *
+     * Optional
      */
-    packageName: string;
+    packageName?: string;
     /**
      * Version of this package.
      * Only available if the package has been uploaded to the current participant.
-     * If unavailable, is empty string.
+     *
+     * Optional
      */
-    packageVersion: string;
+    packageVersion?: string;
 };
 

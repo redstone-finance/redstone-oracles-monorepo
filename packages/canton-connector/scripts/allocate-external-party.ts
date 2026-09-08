@@ -45,7 +45,7 @@ async function main() {
 
   const allocated = await client.allocateExternalParty({
     synchronizer,
-    onboardingTransactions: (generated.topologyTransactions ?? []).map((transaction) => ({
+    onboardingTransactions: generated.topologyTransactions.map((transaction) => ({
       transaction,
     })),
     multiHashSignatures: [

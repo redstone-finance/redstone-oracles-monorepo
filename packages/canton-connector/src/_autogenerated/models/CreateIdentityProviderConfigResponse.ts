@@ -4,6 +4,9 @@
 /* eslint-disable */
 import type { IdentityProviderConfig } from './IdentityProviderConfig';
 export type CreateIdentityProviderConfigResponse = {
-    identityProviderConfig?: IdentityProviderConfig;
+    /**
+     * Required
+     */
+    identityProviderConfig: IdentityProviderConfig;
 };
 

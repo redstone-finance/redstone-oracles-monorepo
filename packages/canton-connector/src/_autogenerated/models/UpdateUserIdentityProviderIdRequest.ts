@@ -8,15 +8,23 @@
 export type UpdateUserIdentityProviderIdRequest = {
     /**
      * User to update
+     *
+     * Required
      */
     userId: string;
     /**
      * Current identity provider ID of the user
+     * If omitted, the default IDP is assumed
+     *
+     * Optional
      */
-    sourceIdentityProviderId: string;
+    sourceIdentityProviderId?: string;
     /**
      * Target identity provider ID of the user
+     * If omitted, the default IDP is assumed
+     *
+     * Optional
      */
-    targetIdentityProviderId: string;
+    targetIdentityProviderId?: string;
 };
 

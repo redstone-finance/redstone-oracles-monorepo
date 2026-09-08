@@ -4,6 +4,6 @@
 /* eslint-disable */
 import type { CompletionResponse } from './CompletionResponse';
 export type CompletionStreamResponse = {
-    completionResponse: CompletionResponse;
+    completionResponse?: CompletionResponse;
 };
 

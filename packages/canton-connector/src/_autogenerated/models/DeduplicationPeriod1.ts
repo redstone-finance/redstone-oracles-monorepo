@@ -12,7 +12,9 @@ import type { Empty3 } from './Empty3';
  *
  * Used to audit the deduplication guarantee described in ``commands.proto``.
  *
- * Optional; the deduplication guarantee applies even if the completion omits this field.
+ * The deduplication guarantee applies even if the completion omits this field.
+ *
+ * Optional
  */
 export type DeduplicationPeriod1 = ({
     DeduplicationDuration: DeduplicationDuration1;

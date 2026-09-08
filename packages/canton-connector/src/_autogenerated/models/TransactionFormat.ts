@@ -11,9 +11,10 @@ export type TransactionFormat = {
     /**
      * Required
      */
-    eventFormat?: EventFormat;
+    eventFormat: EventFormat;
     /**
      * What transaction shape to use for interpreting the filters of the event format.
+     *
      * Required
      */
     transactionShape: TransactionFormat.transactionShape;
@@ -21,6 +22,7 @@ export type TransactionFormat = {
 export namespace TransactionFormat {
     /**
      * What transaction shape to use for interpreting the filters of the event format.
+     *
      * Required
      */
     export enum transactionShape {

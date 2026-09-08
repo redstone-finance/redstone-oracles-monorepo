@@ -3,6 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type AllocateExternalPartyResponse = {
+    /**
+     * The allocated party id
+     *
+     * Required
+     */
     partyId: string;
 };
 

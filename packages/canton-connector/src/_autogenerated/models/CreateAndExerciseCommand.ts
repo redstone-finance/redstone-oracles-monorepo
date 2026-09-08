@@ -16,17 +16,20 @@ export type CreateAndExerciseCommand = {
     templateId: string;
     /**
      * The arguments required for creating a contract from this template.
+     *
      * Required
      */
     createArguments: any;
     /**
      * The name of the choice the client wants to exercise.
      * Must be a valid NameString (as described in ``value.proto``).
+     *
      * Required
      */
     choice: string;
     /**
      * The argument for this choice.
+     *
      * Required
      */
     choiceArgument: any;

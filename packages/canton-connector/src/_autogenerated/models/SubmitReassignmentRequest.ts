@@ -6,8 +6,9 @@ import type { ReassignmentCommands } from './ReassignmentCommands';
 export type SubmitReassignmentRequest = {
     /**
      * The reassignment command to be submitted.
+     *
      * Required
      */
-    reassignmentCommands?: ReassignmentCommands;
+    reassignmentCommands: ReassignmentCommands;
 };
 

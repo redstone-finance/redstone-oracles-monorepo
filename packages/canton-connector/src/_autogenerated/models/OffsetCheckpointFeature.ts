@@ -6,7 +6,9 @@ import type { Duration } from './Duration';
 export type OffsetCheckpointFeature = {
     /**
      * The maximum delay to emmit a new OffsetCheckpoint if it exists
+     *
+     * Required
      */
-    maxOffsetCheckpointEmissionDelay?: Duration;
+    maxOffsetCheckpointEmissionDelay: Duration;
 };
 

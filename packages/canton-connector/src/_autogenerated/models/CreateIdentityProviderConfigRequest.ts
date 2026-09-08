@@ -7,6 +7,6 @@ export type CreateIdentityProviderConfigRequest = {
     /**
      * Required
      */
-    identityProviderConfig?: IdentityProviderConfig;
+    identityProviderConfig: IdentityProviderConfig;
 };
 

@@ -7,6 +7,6 @@ import type { Kind } from './Kind';
  * A right granted to a user.
  */
 export type Right = {
-    kind: Kind;
+    kind?: Kind;
 };
 

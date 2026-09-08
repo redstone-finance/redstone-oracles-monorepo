@@ -7,11 +7,15 @@
  */
 export type GenerateExternalPartyTopologyResponse = {
     /**
-     * the generated party id
+     * The generated party id
+     *
+     * Required
      */
     partyId: string;
     /**
-     * the fingerprint of the supplied public key
+     * The fingerprint of the supplied public key
+     *
+     * Required
      */
     publicKeyFingerprint: string;
     /**
@@ -19,10 +23,14 @@ export type GenerateExternalPartyTopologyResponse = {
      * Note that the serialization includes the versioning information. Therefore, the transaction here is serialized
      * as an `UntypedVersionedMessage` which in turn contains the serialized `TopologyTransaction` in the version
      * supported by the synchronizer.
+     *
+     * Required: must be non-empty
      */
-    topologyTransactions?: Array<string>;
+    topologyTransactions: Array<string>;
     /**
      * the multi-hash which may be signed instead of each individual transaction
+     *
+     * Required: must be non-empty
      */
     multiHash: string;
 };

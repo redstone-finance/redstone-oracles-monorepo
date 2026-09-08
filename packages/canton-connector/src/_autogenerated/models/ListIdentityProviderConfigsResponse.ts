@@ -4,6 +4,11 @@
 /* eslint-disable */
 import type { IdentityProviderConfig } from './IdentityProviderConfig';
 export type ListIdentityProviderConfigsResponse = {
-    identityProviderConfigs?: Array<IdentityProviderConfig>;
+    /**
+     * The list of identity provider configs
+     *
+     * Required: must be non-empty
+     */
+    identityProviderConfigs: Array<IdentityProviderConfig>;
 };
 

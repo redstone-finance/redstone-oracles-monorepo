@@ -5,6 +5,9 @@
 import type { Empty5 } from './Empty5';
 import type { Unvet } from './Unvet';
 import type { Vet } from './Vet';
+/**
+ * Required
+ */
 export type Operation = ({
     Empty: Empty5;
 } | {

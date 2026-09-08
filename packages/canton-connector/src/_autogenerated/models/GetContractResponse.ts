@@ -18,6 +18,6 @@ export type GetContractResponse = {
      *
      * Required
      */
-    createdEvent?: CreatedEvent;
+    createdEvent: CreatedEvent;
 };
 

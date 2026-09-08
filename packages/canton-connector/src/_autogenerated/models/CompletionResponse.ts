@@ -5,6 +5,9 @@
 import type { Completion } from './Completion';
 import type { Empty4 } from './Empty4';
 import type { OffsetCheckpoint } from './OffsetCheckpoint';
+/**
+ * Required
+ */
 export type CompletionResponse = ({
     Completion: Completion;
 } | {

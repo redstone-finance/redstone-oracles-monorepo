@@ -7,6 +7,6 @@ import type { Update1 } from './Update1';
  * Provided for backwards compatibility, it will be removed in the Canton version 3.5.0.
  */
 export type JsGetUpdateTreesResponse = {
-    update: Update1;
+    update?: Update1;
 };
 

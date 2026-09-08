@@ -8,6 +8,6 @@ import type { Serial } from './Serial';
  * participant and synchronizer.
  */
 export type PriorTopologySerial = {
-    serial: Serial;
+    serial?: Serial;
 };
 

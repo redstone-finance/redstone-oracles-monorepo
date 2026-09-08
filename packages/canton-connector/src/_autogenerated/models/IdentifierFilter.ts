@@ -6,6 +6,9 @@ import type { Empty1 } from './Empty1';
 import type { InterfaceFilter } from './InterfaceFilter';
 import type { TemplateFilter } from './TemplateFilter';
 import type { WildcardFilter } from './WildcardFilter';
+/**
+ * Required
+ */
 export type IdentifierFilter = ({
     Empty: Empty1;
 } | {

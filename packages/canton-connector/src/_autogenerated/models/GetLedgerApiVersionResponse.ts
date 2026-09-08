@@ -6,6 +6,8 @@ import type { FeaturesDescriptor } from './FeaturesDescriptor';
 export type GetLedgerApiVersionResponse = {
     /**
      * The version of the ledger API.
+     *
+     * Required
      */
     version: string;
     /**
@@ -18,7 +20,9 @@ export type GetLedgerApiVersionResponse = {
      *
      * See the feature descriptions themselves for the relation between
      * Ledger API versions and feature presence.
+     *
+     * Required
      */
-    features?: FeaturesDescriptor;
+    features: FeaturesDescriptor;
 };
 
