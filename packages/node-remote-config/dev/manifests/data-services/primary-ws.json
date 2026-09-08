@@ -6892,86 +6892,6 @@
         "crypto"
       ]
     },
-    "BTC_EMA_150S": {
-      "source": [
-        "ema"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "BTC_PERP": {
-      "source": [
-        "ws-perp-binance-usdt",
-        "ws-perp-bybit-usdt",
-        "ws-perp-gate-usdt",
-        "ws-perp-mexc-usdt",
-        "ws-perp-okx-usdt"
-      ],
-      "priceAggregator": "constantWeightMedian",
-      "customWeightsForWeightedMedian": {
-        "ws-perp-binance-usdt": 3,
-        "ws-perp-okx-usdt": 2,
-        "ws-perp-bybit-usdt": 2
-      },
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "BTC_PERP_EMA_30S": {
-      "source": [
-        "ema"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "GRVT_FAIR_BTC": {
-      "source": [
-        "ws-grvt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "GRVT_FAIR_BTC_EMA_30S": {
-      "source": [
-        "ema"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "GRVT_FAIR_CAPPED_BTC": {
-      "source": [
-        "grvt-cap"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "GRVT_FAIR_CAPPED_BTC_EMA_150S": {
-      "source": [
-        "ema"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
     "TUT": {
       "source": [
         "ws-spot-binance-usdt",
@@ -7856,6 +7776,274 @@
       "types": [
         "crypto"
       ]
+    },
+    "BTC_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BTC_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GRVT_FAIR_BTC": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BTC_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BTC_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BTC_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BTC_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ANTHROPIC_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-coinbase-usdc",
+        "ws-perp-mexc-usdt"
+      ],
+      "priceAggregator": "geomean",
+      "geomeanAggregatorConfig": {
+        "medianClamps": 25
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ANTHROPIC_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ANTHROPIC": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ANTHROPIC_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ANTHROPIC_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ANTHROPIC_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ANTHROPIC_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TSLA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_TSLA": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_TSLA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:TSLA_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:TSLA_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:TSLA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GAS.Y_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NATGAS": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NATGAS_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NATGAS_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NATGAS_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:NATGAS_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
