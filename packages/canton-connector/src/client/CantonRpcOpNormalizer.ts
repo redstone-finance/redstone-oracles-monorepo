@@ -9,6 +9,7 @@ export class CantonRpcOpNormalizer extends RpcOpNormalizer {
         return RpcOpNormalizer.blockNumberTelemetry(result);
       case "getActiveContractsData":
       case "getActiveContractData":
+      case "getCreatedContractData":
       case "getMostActiveContractData":
         return RpcOpNormalizer.callTelemetry();
       case "exerciseChoices":

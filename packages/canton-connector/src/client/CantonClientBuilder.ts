@@ -132,6 +132,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
         transfer: MultiExecutor.ExecutionMode.FALLBACK,
         getActiveContractsData: MultiExecutor.ExecutionMode.FALLBACK,
         getActiveContractData: MultiExecutor.ExecutionMode.FALLBACK,
+        getCreatedContractData: MultiExecutor.ExecutionMode.FALLBACK,
         getMostActiveContractData: MultiExecutor.ExecutionMode.FALLBACK,
         getCreateContractEvents: MultiExecutor.ExecutionMode.FALLBACK,
         getTransactionsForInterface: MultiExecutor.ExecutionMode.FALLBACK,
