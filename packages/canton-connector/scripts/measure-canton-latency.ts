@@ -149,6 +149,10 @@ function readTargetUpdates() {
   return RedstoneCommon.getFromEnv("TARGET_UPDATES", z.number().default(200));
 }
 
+function readAtOffset() {
+  return RedstoneCommon.getFromEnv("AT_OFFSET", z.number().optional());
+}
+
 function readOffsetWindow() {
   return RedstoneCommon.getFromEnv("OFFSET_WINDOW", z.number().default(3000));
 }
@@ -590,18 +594,15 @@ async function main() {
 
   logger.info(`network=${network} interfaceId=${interfaceId} partyId=${partyId}`);
 
-  const { offset: ledgerEnd } = await api.performRequest(
-    DefaultService.getV2StateLedgerEnd,
-    "getCurrentOffset"
-  );
+  const atOffset = readAtOffset();
+  const startOffset =
+    atOffset ??
+    (await api.performRequest(DefaultService.getV2StateLedgerEnd, "getCurrentOffset")).offset ??
+    0;
 
-  const samples = await collectSamples(
-    api,
-    partyId,
-    interfaceId,
-    ledgerEnd ?? 0,
-    readTargetUpdates()
-  );
+  logger.info(`startOffset=${startOffset} (${atOffset ? "AT_OFFSET" : "ledger end"})`);
+
+  const samples = await collectSamples(api, partyId, interfaceId, startOffset, readTargetUpdates());
 
   if (!samples.length) {
     throw new Error(
