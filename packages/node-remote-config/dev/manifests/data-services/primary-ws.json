@@ -3617,7 +3617,6 @@
     "TAC": {
       "source": [
         "ws-spot-bybit-usdt",
-        "binancealpha_deferred-usdt",
         "ws-spot-bitget-usdt",
         "mexc_deferred-usdt",
         "bingx_deferred-usdt"

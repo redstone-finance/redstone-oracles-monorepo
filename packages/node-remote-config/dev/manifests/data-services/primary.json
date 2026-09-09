@@ -726,7 +726,6 @@
         "bitget-usdt-reversed",
         "bitso-usdt-reversed",
         "bybit-usdt-reversed",
-        "kucoin-usdt-reversed",
         "mercado-btc-reversed",
         "okx-usdt-reversed"
       ],
@@ -1104,8 +1103,6 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "mexc-usdc",
-        "mexc-usdt",
         "okx-usdt",
         "curve-ethereum-weth"
       ],
@@ -1245,8 +1242,6 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "mexc-usdc",
-        "mexc-usdt",
         "okx-usdt",
         "xt-usdt"
       ],
@@ -1817,7 +1812,6 @@
     },
     "PUFFER": {
       "source": [
-        "bingx-usdt",
         "bitget-usdt",
         "bybit-usdt",
         "gate-usdt",
@@ -1856,7 +1850,6 @@
     },
     "GOAT": {
       "source": [
-        "bingx-usdt",
         "bitget-usdt",
         "bitrue-usdt",
         "bybit-usdt",
@@ -2023,7 +2016,6 @@
         "bitrue-usdt",
         "bybit-usdt",
         "gate-usdt",
-        "htx-usdt",
         "kucoin-usdt"
       ],
       "denomination": "USD",
@@ -2837,10 +2829,8 @@
       "source": [
         "bitget-usdt",
         "bybit-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "htx-usdt",
-        "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdc",
@@ -2944,8 +2934,6 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "mexc-usdc",
-        "mexc-usdt",
         "okx-usdt",
         "xt-usdt"
       ],
@@ -3139,7 +3127,6 @@
     "FUEL": {
       "source": [
         "bitget-usdt",
-        "bybit-usdt",
         "gate-usdt",
         "kucoin-usdt",
         "mexc-usdt"
@@ -3916,8 +3903,6 @@
         "kucoin-usdt",
         "lbank-usdc",
         "lbank-usdt",
-        "mexc-usdc",
-        "mexc-usdt",
         "xt-usdt",
         "pancake-swap-bnb-usdt-100"
       ],
@@ -4843,8 +4828,6 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "mexc-usdc",
-        "mexc-usdt",
         "okx-usdt",
         "xt-usdt"
       ],
