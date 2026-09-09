@@ -2449,7 +2449,7 @@
     },
     "io:VSXY_MARK_0": {
       "source": [
-        "hip3-entropy-equity-regular-mainnet-fetcher"
+        "hip3-entropy-equity-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2460,7 +2460,7 @@
     },
     "io:VSXY_MARK_1": {
       "source": [
-        "hip3-entropy-equity-regular-mainnet-fetcher"
+        "hip3-entropy-equity-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2471,7 +2471,7 @@
     },
     "io:VSXY_EXT": {
       "source": [
-        "hip3-entropy-equity-regular-mainnet-fetcher"
+        "hip3-entropy-equity-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2482,7 +2482,7 @@
     },
     "io:VSXY": {
       "source": [
-        "hip3-entropy-equity-regular-mainnet-fetcher"
+        "hip3-entropy-equity-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2523,6 +2523,30 @@
       "redstoneXAggregatorConfig": {
         "priceValidationSources": []
       },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GPRO---OVERNIGHT": {
+      "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GPRO---EXTENDED": {
+      "source": [],
       "broadcasters": [
         "influx",
         "s3"
@@ -2620,7 +2644,7 @@
     },
     "io:GPRO_MARK_0": {
       "source": [
-        "hip3-entropy-equity-pre-after-mainnet-fetcher"
+        "hip3-entropy-equity-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2631,7 +2655,7 @@
     },
     "io:GPRO_MARK_1": {
       "source": [
-        "hip3-entropy-equity-pre-after-mainnet-fetcher"
+        "hip3-entropy-equity-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2642,7 +2666,7 @@
     },
     "io:GPRO_EXT": {
       "source": [
-        "hip3-entropy-equity-pre-after-mainnet-fetcher"
+        "hip3-entropy-equity-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2653,7 +2677,7 @@
     },
     "io:GPRO": {
       "source": [
-        "hip3-entropy-equity-pre-after-mainnet-fetcher"
+        "hip3-entropy-equity-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
