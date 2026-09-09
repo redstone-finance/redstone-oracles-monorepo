@@ -9,7 +9,7 @@ import {
   MockNumericPackageArgs,
   MockSignerIndex,
   MockStringPackageArgs,
-} from "../src/helpers/test-utils";
+} from "../src";
 
 export const NUMBER_OF_MOCK_NUMERIC_SIGNERS = 10;
 
@@ -104,6 +104,10 @@ export const getBlockTimestampMilliseconds = async () => {
 
 export function hardhatV5Provider() {
   return ethers.provider;
+}
+
+export async function hardhatSigners() {
+  return await ethers.getSigners();
 }
 
 export async function deployContract<Deployed extends Contract = Contract>(

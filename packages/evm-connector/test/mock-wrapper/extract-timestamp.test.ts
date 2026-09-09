@@ -1,9 +1,7 @@
 import { expect } from "chai";
-import { ethers } from "hardhat";
-import { DEFAULT_TIMESTAMP_FOR_TESTS, getMockNumericPackage } from "../../src/helpers/test-utils";
-import { WrapperBuilder } from "../../src/index";
+import { DEFAULT_TIMESTAMP_FOR_TESTS, getMockNumericPackage, WrapperBuilder } from "../../src";
 import { SampleRedstoneConsumerNumericMock } from "../../typechain-types";
-import { mockNumericPackages } from "../tests-common";
+import { deployContract, mockNumericPackages } from "../tests-common";
 
 const getSimpleTestPackageWithTimestamp = (timestamp: number) =>
   getMockNumericPackage({
@@ -16,10 +14,9 @@ describe("Extract Timestamp", function () {
   let sampleContract: SampleRedstoneConsumerNumericMock;
 
   beforeEach(async () => {
-    const SampleRedstoneConsumerNumericMock = await ethers.getContractFactory(
+    ({ contract: sampleContract } = await deployContract<SampleRedstoneConsumerNumericMock>(
       "SampleRedstoneConsumerNumericMock"
-    );
-    sampleContract = await SampleRedstoneConsumerNumericMock.deploy();
+    ));
   });
 
   it("Should extract timestamp correctly", async () => {

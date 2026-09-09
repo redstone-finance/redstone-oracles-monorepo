@@ -2,10 +2,9 @@ import { Signer } from "@ethersproject/abstract-signer";
 import { parseEther, parseUnits } from "@ethersproject/units";
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
-import { ethers } from "hardhat";
 import { getMockNumericPackage, getRange, MockSignerIndex, WrapperBuilder } from "../../src";
 import { SampleSyntheticToken } from "../../typechain-types";
-import { deployContract, NUMBER_OF_MOCK_NUMERIC_SIGNERS } from "../tests-common";
+import { deployContract, hardhatSigners, NUMBER_OF_MOCK_NUMERIC_SIGNERS } from "../tests-common";
 
 // TODO audit: measure how many bytes do we add to the consumer contracts
 
@@ -30,7 +29,7 @@ describe("SampleSyntheticToken", function () {
       "SYNTH-REDSTONE",
       "SREDSTONE"
     );
-    [signer] = await ethers.getSigners();
+    [signer] = await hardhatSigners();
     address = await signer.getAddress();
 
     const mockDataPackages = getRange({

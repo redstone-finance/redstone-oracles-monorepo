@@ -1,17 +1,15 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { Event } from "@ethersproject/contracts";
 import { expect } from "chai";
-import { ethers } from "hardhat";
-import { WrapperBuilder } from "../../src/index";
+import { WrapperBuilder } from "../../src";
 import { SampleWithEvents } from "../../typechain-types";
-import { mockNumericPackages } from "../tests-common";
+import { deployContract, mockNumericPackages } from "../tests-common";
 
 describe("SampleWithEvents", function () {
   let sampleContract: SampleWithEvents;
 
   beforeEach(async () => {
-    const SampleWithEvents = await ethers.getContractFactory("SampleWithEvents");
-    sampleContract = await SampleWithEvents.deploy();
+    ({ contract: sampleContract } = await deployContract<SampleWithEvents>("SampleWithEvents"));
   });
 
   it("Test events with contract wrapping", async function () {
