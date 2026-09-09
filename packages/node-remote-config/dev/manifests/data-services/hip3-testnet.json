@@ -136,7 +136,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MARK_ani:DOG": {
       "source": [
@@ -151,7 +154,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_ani:DOG": {
       "source": [
@@ -232,10 +238,7 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "snoozed"
-      ]
+      "rateFeed": false
     },
     "ani:DOG_MARK_1": {
       "source": [
@@ -246,10 +249,7 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "snoozed"
-      ]
+      "rateFeed": false
     },
     "ani:DOG_EXT": {
       "source": [
@@ -271,10 +271,7 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "snoozed"
-      ]
+      "rateFeed": false
     },
     "OPEN_INTEREST_ani:DOG": {
       "source": [
@@ -344,7 +341,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MARK_ani:DOG2": {
       "source": [
@@ -359,7 +359,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_ani:DOG2": {
       "source": [
@@ -427,10 +430,7 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "snoozed"
-      ]
+      "rateFeed": false
     },
     "ani:DOG2_MARK_1": {
       "source": [
@@ -441,10 +441,7 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "snoozed"
-      ]
+      "rateFeed": false
     },
     "ani:DOG2_EXT": {
       "source": [
@@ -466,10 +463,7 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "snoozed"
-      ]
+      "rateFeed": false
     },
     "OPEN_INTEREST_ani:DOG2": {
       "source": [
@@ -555,16 +549,6 @@
         "rwa"
       ]
     },
-    "binance:SPCX_ORACLE": {
-      "source": [
-        "ws-binance-index-price"
-      ],
-      "broadcasters": [
-        "influx"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "MARK_ani:CAT": {
       "source": [
         "ws-hyperliquid-perps-ani",
@@ -578,7 +562,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_ani:CAT": {
       "source": [
@@ -659,10 +646,7 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "snoozed"
-      ]
+      "rateFeed": false
     },
     "ani:CAT_MARK_1": {
       "source": [
@@ -673,10 +657,7 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "snoozed"
-      ]
+      "rateFeed": false
     },
     "ani:CAT_EXT": {
       "source": [
@@ -698,10 +679,7 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "snoozed"
-      ]
+      "rateFeed": false
     },
     "OPEN_INTEREST_ani:CAT": {
       "source": [
@@ -1051,7 +1029,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MARK_io:SMCI": {
       "source": [
@@ -1066,7 +1047,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:SMCI": {
       "source": [
@@ -1081,7 +1065,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:SMCI_EMA_HALF_3M": {
       "source": [
@@ -1091,7 +1078,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:SMCI_EMA_HALF_5M": {
       "source": [
@@ -1101,7 +1091,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "ENTROPY_DEPTH_io:SMCI": {
       "source": [
@@ -1111,7 +1104,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "ENTROPY_DEPTH_io:SMCI_EMA_HALF_5M": {
       "source": [
@@ -1121,7 +1117,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:SMCI_MARK_0": {
       "source": [
@@ -1132,7 +1131,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:SMCI_MARK_1": {
       "source": [
@@ -1143,7 +1145,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:SMCI_EXT": {
       "source": [
@@ -1179,7 +1184,10 @@
           "maxPercent": 1000000000,
           "maxDelayMilliseconds": 1000
         }
-      }
+      },
+      "types": [
+        "snoozed"
+      ]
     },
     "SNDK": {
       "source": [],
@@ -1441,7 +1449,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MARK_io:AXTI": {
       "source": [
@@ -1456,7 +1467,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:AXTI": {
       "source": [
@@ -1471,7 +1485,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:AXTI_EMA_HALF_3M": {
       "source": [
@@ -1481,7 +1498,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:AXTI_EMA_HALF_5M": {
       "source": [
@@ -1491,7 +1511,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "ENTROPY_DEPTH_io:AXTI": {
       "source": [
@@ -1501,7 +1524,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "ENTROPY_DEPTH_io:AXTI_EMA_HALF_5M": {
       "source": [
@@ -1511,7 +1537,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:AXTI_MARK_0": {
       "source": [
@@ -1522,7 +1551,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:AXTI_MARK_1": {
       "source": [
@@ -1533,7 +1565,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:AXTI_EXT": {
       "source": [
@@ -1569,7 +1604,10 @@
           "maxPercent": 1000000000,
           "maxDelayMilliseconds": 1000
         }
-      }
+      },
+      "types": [
+        "snoozed"
+      ]
     },
     "DRAM": {
       "source": [],
@@ -1636,7 +1674,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MARK_io:DRAM": {
       "source": [
@@ -1651,7 +1692,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:DRAM": {
       "source": [
@@ -1666,7 +1710,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:DRAM_EMA_HALF_3M": {
       "source": [
@@ -1676,7 +1723,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:DRAM_EMA_HALF_5M": {
       "source": [
@@ -1686,7 +1736,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "ENTROPY_DEPTH_io:DRAM": {
       "source": [
@@ -1696,7 +1749,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "ENTROPY_DEPTH_io:DRAM_EMA_HALF_5M": {
       "source": [
@@ -1706,7 +1762,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:DRAM_MARK_0": {
       "source": [
@@ -1717,7 +1776,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:DRAM_MARK_1": {
       "source": [
@@ -1728,7 +1790,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:DRAM_EXT": {
       "source": [
@@ -1764,7 +1829,10 @@
           "maxPercent": 1000000000,
           "maxDelayMilliseconds": 1000
         }
-      }
+      },
+      "types": [
+        "snoozed"
+      ]
     },
     "IONQ": {
       "source": [],
@@ -2026,7 +2094,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MARK_io:EWY": {
       "source": [
@@ -2041,7 +2112,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:EWY": {
       "source": [
@@ -2056,7 +2130,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:EWY_EMA_HALF_3M": {
       "source": [
@@ -2066,7 +2143,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:EWY_EMA_HALF_5M": {
       "source": [
@@ -2076,7 +2156,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "ENTROPY_DEPTH_io:EWY": {
       "source": [
@@ -2086,7 +2169,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "ENTROPY_DEPTH_io:EWY_EMA_HALF_5M": {
       "source": [
@@ -2096,7 +2182,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:EWY_MARK_0": {
       "source": [
@@ -2107,7 +2196,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:EWY_MARK_1": {
       "source": [
@@ -2118,7 +2210,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:EWY_EXT": {
       "source": [
@@ -2154,7 +2249,10 @@
           "maxPercent": 1000000000,
           "maxDelayMilliseconds": 1000
         }
-      }
+      },
+      "types": [
+        "snoozed"
+      ]
     },
     "NBIS": {
       "source": [],
@@ -2376,7 +2474,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MARK_io:VSXY": {
       "source": [
@@ -2391,7 +2492,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:VSXY": {
       "source": [
@@ -2406,7 +2510,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:VSXY_EMA_HALF_3M": {
       "source": [
@@ -2416,7 +2523,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "MID_io:VSXY_EMA_HALF_5M": {
       "source": [
@@ -2426,7 +2536,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "ENTROPY_DEPTH_io:VSXY": {
       "source": [
@@ -2436,7 +2549,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "ENTROPY_DEPTH_io:VSXY_EMA_HALF_5M": {
       "source": [
@@ -2446,7 +2562,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:VSXY_MARK_0": {
       "source": [
@@ -2457,7 +2576,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:VSXY_MARK_1": {
       "source": [
@@ -2468,7 +2590,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
     },
     "io:VSXY_EXT": {
       "source": [
@@ -2504,7 +2629,10 @@
           "maxPercent": 1000000000,
           "maxDelayMilliseconds": 1000
         }
-      }
+      },
+      "types": [
+        "snoozed"
+      ]
     },
     "GPRO": {
       "source": [],
