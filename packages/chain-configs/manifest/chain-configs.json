@@ -894,6 +894,7 @@
       "currencySymbol": "SOL",
       "publicRpcUrls": [
         "https://api.testnet.solana.com",
+        "https://solana-testnet-rpc.publicnode.com",
         "https://testnet.block-engine.jito.wtf#type=jito",
         "https://dallas.testnet.block-engine.jito.wtf#type=jito",
         "https://ny.testnet.block-engine.jito.wtf#type=jito"
