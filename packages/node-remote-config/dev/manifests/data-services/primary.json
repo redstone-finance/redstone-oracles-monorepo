@@ -4726,6 +4726,27 @@
         }
       }
     },
+    "MEMORA_DEVNET_LAMPORTS": {
+      "source": [
+        "memora-solana"
+      ],
+      "denomination": "other",
+      "rateFeed": false
+    },
+    "MEMORA_DEVNET_SLOT": {
+      "source": [
+        "memora-solana"
+      ],
+      "denomination": "other",
+      "rateFeed": false
+    },
+    "MEMORA_DEVNET_BLOCK_TIMESTAMP": {
+      "source": [
+        "memora-solana"
+      ],
+      "denomination": "other",
+      "rateFeed": false
+    },
     "JLP": {
       "source": [
         "meteora-solana-mainnet-usdc",
@@ -5684,7 +5705,11 @@
       "BTC",
       "ETH",
       "SOL",
-      "MON"
+      "MON",
+      "MEGA",
+      "MEMORA_DEVNET_LAMPORTS",
+      "MEMORA_DEVNET_SLOT",
+      "MEMORA_DEVNET_BLOCK_TIMESTAMP"
     ],
     "__FRAXTAL__": [
       "BTC",
