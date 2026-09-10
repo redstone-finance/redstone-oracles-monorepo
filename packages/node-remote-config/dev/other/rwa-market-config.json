@@ -116,6 +116,7 @@
   "EWY---OVERNIGHT": "UsEquityOvernight",
   "NBIS---OVERNIGHT": "UsEquityOvernight",
   "VSXY---OVERNIGHT": "UsEquityOvernight",
+  "GPRO---OVERNIGHT": "UsEquityOvernight",
 
   "KOSPI": "Krx",
   "KOSPI200": "Krx",
