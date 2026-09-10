@@ -211,6 +211,7 @@
   "NIKKEI225.Y": "CmeEquities",
   "JP225": "CmeEquities",
 
+  "XYZ100---PERP": "AlwaysOpen",
   "DNMR": "AlwaysOpen",
   "FTSE100": "AlwaysOpen",
   "SOYBEAN": "AlwaysOpen",
