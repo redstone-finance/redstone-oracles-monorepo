@@ -10191,11 +10191,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-wallet-balances@workspace:packages/lambda/lambda-wallet-balances"
   dependencies:
+    "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     axios: "npm:^1.19"
+    dotenv: "npm:^16.0.3"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
