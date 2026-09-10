@@ -8894,19 +8894,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/evm-adapters@workspace:packages/evm-adapters"
   dependencies:
-    "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/abstract-provider": "npm:^5.7.0"
     "@ethersproject/bignumber": "npm:^5.7.0"
-    "@ethersproject/bytes": "npm:^5.6.1"
-    "@ethersproject/contracts": "npm:^5.7.0"
-    "@ethersproject/logger": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
     "@nomiclabs/hardhat-ethers": "npm:^2.0.6"
     "@redstone-finance/eth-contracts": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
-    "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
@@ -10761,7 +10756,6 @@ __metadata:
     "@ethersproject/bytes": "npm:^5.6.1"
     "@ethersproject/hash": "npm:^5.7.0"
     "@ethersproject/signing-key": "npm:^5.7.0"
-    "@ethersproject/strings": "npm:^5.7.0"
     "@ethersproject/transactions": "npm:^5.7.0"
     "@ethersproject/wallet": "npm:^5.7.0"
     "@types/secp256k1": "npm:^4.0.6"
@@ -10858,7 +10852,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/stylus-connector@workspace:packages/stylus-connector"
   dependencies:
-    "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/abstract-signer": "npm:^5.7.0"
     "@ethersproject/bignumber": "npm:^5.7.0"
     "@ethersproject/bytes": "npm:^5.6.1"
