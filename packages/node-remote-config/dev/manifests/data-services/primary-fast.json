@@ -37,6 +37,8 @@
         "curve-ethereum-usdt",
         "uniswap-v3-ethereum-dai-100"
       ],
+      "denomination": "USD",
+      "rateFeed": false,
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 2,
@@ -54,6 +56,8 @@
         "kraken-usd",
         "okx-usd"
       ],
+      "denomination": "USD",
+      "rateFeed": false,
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 2,
@@ -70,6 +74,8 @@
         "kraken-usdt",
         "curve-ethereum-usdt"
       ],
+      "denomination": "USD",
+      "rateFeed": false,
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 2,
@@ -96,7 +102,9 @@
         "okx-usdt",
         "xt-usdc",
         "xt-usdt"
-      ]
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     },
     "BTC": {
       "source": [
@@ -114,7 +122,9 @@
         "okx-usd",
         "xt-usdc",
         "xt-usdt"
-      ]
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     },
     "ETH": {
       "source": [
@@ -134,7 +144,9 @@
         "okx-usd",
         "okx-usdt",
         "xt-usdt"
-      ]
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     },
     "SOL": {
       "source": [
@@ -153,7 +165,9 @@
         "kraken-usdc",
         "okx-usdt",
         "xt-usdt"
-      ]
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     },
     "MON": {
       "source": [
@@ -166,10 +180,14 @@
         "kraken-usd",
         "kucoin-usdt",
         "xt-usdt"
-      ]
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     },
     "EUR": {
       "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
       "broadcasters": [
         "influx",
         "s3"
@@ -188,7 +206,30 @@
         "kucoin-usdt",
         "mexc-usdt",
         "okx-usdt"
-      ]
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MEMORA_DEVNET_LAMPORTS": {
+      "source": [
+        "memora-solana"
+      ],
+      "denomination": "other",
+      "rateFeed": false
+    },
+    "MEMORA_DEVNET_SLOT": {
+      "source": [
+        "memora-solana"
+      ],
+      "denomination": "other",
+      "rateFeed": false
+    },
+    "MEMORA_DEVNET_BLOCK_TIMESTAMP": {
+      "source": [
+        "memora-solana"
+      ],
+      "denomination": "other",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
@@ -201,7 +242,10 @@
       "ETH",
       "SOL",
       "MON",
-      "MEGA"
+      "MEGA",
+      "MEMORA_DEVNET_LAMPORTS",
+      "MEMORA_DEVNET_SLOT",
+      "MEMORA_DEVNET_BLOCK_TIMESTAMP"
     ]
   }
 }
