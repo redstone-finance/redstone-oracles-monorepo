@@ -1,6 +1,6 @@
 import { Signer } from "@ethersproject/abstract-signer";
-import { parseEther, parseUnits } from "@ethersproject/units";
 import { utils } from "@redstone-finance/protocol";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { expect } from "chai";
 import { getMockNumericPackage, getRange, MockSignerIndex, WrapperBuilder } from "../../src";
 import { SampleSyntheticToken } from "../../typechain-types";
@@ -15,10 +15,10 @@ describe("SampleSyntheticToken", function () {
     address: string;
 
   const toEth = function (val: number) {
-    return parseEther(val.toString());
+    return RedstoneCommon.parseEther(val.toString());
   };
   const toVal = function (val: number) {
-    return parseUnits(val.toString(), 26);
+    return RedstoneCommon.parseUnits(val.toString(), 26);
   };
 
   beforeEach(async () => {
