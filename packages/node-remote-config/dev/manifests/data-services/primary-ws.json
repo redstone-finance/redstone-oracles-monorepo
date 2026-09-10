@@ -955,10 +955,14 @@
       "denomination": "timestamp",
       "rateFeed": false
     },
-    "TSLA---PERP": {
+    "TSLA_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "types": [
         "rwa"
       ]
@@ -971,10 +975,14 @@
         "rwa"
       ]
     },
-    "NVDA---PERP": {
+    "NVDA_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "types": [
         "rwa"
       ]
@@ -987,10 +995,14 @@
         "rwa"
       ]
     },
-    "AAPL---PERP": {
+    "AAPL_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "types": [
         "rwa"
       ]
@@ -1003,10 +1015,14 @@
         "rwa"
       ]
     },
-    "MSFT---PERP": {
+    "MSFT_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "types": [
         "rwa"
       ]
@@ -1019,10 +1035,14 @@
         "rwa"
       ]
     },
-    "AMZN---PERP": {
+    "AMZN_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "types": [
         "rwa"
       ]
@@ -1035,10 +1055,14 @@
         "rwa"
       ]
     },
-    "GOOGL---PERP": {
+    "GOOGL_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "types": [
         "rwa"
       ]
@@ -1051,10 +1075,14 @@
         "rwa"
       ]
     },
-    "META---PERP": {
+    "META_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "types": [
         "rwa"
       ]
@@ -1203,7 +1231,7 @@
         "rwa"
       ]
     },
-    "WTI.Y---PERP": {
+    "WTI.Y_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -1693,10 +1721,14 @@
         "rwa"
       ]
     },
-    "USA100.Y---PERP": {
+    "USA100.Y_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "types": [
         "rwa"
       ]
@@ -1773,10 +1805,14 @@
         "rwa"
       ]
     },
-    "USA500.Y---PERP": {
+    "USA500.Y_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "types": [
         "rwa"
       ]
@@ -7801,11 +7837,11 @@
         "ema"
       ],
       "denomination": "USD",
+      "rateFeed": false,
       "broadcasters": [
         "influx",
         "s3"
       ],
-      "rateFeed": false,
       "types": [
         "crypto"
       ]

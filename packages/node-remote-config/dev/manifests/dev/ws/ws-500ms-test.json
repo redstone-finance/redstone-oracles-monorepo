@@ -511,7 +511,7 @@
       "denomination": "timestamp",
       "rateFeed": false
     },
-    "TSLA---PERP": {
+    "TSLA_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -527,7 +527,7 @@
         "rwa"
       ]
     },
-    "NVDA---PERP": {
+    "NVDA_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -543,7 +543,7 @@
         "rwa"
       ]
     },
-    "AAPL---PERP": {
+    "AAPL_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -559,7 +559,7 @@
         "rwa"
       ]
     },
-    "MSFT---PERP": {
+    "MSFT_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -575,7 +575,7 @@
         "rwa"
       ]
     },
-    "AMZN---PERP": {
+    "AMZN_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -591,7 +591,7 @@
         "rwa"
       ]
     },
-    "GOOGL---PERP": {
+    "GOOGL_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -607,7 +607,7 @@
         "rwa"
       ]
     },
-    "META---PERP": {
+    "META_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
