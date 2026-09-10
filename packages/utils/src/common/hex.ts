@@ -6,8 +6,12 @@ const hasBuffer = typeof Buffer !== "undefined";
 
 export type BytesLike = string | ArrayLike<number>;
 
-export function isHexString(value: string) {
-  return HEX_CHARS_REGEXP.test(value) && stripHexPrefix(value).length % BYTE_HEX_LENGTH === 0;
+export function isHexString(value: unknown): value is string {
+  return (
+    typeof value === "string" &&
+    HEX_CHARS_REGEXP.test(value) &&
+    stripHexPrefix(value).length % BYTE_HEX_LENGTH === 0
+  );
 }
 
 export function arrayify(value: BytesLike) {
@@ -31,6 +35,14 @@ export function hexlify(value: BytesLike) {
   const bytes = arrayify(value);
 
   return `0x${hasBuffer ? Buffer.from(bytes).toString("hex") : hexFromBytes(bytes)}`;
+}
+
+export function hexDataSlice(value: BytesLike, start: number, end?: number) {
+  return hexlify(arrayify(value).slice(start, end));
+}
+
+export function hexValue(value: number | bigint) {
+  return `0x${value.toString(HEX_RADIX)}`;
 }
 
 function stripHexPrefix(value: string) {
