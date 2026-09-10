@@ -1,5 +1,5 @@
-import { parseUnits } from "@ethersproject/units";
 import { utils } from "@redstone-finance/protocol";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { expect } from "chai";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
@@ -88,7 +88,7 @@ describe("SampleProxyConnector", function () {
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
     await expect(
       wrappedContract.requireValueForward({
-        value: parseUnits("2137"),
+        value: RedstoneCommon.parseUnits("2137"),
       })
     ).not.to.be.reverted;
   });
