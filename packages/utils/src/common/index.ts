@@ -31,6 +31,7 @@ export * from "./sets";
 export * from "./SetWithTTL";
 export * from "./simple-cache";
 export * from "./time";
+export * from "./units";
 export * from "./unsupported-param";
 export * from "./url";
 export * from "./utf8";
