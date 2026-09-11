@@ -1,0 +1,34 @@
+{
+  "interval": 2000,
+  "priceAggregator": "median",
+  "defaultSource": [],
+  "defaultBroadcasters": ["redstone-packages", "influx", "s3"],
+  "sourceTimeout": 2000,
+  "minValidSourcesPercentage": 1,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 30,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "MEMORA_DEVNET_LAMPORTS": {
+      "source": ["memora-solana-devnet"],
+      "denomination": "other",
+      "rateFeed": false
+    },
+    "MEMORA_DEVNET_SLOT": {
+      "source": ["memora-solana-devnet"],
+      "denomination": "other",
+      "rateFeed": false
+    },
+    "MEMORA_DEVNET_BLOCK_TIMESTAMP": {
+      "source": ["memora-solana-devnet"],
+      "denomination": "other",
+      "rateFeed": false
+    }
+  },
+  "multiPointPackages": {
+    "__MEMORA__": ["MEMORA_DEVNET_LAMPORTS", "MEMORA_DEVNET_SLOT", "MEMORA_DEVNET_BLOCK_TIMESTAMP"]
+  }
+}
