@@ -209,27 +209,6 @@
       ],
       "denomination": "USD",
       "rateFeed": false
-    },
-    "MEMORA_DEVNET_LAMPORTS": {
-      "source": [
-        "memora-solana"
-      ],
-      "denomination": "other",
-      "rateFeed": false
-    },
-    "MEMORA_DEVNET_SLOT": {
-      "source": [
-        "memora-solana"
-      ],
-      "denomination": "other",
-      "rateFeed": false
-    },
-    "MEMORA_DEVNET_BLOCK_TIMESTAMP": {
-      "source": [
-        "memora-solana"
-      ],
-      "denomination": "other",
-      "rateFeed": false
     }
   },
   "multiPointPackages": {
@@ -242,10 +221,7 @@
       "ETH",
       "SOL",
       "MON",
-      "MEGA",
-      "MEMORA_DEVNET_LAMPORTS",
-      "MEMORA_DEVNET_SLOT",
-      "MEMORA_DEVNET_BLOCK_TIMESTAMP"
+      "MEGA"
     ]
   }
 }
