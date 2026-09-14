@@ -1,6 +1,6 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import { ICasperConnection } from "../../casper/ICasperConnection";
+import { CasperNumber } from "../../casper/utils";
 import { CasperContractAdapter } from "../CasperContractAdapter";
 import {
   ENTRY_POINT_GET_PRICE_AND_TIMESTAMP,
@@ -33,13 +33,13 @@ export class PriceFeedCasperContractAdapter
   }
 
   async readTimestampFromContract(): Promise<number> {
-    const timestamp: BigNumber = await this.queryContractData(STORAGE_KEY_TIMESTAMP);
+    const timestamp: CasperNumber = await this.queryContractData(STORAGE_KEY_TIMESTAMP);
 
     return timestamp.toNumber();
   }
 
   async readValueFromContract() {
-    const value: BigNumber = await this.queryContractData(STORAGE_KEY_VALUE);
+    const value: CasperNumber = await this.queryContractData(STORAGE_KEY_VALUE);
 
     return value.toBigInt();
   }

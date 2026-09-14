@@ -1,4 +1,3 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { ICasperConnection } from "../../src/casper/ICasperConnection";
 import {
   ENTRY_POINT_GET_PRICE_AND_TIMESTAMP,
@@ -11,6 +10,7 @@ import {
   contractDataMock,
   getMockCasperConnection,
   mockStateRootHashImplementations,
+  u256Value,
 } from "../mock-utils";
 
 describe("PriceFeedCasperContractAdapter tests", () => {
@@ -25,7 +25,7 @@ describe("PriceFeedCasperContractAdapter tests", () => {
 
   it("readTimestampFromContract should queryContractData about STORAGE_KEY_TIMESTAMP", async () => {
     connection.queryContractData.mockImplementationOnce(
-      contractDataMock(adapter, STORAGE_KEY_TIMESTAMP, BigNumber.from(2233))
+      contractDataMock(adapter, STORAGE_KEY_TIMESTAMP, u256Value(2233))
     );
 
     const timestamp = await adapter.readTimestampFromContract();
@@ -34,7 +34,7 @@ describe("PriceFeedCasperContractAdapter tests", () => {
 
   it("readValueFromContract should queryContractData about STORAGE_KEY_VALUE", async () => {
     connection.queryContractData.mockImplementationOnce(
-      contractDataMock(adapter, STORAGE_KEY_VALUE, BigNumber.from(12345))
+      contractDataMock(adapter, STORAGE_KEY_VALUE, u256Value(12345))
     );
 
     const value = await adapter.readValueFromContract();
@@ -49,11 +49,9 @@ describe("PriceFeedCasperContractAdapter tests", () => {
     );
 
     connection.queryContractData
+      .mockImplementationOnce(contractDataMock(adapter, STORAGE_KEY_VALUE, u256Value(54321), "2"))
       .mockImplementationOnce(
-        contractDataMock(adapter, STORAGE_KEY_VALUE, BigNumber.from(54321), "2")
-      )
-      .mockImplementationOnce(
-        contractDataMock(adapter, STORAGE_KEY_TIMESTAMP, BigNumber.from(2233), "2")
+        contractDataMock(adapter, STORAGE_KEY_TIMESTAMP, u256Value(2233), "2")
       );
 
     const { value, timestamp } = await adapter.getPriceAndTimestamp();

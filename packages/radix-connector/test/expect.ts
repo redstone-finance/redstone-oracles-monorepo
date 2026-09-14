@@ -1,4 +1,3 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { Value, ValueKind } from "@radixdlt/radix-engine-toolkit";
 import { RadixParser } from "../src/radix/parser/RadixParser";
 
@@ -55,7 +54,7 @@ export function expectU256Digits(value: Value, expectedValue: bigint) {
   const arr = expectArray(value, ValueKind.U64);
 
   expect(arr).toStrictEqual(u256Digits(expectedValue));
-  expect(RadixParser.extractValue(value)).toStrictEqual(BigNumber.from(expectedValue));
+  expect(RadixParser.extractValue(value)).toStrictEqual(expectedValue);
 }
 
 export function expectArray<K extends ValueKind>(value: Value, type: K) {

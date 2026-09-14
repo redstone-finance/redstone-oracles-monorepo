@@ -1,4 +1,3 @@
-import { arrayify } from "@ethersproject/bytes";
 import {
   Intent,
   Signature,
@@ -28,8 +27,8 @@ async function getNotarizedTransaction(
 
   for (const signature of signatures) {
     const signatureWithPublicKey = new SignatureWithPublicKey.Ed25519(
-      arrayify(signature.signature),
-      arrayify(signature.publicKey)
+      RedstoneCommon.arrayify(signature.signature),
+      RedstoneCommon.arrayify(signature.publicKey)
     );
     tx = tx.sign(signatureWithPublicKey);
   }

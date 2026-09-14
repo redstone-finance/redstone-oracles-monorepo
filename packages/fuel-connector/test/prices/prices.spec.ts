@@ -1,4 +1,3 @@
-import { BigNumberish } from "@ethersproject/bignumber";
 import { ContractParamsProviderMock } from "@redstone-finance/sdk";
 import fs from "fs";
 import path from "path";
@@ -97,10 +96,10 @@ describe("Prices contract", () => {
     callback: (
       adapter: FuelPricesContractAdapter,
       paramsProvider: ContractParamsProviderMock
-    ) => Promise<BigNumberish[]>,
+    ) => Promise<bigint[]>,
     dataFeeds = ["ETH", "BTC"],
     filename = "3sig_ETH_BTC"
-  ): Promise<BigNumberish[]> => {
+  ): Promise<bigint[]> => {
     const adapter = await deployPricesContract();
     const paramsProvider = createContractParamsProviderMock(filename, dataFeeds);
 

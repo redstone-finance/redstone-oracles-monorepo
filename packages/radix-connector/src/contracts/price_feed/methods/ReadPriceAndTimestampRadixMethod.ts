@@ -1,4 +1,3 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { PriceAndTimestamp } from "@redstone-finance/multichain-kit";
 import { ValueProxyRadixInvocation } from "../../../radix/RadixInvocation";
 import { RadixTransaction } from "../../../radix/RadixTransaction";
@@ -14,7 +13,7 @@ export class ReadPriceAndTimestampRadixMethod extends ValueProxyRadixInvocation<
 
   override interpret(value: unknown[]) {
     return {
-      value: BigNumber.from(value[0]).toBigInt(),
+      value: value[0] as bigint,
       timestamp: Number(value[1]),
     };
   }

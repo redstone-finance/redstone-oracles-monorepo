@@ -1,7 +1,11 @@
 import { ContractParamsProviderMock } from "@redstone-finance/sdk";
-import { Contracts, RuntimeArgs } from "casper-js-sdk";
+import { CLValueBuilder, Contracts, RuntimeArgs } from "casper-js-sdk";
 import { ICasperConnection } from "../src/casper/ICasperConnection";
 import { CasperContractAdapter } from "../src/contracts/CasperContractAdapter";
+
+export function u256Value(value: number) {
+  return CLValueBuilder.u256(value).value();
+}
 
 export function getMockCasperConnection() {
   return {

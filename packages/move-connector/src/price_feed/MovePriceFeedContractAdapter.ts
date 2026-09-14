@@ -1,4 +1,3 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import { MoveClient } from "../MoveClient";
 import { MoveContractViewer } from "../MoveContractViewer";
@@ -12,7 +11,7 @@ export class MovePriceFeedContractAdapter extends MoveContractViewer implements 
     const result = await this.viewOnChain("read_price_and_timestamp");
 
     return {
-      value: BigNumber.from(result[0]).toBigInt(),
+      value: BigInt(result[0] as string),
       timestamp: Number(result[1]),
     };
   }

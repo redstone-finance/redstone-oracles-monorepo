@@ -1,4 +1,3 @@
-import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import _ from "lodash";
 import { RadixClient } from "../../radix/RadixClient";
@@ -119,7 +118,7 @@ export class PriceAdapterRadixContractAdapter extends RadixContractAdapter {
 
   private async readPriceData(stateVersion?: number): Promise<ContractData> {
     const priceMap: {
-      [p: string]: [BigNumberish, BigNumberish, BigNumberish];
+      [p: string]: [bigint, bigint, bigint];
     } = await this.client.readValue(this.componentId, "prices", stateVersion);
 
     return Object.fromEntries(
@@ -130,11 +129,11 @@ export class PriceAdapterRadixContractAdapter extends RadixContractAdapter {
     );
   }
 
-  static convertRawToLastDetails(data: [BigNumberish, BigNumberish, BigNumberish]) {
+  static convertRawToLastDetails(data: [bigint, bigint, bigint]) {
     return {
       lastDataPackageTimestampMS: Number(data[2]),
       lastBlockTimestampMS: Number(data[1]),
-      lastValue: BigNumber.from(data[0]).toBigInt(),
+      lastValue: data[0],
     };
   }
 

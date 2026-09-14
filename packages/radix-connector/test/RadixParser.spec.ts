@@ -1,6 +1,5 @@
-import { BigNumber } from "@ethersproject/bignumber";
-import { arrayify } from "@ethersproject/bytes";
 import { ValueKind } from "@radixdlt/radix-engine-toolkit";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { RadixParser } from "../src/radix/parser/RadixParser";
 import {
   expectArray,
@@ -35,14 +34,11 @@ describe("RadixParser tests", () => {
 
     const values = expectTupleOfBigIntAndArray(result, timestamp, ValueKind.Blob);
 
-    expect(values.map((value) => BigNumber.from(value.value))).toStrictEqual(
-      priceValues.map((value) => BigNumber.from(value))
+    expect(values.map((value) => BigInt(RedstoneCommon.hexlify(value.value)))).toStrictEqual(
+      priceValues
     );
 
-    expect(RadixParser.extractValue(result)).toStrictEqual([
-      timestamp,
-      priceValues.map(BigNumber.from),
-    ]);
+    expect(RadixParser.extractValue(result)).toStrictEqual([timestamp, priceValues]);
   });
 
   it("should decode getPrices SBOR response with Value(Bytes) values", async () => {
@@ -59,14 +55,11 @@ describe("RadixParser tests", () => {
         expectToBe(value, ValueKind.Tuple);
         expectToBe(value.fields[0], ValueKind.Blob);
 
-        return BigNumber.from(value.fields[0].value);
+        return BigInt(RedstoneCommon.hexlify(value.fields[0].value));
       })
-    ).toStrictEqual(priceValues.map((value) => BigNumber.from(value)));
+    ).toStrictEqual(priceValues);
 
-    expect(RadixParser.extractValue(result)).toStrictEqual([
-      timestamp,
-      priceValues.map(BigNumber.from),
-    ]);
+    expect(RadixParser.extractValue(result)).toStrictEqual([timestamp, priceValues]);
   });
 
   it("should decode getPrices SBOR response with U256-digits values", async () => {
@@ -80,10 +73,7 @@ describe("RadixParser tests", () => {
 
     expect(values.map((value) => value.elements)).toStrictEqual(priceValues.map(u256Digits));
 
-    expect(RadixParser.extractValue(result)).toStrictEqual([
-      timestamp,
-      priceValues.map(BigNumber.from),
-    ]);
+    expect(RadixParser.extractValue(result)).toStrictEqual([timestamp, priceValues]);
   });
 
   it("should decode getPriceData SBOR response", async () => {
@@ -101,7 +91,7 @@ describe("RadixParser tests", () => {
 
     const priceDataObj = RadixParser.extractValue(result);
     expect(priceDataObj).toStrictEqual(
-      prices.map(BigNumber.from).map((price) => {
+      prices.map((price) => {
         return [price, timestamp, blockTimestamp];
       })
     );
@@ -133,7 +123,7 @@ describe("RadixParser tests", () => {
       "2c59617248994d12816ee1fa77ce0a64eeb456bf",
       "83cba8c619fb629b81a65c2e67fe15cf3e3c9747",
       "f786a909d559f5dee2dc6706d8e5a81728a39ae9",
-    ].map((value) => arrayify("0x" + value));
+    ].map((value) => RedstoneCommon.arrayify(value));
 
     const obj = JSON.parse(json) as unknown[];
     const result = obj.map(RadixParser.makeManifestValue);
@@ -161,8 +151,8 @@ describe("RadixParser tests", () => {
       signerCountThreshold,
       signerValues,
       {
-        "0x425443": BigNumber.from(btcPrice),
-        "0x455448": BigNumber.from(ethPrice),
+        "0x425443": btcPrice,
+        "0x455448": ethPrice,
       },
       timestamp,
     ]);

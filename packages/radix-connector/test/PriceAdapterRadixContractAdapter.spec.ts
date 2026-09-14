@@ -1,4 +1,3 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { NetworkId } from "@radixdlt/radix-engine-toolkit";
 import { ContractParamsProviderMock } from "@redstone-finance/sdk";
 import {
@@ -68,10 +67,7 @@ describe("PriceAdapterRadixContractAdapter tests", () => {
     const paramsProvider = makeContractParamsProviderMock();
 
     const prices = await sut.getPricesFromPayload(paramsProvider);
-    expect(prices).toStrictEqual([
-      BigNumber.from("0x353c482368"),
-      BigNumber.from("0x084721beb603"),
-    ]);
+    expect(prices).toStrictEqual([0x353c482368n, 0x084721beb603n]);
   });
 
   it("readPricesFromContract should return proper value by using method", async () => {
@@ -87,19 +83,13 @@ describe("PriceAdapterRadixContractAdapter tests", () => {
 
     sut.readMode = "CallReadMethod";
     const prices = await sut.readPricesFromContract(paramsProvider);
-    expect(prices).toStrictEqual([
-      BigNumber.from("0x3540817c9b"),
-      BigNumber.from("0x084845ba3b74"),
-    ]);
+    expect(prices).toStrictEqual([0x3540817c9bn, 0x084845ba3b74n]);
   });
 
   it("writePricesFromPayloadToContract should return proper values", async () => {
     const paramsProvider = makeContractParamsProviderMock();
 
     const prices = await sut.writePricesFromPayloadToContract(paramsProvider);
-    expect(prices).toStrictEqual([
-      BigNumber.from("0x353c482368"),
-      BigNumber.from("0x084721beb603"),
-    ]);
+    expect(prices).toStrictEqual([0x353c482368n, 0x084721beb603n]);
   });
 });

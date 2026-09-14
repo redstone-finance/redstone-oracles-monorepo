@@ -1,4 +1,3 @@
-import { arrayify, hexlify } from "@ethersproject/bytes";
 import { PublicKey, RadixEngineToolkit } from "@radixdlt/radix-engine-toolkit";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { publicKeyConvert } from "secp256k1";
@@ -10,8 +9,8 @@ export async function pkToAddress(
   scheme: "secp256k1" | "ed25519",
   networkId: number
 ) {
-  const bytes = publicKeyConvert(arrayify(publicKeyHex), true);
-  console.log(`Public key hex: ${hexlify(bytes)}`);
+  const bytes = publicKeyConvert(RedstoneCommon.arrayify(publicKeyHex), true);
+  console.log(`Public key hex: ${RedstoneCommon.hexlify(bytes)}`);
   const pk = scheme === "secp256k1" ? new PublicKey.Secp256k1(bytes) : new PublicKey.Ed25519(bytes);
 
   return await RadixEngineToolkit.Derive.virtualAccountAddressFromPublicKey(pk, networkId);
