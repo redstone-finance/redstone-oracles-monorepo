@@ -1,8 +1,8 @@
 {
   "mainnet": {
     "signatory": "RedStoneOracleOwner::1220a6f7c2315ed7ba230397a459b036bfe9f36763a0e848dad741c4e9d20d85687c",
-    "interfaceId": "#redstone-interface-v18",
-    "pricePillInterfaceId": "#redstone-price-pill-v18",
+    "interfaceId": "#redstone-interface-v19",
+    "pricePillInterfaceId": "#redstone-price-pill-v19",
     "featuredInterfaceId": "#splice-api-featured-app-v2:Splice.Api.FeaturedAppRightV2:FeaturedAppRight",
     "node": {
       "globalDomain": "global-domain::1220b1431ef217342db44d516bb9befde802be7d8899637d290895fa58880f19accc",
