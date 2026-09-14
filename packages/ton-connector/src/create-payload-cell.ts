@@ -1,5 +1,5 @@
-import { arrayify } from "@ethersproject/bytes";
 import { consts } from "@redstone-finance/protocol";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { beginCell, Builder } from "@ton/core";
 import { serializeDict } from "@ton/core/dist/dict/serializeDict";
 import assert from "assert";
@@ -68,7 +68,7 @@ function storeSignatureAndData(dataPackageHex: string, builder: Builder) {
   console.assert(data.length / 2 <= 127, "Must be implemented for larger data");
 
   const dataCell = beginCell()
-    .storeBuffer(Buffer.from(arrayify("0x" + data)))
+    .storeBuffer(Buffer.from(RedstoneCommon.arrayify(data)))
     .endCell();
 
   builder.storeSlice(signatureCell.beginParse()).storeRef(dataCell);

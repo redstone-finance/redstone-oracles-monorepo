@@ -1,6 +1,5 @@
-import { hexlify } from "@ethersproject/bytes";
-import { toUtf8Bytes } from "@ethersproject/strings";
 import { consts } from "@redstone-finance/protocol";
+import { ContractParamsProvider } from "@redstone-finance/sdk";
 import {
   DATA_PACKAGE_DATA_1,
   DATA_PACKAGE_DATA_2,
@@ -128,10 +127,14 @@ describe.skip("TON unit Tests", () => {
     for (const caseData of [
       [],
       [1, 2, 3],
-      ["BTC", "ETH", "USDT"].map((n) => hexlify(toUtf8Bytes(n))),
+      ContractParamsProvider.hexlifyFeedIds(["BTC", "ETH", "USDT"]),
       ["0x12470f7aBA85c8b81D63137DD5925D6EE114952b"],
       ["0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"],
-      ["0x12470f7aBA85c8b81D63137DD5925D6EE114952b", 1, hexlify(toUtf8Bytes("BTC"))],
+      [
+        "0x12470f7aBA85c8b81D63137DD5925D6EE114952b",
+        1,
+        ContractParamsProvider.hexlifyFeedId("BTC"),
+      ],
       Array.from(Array(255).keys()),
     ]) {
       expect(await testerAdapter.testTupleDeserializeIntegers(caseData)).toStrictEqual(

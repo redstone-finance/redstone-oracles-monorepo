@@ -1,4 +1,3 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { LegacyPricesContractAdapter } from "@redstone-finance/multichain-kit-legacy";
 import {
   ContractData,
@@ -26,7 +25,7 @@ export async function getContractDataFromExtendedPricesContractAdapter(
     {
       lastDataPackageTimestampMS: timestamp,
       lastBlockTimestampMS: latestUpdateBlockTimestamp ?? timestamp,
-      lastValue: BigNumber.from(price),
+      lastValue: price,
     },
   ]);
 

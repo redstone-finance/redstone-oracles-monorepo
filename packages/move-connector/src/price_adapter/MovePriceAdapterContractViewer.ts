@@ -1,6 +1,4 @@
 import { AccountAddress, MoveVector } from "@aptos-labs/ts-sdk";
-import { BigNumber } from "@ethersproject/bignumber";
-import { hexlify } from "@ethersproject/bytes";
 import { ContractData } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { MoveClient } from "../MoveClient";
@@ -35,7 +33,7 @@ export class MovePriceAdapterContractViewer extends MoveContractViewer {
       contractData[feedId] = {
         lastDataPackageTimestampMS: parseInt(data.write_timestamp),
         lastBlockTimestampMS: parseInt(data.timestamp),
-        lastValue: BigNumber.from(data.value).toBigInt(),
+        lastValue: BigInt(data.value),
       };
     }
 
@@ -46,7 +44,7 @@ export class MovePriceAdapterContractViewer extends MoveContractViewer {
     try {
       const [data] = await this.viewOnChain<PriceDataSchema[]>("price_data_by_address", [
         AccountAddress.fromString(this.priceAdapterObjectAddress),
-        MoveVector.U8(hexlify(makeFeedIdBytes(feedId))),
+        MoveVector.U8(RedstoneCommon.hexlify(makeFeedIdBytes(feedId))),
       ]);
 
       return data;

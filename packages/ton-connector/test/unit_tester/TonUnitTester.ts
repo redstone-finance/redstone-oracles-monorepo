@@ -1,4 +1,3 @@
-import { hexlify } from "@ethersproject/bytes";
 import { Cell, ContractProvider, serializeTuple } from "@ton/core";
 import { TonContract } from "../../src/TonContract";
 import {
@@ -6,6 +5,8 @@ import {
   createBuilderFromString,
   createTupleItems,
 } from "../../src/ton-utils";
+
+const EVM_ADDRESS_HEX_LENGTH = 40;
 
 /* eslint-disable  @typescript-eslint/class-methods-use-this -- TON Getter methods must not be static */
 export class TonUnitTester extends TonContract {
@@ -25,7 +26,7 @@ export class TonUnitTester extends TonContract {
       },
     ]);
 
-    return hexlify(stack.readBigNumber()).toLowerCase();
+    return `0x${stack.readBigNumber().toString(16).padStart(EVM_ADDRESS_HEX_LENGTH, "0")}`;
   }
 
   async getTestMedian(provider: ContractProvider, numbers: number[]) {

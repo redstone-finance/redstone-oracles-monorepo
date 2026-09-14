@@ -1,5 +1,5 @@
-import { hexlify } from "@ethersproject/bytes";
 import { IContractConnector } from "@redstone-finance/multichain-kit-legacy";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { sleep } from "./Ton";
 import { TonContract } from "./TonContract";
 import { TonContractFactory } from "./TonContractFactory";
@@ -70,7 +70,7 @@ export abstract class TonContractConnector<Contract extends TonContract, Adapter
 
     const lastTransaction = transactions[0].tx;
 
-    const transactionId = hexlify(lastTransaction.hash()).substring(2);
+    const transactionId = RedstoneCommon.hexlify(lastTransaction.hash()).substring(2);
 
     return {
       seqno,

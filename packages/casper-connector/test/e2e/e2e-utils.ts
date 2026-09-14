@@ -1,4 +1,3 @@
-import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import fs from "fs";
@@ -32,8 +31,14 @@ export function readDeployedHex(contractName: string) {
     .trim();
 }
 
-function verifyUsdtValue(value: BigNumberish) {
-  const usdtPrice = BigNumber.from(value).toNumber();
+export function verifyReturnedValues(values: bigint[], expectedLength: number, timestamp?: number) {
+  expect(values.length).toBe(expectedLength);
+  verifyUsdtValue(values[2]);
+  verifyTimestamp(timestamp);
+}
+
+function verifyUsdtValue(value: bigint) {
+  const usdtPrice = Number(value);
 
   expect(usdtPrice).toBeLessThanOrEqual(1.02 * 10 ** 8);
   expect(usdtPrice).toBeGreaterThanOrEqual(0.98 * 10 ** 8);
@@ -43,14 +48,4 @@ function verifyTimestamp(timestamp: number | undefined) {
   if (timestamp) {
     expect(timestamp).toBeGreaterThanOrEqual(Date.now() - 2 * 60 * 1000);
   }
-}
-
-export function verifyReturnedValues(
-  values: BigNumberish[],
-  expectedLength: number,
-  timestamp?: number
-) {
-  expect(values.length).toBe(expectedLength);
-  verifyUsdtValue(values[2]);
-  verifyTimestamp(timestamp);
 }

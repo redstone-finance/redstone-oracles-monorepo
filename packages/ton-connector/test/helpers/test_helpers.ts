@@ -1,5 +1,3 @@
-import { BigNumber } from "@ethersproject/bignumber";
-import { arrayify, hexlify } from "@ethersproject/bytes";
 import { RedstonePayload } from "@redstone-finance/protocol";
 import {
   ContractParamsProvider,
@@ -84,12 +82,12 @@ export async function waitForNewPayload(
 }
 
 function getMedianAndTimestamp(payloadHex: string) {
-  const payload = RedstonePayload.parse(arrayify(payloadHex));
+  const payload = RedstonePayload.parse(RedstoneCommon.arrayify(payloadHex));
 
   return {
     median: MathUtils.getMedian(
       payload.signedDataPackages[0].dataPackage.dataPoints.map((dp) =>
-        BigNumber.from(hexlify(dp.value)).toNumber()
+        Number(RedstoneCommon.hexlify(dp.value))
       )
     ),
     timestamp: payload.signedDataPackages[0].dataPackage.timestampMilliseconds,

@@ -1,4 +1,3 @@
-import { BigNumberish } from "@ethersproject/bignumber";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { sleep } from "fuels";
@@ -71,15 +70,13 @@ describe("Gas Usage of integrated and initialized prices contract", () => {
     method: string,
     uniqueSignerCount: number,
     dataFeeds: string[],
-    gasUsage: BigNumberish
+    gasUsage: number
   ) {
     console.log(
-      `Gas usage for ${method}, ${uniqueSignerCount} signer(s), ${
-        dataFeeds.length
-      } feed(s): ${Number(gasUsage)}`
+      `Gas usage for ${method}, ${uniqueSignerCount} signer(s), ${dataFeeds.length} feed(s): ${gasUsage}`
     );
 
-    results[`${method}:${uniqueSignerCount}:${dataFeeds.length}`] = Number(gasUsage);
+    results[`${method}:${uniqueSignerCount}:${dataFeeds.length}`] = gasUsage;
   }
 
   async function waitForNewData() {
