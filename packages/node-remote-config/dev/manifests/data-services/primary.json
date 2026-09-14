@@ -5789,6 +5789,13 @@
       "source": [
         "earn-usdc"
       ],
+      "denomination": "USDC",
+      "rateFeed": true
+    },
+    "earnUSDC_FUNDAMENTAL/USD": {
+      "source": [
+        "usd-based"
+      ],
       "denomination": "USD",
       "rateFeed": true
     }
