@@ -214,6 +214,13 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "earnUSDC_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "CDK5U5R2GZVJVGGY4ABPARGN3WMCWSIUEF2ONVN2ELNO47GE7SVB57FX",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
