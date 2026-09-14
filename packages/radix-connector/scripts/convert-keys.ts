@@ -1,5 +1,5 @@
-import { arrayify, hexlify } from "@ethersproject/bytes";
 import { publicKeyFromPrivateKey } from "@redstone-finance/signing";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { publicKeyConvert } from "secp256k1";
 import { makeRadixClient, NETWORK, PRIVATE_KEY } from "./constants";
 
@@ -16,7 +16,9 @@ async function main() {
 
   const publicKey = publicKeyFromPrivateKey(PRIVATE_KEY.value);
   console.log("EVM Uncompressed Public Key:", publicKey);
-  const uncompressedPublicKey = hexlify(publicKeyConvert(arrayify(publicKey), true)).substring(2);
+  const uncompressedPublicKey = RedstoneCommon.hexlify(
+    publicKeyConvert(RedstoneCommon.arrayify(publicKey), true)
+  ).substring(2);
   console.log("EVM Compressed Public Key:", uncompressedPublicKey);
 
   console.log(

@@ -1,10 +1,10 @@
-import { arrayify, hexlify } from "@ethersproject/bytes";
 import { blake2b } from "@noble/hashes/blake2";
+import { RedstoneCommon } from "@redstone-finance/utils";
 
 export function casperBlake2b(dataHex: string, withPrefix = false) {
-  const hashBytes = blake2b(arrayify(dataHex.startsWith("0x") ? dataHex : "0x" + dataHex), {
+  const hashBytes = blake2b(RedstoneCommon.arrayify(dataHex), {
     dkLen: 32,
   });
 
-  return (withPrefix ? "0x" : "") + hexlify(hashBytes).substring(2);
+  return (withPrefix ? "0x" : "") + RedstoneCommon.hexlify(hashBytes).substring(2);
 }

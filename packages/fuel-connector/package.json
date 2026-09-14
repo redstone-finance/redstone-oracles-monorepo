@@ -22,8 +22,6 @@
     "run-node": "fuel-core run --db-type in-memory --debug"
   },
   "dependencies": {
-    "@ethersproject/bignumber": "^5.7.0",
-    "@ethersproject/bytes": "^5.6.1",
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/multichain-kit-legacy": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",

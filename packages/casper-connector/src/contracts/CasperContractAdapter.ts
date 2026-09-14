@@ -1,4 +1,4 @@
-import { hexlify } from "@ethersproject/bytes";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import assert from "assert";
 import { Contracts, RuntimeArgs } from "casper-js-sdk";
 import { ICasperConnection } from "../casper/ICasperConnection";
@@ -38,7 +38,7 @@ export class CasperContractAdapter {
   async queryForContract(key: string): Promise<Contracts.Contract> {
     const address: Uint8Array = await this.queryContractData(key);
 
-    return new VersionedCasperContract(this.connection, hexlify(address));
+    return new VersionedCasperContract(this.connection, RedstoneCommon.hexlify(address));
   }
 
   async assertWaitForDeployAndRefreshStateRootHash(deployId: string) {

@@ -1,4 +1,4 @@
-import { BigNumberish } from "@ethersproject/bignumber";
+import { BigNumberish } from "starknet";
 
 export type PriceFeedRoundData = { answer: BigNumberish };
 

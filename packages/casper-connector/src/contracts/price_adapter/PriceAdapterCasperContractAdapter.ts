@@ -1,7 +1,7 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import assert from "assert";
 import { casperBlake2b } from "../../casper/casper-blake2b";
+import { CasperNumber } from "../../casper/utils";
 import { CasperContractAdapter } from "../CasperContractAdapter";
 import { RunMode } from "../RunMode";
 import { RuntimeArgsFactory } from "../RuntimeArgsFactory";
@@ -36,7 +36,7 @@ export class PriceAdapterCasperContractAdapter extends CasperContractAdapter {
   }
 
   async readTimestampFromContract(): Promise<number> {
-    const timestamp: BigNumber = await this.queryContractData(STORAGE_KEY_TIMESTAMP);
+    const timestamp: CasperNumber = await this.queryContractData(STORAGE_KEY_TIMESTAMP);
 
     return timestamp.toNumber();
   }
@@ -49,7 +49,7 @@ export class PriceAdapterCasperContractAdapter extends CasperContractAdapter {
     return results.map((result) => {
       switch (result.status) {
         case "fulfilled":
-          return BigNumber.from((result as PromiseFulfilledResult<BigNumber>).value).toBigInt();
+          return (result as PromiseFulfilledResult<CasperNumber>).value.toBigInt();
         default:
           return 0n;
       }

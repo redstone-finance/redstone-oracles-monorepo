@@ -1,12 +1,9 @@
-import { BigNumberish } from "@ethersproject/bignumber";
 import { Value } from "@radixdlt/radix-engine-toolkit";
 import { ValueRadixInvocation } from "../../../radix/RadixInvocation";
 import { RadixTransaction } from "../../../radix/RadixTransaction";
 import { makeFeedIds } from "../../../radix/utils";
 
-export class ReadPriceDataRadixMethod extends ValueRadixInvocation<
-  [BigNumberish, BigNumberish, BigNumberish][]
-> {
+export class ReadPriceDataRadixMethod extends ValueRadixInvocation<[bigint, bigint, bigint][]> {
   constructor(
     componentId: string,
     private dataFeedIds: string[]

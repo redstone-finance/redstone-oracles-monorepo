@@ -6,9 +6,9 @@ import {
   Ed25519Signature,
   generateSigningMessageForTransaction,
 } from "@aptos-labs/ts-sdk";
-import { hexlify } from "@ethersproject/bytes";
 import Aptos from "@ledgerhq/hw-app-aptos";
 import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
+import { RedstoneCommon } from "@redstone-finance/utils";
 
 export type AptosLedger = Aptos;
 
@@ -35,8 +35,8 @@ export const getLedgerData = async (aptos: AptosLedger, accountId: number) => {
   const result = await aptos.getAddress(getDerivationPath(accountId));
 
   return {
-    publicKey: hexlify(result.publicKey),
-    address: hexlify(result.address),
+    publicKey: RedstoneCommon.hexlify(result.publicKey),
+    address: RedstoneCommon.hexlify(result.address),
     ed: new Ed25519PublicKey(result.publicKey),
   };
 };

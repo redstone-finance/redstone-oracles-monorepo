@@ -1,4 +1,3 @@
-import { hexlify } from "@ethersproject/bytes";
 import { RadixEngineToolkit } from "@radixdlt/radix-engine-toolkit";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
@@ -14,12 +13,12 @@ async function signIntent(compiledIntent: string) {
   const ledgerSigner = await LedgerSigner.makeLedgerSigner(accountId, networkId);
   const hashToSign = (await RadixEngineToolkit.Intent.intentHash(intent)).hash;
 
-  console.log(`Intent hash to sign: ${hexlify(hashToSign)}`);
+  console.log(`Intent hash to sign: ${RedstoneCommon.hexlify(hashToSign)}`);
 
   const signature = await ledgerSigner.signIntentToSignatureWithKey(hashToSign);
   console.log({
-    signature: hexlify(signature.signature),
-    publicKey: hexlify(signature.publicKey),
+    signature: RedstoneCommon.hexlify(signature.signature),
+    publicKey: RedstoneCommon.hexlify(signature.publicKey),
   });
 }
 

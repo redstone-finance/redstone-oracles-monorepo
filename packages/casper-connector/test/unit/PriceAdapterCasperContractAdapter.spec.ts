@@ -1,4 +1,3 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { ICasperConnection } from "../../src/casper/ICasperConnection";
 import { STORAGE_KEY_VALUES } from "../../src/contracts/constants";
 import { PriceAdapterCasperContractAdapter } from "../../src/contracts/price_adapter/PriceAdapterCasperContractAdapter";
@@ -8,6 +7,7 @@ import {
   getMockCasperConnection,
   makeContractParamsProviderMock,
   mockStateRootHashImplementations,
+  u256Value,
 } from "../mock-utils";
 import {
   testReadPricesFromContract,
@@ -41,21 +41,17 @@ describe("PriceAdapterCasperContractAdapter tests", () => {
   it("readPricesFromContract should return values even when one doesn't exist", async () => {
     connection.queryContractDictionary
       .mockImplementationOnce(
-        contractDictionaryMock(adapter, STORAGE_KEY_VALUES, "ETH", BigNumber.from(12345))
+        contractDictionaryMock(adapter, STORAGE_KEY_VALUES, "ETH", u256Value(12345))
       )
       .mockRejectedValueOnce("")
       .mockImplementationOnce(
-        contractDictionaryMock(adapter, STORAGE_KEY_VALUES, "BTC", BigNumber.from(54321))
+        contractDictionaryMock(adapter, STORAGE_KEY_VALUES, "BTC", u256Value(54321))
       );
 
     const values = await adapter.readPricesFromContract(
       makeContractParamsProviderMock(["ETH", "AVAX", "BTC"])
     );
-    expect(values.map(BigNumber.from)).toStrictEqual([
-      BigNumber.from(12345),
-      BigNumber.from(0),
-      BigNumber.from(54321),
-    ]);
+    expect(values).toStrictEqual([12345n, 0n, 54321n]);
   });
 
   it("getPricesFromPayload must not be executed", async () => {

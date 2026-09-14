@@ -1,6 +1,5 @@
-import { arrayify, hexlify } from "@ethersproject/bytes";
-import { toUtf8Bytes } from "@ethersproject/strings";
 import { consts } from "@redstone-finance/protocol";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { beginCell, Builder, Cell, TupleBuilder, TupleReader } from "@ton/core";
 import { OP_NUMBER_BITS } from "./config/constants";
 
@@ -46,11 +45,9 @@ export function createArrayFromTuple(result: TupleReader) {
 }
 
 export function createBuilderFromString(value: string) {
-  return beginCell().storeBuffer(
-    Buffer.from(arrayify(value.startsWith("0x") ? value : "0x" + value))
-  );
+  return beginCell().storeBuffer(Buffer.from(RedstoneCommon.arrayify(value)));
 }
 
 export function toBigInt(feedId: string) {
-  return BigInt(hexlify(toUtf8Bytes(feedId)));
+  return BigInt(RedstoneCommon.hexlify(RedstoneCommon.toUtf8Bytes(feedId)));
 }

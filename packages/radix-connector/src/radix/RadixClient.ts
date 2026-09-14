@@ -1,4 +1,3 @@
-import { hexlify } from "@ethersproject/bytes";
 import { StreamTransactionsResponse } from "@radixdlt/babylon-gateway-api-sdk";
 import {
   defaultValidationConfig,
@@ -36,7 +35,7 @@ export class RadixClient {
   static async getAddressDataHex(addressString: string) {
     const entity = await RadixEngineToolkit.Address.decode(addressString);
 
-    return hexlify(entity.data).substring(2);
+    return RedstoneCommon.hexlify(entity.data).substring(2);
   }
 
   async call<T>(

@@ -18,7 +18,6 @@
     "lint:fix": "yarn global:eslint --fix ."
   },
   "dependencies": {
-    "@ethersproject/bignumber": "^5.7.0",
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/multichain-kit-legacy": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",

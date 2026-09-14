@@ -1,5 +1,8 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { RuntimeArgs } from "casper-js-sdk";
+import {
+  PriceAdapterCasperContractAdapter,
+  PriceRelayAdapterCasperContractAdapter,
+} from "../../src";
 import { ICasperConnection } from "../../src/casper/ICasperConnection";
 import { decodeHex, decodeStringCLList } from "../../src/casper/utils";
 import { CasperContractAdapter } from "../../src/contracts/CasperContractAdapter";
@@ -10,8 +13,6 @@ import {
   STORAGE_KEY_TIMESTAMP,
   STORAGE_KEY_VALUES,
 } from "../../src/contracts/constants";
-import { PriceAdapterCasperContractAdapter } from "../../src/contracts/price_adapter/PriceAdapterCasperContractAdapter";
-import { PriceRelayAdapterCasperContractAdapter } from "../../src/contracts/price_relay_adapter/PriceRelayAdapterCasperContractAdapter";
 import {
   MOCK_PAYLOAD_HASH,
   MOCK_PAYLOAD_HEX,
@@ -19,6 +20,7 @@ import {
   contractDataMock,
   contractDictionaryMock,
   makeContractParamsProviderMock,
+  u256Value,
 } from "../mock-utils";
 
 export async function testReadPricesFromContract(
@@ -28,14 +30,14 @@ export async function testReadPricesFromContract(
 ) {
   connection.queryContractDictionary
     .mockImplementationOnce(
-      contractDictionaryMock(wrappedAdapter, STORAGE_KEY_VALUES, "ETH", BigNumber.from(12345))
+      contractDictionaryMock(wrappedAdapter, STORAGE_KEY_VALUES, "ETH", u256Value(12345))
     )
     .mockImplementationOnce(
-      contractDictionaryMock(wrappedAdapter, STORAGE_KEY_VALUES, "BTC", BigNumber.from(54321))
+      contractDictionaryMock(wrappedAdapter, STORAGE_KEY_VALUES, "BTC", u256Value(54321))
     );
 
   const values = await adapter.readPricesFromContract(makeContractParamsProviderMock());
-  expect(values.map(BigNumber.from)).toStrictEqual([BigNumber.from(12345), BigNumber.from(54321)]);
+  expect(values).toStrictEqual([12345n, 54321n]);
 }
 
 export async function testReadTimestampFromContract(
@@ -44,7 +46,7 @@ export async function testReadTimestampFromContract(
   wrappedAdapter: CasperContractAdapter
 ) {
   connection.queryContractData.mockImplementationOnce(
-    contractDataMock(wrappedAdapter, STORAGE_KEY_TIMESTAMP, BigNumber.from(2233))
+    contractDataMock(wrappedAdapter, STORAGE_KEY_TIMESTAMP, u256Value(2233))
   );
 
   const timestamp = await adapter.readTimestampFromContract();
@@ -83,7 +85,7 @@ export async function testGetPricesFromPayload(
 
   const prices = await adapter.getPricesFromPayload(makeContractParamsProviderMock());
 
-  expect(prices.map(BigNumber.from)).toStrictEqual([BigNumber.from(12345), BigNumber.from(54321)]);
+  expect(prices).toStrictEqual([12345n, 54321n]);
 }
 
 function getComputedValuesContractDictionaryMock(adapter: PriceRelayAdapterCasperContractAdapter) {
@@ -94,17 +96,17 @@ function getComputedValuesContractDictionaryMock(adapter: PriceRelayAdapterCaspe
     [
       {
         timestamp: 0,
-        values: [BigNumber.from(11111), BigNumber.from(55555)],
+        values: [u256Value(11111), u256Value(55555)],
         feedIds: ["ETH", "BTC"],
       },
       {
         timestamp: 0,
-        values: [BigNumber.from(12345), BigNumber.from(54321)],
+        values: [u256Value(12345), u256Value(54321)],
         feedIds: ["ETH", "BTC"],
       },
       {
         timestamp: 0,
-        values: [BigNumber.from(11111), BigNumber.from(55555)],
+        values: [u256Value(11111), u256Value(55555)],
         feedIds: ["ETH"],
       },
     ],

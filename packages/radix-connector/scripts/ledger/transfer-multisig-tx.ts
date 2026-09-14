@@ -1,4 +1,3 @@
-import { hexlify } from "@ethersproject/bytes";
 import { RadixEngineToolkit } from "@radixdlt/radix-engine-toolkit";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
@@ -30,7 +29,7 @@ async function transferMultiSig() {
   const intent = await client.compileTransactionToIntent(tx);
   console.log(await RadixEngineToolkit.Intent.decompile(intent, "String"));
 
-  console.log(hexlify(intent));
+  console.log(RedstoneCommon.hexlify(intent));
 }
 
 void transferMultiSig();

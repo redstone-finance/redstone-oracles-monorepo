@@ -1,10 +1,9 @@
-import { BigNumberish } from "@ethersproject/bignumber";
 import { Value } from "@radixdlt/radix-engine-toolkit";
 import { ValueRadixInvocation } from "../../../radix/RadixInvocation";
 import { RadixTransaction } from "../../../radix/RadixTransaction";
 import { makeFeedId } from "../../../radix/utils";
 
-export class ReadTimestampRadixMethod extends ValueRadixInvocation<BigNumberish> {
+export class ReadTimestampRadixMethod extends ValueRadixInvocation<bigint> {
   constructor(
     component: string,
     private feedId?: string

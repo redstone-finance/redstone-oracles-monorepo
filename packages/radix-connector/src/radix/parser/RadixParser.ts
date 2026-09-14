@@ -1,4 +1,3 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import {
   NetworkId,
   RadixEngineToolkit,
@@ -6,6 +5,7 @@ import {
   Value,
   ValueKind,
 } from "@radixdlt/radix-engine-toolkit";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { GeneratedConverter, SerializableManifestValue } from "./generated";
 
 interface ObjInterface {
@@ -23,6 +23,8 @@ interface ObjInterface {
 export type U256Digits = { elements: { value: bigint }[] };
 
 const U256_VALUE_SIZE = 32;
+const U256_DIGIT_BITS = 64n;
+const HEX_RADIX = 16;
 
 export class RadixParser {
   static async decodeSborHex(hex: string, networkId = NetworkId.Stokenet) {
@@ -53,9 +55,9 @@ export class RadixParser {
     }
 
     if (obj.kind === ValueKind.Blob && obj.value.length === U256_VALUE_SIZE) {
-      const value = BigNumber.from(obj.value);
+      const value = BigInt(RedstoneCommon.hexlify(obj.value));
 
-      return asKeyName ? value.toHexString() : value;
+      return asKeyName ? RadixParser.toHexString(value) : value;
     }
 
     let simpleObject: unknown =
@@ -87,7 +89,7 @@ export class RadixParser {
       ) {
         const u256 = RadixParser.parseU256Digits(array as U256Digits);
 
-        return asKeyName ? u256.toHexString() : u256;
+        return asKeyName ? RadixParser.toHexString(u256) : u256;
       } else {
         return array.elements.map((element) => RadixParser.extractValue(element));
       }
@@ -195,11 +197,15 @@ export class RadixParser {
   }
 
   private static parseU256Digits(digits: U256Digits) {
-    return digits.elements.reduce((acc, element, index) => {
-      const shift = BigNumber.from(2).pow(index * 64);
-      const part = BigNumber.from(element.value).mul(shift);
+    return digits.elements.reduceRight(
+      (acc, element) => (acc << U256_DIGIT_BITS) + element.value,
+      0n
+    );
+  }
 
-      return acc.add(part);
-    }, BigNumber.from(0));
+  private static toHexString(value: bigint) {
+    const hex = value.toString(HEX_RADIX);
+
+    return `0x${hex.length % 2 ? "0" : ""}${hex}`;
   }
 }

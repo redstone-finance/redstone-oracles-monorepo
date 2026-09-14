@@ -1,4 +1,3 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { RuntimeArgs } from "casper-js-sdk";
 import { casperBlake2b } from "../../casper/casper-blake2b";
@@ -108,7 +107,7 @@ export class PriceRelayAdapterCasperContractAdapter extends PriceAdapterCasperCo
     return computedValues
       .filter((obj) => obj.feedIds.join(",") === dataFeedIds.join(","))
       .reverse()[0]
-      .values.map((bn) => BigNumber.from(bn).toBigInt());
+      .values.map((value) => value.toBigInt());
   }
 
   private async getWrappedContractAdapter(): Promise<PriceAdapterCasperContractAdapter> {

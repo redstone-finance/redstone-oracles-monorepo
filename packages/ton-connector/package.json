@@ -34,9 +34,6 @@
     "test": "yarn global:with-auth-gateways yarn global:jest:cov"
   },
   "dependencies": {
-    "@ethersproject/bignumber": "^5.7.0",
-    "@ethersproject/bytes": "^5.6.1",
-    "@ethersproject/strings": "^5.7.0",
     "@orbs-network/ton-access": "^2.3.3",
     "@redstone-finance/multichain-kit-legacy": "workspace:*",
     "@redstone-finance/protocol": "workspace:*",

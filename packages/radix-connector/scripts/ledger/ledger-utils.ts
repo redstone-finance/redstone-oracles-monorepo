@@ -1,4 +1,3 @@
-import { hexlify } from "@ethersproject/bytes";
 import Aptos from "@ledgerhq/hw-app-aptos";
 import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
 import {
@@ -9,6 +8,7 @@ import {
   SignatureWithPublicKey,
   TransactionBuilderIntentSignaturesStep,
 } from "@radixdlt/radix-engine-toolkit";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { IRadixSigner } from "../../src";
 
 export class LedgerSigner implements IRadixSigner {
@@ -84,7 +84,7 @@ export const getPublicKey = async (
   const pk = new PublicKey.Ed25519(new Uint8Array(result.publicKey));
 
   return {
-    publicKey: hexlify(result.publicKey),
+    publicKey: RedstoneCommon.hexlify(result.publicKey),
     address: await RadixEngineToolkit.Derive.virtualAccountAddressFromPublicKey(pk, networkId),
     ed: pk,
   };

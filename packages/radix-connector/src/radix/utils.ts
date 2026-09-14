@@ -1,5 +1,3 @@
-import { arrayify } from "@ethersproject/bytes";
-import { toUtf8Bytes } from "@ethersproject/strings";
 import {
   address,
   array,
@@ -14,6 +12,7 @@ import {
   Value,
   ValueKind,
 } from "@radixdlt/radix-engine-toolkit";
+import { RedstoneCommon } from "@redstone-finance/utils";
 
 export interface NonFungibleGlobalIdInput {
   resourceAddress: string;
@@ -98,7 +97,7 @@ export function makeBytes(arr: number[]) {
 }
 
 export function makeFeedId(feedId: string) {
-  const feedIdArr = Array.from(toUtf8Bytes(feedId));
+  const feedIdArr = Array.from(RedstoneCommon.toUtf8Bytes(feedId));
 
   return makeBytes(feedIdArr);
 }
@@ -108,7 +107,7 @@ export function makeFeedIds(arr: string[]) {
 }
 
 export function makeSigners(arr: string[]) {
-  const signerArrays = arr.map((signer) => Array.from(arrayify(signer)));
+  const signerArrays = arr.map((signer) => Array.from(RedstoneCommon.arrayify(signer)));
 
   return array(ValueKind.Array, ...signerArrays.map(makeBytes));
 }
