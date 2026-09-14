@@ -8,14 +8,14 @@
   "updateTriggers": {
     "timeSinceLastUpdateInMilliseconds": 179000
   },
-  "adapterContract": "RedStoneAdapter-v18-0.4.0",
-  "adapterContractPackageId": "#redstone-interface-v18",
+  "adapterContract": "RedStoneAdapter-v19-0.4.0",
+  "adapterContractPackageId": "#redstone-interface-v19",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "AAPL---24_7": { "priceFeedAddress": "RedStoneAdapter-v18-0.4.0" },
-    "TSLA---24_7": { "priceFeedAddress": "RedStoneAdapter-v18-0.4.0" },
-    "NVDA---24_7": { "priceFeedAddress": "RedStoneAdapter-v18-0.4.0" },
-    "GOOGL---24_7": { "priceFeedAddress": "RedStoneAdapter-v18-0.4.0" },
-    "XYZ100---PERP": { "priceFeedAddress": "RedStoneAdapter-v18-0.4.0" }
+    "AAPL---24_7": { "priceFeedAddress": "RedStoneAdapter-v19-0.4.0" },
+    "TSLA---24_7": { "priceFeedAddress": "RedStoneAdapter-v19-0.4.0" },
+    "NVDA---24_7": { "priceFeedAddress": "RedStoneAdapter-v19-0.4.0" },
+    "GOOGL---24_7": { "priceFeedAddress": "RedStoneAdapter-v19-0.4.0" },
+    "XYZ100---PERP": { "priceFeedAddress": "RedStoneAdapter-v19-0.4.0" }
   }
 }
