@@ -37,6 +37,9 @@ All choices across all contracts (`IRedStoneCore`, `IRedStoneAdapter`, `IRedSton
 2. Intellect did set up a participant (node), which we can use
 3. Keycloak defines a user who can operate on the participant
 4. Doesn't provide Ledger API outside the system so it can be only used via RPC calls.
+5. The **mainnet** `canton-ui` account requires TOTP, the devnet one does not. Pass a fresh 6-digit code to any
+   target that needs a token, e.g. `make deploy-adapter TOTP=123456`; without it Keycloak answers
+   `invalid_grant` / `Invalid user credentials`.
 
 ## Contracts - Canton caveats
 
