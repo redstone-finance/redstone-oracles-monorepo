@@ -5284,6 +5284,20 @@
       "denomination": "iTRY",
       "rateFeed": true
     },
+    "emUSD_FUNDAMENTAL": {
+      "source": [
+        "accountable-brix-emusd"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "wemUSD_FUNDAMENTAL/USD": {
+      "source": [
+        "ethereum-evm-fetcher-brix"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "MEGA": {
       "source": [
         "binance-usdc",
