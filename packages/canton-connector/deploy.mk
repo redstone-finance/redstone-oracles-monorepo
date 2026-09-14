@@ -42,23 +42,42 @@ PARTY_OWNER=RedStoneOracleOwner::$(CANTON_PARTY_SUFFIX)
 PARTY_CLIENT=Client::$(CANTON_PARTY_SUFFIX)
 PARTY_BENEFICIARY=$(BENEFICIARY)::$(CANTON_PARTY_SUFFIX)
 
+# The mainnet `canton-ui` Keycloak account requires TOTP; the devnet one does not.
+# Pass a fresh 6-digit code when the realm asks for it, e.g. `make deploy-adapter TOTP=123456`.
+TOTP_ARG=$(if $(TOTP),-d "totp=$(TOTP)",)
+
+check-party-suffix:
+	@test -n "$(CANTON_PARTY_SUFFIX)" || ( \
+	  echo "CANTON_PARTY_SUFFIX is empty - every party would be malformed, e.g. 'RedStoneOracleOwner::'." >&2; \
+	  echo "Set CANTON_PARTY_SUFFIX in .env" >&2; \
+	  exit 1)
+
 get-token:
 	@test -n "$(KEYCLOAK_USERNAME)" || (echo "Set KEYCLOAK_USERNAME env variable" && exit 1)
 	@test -n "$(KEYCLOAK_PASSWORD)" || (echo "Set KEYCLOAK_PASSWORD env variable" && exit 1)
-	@echo "Getting fresh token from Keycloak..."
+	@echo "Getting fresh token from Keycloak (realm $(REALM))..." >&2
 	@RESPONSE=$$(curl -s -X POST \
 	  "$(KEYCLOAK_URL)/auth/realms/$(REALM)/protocol/openid-connect/token" \
 	  -d "grant_type=password" \
 	  -d "client_id=$(CLIENT_ID)" \
 	  -d "username=$(KEYCLOAK_USERNAME)" \
 	  -d "password=$(KEYCLOAK_PASSWORD)" \
+	  $(TOTP_ARG) \
 	  ); \
+	TOKEN=$$(echo $$RESPONSE | jq -r '.access_token'); \
+	if [ -z "$$TOKEN" ] || [ "$$TOKEN" = "null" ]; then \
+	  echo "Failed to get a token from $(KEYCLOAK_URL) (realm $(REALM)):" >&2; \
+	  if [ -z "$$RESPONSE" ]; then echo "  empty response (unreachable host or bad URL)" >&2; \
+	  else echo $$RESPONSE | jq -r '"  error: \(.error // "?"), description: \(.error_description // "?")"' >&2; fi; \
+	  echo "  If this realm requires TOTP, re-run with TOTP=<6-digit code>." >&2; \
+	  exit 1; \
+	fi; \
 	echo $$RESPONSE | jq -r '.access_token' > token.txt; \
 	echo $$RESPONSE | jq -r '.refresh_token' > refresh_token.txt; \
-	echo "Token saved to token.txt"
+	echo "Token saved to token.txt" >&2
 
 refresh-token:
-	@echo "Refreshing token..."
+	@echo "Refreshing token..." >&2
 	@RESPONSE=$$(curl -s -X POST \
 	  "$(KEYCLOAK_URL)/auth/realms/$(REALM)/protocol/openid-connect/token" \
 	  -H "Content-Type: application/x-www-form-urlencoded" \
@@ -68,7 +87,7 @@ refresh-token:
 	  -d "scope=openid profile email"); \
 	echo $$RESPONSE | jq -r '.access_token' > token.txt; \
 	echo $$RESPONSE | jq -r '.refresh_token' > refresh_token.txt; \
-	echo "Token refreshed"
+	echo "Token refreshed" >&2
 
 test-api: get-token
 	@curl -H "Authorization: Bearer $(TOKEN)" \
@@ -78,7 +97,7 @@ list-parties: get-token
 	@curl -H "Authorization: Bearer $(TOKEN)" \
 	  "$(CANTON_API)/v2/parties" | jq '.'
 
-deploy-core: get-token
+deploy-core: check-party-suffix get-token
 	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
 	  -H "Content-Type: application/json" \
 	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
@@ -96,7 +115,7 @@ deploy-core: get-token
 		"actAs": ["$(PARTY_OWNER)","$(PARTY_BENEFICIARY)"], \
 		"commandId": "deploy-core-$(shell date +%s)"}' | jq '.'
 
-deploy-core-client: get-token
+deploy-core-client: check-party-suffix get-token
 	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
 	  -H "Content-Type: application/json" \
 	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
@@ -110,7 +129,7 @@ deploy-core-client: get-token
 		"actAs": ["$(PARTY_OWNER)"], \
 		"commandId": "deploy-core-client-$(shell date +%s)"}' | jq '.'
 
-deploy-factory: get-token
+deploy-factory: check-party-suffix get-token
 	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
 	  -H "Content-Type: application/json" \
 	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
@@ -125,7 +144,7 @@ deploy-factory: get-token
 		"actAs": ["$(PARTY_OWNER)"], \
 		"commandId": "deploy-factory-$(shell date +%s)"}' | jq '.'
 
-deploy-reward-factory: get-token
+deploy-reward-factory: check-party-suffix get-token
 	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
 	  -H "Content-Type: application/json" \
 	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
@@ -142,7 +161,7 @@ deploy-reward-factory: get-token
 		"actAs": ["$(PARTY_OWNER)", "$(PARTY_BENEFICIARY)"], \
 		"commandId": "deploy-reward-factory-$(shell date +%s)"}' | jq '.'
 
-deploy-adapter: get-token
+deploy-adapter: check-party-suffix get-token
 	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
 	  -H "Content-Type: application/json" \
 	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
