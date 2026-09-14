@@ -94,6 +94,7 @@
         "bitrue-usdc",
         "bitrue-usdt",
         "bybit-usdt",
+        "gate-usdc",
         "gate-usdt",
         "kraken-eur",
         "kraken-usd",
@@ -108,6 +109,7 @@
     },
     "BTC": {
       "source": [
+        "binance-usd",
         "binance-usdc",
         "bingx-usdc",
         "bingx-usdt",
@@ -116,10 +118,12 @@
         "bitrue-usdc",
         "bitrue-usdt",
         "bitstamp-usd",
+        "bitstamp-usdc",
         "kraken-usd",
         "mexc-usdc",
         "mexc-usdt",
         "okx-usd",
+        "okx-usdc",
         "xt-usdc",
         "xt-usdt"
       ],
@@ -128,6 +132,7 @@
     },
     "ETH": {
       "source": [
+        "binance-usdc",
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
@@ -135,6 +140,7 @@
         "bitget-usdt",
         "bitrue-usdc",
         "bitrue-usdt",
+        "bitstamp-eur",
         "bitstamp-usd",
         "bybit-usdc",
         "coinbase-usd",
@@ -143,6 +149,7 @@
         "kucoin-usdt",
         "okx-usd",
         "okx-usdt",
+        "xt-usdc",
         "xt-usdt"
       ],
       "denomination": "USD",
@@ -154,6 +161,7 @@
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
+        "bitget-eur",
         "bitget-usdt",
         "bitrue-usdc",
         "bitrue-usdt",
@@ -163,6 +171,7 @@
         "kraken-eur",
         "kraken-usd",
         "kraken-usdc",
+        "okx-usdc",
         "okx-usdt",
         "xt-usdt"
       ],
