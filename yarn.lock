@@ -9226,6 +9226,7 @@ __metadata:
   resolution: "@redstone-finance/internal-utils@workspace:packages/internal-utils"
   dependencies:
     "@aws-sdk/client-cloudwatch": "npm:^3.696.0"
+    "@aws-sdk/client-cloudwatch-logs": "npm:^3.696.0"
     "@aws-sdk/client-dynamodb": "npm:^3.696.0"
     "@aws-sdk/client-ecr": "npm:^3.696.0"
     "@aws-sdk/client-ecs": "npm:^3.696.0"
@@ -10062,7 +10063,6 @@ __metadata:
     "@aws-sdk/client-cloudwatch": "npm:^3.696.0"
     "@aws-sdk/client-cloudwatch-logs": "npm:^3.696.0"
     "@aws-sdk/client-ec2": "npm:^3.696.0"
-    "@aws-sdk/client-ecs": "npm:^3.696.0"
     "@aws-sdk/client-s3": "npm:^3.696.0"
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/bignumber": "npm:^5.7.0"
