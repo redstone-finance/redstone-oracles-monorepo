@@ -22,7 +22,11 @@
     },
     // Perform a *full* typecheck according to tsconfig.json (usually includes tests and scripts).
     "typecheck": {
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/typescript-config/tsconfig-common.json", "!tsconfig.build.json"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/packages/typescript-config/tsconfig-common.json",
+        "!tsconfig.build.json"
+      ],
       "dependsOn": ["setup-dev"]
     },
     "compile": {
@@ -30,7 +34,7 @@
       "outputs": ["typechain-types/**", "artifacts/**", "cache/**"]
     },
     "lint": {
-      "inputs": ["./**.{js,ts,json}", "$TURBO_ROOT$/eslint.config.ts"],
+      "inputs": ["./**.{js,ts,json,jsonc}", "$TURBO_ROOT$/eslint.config.ts"],
       "dependsOn": ["setup-dev"]
     },
     "lint:fix": {
