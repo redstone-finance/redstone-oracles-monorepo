@@ -1,8 +1,8 @@
 import { LogDescription } from "@ethersproject/abi";
 import type { Log, TransactionResponse } from "@ethersproject/abstract-provider";
-import { BytesLike } from "@ethersproject/bytes";
 import { Contract, ContractReceipt, Event } from "@ethersproject/contracts";
 import { deepCopy } from "@ethersproject/properties";
+import { RedstoneCommon } from "@redstone-finance/utils";
 
 // Copied from ethers.js source code
 export const addContractWait = (contract: Contract, tx: TransactionResponse) => {
@@ -21,7 +21,7 @@ export const addContractWait = (contract: Contract, tx: TransactionResponse) => 
       // Successfully parsed the event log; include it
       if (parsed) {
         event.args = parsed.args;
-        event.decode = (data: BytesLike, topics?: Array<string>) => {
+        event.decode = (data: RedstoneCommon.BytesLike, topics?: Array<string>) => {
           return contract.interface.decodeEventLog(parsed.eventFragment, data, topics);
         };
         event.event = parsed.name;
