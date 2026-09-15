@@ -10,7 +10,10 @@ export class CantonBlockchainService implements BlockchainServiceWithTxLookup {
   constructor(protected readonly cantonClient: CantonClient) {}
 
   get txLookup() {
-    return new CantonTxLookup(this.cantonClient, readCantonPartyIds().updaterPartyId);
+    return new CantonTxLookup(
+      this.cantonClient,
+      readCantonPartyIds(this.cantonClient.network).updaterPartyId
+    );
   }
 
   async getBlockNumber() {
