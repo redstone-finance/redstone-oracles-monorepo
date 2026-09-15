@@ -1,5 +1,5 @@
 import { BigNumber } from "@ethersproject/bignumber";
-import { formatBytes32String } from "@ethersproject/strings";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { expect } from "chai";
 import { MOCK_SIGNERS, WrapperBuilder } from "../../src";
 import { SampleForLocalhostMockTest } from "../../typechain-types";
@@ -21,7 +21,7 @@ dynamicDescribe("verify prices test", function () {
   const pricesToVerify = JSON.parse(process.env.PRICES_TO_CHECK ?? "[]") as {
     [token: string]: number;
   };
-  const bytes32Symbols = Object.keys(pricesToVerify).map(formatBytes32String);
+  const bytes32Symbols = Object.keys(pricesToVerify).map(RedstoneCommon.formatBytes32String);
   const expectedPrices = Object.values(pricesToVerify);
 
   const testShouldPass = async (dataPackagesIds: string[]) => {
