@@ -1,7 +1,7 @@
 import { Signer } from "@ethersproject/abstract-signer";
 import { BigNumber } from "@ethersproject/bignumber";
-import { BytesLike } from "@ethersproject/bytes";
 import { Contract, ContractTransaction } from "@ethersproject/contracts";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { abi as PRICE_ADAPTER_ABI } from "../abi/StylusAdapter.json";
 
 export type LastUpdateDetails = {
@@ -12,9 +12,14 @@ export type LastUpdateDetails = {
 
 interface StylusAdapterContract {
   callStatic: {
-    getLastUpdateDetailsUnsafeForMany: (dataFeedIds: BytesLike[]) => Promise<LastUpdateDetails[]>;
+    getLastUpdateDetailsUnsafeForMany: (
+      dataFeedIds: RedstoneCommon.BytesLike[]
+    ) => Promise<LastUpdateDetails[]>;
   };
-  writePrices: (dataFeedsIds: BytesLike[], payload: BytesLike) => Promise<ContractTransaction>;
+  writePrices: (
+    dataFeedsIds: RedstoneCommon.BytesLike[],
+    payload: RedstoneCommon.BytesLike
+  ) => Promise<ContractTransaction>;
 }
 
 export class PriceAdapterService {

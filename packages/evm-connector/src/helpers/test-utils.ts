@@ -1,4 +1,3 @@
-import { arrayify } from "@ethersproject/bytes";
 import {
   DataPackage,
   DataPoint,
@@ -10,6 +9,7 @@ import {
   utils,
 } from "@redstone-finance/protocol";
 import { createWallet } from "@redstone-finance/signing";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import type { MockDataPackageConfig } from "../wrappers/MockWrapper";
 
 export const MAX_MOCK_SIGNERS_COUNT = 19;
@@ -210,7 +210,10 @@ export const getMockStringPackage = (args: MockStringPackageArgs): MockDataPacka
 export const getMockPackageWithOneBytesDataPoint = (
   args: MockPackageWithOneBytesDataPointArgs
 ): MockDataPackageConfig => {
-  const dataPoint = new DataPoint(args.dataFeedId || DEFAULT_DATA_FEED_ID, arrayify(args.hexValue));
+  const dataPoint = new DataPoint(
+    args.dataFeedId || DEFAULT_DATA_FEED_ID,
+    RedstoneCommon.arrayify(args.hexValue)
+  );
 
   return getMockPackage(args, [dataPoint]);
 };

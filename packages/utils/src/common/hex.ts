@@ -1,5 +1,6 @@
 const HEX_CHARS_REGEXP = /^(0x)?[0-9a-f]+$/i;
 const HEX_PREFIX_REGEXP = /^0x/i;
+const LEADING_ZEROS_REGEXP = /^0+/;
 const HEX_RADIX = 16;
 const BYTE_HEX_LENGTH = 2;
 const hasBuffer = typeof Buffer !== "undefined";
@@ -41,8 +42,36 @@ export function hexDataSlice(value: BytesLike, start: number, end?: number) {
   return hexlify(arrayify(value).slice(start, end));
 }
 
-export function hexValue(value: number | bigint) {
-  return `0x${value.toString(HEX_RADIX)}`;
+export function hexValue(value: number | bigint | BytesLike) {
+  if (typeof value === "number" || typeof value === "bigint") {
+    return `0x${value.toString(HEX_RADIX)}`;
+  }
+
+  const digits = hexDigits(value).replace(LEADING_ZEROS_REGEXP, "");
+
+  return `0x${digits === "" ? "0" : digits}`;
+}
+
+export function hexZeroPad(value: BytesLike, byteLength: number) {
+  const digits = hexDigits(value);
+  const width = byteLength * BYTE_HEX_LENGTH;
+  if (digits.length > width) {
+    throw new Error(`Value ${hexValue(value)} does not fit in ${byteLength} bytes`);
+  }
+
+  return `0x${digits.padStart(width, "0")}`;
+}
+
+function hexDigits(value: BytesLike) {
+  if (typeof value !== "string") {
+    return stripHexPrefix(hexlify(value));
+  }
+
+  if (!HEX_CHARS_REGEXP.test(value)) {
+    throw new Error(`Not a hex string: ${value}`);
+  }
+
+  return stripHexPrefix(value).toLowerCase();
 }
 
 function stripHexPrefix(value: string) {
