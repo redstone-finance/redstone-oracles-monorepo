@@ -1,4 +1,6 @@
 ANCHOR=RUSTUP_TOOLCHAIN=nightly-2026-04-19 anchor
+PLATFORM_TOOLS_VERSION=v1.52
+PLATFORM_TOOLS_DIR=$(HOME)/.cache/solana/$(PLATFORM_TOOLS_VERSION)/platform-tools
 
 prepare:
 	rustup component add clippy rustfmt
@@ -17,10 +19,13 @@ lint: clippy fmt-check
 build-verifiable:
 	$(ANCHOR) build --verifiable
 
-build:
+pin-platform-tools:
+	mkdir -p $(PLATFORM_TOOLS_DIR)
+
+build: pin-platform-tools
 	$(ANCHOR) build --ignore-keys
 
-build-test:
+build-test: pin-platform-tools
 	$(ANCHOR) build --ignore-keys -- --features agnostic-tests
 
 copy-program:
