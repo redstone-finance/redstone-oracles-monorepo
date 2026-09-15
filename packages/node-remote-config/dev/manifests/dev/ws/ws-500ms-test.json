@@ -519,6 +519,16 @@
         "rwa"
       ]
     },
+    "TSLA---PRE_AFTER": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "TSLA---24_7": {
       "source": [],
       "denomination": "USD",
@@ -529,6 +539,16 @@
     },
     "NVDA_PERP": {
       "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NVDA---PRE_AFTER": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -551,6 +571,16 @@
         "rwa"
       ]
     },
+    "AAPL---PRE_AFTER": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "AAPL---24_7": {
       "source": [],
       "denomination": "USD",
@@ -561,6 +591,16 @@
     },
     "MSFT_PERP": {
       "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "MSFT---PRE_AFTER": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -583,6 +623,16 @@
         "rwa"
       ]
     },
+    "AMZN---PRE_AFTER": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "AMZN---24_7": {
       "source": [],
       "denomination": "USD",
@@ -599,6 +649,16 @@
         "rwa"
       ]
     },
+    "GOOGL---PRE_AFTER": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "GOOGL---24_7": {
       "source": [],
       "denomination": "USD",
@@ -609,6 +669,16 @@
     },
     "META_PERP": {
       "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "META---PRE_AFTER": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
