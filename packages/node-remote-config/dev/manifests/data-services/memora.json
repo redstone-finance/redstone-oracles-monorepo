@@ -14,6 +14,13 @@
   "tokens": {
     "MEMORA_DEVNET_LAMPORTS": {
       "source": ["memora-solana-devnet"],
+      "comment": "the vault balance may jump by any amount, only the hard limits bound it",
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 100000000,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "other",
       "rateFeed": false
     },
