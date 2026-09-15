@@ -2733,6 +2733,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@clickhouse/client@npm:^1.23.1":
+  version: 1.23.1
+  resolution: "@clickhouse/client@npm:1.23.1"
+  checksum: 10c0/9c227ddbb871d0ba619c33f05376e0285a4593722a69046945d050d6ff61a4cb0bfbdf6694a7e2df9211564adbaadc7bdc006fbca7dfb428ae7af61bc4737faa
+  languageName: node
+  linkType: hard
+
 "@colors/colors@npm:1.5.0":
   version: 1.5.0
   resolution: "@colors/colors@npm:1.5.0"
@@ -9227,6 +9234,7 @@ __metadata:
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@aws-sdk/lib-dynamodb": "npm:^3.696.0"
     "@aws-sdk/util-arn-parser": "npm:^3.696.0"
+    "@clickhouse/client": "npm:^1.23.1"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@influxdata/influxdb-client-apis": "npm:^1.35.0"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
