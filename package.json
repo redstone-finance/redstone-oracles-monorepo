@@ -77,6 +77,7 @@
     "depcheck": "^1.4.7",
     "esbuild": "^0.28",
     "eslint": "^10.10.0",
+    "javascript-obfuscator": "^4",
     "jest": "^30",
     "jiti": "^2.5.1",
     "lerna": "^10",
