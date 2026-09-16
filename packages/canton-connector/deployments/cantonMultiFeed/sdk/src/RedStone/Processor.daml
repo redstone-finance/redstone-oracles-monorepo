@@ -12,7 +12,7 @@ import DA.Optional
 import DA.Set as S
 import RedStone.Internal.DataPoint(DataPoint(..))
 import RedStone.Config
-import RedStone.ProcessorResult
+import RedStone.ProcessorTypes
 import RedStone.Result
 import RedStone.U256
 import RedStone.Internal.Bytes as B
@@ -32,7 +32,7 @@ processPayload config hex =
     _ = verifyPayloadLength hex
   in processPayloadBytes config (B.fromList $ hexToList hex)
 
-processPayloadNumeric: Config -> Text -> ProcessorResult
+processPayloadNumeric: Config -> Text -> ProcessorOutcome
 processPayloadNumeric config hex =
   let
     (values, timestamp) = processPayload config hex
@@ -40,19 +40,15 @@ processPayloadNumeric config hex =
 
 -- Private
 
-aggregate = map (mapResult median show)
+aggregate = map (mapResult median (\e -> ProcessorError (show e)))
 
-processPayloadBytes config bytes =
-  let
-    (dataPackageCountRest, dataPackageCount) = trimMetadata bytes
-    (Bytes{revList=dataPackagesRest}, dataPackages) = trimMulti trimDataPackage dataPackageCount dataPackageCountRest
-
-    _ = L.null dataPackagesRest ??? RedStoneError Processing "Non-empty payload remainder" (L.reverse dataPackagesRest)
-
-    timestamp = verifyTimestamps config dataPackages
-    feedValues = getFeedValues config dataPackages
-  in
-  (aggregate feedValues, timestamp)
+processPayloadBytes config bytes = (!!!) $ do
+  let (dataPackageCountRest, dataPackageCount) = trimMetadata bytes
+  let (Bytes{revList=dataPackagesRest}, dataPackages) = trimMulti trimDataPackage dataPackageCount dataPackageCountRest
+  _ <- L.null dataPackagesRest ??? RedStoneError Processing "Non-empty payload remainder" (L.reverse dataPackagesRest)
+  let timestamp = verifyTimestamps config dataPackages
+  let feedValues = getFeedValues config dataPackages
+  pure (aggregate feedValues, timestamp)
 
 getFeedValues config dataPackages =
   let

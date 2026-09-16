@@ -11,7 +11,7 @@ import DA.Map as M
 import DA.Optional (fromOptional, isSome, isNone)
 import IRedStonePricePill
 import RedStoneTypes
-import Config(pill_keep_ms)
+import RedStoneAdapter.Config(pill_keep_ms)
 
 data PillRecord = PillRecord
   with
@@ -23,9 +23,9 @@ data PillRecord = PillRecord
 -- Public
 
 createNewRecords inputData newPills =
-    zip (map fst inputData) $
+    zip (map (.feedId) inputData) $
       zipWith (\pd cid -> PillRecord with priceData = pd, pillCid = cid, demotedTimestamp = None)
-              (map snd inputData) newPills
+              (map (.priceData) inputData) newPills
 
 addToFeedData currentFeedData (feedId, newest) =
     let
@@ -36,11 +36,12 @@ partitionRecords currentTimestamp currentFeedData =
   let
     entries = M.toList currentFeedData
 
-    (newEntries, toArchive) = L.foldl (\(cleaned, toArchive) (feedId, pills) ->
-      let
-         (remaining, stale) = partitionFeedPills currentTimestamp pills
-      in ((feedId, remaining) :: cleaned, stale ++ toArchive))
-      ([], []) entries
+    (newEntries, toArchive) = L.foldl
+      (\(cleaned, toArchive) (feedId, pills) ->
+        let (remaining, stale) = partitionFeedPills currentTimestamp pills
+        in ((feedId, remaining) :: cleaned, stale ++ toArchive))
+      ([], [])
+      entries
 
   in (newEntries, toArchive)
 

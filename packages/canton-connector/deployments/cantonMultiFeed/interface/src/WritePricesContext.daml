@@ -2,8 +2,8 @@ module WritePricesContext where
 
 data WritePricesContext = WritePricesContext
   with
-    additionalPillViewers : Optional [Party]
-    paidTrafficCost : Optional Int
+    additionalPillViewers : [Party]
+    paidTrafficCost : Int
   deriving (Eq, Show, Ord)
 
-empty_write_prices_context = WritePricesContext with additionalPillViewers = None, paidTrafficCost = None
+empty_write_prices_context = WritePricesContext with additionalPillViewers = [], paidTrafficCost = 0

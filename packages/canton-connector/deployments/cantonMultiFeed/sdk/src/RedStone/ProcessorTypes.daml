@@ -1,4 +1,4 @@
-module RedStone.ProcessorResult where
+module RedStone.ProcessorTypes where
 
 import DA.Numeric
 import RedStone.U256
@@ -11,8 +11,11 @@ import RedStone.Result
 type DecimalValue = Numeric 8 -- 8 decimals
 value_divisor: DecimalValue = 10.0 ^ 8
 
-type ProcessorResult  = ([Result DecimalValue Text], Int)
-type ProcessorRawResult = ([Result U256 Text], Int)
+data ProcessorError = ProcessorError with message : Text
+  deriving (Eq, Show, Ord)
+
+type ProcessorOutcome  = ([Result DecimalValue ProcessorError], Int)
+type ProcessorRawOutcome = ([Result U256 ProcessorError], Int)
 
 divByDivisor a = div a value_divisor
 

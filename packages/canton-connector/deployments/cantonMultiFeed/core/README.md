@@ -28,13 +28,12 @@ The models and architecture of data are described in the [RedStone docs](https:/
 #### Interface
 
 * The contract implements [`IRedStoneCore`](../interface/src/IRedStoneCore.daml) interface, by implementing
-the `iRedStoneCore_ShouldVerifyViewer`, `iRedStoneCore_VerifyViewer` and `iRedStoneCore_GetPricesImpl` functions.
+the `iRedStoneCore_VerifyViewer` and `iRedStoneCore_GetPricesImpl` functions.
 
 ```haskell
 interface IRedStoneCore where
   viewtype RedStoneCoreView
 
-  iRedStoneCore_ShouldVerifyViewer : Party -> Bool
   iRedStoneCore_VerifyViewer : Party -> Update ()
   iRedStoneCore_GetPricesImpl : Party -> [RedStoneFeedId] -> Time -> PayloadHex -> Update RedStoneResult
 
@@ -46,15 +45,11 @@ interface IRedStoneCore where
       payloadHex : PayloadHex
     controller caller
     do
-      if iRedStoneCore_ShouldVerifyViewer this caller then
-         iRedStoneCore_VerifyViewer this caller
-      else
-         pure ()
-
+      iRedStoneCore_VerifyViewer this caller
       iRedStoneCore_GetPricesImpl this caller feedIds currentTime payloadHex
 ```
 
-The `caller : Party` pattern is used as the `controller`. The `iRedStoneCore_ShouldVerifyViewer` controls whether viewer authorization is enforced — when `True`, `iRedStoneCore_VerifyViewer` checks that the caller is in the `viewers` list. This allows templates like `RedStoneCore` (disclosed contract pattern) to disable the check while `RedStoneAdapter` enforces it. See the [Caller Pattern](../README.md#caller-pattern) section for details.
+The `caller : Party` pattern is used as the `controller`. `iRedStoneCore_VerifyViewer` decides whether viewer authorization is enforced — its implementation may check that the caller is in the `viewers` list or no-op. This allows templates like `RedStoneCore` (disclosed contract pattern) to disable the check (via its `shouldVerifyViewer` flag) while `RedStoneAdapter` always enforces it. See the [Caller Pattern](../README.md#caller-pattern) section for details.
 
 #### Contract template
 
@@ -75,9 +70,7 @@ template RedStoneCore
     beneficiary : Optional Party
     featuredCid : Optional RedStoneFeaturedContract
 
-  iRedStoneCore_ShouldVerifyViewer caller = shouldVerifyViewer
-
-  iRedStoneCore_VerifyViewer caller = assertMsg "GetPrices: caller must be a viewer" $ caller `elem` viewers
+  iRedStoneCore_VerifyViewer caller = if shouldVerifyViewer then assertMsg "GetPrices: caller must be a viewer" (caller `elem` viewers) else pure ()
 
   iRedStoneCore_GetPricesImpl caller feedIds currentTime payloadHex = do
       case (featuredCid, beneficiary) of
@@ -95,7 +88,7 @@ See more about configuring, data processing and the output in the [`RedStone SDK
 
 * Use the prepared [Core.daml](../test/src/Core.daml) flow by running `make run-Core`
 and `make prepare_data` before, if needed.
-* or use the flow similar to the one inside [Makefile](../ops.mk)
+* or use the flow similar to the one inside [Makefile](../../ops.mk)
 
 ## Disclosed Core Contract
 
@@ -117,7 +110,7 @@ module RedStoneCoreClient where
 import IRedStoneCore
 
 type RedStoneValue = Numeric 8
-type RedStoneResult = ([RedStoneValue], Int)
+data RedStoneResult = RedStoneResult with prices : [RedStoneValue]; packageTimestamp : Int
 type RedStoneFeedId = [Int]
 
 template RedStoneCoreClient

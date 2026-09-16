@@ -7,6 +7,7 @@ module RedStone.Internal.Verify
 
 import DA.List as L
 import DA.Text as T
+import DA.Crypto.Text as C
 import RedStone.Internal.Const
 import RedStone.Internal.Error
 
@@ -14,18 +15,16 @@ import RedStone.Internal.Error
 
 verificationError = RedStoneError Verification
 
-verifyTimestamps config dataPackages =
-    let
-        timestamps dataPackages = dedup (map (\dataPackage -> dataPackage.timestamp) dataPackages)
-        ts = timestamps dataPackages
+verifyTimestamps config dataPackages = (!!!) $ do
+    let ts = dedup (map (\dataPackage -> dataPackage.timestamp) dataPackages)
+    _ <- not (L.null ts) ??? verificationError "No timestamps in payload" ts
+    _ <- L.length ts == 1 ??? verificationError "Timestamps are non-equal" ts
+    let timestamp = head ts
+    _ <- timestamp <= config.currentTimestamp + config.maxAllowedPackageTimestampAheadMs ??? verificationError "Timestamp too far in the future" (timestamp, config.currentTimestamp + config.maxAllowedPackageTimestampAheadMs)
+    _ <- timestamp >= config.currentTimestamp - config.maxAllowedPackageTimestampDelayMs ??? verificationError "Timestamp too old" (timestamp, config.currentTimestamp - config.maxAllowedPackageTimestampDelayMs)
+    pure timestamp
 
-        _ = L.length ts == 1 ??? verificationError "Timestamps are non-equal" ts
-
-        timestamp = head ts
-
-        _ = timestamp <= config.currentTimestamp + config.maxAheadMs ??? verificationError "Timestamp too far in the future" (timestamp, config.currentTimestamp + config.maxAheadMs)
-        _ = timestamp >= config.currentTimestamp - config.maxDelayMs ??? verificationError "Timestamp too old" (timestamp, config.currentTimestamp - config.maxDelayMs)
-    in timestamp
-
-verifyPayloadLength hex =
-    T.length hex <= max_payload_hex_chars ??? RedStoneError Processing "Payload too large" (T.length hex, max_payload_hex_chars)
+verifyPayloadLength hex = (!!!) $ do
+    _ <- T.length hex <= max_payload_hex_chars ??? RedStoneError Processing "Payload too large" (T.length hex, max_payload_hex_chars)
+    _ <- C.isHex hex ??? RedStoneError Processing "Payload is not a hex string" hex
+    pure ()
