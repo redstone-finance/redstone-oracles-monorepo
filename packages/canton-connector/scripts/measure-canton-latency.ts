@@ -191,8 +191,7 @@ function extractWrittenFeeds(events: Event[]): WrittenFeed[] {
     }
 
     const createArgument = event.CreatedEvent.createArgument as
-      | { feedData?: [CantonFeedId, { priceData: PriceData }[]][] }
-      | undefined;
+      { feedData?: [CantonFeedId, { priceData: PriceData }[]][] } | undefined;
 
     if (!createArgument?.feedData) {
       continue;

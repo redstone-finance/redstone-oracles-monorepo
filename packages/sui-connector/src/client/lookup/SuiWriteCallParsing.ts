@@ -8,9 +8,7 @@ const FEED_ID_ARG_ID = 1;
 const PAYLOAD_ARG_ID = 2;
 
 type ParsedInput =
-  | { kind: "pure"; rawValue: unknown }
-  | { kind: "shared"; objectId: string }
-  | { kind: "other" };
+  { kind: "pure"; rawValue: unknown } | { kind: "shared"; objectId: string } | { kind: "other" };
 
 interface ParsedMoveCall {
   functionName: string;

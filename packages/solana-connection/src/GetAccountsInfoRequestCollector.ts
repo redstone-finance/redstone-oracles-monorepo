@@ -2,8 +2,7 @@ import { Collector } from "@redstone-finance/utils";
 import { AccountInfo, Commitment, DataSlice, PublicKey } from "@solana/web3.js";
 
 export type CollectableCommitmentOrConfig =
-  | Commitment
-  | { minContextSlot?: number; commitment?: Commitment; dataSlice?: DataSlice };
+  Commitment | { minContextSlot?: number; commitment?: Commitment; dataSlice?: DataSlice };
 
 export type GetAccountsInfoRequestCollectorDelegate = {
   getAccountsInfoRequestCollectorGetMultipleAccountsInfo(

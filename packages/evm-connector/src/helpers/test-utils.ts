@@ -15,26 +15,7 @@ import type { MockDataPackageConfig } from "../wrappers/MockWrapper";
 export const MAX_MOCK_SIGNERS_COUNT = 19;
 
 export type MockSignerIndex =
-  | 0
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11
-  | 12
-  | 13
-  | 14
-  | 15
-  | 16
-  | 17
-  | 18
-  | 19;
+  0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19;
 
 export type MockSignerAddress =
   | "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
@@ -72,8 +53,7 @@ export interface MockStringPackageArgs extends MockPackageArgs {
 }
 
 export interface MockPackageWithOneNumericDataPointArgs
-  extends MockPackageArgs,
-    INumericDataPoint {}
+  extends MockPackageArgs, INumericDataPoint {}
 
 export interface MockPackageWithOneBytesDataPointArgs extends MockPackageArgs {
   dataFeedId?: utils.ConvertibleToBytes32;
