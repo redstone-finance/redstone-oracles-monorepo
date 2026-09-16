@@ -18,15 +18,13 @@
     "sample-run": "yarn global:with-auth-gateways yarn global:tsx scripts/sample-run.ts"
   },
   "dependencies": {
-    "@ethersproject/abstract-signer": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",
-    "@ethersproject/contracts": "^5.7.0",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*"
   },
   "devDependencies": {
-    "@ethersproject/providers": "^5.6.8",
-    "@ethersproject/wallet": "^5.7.0",
+    "@redstone-finance/rpc-providers": "workspace:*",
+    "@redstone-finance/signing": "workspace:*",
     "dotenv": "^16.0.3"
   },
   "files": [

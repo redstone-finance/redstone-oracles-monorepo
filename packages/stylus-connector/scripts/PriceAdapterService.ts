@@ -1,6 +1,12 @@
-import { Signer } from "@ethersproject/abstract-signer";
 import { BigNumber } from "@ethersproject/bignumber";
-import { Contract, ContractTransaction } from "@ethersproject/contracts";
+import {
+  evmWritableContract,
+  signAndBroadcastTx,
+  waitForSuccessfulTransaction,
+  type EvmPopulatedTx,
+  type EvmProvider,
+} from "@redstone-finance/rpc-providers";
+import { type Wallet } from "@redstone-finance/signing";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { abi as PRICE_ADAPTER_ABI } from "../abi/StylusAdapter.json";
 
@@ -16,21 +22,28 @@ interface StylusAdapterContract {
       dataFeedIds: RedstoneCommon.BytesLike[]
     ) => Promise<LastUpdateDetails[]>;
   };
-  writePrices: (
-    dataFeedsIds: RedstoneCommon.BytesLike[],
-    payload: RedstoneCommon.BytesLike
-  ) => Promise<ContractTransaction>;
+  populateTransaction: {
+    writePrices: (
+      dataFeedsIds: RedstoneCommon.BytesLike[],
+      payload: RedstoneCommon.BytesLike
+    ) => Promise<EvmPopulatedTx>;
+  };
 }
 
 export class PriceAdapterService {
-  private readonly contract: Contract & StylusAdapterContract;
-  private readonly signer: Signer;
+  private readonly contract: StylusAdapterContract;
 
-  constructor(contractAddress: string, signer: Signer) {
-    this.signer = signer;
-
-    this.contract = new Contract(contractAddress, PRICE_ADAPTER_ABI, this.signer) as Contract &
-      StylusAdapterContract;
+  constructor(
+    private readonly contractAddress: string,
+    private readonly provider: EvmProvider,
+    private readonly wallet: Wallet
+  ) {
+    this.contract = evmWritableContract<StylusAdapterContract>(
+      contractAddress,
+      PRICE_ADAPTER_ABI,
+      provider,
+      wallet.address
+    );
   }
 
   async readPriceData(feedIds: string[]) {
@@ -38,6 +51,12 @@ export class PriceAdapterService {
   }
 
   async writePrices(feeds: string[], payload: string) {
-    return await this.contract.writePrices(feeds, payload);
+    const { data } = await this.contract.populateTransaction.writePrices(feeds, payload);
+    const broadcastedTx = await signAndBroadcastTx(this.provider, this.wallet, {
+      to: this.contractAddress,
+      data,
+    });
+
+    return await waitForSuccessfulTransaction(this.provider, broadcastedTx);
   }
 }
