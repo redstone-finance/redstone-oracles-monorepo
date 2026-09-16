@@ -2,8 +2,9 @@ import axios, { AxiosError } from "axios";
 import { LogLevels } from "consola";
 import { getLogLevel, loggerFactory } from "../logger";
 import { sanitizeLogMessage } from "../logger/sanitize-token";
-import { ETHERS_5_7_ERROR_PROPS, isEthers_5_7_Error, type Ethers_5_7_Error } from "./EthersError";
+import { ETHERS_ERROR_PROPS, isEthers_5_7_Error, type Ethers_5_7_Error } from "./EthersError";
 import { JSONstringify, stringify } from "./misc";
+import { isDefined } from "./objects";
 
 export class UnrecoverableError extends Error {
   unrecoverable? = true;
@@ -110,8 +111,8 @@ function stringifyErrorUnsanitized(e: unknown, noStack = false): string {
     } else if (isEthers_5_7_Error(error)) {
       return (
         "[Ethers 5.7 Error]" +
-        ETHERS_5_7_ERROR_PROPS.filter((prop) => Object.hasOwn(error, prop))
-          .map((prop) => `[${prop}: "${error[prop]}"]`)
+        ETHERS_ERROR_PROPS.filter((prop) => isDefined(error[prop]))
+          .map((prop) => `[${prop}: "${stringify(error[prop])}"]`)
           .join("") +
         showStack(error.stack)
       );
