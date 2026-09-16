@@ -61,8 +61,8 @@ toIntU256 (U256 (Bytes revList)) = leByteListToInt revList
 
 u256ToInt (U256 (Bytes revList)) =
   let
-    first8 = take int_size revList
-    rest = drop int_size revList
+    first8 = take int_size_bytes revList
+    rest = drop int_size_bytes revList
 
     hasHighBytes = any (/= 0) rest
 
@@ -83,7 +83,7 @@ u256FromInt n =
 
 u256FromIntAcc acc remaining =
   if remaining == 0 then acc else
-    u256FromIntAcc ((remaining % byte_range) :: acc) ((remaining - remaining % byte_range) / byte_range)
+    u256FromIntAcc ((remaining % byte_range) :: acc) (remaining / byte_range)
 
 compareU256 (U256 (Bytes revList1)) (U256 (Bytes revList2)) = compare (L.reverse revList1) (L.reverse revList2)
 
@@ -101,12 +101,12 @@ showU256 u =
   in text
 
 normalizeBytes Bytes{revList=xs}
-  | length xs < u256_size = xs ++ replicate (u256_size - length xs) 0
-  | length xs == u256_size = xs
+  | length xs < uint256_size_bytes = xs ++ replicate (uint256_size_bytes - length xs) 0
+  | length xs == uint256_size_bytes = xs
   | otherwise =
       let
-        first32 = take u256_size xs
-        rest = drop u256_size xs
+        first32 = take uint256_size_bytes xs
+        rest = drop uint256_size_bytes xs
       in if all (== 0) rest
          then first32
          else error $ "U256 overflow: non-zero bytes beyond 32: " <> show rest

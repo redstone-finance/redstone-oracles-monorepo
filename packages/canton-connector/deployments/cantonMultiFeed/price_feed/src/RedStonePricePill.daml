@@ -1,9 +1,9 @@
 module RedStonePricePill where
 
+import DA.Time (addRelTime, milliseconds, isLedgerTimeGT)
 import IRedStonePricePill
 import RedStoneTypes
 import Time (millisToTime)
-import DA.Time (addRelTime, milliseconds, isLedgerTimeGT)
 
 template RedStonePricePill
   with
@@ -15,6 +15,8 @@ template RedStonePricePill
     stalenessMs : Int
     adapterId : Text
   where
+    ensure stalenessMs >= 0
+
     signatory owner
     observer viewers, creators
 
@@ -22,14 +24,10 @@ template RedStonePricePill
       view = RedStonePricePillView with feedId, priceData, stalenessMs, adapterId
 
       iRedStonePricePill_VerifyArchiver caller = assertMsg "ArchivePill: Caller must be a creator" $ caller `elem` creators
-      iRedStonePricePill_VerifyViewer caller = assertMsg "Read: Caller must be a viewer or a creator" $ caller `elem` (viewers ++ creators)
+      iRedStonePricePill_VerifyViewer caller = assertMsg "Read: Caller must be a viewer or a creator" $ any (elem caller) [viewers, creators]
 
       iRedStonePricePill_IsDataStaleImpl =
         let
-            maxTime = addRelTime (millisToTime priceData.timestamp) $ milliseconds stalenessMs
+            maxTime = addRelTime (millisToTime priceData.packageTimestamp) $ milliseconds stalenessMs
         in
             isLedgerTimeGT maxTime
-
-      iRedStonePricePill_AssertDataNotStaleImpl = do
-           isStale <- iRedStonePricePill_IsDataStaleImpl $ toInterface @IRedStonePricePill this
-           assertMsg "Price Data is stale and cannot be read" $ not isStale

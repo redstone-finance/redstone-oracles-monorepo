@@ -5,7 +5,6 @@ import RedStoneTypes
 interface IRedStoneCore where
   viewtype RedStoneCoreView
 
-  iRedStoneCore_ShouldVerifyViewer : Party -> Bool
   iRedStoneCore_VerifyViewer : Party -> Update ()
   iRedStoneCore_GetPricesImpl : Party -> [RedStoneFeedId] -> Time -> PayloadHex -> Update RedStoneResult
 
@@ -17,11 +16,7 @@ interface IRedStoneCore where
       payloadHex : PayloadHex
     controller caller
     do
-      if iRedStoneCore_ShouldVerifyViewer this caller then
-         iRedStoneCore_VerifyViewer this caller
-      else
-         pure ()
-
+      iRedStoneCore_VerifyViewer this caller
       iRedStoneCore_GetPricesImpl this caller feedIds currentTime payloadHex
 
 data RedStoneCoreView = RedStoneCoreView

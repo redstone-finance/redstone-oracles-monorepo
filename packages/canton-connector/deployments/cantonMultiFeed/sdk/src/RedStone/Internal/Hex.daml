@@ -6,6 +6,7 @@ module RedStone.Internal.Hex (
 
 import DA.Text as T
 import DA.List as L
+import DA.Map as Map
 import DA.Optional
 
 -- Public
@@ -18,6 +19,13 @@ hexToList hex = map (\[a,b] -> pairToByte (a,b)) (L.chunksOf 2 $ explode hex)
 
 hex_range = 16
 
+hexDigits = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"]
+
+hexCharToIntMap = Map.fromList
+  [ ("0",0),("1",1),("2",2),("3",3),("4",4),("5",5),("6",6),("7",7),("8",8),("9",9)
+  , ("a",10),("b",11),("c",12),("d",13),("e",14),("f",15)
+  , ("A",10),("B",11),("C",12),("D",13),("E",14),("F",15) ]
+
 data HexBytes = HexBytes
   with
     bytes: [Int]
@@ -26,14 +34,11 @@ data HexBytes = HexBytes
 instance Show HexBytes where
   show HexBytes{bytes} = show $ listToHex bytes
 
-hexCharToInt c =
-  let hexChars = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"]
-      lower = T.asciiToLower c
-  in elemIndex lower hexChars
+hexCharToInt c = Map.lookup c hexCharToIntMap
 
 hexDigit n = case n of
-  n | n >= 0 && n < hex_range -> ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"] !! n
-  _ -> "?"
+  n | n >= 0 && n < hex_range -> hexDigits !! n
+  _ -> error $ "Invalid hex digit value: " <> show n
 
 pairToByte (a, b) = hex_range * (fromSome (hexCharToInt a)) + (fromSome (hexCharToInt b))
 

@@ -1,14 +1,14 @@
 sdk-version: 3.4.11
-name: redstone-core-v18
+name: redstone-core-v19
 version: 0.4.0
 source: src
 dependencies:
   - daml-prim
   - daml-stdlib
 data-dependencies:
-  - ../types/.daml/dist/redstone-types-v18-0.4.0.dar
-  - ../sdk/.daml/dist/redstone-sdk-v18-0.4.0.dar
-  - ../featured/.daml/dist/redstone-featured-v18-0.4.0.dar
-  - ../interface/.daml/dist/redstone-interface-v18-0.4.0.dar
+  - ../types/.daml/dist/redstone-types-v19-0.4.0.dar
+  - ../sdk/.daml/dist/redstone-sdk-v19-0.4.0.dar
+  - ../featured/.daml/dist/redstone-featured-v19-0.4.0.dar
+  - ../interface/.daml/dist/redstone-interface-v19-0.4.0.dar
 build-options:
   - --target=2.1

@@ -20,7 +20,7 @@ import Internal.Events
 import Internal.PillRecord
 import Internal.Rewards
 import Internal.Verify
-import Config(adapter_config_fun, pill_staleness_ms)
+import RedStoneAdapter.Config(adapter_config_fun, pill_staleness_ms)
 
 data WriteContext = WriteContext
   with

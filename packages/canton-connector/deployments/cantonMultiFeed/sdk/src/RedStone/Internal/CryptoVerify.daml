@@ -17,9 +17,9 @@ getDataPackageSignerIndices signers = map (\(dataPackage) -> (dataPackage, verif
 
 isValidSig HexBytes{bytes=signature} HexBytes{bytes=signableBytes} pk =
   let
-    derSignature = listToHex . signatureToDer $ signature
+    derSignature = listToHex $ signatureToDer signature
     derPublicKey = publicKeyToDer pk
-    hash = C.keccak256 . listToHex $ signableBytes
+    hash = C.keccak256 $ listToHex signableBytes
   in C.secp256k1WithEcdsaOnly derSignature hash derPublicKey
 
 verifySignerIndex signers dataPackage =

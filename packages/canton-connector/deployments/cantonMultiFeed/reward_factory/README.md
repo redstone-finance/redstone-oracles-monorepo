@@ -2,6 +2,9 @@
 
 ## Overview
 
+> **Being retired.** CIP-0104 replaces the `FeaturedAppActivityMarker` / `AppRewardCoupon` model with
+> traffic-based app rewards accounted for by the network itself.
+
 The `RedStoneRewardFactory` is a Canton contract that handles batched creation of `FeaturedAppRight` activity markers
 (rewards) for the RedStone oracle adapter. It decouples reward creation from the price pill factory,
 allowing rewards to be accumulated and submitted in batches with a configurable time-based throttle.
@@ -10,14 +13,18 @@ allowing rewards to be accumulated and submitted in batches with a configurable 
 
 ### How it works
 
-1. The [`RedStoneAdapter`](../adapter/src/RedStoneAdapter.daml) accumulates a pill count in its `RewardState`
+1. The [`RedStoneAdapter`](../adapter/src/RedStoneAdapter.daml) accumulates `paidTrafficCost` — the traffic
+   cost in **bytes**, measured off-ledger and passed in via `WritePricesContext` — in its `RewardState`
    each time new prices are written.
 2. When the time since the last reward creation exceeds `min_reward_creation_ms` (configured in
-   [`Config.daml`](../adapter/src/Config.daml)), the adapter calls the `RedStoneRewardFactory`
-   via the [`IRedStoneRewardFactory.CreateRewards`](../interface/src/IRedStoneRewardFactory.daml) choice.
-3. The accumulated pill count is passed directly as the `count` parameter to `CreateRewards`.
+   [`RedStoneAdapter/Config.daml`](../adapter/src/RedStoneAdapter/Config.daml)) **and** the accumulated cost is
+   greater than zero, the adapter calls the `RedStoneRewardFactory` via the
+   [`IRedStoneRewardFactory.CreateRewards`](../interface/src/IRedStoneRewardFactory.daml) choice
+   (see [`Internal/Rewards.daml`](../adapter/src/Internal/Rewards.daml)).
+3. The accumulated byte count is passed as the `count` parameter to `CreateRewards`, and `RewardState` is reset.
 4. The `RedStoneRewardFactory` calculates a weighted reward using [`RewardConfig`](src/RewardConfig.daml)
-   and creates a `FeaturedAppActivityMarker` via the `FeaturedAppRight` contract.
+   and — only if the weight reaches `1.0` — creates a `FeaturedAppActivityMarker` via the `FeaturedAppRight`
+   contract. Below that it returns `0.0` and creates nothing.
 
 ### Dedicated interface
 
@@ -32,18 +39,24 @@ nonconsuming choice CreateRewards : Decimal
   controller caller
 ```
 
-- `count` is the accumulated pill count
-- The return value is the calculated reward weight
+- `count` is the accumulated traffic cost in bytes
+- The return value is the calculated reward weight, or `0.0` when no marker was created
 
 ### Reward weight calculation
 
-The reward weight is calculated in [`RewardConfig.daml`](src/RewardConfig.daml):
+The reward weight is calculated in [`RewardConfig.daml`](src/RewardConfig.daml) from the accumulated traffic
+cost in bytes, with `reward_min_count` (5 kB, the marker's own estimated cost) subtracted first:
 
 ```haskell
-weight = pillCount * reward_factor_frac_num / reward_factor_frac_den
+rewardWeight total =
+   if total > reward_min_count then
+     intToDecimal ((total - reward_min_count) * reward_factor_frac_num) / intToDecimal reward_factor_frac_den
+   else
+     0.0
 ```
 
-With default values `3/4`, this means each pill contributes `0.75` to the reward weight.
+With the current constants (`one_mb_price = 60`, factor 1.15) that is ≈69 per MB of traffic. The factory only
+creates a marker once the weight reaches `1.0`; below that it returns `0.0` and creates nothing.
 
 ## Contract template
 
@@ -60,6 +73,7 @@ template RedStoneRewardFactory
 ### Signatories
 
 Both `owner` and `beneficiary` are signatories, which means:
+
 - Creating the contract requires authorization from both parties
 - The `beneficiary`'s authority enables creating `FeaturedAppActivityMarkers`
 
@@ -80,4 +94,6 @@ make update-reward-factory-id
 ### Configuration
 
 - `min_reward_creation_ms`: Minimum interval between reward creation calls (default: 7 minutes)
-- `reward_factor_frac_num / reward_factor_frac_den`: Reward weight per pill (default: 3/4 = 0.75)
+- `reward_factor_frac_num / reward_factor_frac_den`: Reward weight per byte of traffic
+  (default: `60 * 115 / (1 MB * 100)`, i.e. ≈69 per MB)
+- `reward_min_count`: Traffic not rewarded, covering the marker's own cost (default: 5 kB)

@@ -2,7 +2,7 @@ module RewardConfig (
     rewardWeight
 ) where
 
-one_kb = 1000 -- or 1024, to test
+one_kb = 1000
 one_mb = one_kb * one_kb
 one_mb_price = 60
 

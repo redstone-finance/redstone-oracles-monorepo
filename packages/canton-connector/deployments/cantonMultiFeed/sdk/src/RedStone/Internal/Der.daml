@@ -6,6 +6,7 @@ module RedStone.Internal.Der
 
 import DA.Text as T
 import DA.List as L
+import DA.Crypto.Text as C
 import RedStone.Internal.Error
 
 -- Public
@@ -13,36 +14,23 @@ import RedStone.Internal.Error
 signatureToDer fullSignature =
   let
     sigLen = L.length fullSignature
-    _ = sigLen == sig_rs_length || sigLen == sig_rsv_length ??? otherError "Wrong signature length" sigLen
 
-    (signatureRS, _) = L.splitAt sig_rs_length fullSignature
+    (signatureRS, vBytes) = L.splitAt sig_rs_length fullSignature
     (r, s) = L.splitAt sig_r_length signatureRS
-    _ = isCanonicalS s ??? otherError "Signature s value is over N/2" s
 
     seq = concatMap derEncodeList [r, s]
     der = 0x30 :: (L.length seq) :: seq
-  in der
+  in (!!!) $ do
+    _ <- sigLen == sig_rs_length || sigLen == sig_rsv_length ??? otherError "Wrong signature length" sigLen
+    _ <- validRecoveryByte vBytes ??? otherError "Invalid signature recovery byte (v)" vBytes
+    _ <- isCanonicalS s ??? otherError "Signature s value is over N/2" s
+    pure der
 
-publicKeyToDer pubKeyHex =
-  let
-    prefixLen = 2
-    keyLength = T.length pubKeyHex / 2
-  in if keyLength == public_key_length + (prefixLen / 2) && T.take prefixLen pubKeyHex == "04"
-     then
-       let
-         derPrefix = "3056" <>                    -- SEQUENCE, 86 bytes
-                    "3010" <>                     -- Algorithm SEQUENCE, 16 bytes
-                    "06072a8648ce3d0201" <>       -- OID: ecPublicKey
-                    "06052b8104000a" <>           -- OID: secp256k1
-                    "0342" <>                     -- BIT STRING, 66 bytes
-                    "00"                          -- Unused bits
-
-         fullDER = derPrefix <> pubKeyHex
-
-       in fullDER
-     else if keyLength == public_key_length
-     then publicKeyToDer $ "04" <> pubKeyHex
-     else error $ "Error: Expected 65 bytes starting with 04 (or 64 bytes without prefix)" <> show (T.take prefixLen pubKeyHex)
+publicKeyToDer pubKeyHex = (!!!) $ do
+  _ <- C.isHex pubKeyHex && T.length pubKeyHex % 2 == 0 ??? otherError "Public key must be an even-length hex string" pubKeyHex
+  let normalized = if T.length pubKeyHex / 2 == public_key_length then "04" <> pubKeyHex else pubKeyHex
+  _ <- T.length normalized / 2 == public_key_length + 1 && T.take 2 normalized == "04" ??? otherError "Expected 65 bytes starting with 04 (or 64 bytes without prefix)" normalized
+  pure $ der_public_key_prefix <> normalized
 
 -- Private
 
@@ -50,6 +38,13 @@ sig_r_length = 32
 sig_rs_length = 64
 sig_rsv_length = 65
 public_key_length = 64
+
+der_public_key_prefix = "3056" <> "3010" <> "06072a8648ce3d0201" <> "06052b8104000a" <> "0342" <> "00"
+
+validRecoveryByte vBytes = case vBytes of
+  [] -> True
+  [v] -> v == 0 || v == 1 || v == 27 || v == 28
+  _ -> False
 secp256k1_N_div_2 =
   [ 0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
   , 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF

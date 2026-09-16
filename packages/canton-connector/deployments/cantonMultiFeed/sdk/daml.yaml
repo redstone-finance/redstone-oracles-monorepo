@@ -1,5 +1,5 @@
 sdk-version: 3.4.11
-name: redstone-sdk-v18
+name: redstone-sdk-v19
 version: 0.4.0
 source: src
 dependencies:
@@ -8,11 +8,11 @@ dependencies:
 exposed-modules:
   - RedStone.Config
   - RedStone.Processor
-  - RedStone.ProcessorResult
+  - RedStone.ProcessorTypes
   - RedStone.Result
   - RedStone.U256
 data-dependencies:
-  - ../common/.daml/dist/redstone-common-v18-0.4.0.dar
+  - ../common/.daml/dist/redstone-common-v19-0.4.0.dar
 build-options:
   - -Wno-crypto-text-is-alpha
   - --target=2.1
