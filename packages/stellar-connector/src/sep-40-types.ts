@@ -5,8 +5,7 @@ export const STELLAR_ASSET = "Stellar" as const;
 export const OTHER_ASSET = "Other" as const;
 
 export type Sep40Asset =
-  | { tag: typeof STELLAR_ASSET; address: Address }
-  | { tag: typeof OTHER_ASSET; symbol: string };
+  { tag: typeof STELLAR_ASSET; address: Address } | { tag: typeof OTHER_ASSET; symbol: string };
 export type FeedMapping = { feed: string; asset: Sep40Asset; decimals?: number };
 
 export function assetToScVal(asset: Sep40Asset) {

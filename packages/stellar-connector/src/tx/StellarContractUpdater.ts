@@ -10,9 +10,10 @@ import {
 
 const WRITE_PRICES_METHOD = "write_prices";
 
-export class StellarContractUpdater
-  implements ContractUpdater<unknown, StellarContractUpdateContext>
-{
+export class StellarContractUpdater implements ContractUpdater<
+  unknown,
+  StellarContractUpdateContext
+> {
   constructor(
     private readonly executor: StellarTransactionExecutor,
     private readonly contract: Contract

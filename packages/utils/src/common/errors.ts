@@ -87,12 +87,7 @@ export function stringifyError(e: unknown, noStack = false) {
 function stringifyErrorUnsanitized(e: unknown, noStack = false): string {
   try {
     const error = e as
-      | AggregateError
-      | AxiosError
-      | undefined
-      | Error
-      | { toJSON: () => string }
-      | Ethers_5_7_Error;
+      AggregateError | AxiosError | undefined | Error | { toJSON: () => string } | Ethers_5_7_Error;
 
     if (error === undefined) {
       return "undefined";

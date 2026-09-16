@@ -7,10 +7,7 @@ import { z } from "zod";
 import { StellarNetwork } from "../src";
 
 type StellarContract =
-  | typeof PRICE_ADAPTER
-  | typeof PRICE_FEED
-  | typeof SEP40_CONTRACT
-  | typeof MULTICALL;
+  typeof PRICE_ADAPTER | typeof PRICE_FEED | typeof SEP40_CONTRACT | typeof MULTICALL;
 
 export const PRICE_ADAPTER = "redstone_adapter";
 export const PRICE_FEED = "redstone_price_feed";
