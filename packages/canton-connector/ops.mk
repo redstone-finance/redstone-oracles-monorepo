@@ -131,19 +131,26 @@ unlink-all-pills: get-adapter-id-by-interface get-token
 	    "actAs": ["$(PARTY_OWNER)"], \
 		"commandId": "unlink-all-pills-$(shell date +%s)"}' | jq '.'
 
-archive: get-token
-	curl -X POST -H "Authorization: Bearer $(TOKEN)" \
+ACT_AS?="$(PARTY_OWNER)"
+
+check-archive-args:
+	@test -n "$(TEMPLATE_ID)" || (echo "Set TEMPLATE_ID=<packageId>:<Module>:<Template>" >&2 && exit 1)
+	@test -n "$(CONTRACT_ID)" || (echo "Set CONTRACT_ID=<contractId to archive>" >&2 && exit 1)
+
+archive-contract: check-archive-args check-party-suffix get-token
+	@echo "Archiving $(CONTRACT_ID) of $(TEMPLATE_ID)" >&2
+	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
 	  -H "Content-Type: application/json" \
 	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
 	  -d '{ \
 		"commands": [{ \
 			"ExerciseCommand": { \
-	    		"templateId": "$(REWARD_FACTORY_TEMPLATE_ID)", \
-	    		"contractId": "0061bc5ae1e86c1c9d498ff5c965d9a6b998a5d7711114300e8f383e94040d11fbca1212201368ed9cdf8c0a105c1c0c9e92abbe05caad2a452e8a56ebd4baf9f9a79c619d", \
-	    		"choice": "Archive", \
+			"templateId": "$(TEMPLATE_ID)", \
+			"contractId": "$(CONTRACT_ID)", \
+			"choice": "Archive", \
 				"choiceArgument": {}}}], \
-	    "actAs": ["$(PARTY_OWNER)","$(PARTY_BENEFICIARY)"], \
-		"commandId": "archive-$(shell date +%s)"}' | jq '.'
+	    "actAs": [$(ACT_AS)], \
+		"commandId": "archive-contract-$(shell date +%s)"}' | jq '.'
 
 get-adapter-id: get-token
 	@LEDGER_END=$$(curl -s -X GET \
