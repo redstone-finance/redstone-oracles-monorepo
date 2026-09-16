@@ -2,6 +2,9 @@
 export type MetadataForRedstonePrice = {
   nodeLabel: string;
 
+  /** Market status of an RWA feed at the iteration time. Defined only for RWA feeds. */
+  currentStatus?: RwaMarketStatus;
+
   /** Aggregated value represented as decimal with '.' decimal point separator */
   value: string;
 
@@ -27,7 +30,17 @@ export interface MetadataPerSource {
 
   /** value timestamp as reported by source */
   timestampMilliseconds?: number;
+
+  /**
+   * Temporary carrier of the RWA market status from the fetcher to the node's metadata builder.
+   * It is lifted to `MetadataForRedstonePrice.currentStatus` and removed from the per-source
+   * metadata, so it never reaches the broadcasted data packages.
+   */
+  marketStatus?: RwaMarketStatus;
 }
+
+/** Mirrors the `MarketStatus` enum values from node-commons, which cannot be imported here. */
+export type RwaMarketStatus = "regular-hours" | "closed-short" | "closed-long";
 
 export type SlippageData =
   | {
