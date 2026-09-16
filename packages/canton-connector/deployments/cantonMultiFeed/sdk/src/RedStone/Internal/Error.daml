@@ -19,8 +19,8 @@ instance Show a => Show (RedStoneError a) where
 
 otherError message arg = RedStoneError Other message arg
 
-check cond orError =
-    if cond then () else error $ show orError
-
 infixl 1 ???
-cond ??? orError = check cond orError
+(???) : Show a => Bool -> RedStoneError a -> Either Text ()
+cond ??? orError = if cond then Right () else Left (show orError)
+
+(!!!) = either error identity

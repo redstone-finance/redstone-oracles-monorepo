@@ -1,17 +1,23 @@
 module PriceUpdateEvent where
 
 import RedStoneTypes
+import RedStone.ProcessorTypes (ProcessorError)
+
+data PriceUpdate
+  = Updated (RedStonePriceData RedStoneValue)
+  | Skipped ProcessorError
+  deriving (Eq, Show)
 
 template PriceUpdateEvent
   with
     feedId : RedStoneFeedId
     isSkipped : Bool
-    priceData : Optional (RedStonePriceData RedStoneValue)
-    error : Optional Text
+    update : PriceUpdate
     owner : Party
     updaters : [Party]
     adapterId : Optional Text
   where
+    ensure isSkipped == (case update of Skipped _ -> True; Updated _ -> False)
     signatory owner
     observer updaters
 

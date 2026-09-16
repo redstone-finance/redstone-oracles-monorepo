@@ -36,6 +36,9 @@ All choices across all contracts (`IRedStoneCore`, `IRedStoneAdapter`, `IRedSton
 2. Intellect did set up a participant (node), which we can use
 3. Keycloak defines a user who can operate on the participant
 4. Doesn't provide Ledger API outside the system so it can be only used via RPC calls.
+5. The **mainnet** `canton-ui` account requires TOTP, the devnet one does not. Pass a fresh 6-digit code to any
+   target that needs a token, e.g. `make deploy-adapter TOTP=123456`; without it Keycloak answers
+   `invalid_grant` / `Invalid user credentials`.
 
 ## Contracts - Canton caveats
 
@@ -61,8 +64,9 @@ All choices across all contracts (`IRedStoneCore`, `IRedStoneAdapter`, `IRedSton
    1. Local development
    2. Calling [deploy](../../deploy.mk) methods with keycloak authorization
    3. Making [operations](../../ops.mk) (calling/deploying) contracts on external provider
-3. Run from the canton-connector root with `DEPLOY_DIR=deployments/cantonMultiFeed`,
-   e.g. `make deploy-adapter DEPLOY_DIR=deployments/cantonMultiFeed`.
+3. `DEPLOY_DIR` (default `daml`) and `NETWORK` are set in `../../.env`. Per-deployment
+   state files (`factory_id.txt`, `reward_factory_id.txt`, `adapter_id.txt`,
+   `core_id.txt`) live under `$(DEPLOY_DIR)`.
 
 ## Components
 
@@ -107,11 +111,7 @@ See more about the [RedStone SDK](./sdk/README.md) library.
       payloadHex : PayloadHex
     controller caller
     do
-      if iRedStoneCore_ShouldVerifyViewer this caller then
-         iRedStoneCore_VerifyViewer this caller
-      else
-         pure ()
-
+      iRedStoneCore_VerifyViewer this caller
       iRedStoneCore_GetPricesImpl this caller feedIds currentTime payloadHex
 ```
 
@@ -124,22 +124,16 @@ See more about the Pull model and the Disclosed Core Contract [here](./core/READ
 
 See more about the Push model, PricePill lifecycle and all choices [here](./adapter/README.md)
 
-```haskell
-  nonconsuming choice GetPrices : RedStoneResult
-    with
-      caller : Party
-      feedIds : [RedStoneFeedId]
-      currentTime : Time
-      payloadHex : PayloadHex
-    controller caller
+The `RedStoneAdapter` template implements **both** the `IRedStoneAdapter` and the `IRedStoneCore` interfaces, so `GetPrices` (defined on `IRedStoneCore`) is also callable on an adapter contract. The choices defined by the `IRedStoneAdapter` interface itself are:
 
+```haskell
   nonconsuming choice WritePrices : ContractId IRedStoneAdapter
     with
       caller : Party
       feedIds : [RedStoneFeedId]
       currentTime : Time
-      payloadHex : Text
-      additionalPillViewers : Optional [Party]
+      payloadHex : PayloadHex
+      context : WritePricesContext
     controller caller
 
   nonconsuming choice ReadPrices : [RedStoneValue]
@@ -187,23 +181,25 @@ and contains a snapshot of price data for a single feed.
 
 #### Pill Data Fields
 
-Each `RedStonePricePill` contract contains:
+Each `RedStonePricePill` contract has the following fields:
 
 | Field | Type | Description |
 | ------- | ------ | ------------- |
-| `value` | `Numeric 8` | The aggregated price value |
-| `timestamp` | `Int` | Data timestamp (ms since epoch) |
-| `writeTimestamp` | `Int` | When the pill was written to the ledger (ms) |
+| `owner` | `Party` | Signatory of the pill |
+| `viewers` | `[Party]` | Parties allowed to read the pill |
+| `creators` | `[Party]` | Parties allowed to archive the pill |
 | `feedId` | `RedStoneFeedId` | Feed identifier (e.g., `[69, 84, 72]` for ETH) |
-| `description` | `Text` | Human-readable description |
+| `priceData` | `RedStonePriceData RedStoneValue` | Nested record with `value : Numeric 8`, `packageTimestamp : Int` (data timestamp, ms) and `writeTimestamp : Int` (ledger write time, ms) |
 | `stalenessMs` | `Int` | Staleness window in milliseconds |
 | `adapterId` | `Text` | Identifier of the adapter that created this pill |
+
+There is no stored `description` field — the human-readable description is derived on read by the `ReadDescription` choice.
 
 #### Pill Lifecycle
 
 1. **Creation**: Pills are created during `WritePrices` when the adapter has a `pillFactory` configured. The factory creates one pill per feed ID per write operation. Each pill is a separate Daml contract that can be independently queried.
 2. **Active period**: The pill is readable via `ReadData`, `ReadPrice`, `ReadTimestamp`. `IsDataStale` returns `False` while the current ledger time is within the staleness window. `ReadData` and `ReadPrice` assert the pill is not stale before returning data.
-3. **Retention**: The adapter keeps the **newest 2 pills per feed** — older ones are archived during the next write. The newest pill is always available for at least `pill_keep_ms` (1 minute) — it will not be archived until the next `WritePrices` call after that time elapses.
+3. **Retention**: The adapter always keeps the **newest 2 pills per feed** regardless of age. Older ones (the 3rd and beyond) are "demoted" on write, and archived on a later write once more than `pill_keep_ms` (1 minute) has elapsed since demotion. So a demoted pill stays available for at least `pill_keep_ms` before the next `WritePrices` call archives it.
 4. **Archival**: Stale pills are archived by the factory via `ArchivePricePills`, which exercises the consuming `ArchivePill` choice on each pill. Only `creators` (the updater party) can archive pills.
 
 #### Pill Duration & Staleness
@@ -253,7 +249,7 @@ All choices take `caller : Party` as the first parameter:
     controller caller
 ```
 
-- **`ReadData`** — verifies the caller is a viewer, asserts the pill is not stale, then returns full `RedStonePriceData` (value, timestamp, writeTimestamp)
+- **`ReadData`** — verifies the caller is a viewer, asserts the pill is not stale, then returns full `RedStonePriceData` (`value`, `packageTimestamp`, `writeTimestamp`)
 - **`ReadPrice`** — verifies the caller is a viewer, asserts the pill is not stale, then returns just the price value
 - **`ReadTimestamp`** — returns the data timestamp
 - **`ReadFeedId`** — returns the feed ID
