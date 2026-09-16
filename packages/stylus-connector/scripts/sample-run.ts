@@ -1,10 +1,10 @@
-import * as providers from "@ethersproject/providers";
-import { Wallet } from "@ethersproject/wallet";
+import { getJsonRpcProvider } from "@redstone-finance/rpc-providers";
 import {
   ContractParamsProvider,
   DataPackagesRequestParams,
   getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
+import { createWallet } from "@redstone-finance/signing";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { PriceAdapterService } from "./PriceAdapterService";
@@ -25,22 +25,21 @@ async function main() {
   const contractAddress = RedstoneCommon.getFromEnv("CONTRACT_ADDRESS");
   const privateKey = RedstoneCommon.getFromEnv("PRIVATE_KEY");
   const rpcUrl = RedstoneCommon.getFromEnv("RPC_URL");
-  const provider = new providers.JsonRpcProvider(rpcUrl);
+  const provider = getJsonRpcProvider(rpcUrl);
 
   const paramsProvider = new ContractParamsProvider(requestParams);
   const feeds = paramsProvider.getHexlifiedFeedIdsAsBytes32();
   const payload = await paramsProvider.getPayloadHex();
-  const wallet = new Wallet(privateKey, provider);
+  const wallet = createWallet(privateKey);
 
-  const priceAdapter = new PriceAdapterService(contractAddress, wallet);
+  const priceAdapter = new PriceAdapterService(contractAddress, provider, wallet);
   await readData(priceAdapter, feeds, dataPackagesIds);
 
   console.log(`\nWriting prices for [${dataPackagesIds.toString()}]...`);
 
-  const tx = await priceAdapter.writePrices(feeds, payload);
-  console.log(tx.hash);
-  const receipt = await tx.wait();
-  console.log(`Prices written; Gas used: ${receipt.gasUsed.toBigInt()}`);
+  const receipt = await priceAdapter.writePrices(feeds, payload);
+  console.log(receipt.hash);
+  console.log(`Prices written; Gas used: ${receipt.gasUsed}`);
 
   await readData(priceAdapter, feeds, dataPackagesIds);
 }
