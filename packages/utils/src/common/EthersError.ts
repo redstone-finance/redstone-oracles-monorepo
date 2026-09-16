@@ -6,7 +6,7 @@ export interface EthersError {
 }
 
 export type Ethers_5_7_Error = {
-  [K in (typeof ETHERS_5_7_ERROR_PROPS)[number]]?: string | number;
+  [K in (typeof ETHERS_ERROR_PROPS)[number]]?: unknown;
 } & Error;
 
 export const ETHERS_5_7_ERROR_PROPS = [
@@ -22,7 +22,8 @@ export const ETHERS_5_7_ERROR_PROPS = [
   "errorSignature",
   "body",
 ] as const;
-
+export const ETHERS_6_ERROR_PROPS = ["shortMessage", "info"] as const;
+export const ETHERS_ERROR_PROPS = [...ETHERS_5_7_ERROR_PROPS, ...ETHERS_6_ERROR_PROPS] as const;
 const ethers_5_7_errorCodes: string[] = Object.values(ErrorCode);
 
 export function isEthersError(e: unknown): e is EthersError {
