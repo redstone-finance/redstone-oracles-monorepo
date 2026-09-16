@@ -80,13 +80,13 @@
     },
     "DAI": {
       "source": [
-        "ws-spot-bitget-usdt",
         "bitrue_deferred-usdt",
-        "ws-spot-gate-usdt",
         "ws-spot-kraken-usd",
         "mexc_deferred-usdt",
         "curve-ethereum-usdt-deferred",
-        "uniswap-v3-ethereum-usdt-100-deferred"
+        "uniswap-v3-ethereum-usdt-100-deferred",
+        "kraken_deferred-usdt",
+        "uniswap-v3-ethereum-weth-500-deferred"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -373,18 +373,6 @@
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "VSXY---OVERNIGHT": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
       "types": [
         "rwa"
       ]
@@ -1109,6 +1097,18 @@
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XYZ100_PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "types": [
         "rwa"
       ]
@@ -3551,7 +3551,6 @@
     "STORJ": {
       "source": [
         "lbank_deferred-usdt",
-        "ws-spot-binance-usdt",
         "ws-spot-gate-usdt",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt"
@@ -4221,7 +4220,6 @@
       "source": [
         "bingx_deferred-usdt",
         "mexc_deferred-usdt",
-        "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt"
       ],
@@ -4344,7 +4342,6 @@
         "binance_deferred-usdc",
         "mexc_deferred-usdt",
         "ws-spot-binance-usdt",
-        "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
