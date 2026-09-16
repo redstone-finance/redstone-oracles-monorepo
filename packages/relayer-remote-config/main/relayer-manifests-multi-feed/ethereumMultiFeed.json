@@ -592,6 +592,13 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "wemUSD_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x6b860bE3CCc3b69C912ff2f7975Ea0d1194928a7",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 60000
+      }
     }
   }
 }
