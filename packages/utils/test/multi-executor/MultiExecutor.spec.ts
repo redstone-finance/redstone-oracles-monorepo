@@ -581,7 +581,7 @@ describe("MultiExecutor", () => {
       const aggregateError = e as AggregateError;
 
       expect(aggregateError.message).toEqual(message);
-      expect(aggregateError.errors.length).toEqual(numberOfFails);
+      expect(aggregateError.errors).toHaveLength(numberOfFails);
       expect(aggregateError.errors[0]).toEqual(new Error(firstReason));
     }
   }

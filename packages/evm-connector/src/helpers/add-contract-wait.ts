@@ -10,7 +10,7 @@ export const addContractWait = (contract: Contract, tx: TransactionResponse) => 
   tx.wait = async (confirmations?: number) => {
     const receipt: ContractReceipt = await wait(confirmations);
     receipt.events = receipt.logs.map((log: Log) => {
-      const event = <Event>deepCopy(log);
+      const event = deepCopy(log) as Event;
       let parsed: LogDescription | undefined;
       try {
         parsed = contract.interface.parseLog(log);

@@ -53,7 +53,7 @@
     "global:ts-clean": "cd $INIT_CWD && rm -rf dist coverage \"*.tsbuildinfo\"",
     "global:ts-hardhat-clean": "cd $INIT_CWD && yarn global:ts-clean && rm -rf artifacts cache typechain-types",
     "global:depcheck": "cd $INIT_CWD && depcheck",
-    "depcheck:all": "yarn workspaces foreach --all run global:depcheck",
+    "depcheck:all": "yarn workspaces foreach --all -p run global:depcheck",
     "generate-paths-to-include-in-public-repo": "yarn global:tsx scripts/generate-paths-to-include-in-public-repo.ts",
     "validate-paths-to-include-in-public-repo": "yarn global:tsx scripts/validate-paths-to-include-in-public-repo.ts"
   },

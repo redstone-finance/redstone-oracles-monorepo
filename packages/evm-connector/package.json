@@ -28,8 +28,7 @@
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/signing": "workspace:*",
-    "@redstone-finance/utils": "workspace:*",
-    "axios": "^1.19"
+    "@redstone-finance/utils": "workspace:*"
   },
   "devDependencies": {
     "@ethersproject/bignumber": "^5.7.0",
@@ -44,7 +43,6 @@
     "@typechain/hardhat": "^6.1.2",
     "@types/chai": "^4.3.4",
     "@types/chai-as-promised": "^7.1.5",
-    "@types/sinon-chai": "^3.2.12",
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.1",
     "ethers": "^5.7.2",
