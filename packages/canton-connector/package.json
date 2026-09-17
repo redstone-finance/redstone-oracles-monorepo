@@ -27,6 +27,7 @@
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "decimal.js": "^10.4.3",
+    "form-data": "^4",
     "lodash": "^4.17.23"
   },
   "devDependencies": {
