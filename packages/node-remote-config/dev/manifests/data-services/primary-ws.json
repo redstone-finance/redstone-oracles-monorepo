@@ -2719,6 +2719,102 @@
         "rwa"
       ]
     },
+    "LENOVO": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SHEIN": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BYD": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "KUAISHOU": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "MEITUAN": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "INNOLIGHT": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CSOP_SK_HYNIX_2X": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CSOP_SAMSUNG_2X": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "TSMC": {
       "source": [],
       "priceAggregator": "redstoneX",
@@ -2933,6 +3029,66 @@
       ]
     },
     "KODEX200": {
+      "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SAMSUNG_EM": {
+      "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NAVER": {
+      "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "LG_ELECTRONICS": {
+      "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "HANMI": {
       "source": [],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
