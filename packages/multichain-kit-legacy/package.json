@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@redstone-finance/multichain-kit": "workspace:*",
-    "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*"
   },
