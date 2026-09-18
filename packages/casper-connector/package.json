@@ -26,11 +26,6 @@
     "axios": "^1.19",
     "casper-js-sdk": "^2.15.5"
   },
-  "devDependencies": {
-    "dotenv": "^16.0.3",
-    "node-jq": "^6.0.0",
-    "zod": "^4.1.12"
-  },
   "files": [
     "src",
     "dist"
