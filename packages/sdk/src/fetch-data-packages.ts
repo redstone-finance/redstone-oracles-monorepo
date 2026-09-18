@@ -11,6 +11,8 @@ const GET_REQUEST_TIMEOUT = RedstoneCommon.secsToMs(5);
 const DEFAULT_WAIT_FOR_ALL_GATEWAYS_TIME_MS = 500;
 const logger = loggerFactory("fetch-data-packages");
 
+const DataPointMetadataSchema = z.record(z.string(), z.unknown());
+
 export const SignedDataPackageSchema = z.object({
   dataPoints: z
     .array(
@@ -19,12 +21,14 @@ export const SignedDataPackageSchema = z.object({
           dataFeedId: z.string(),
           value: z.number(),
           decimals: z.number().optional(),
+          metadata: DataPointMetadataSchema.optional(),
         })
         .or(
           z.object({
             dataFeedId: z.string(),
             value: z.string(),
             decimals: z.number().optional(),
+            metadata: DataPointMetadataSchema.optional(),
           })
         )
     )
