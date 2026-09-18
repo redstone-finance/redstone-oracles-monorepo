@@ -596,8 +596,8 @@
     "wemUSD_FUNDAMENTAL/USD": {
       "priceFeedAddress": "0x6b860bE3CCc3b69C912ff2f7975Ea0d1194928a7",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.000001,
-        "timeSinceLastUpdateInMilliseconds": 60000
+        "deviationPercentage": 0.0001,
+        "timeSinceLastUpdateInMilliseconds": 3600000
       }
     }
   }
