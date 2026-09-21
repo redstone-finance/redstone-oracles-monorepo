@@ -5384,6 +5384,13 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "CASH+_FUNDAMENTAL": {
+      "source": [
+        "sync-nav-api"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "CHECK": {
       "source": [
         "bingx-usdt",
