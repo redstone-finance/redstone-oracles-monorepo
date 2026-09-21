@@ -36,6 +36,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
+        "pancake-swap-bnb-wbnb-500",
         "xt-usdc",
         "xt-usdt"
       ]
@@ -281,12 +282,13 @@
       "source": [
         "bitget-usdt",
         "bitrue-usdt",
+        "curve-ethereum-usdt",
         "gate-usdt",
         "kraken-usd",
         "kraken-usdt",
         "mexc-usdt",
-        "curve-ethereum-usdt",
-        "uniswap-v3-ethereum-usdt-100"
+        "uniswap-v3-ethereum-usdt-100",
+        "uniswap-v4-ethereum-usdt-68"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
