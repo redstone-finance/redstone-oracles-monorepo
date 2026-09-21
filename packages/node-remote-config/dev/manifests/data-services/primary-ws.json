@@ -2827,6 +2827,234 @@
         "rwa"
       ]
     },
+    "MEDIATEK": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "DELTA": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "HON_HAI": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ASE": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "FUBON": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ELITE_MATERIAL": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NAN_YA_PLASTICS": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NANYA_TECH": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "UMC": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CATHAY": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "UNIMICRON": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "KING_SLIDE": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "AVC": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "QUANTA": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CTBC": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ACCTON": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "YAGEO": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "HON_PRECISION": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CHUNGHWA_TEL": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "KIOXIA": {
       "source": [],
       "priceAggregator": "redstoneX",
