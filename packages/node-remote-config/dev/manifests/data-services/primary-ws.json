@@ -241,6 +241,20 @@
         "rwa"
       ]
     },
+    "TWD_FX": {
+      "source": [],
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "BTC": {
       "source": [
         "ws-spot-binance-usdt",
