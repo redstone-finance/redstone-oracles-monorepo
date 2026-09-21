@@ -32,6 +32,12 @@ export interface MetadataPerSource {
   timestampMilliseconds?: number;
 
   /**
+   * Rwa value timestamp: as reported by source, else when the node received it, else the iteration
+   * timestamp. Unlike timestampMilliseconds it is never age-filtered, so it may be arbitrarily old.
+   */
+  rwaTimestampMilliseconds?: number;
+
+  /**
    * Temporary carrier of the RWA market status from the fetcher to the node's metadata builder.
    * It is lifted to `MetadataForRedstonePrice.currentStatus` and removed from the per-source
    * metadata, so it never reaches the broadcasted data packages.
