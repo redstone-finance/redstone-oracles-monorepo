@@ -8672,6 +8672,7 @@ __metadata:
     "@ethersproject/bignumber": "npm:^5.7.0"
     "@googleapis/gmail": "npm:^16.1.1"
     "@meteora-ag/dlmm": "npm:^1.9.14"
+    "@msgpack/msgpack": "npm:^3.1.2"
     "@orca-so/common-sdk": "npm:^0.7.0"
     "@orca-so/whirlpools-sdk": "npm:^0.19.0"
     "@raydium-io/raydium-sdk-v2": "npm:^0.2.48-alpha"
