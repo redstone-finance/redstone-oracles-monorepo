@@ -3,6 +3,8 @@ const FEED_SYMBOL_OVERRIDES: Record<string, string | undefined> = {
   EURC: "EUROC",
   xSolvBTC: "SolvBTC.BBN",
   XAUM: "XAUm",
+  USDE: "USDe",
+  SUSDE: "sUSDe",
 };
 
 const FEED_SUFFIXES = ["_FUNDAMENTAL/USD", "_FUNDAMENTAL"];
