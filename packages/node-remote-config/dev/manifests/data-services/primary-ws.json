@@ -35,10 +35,6 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -68,10 +64,6 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -94,10 +86,6 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
       "denomination": "USD",
       "types": [
         "crypto"
@@ -106,10 +94,6 @@
     },
     "EUR": {
       "source": [],
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -267,10 +251,6 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -288,10 +268,6 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
-      ],
-      "broadcasters": [
-        "influx",
-        "s3"
       ],
       "denomination": "USD",
       "rateFeed": false,
