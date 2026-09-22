@@ -755,8 +755,13 @@
     },
     "ENTROPY_DEPTH_io:ANTH": {
       "source": [
+        "ws-hydromancer-depth",
         "ws-hyperliquid-perps-io"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hydromancer-depth"
+      },
       "broadcasters": [
         "influx"
       ],
@@ -888,8 +893,13 @@
     },
     "ENTROPY_DEPTH_io:OAI": {
       "source": [
+        "ws-hydromancer-depth",
         "ws-hyperliquid-perps-io"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hydromancer-depth"
+      },
       "broadcasters": [
         "influx"
       ],
@@ -1308,8 +1318,13 @@
     },
     "ENTROPY_DEPTH_io:SNDK": {
       "source": [
+        "ws-hydromancer-depth",
         "ws-hyperliquid-perps-io"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hydromancer-depth"
+      },
       "broadcasters": [
         "influx"
       ],
@@ -1743,8 +1758,13 @@
     },
     "ENTROPY_DEPTH_io:DRAM": {
       "source": [
+        "ws-hydromancer-depth",
         "ws-hyperliquid-perps-io"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hydromancer-depth"
+      },
       "broadcasters": [
         "influx"
       ],
@@ -1953,8 +1973,13 @@
     },
     "ENTROPY_DEPTH_io:IONQ": {
       "source": [
+        "ws-hydromancer-depth",
         "ws-hyperliquid-perps-io"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hydromancer-depth"
+      },
       "broadcasters": [
         "influx"
       ],
@@ -2163,8 +2188,13 @@
     },
     "ENTROPY_DEPTH_io:EWY": {
       "source": [
+        "ws-hydromancer-depth",
         "ws-hyperliquid-perps-io"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hydromancer-depth"
+      },
       "broadcasters": [
         "influx"
       ],
@@ -2373,8 +2403,13 @@
     },
     "ENTROPY_DEPTH_io:NBIS": {
       "source": [
+        "ws-hydromancer-depth",
         "ws-hyperliquid-perps-io"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hydromancer-depth"
+      },
       "broadcasters": [
         "influx"
       ],
@@ -2753,8 +2788,13 @@
     },
     "ENTROPY_DEPTH_io:GPRO": {
       "source": [
+        "ws-hydromancer-depth",
         "ws-hyperliquid-perps-io"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hydromancer-depth"
+      },
       "broadcasters": [
         "influx"
       ],
@@ -2916,8 +2956,13 @@
     },
     "ENTROPY_DEPTH_io:TCNT": {
       "source": [
+        "ws-hydromancer-depth",
         "ws-hyperliquid-perps-io"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hydromancer-depth"
+      },
       "broadcasters": [
         "influx"
       ],
