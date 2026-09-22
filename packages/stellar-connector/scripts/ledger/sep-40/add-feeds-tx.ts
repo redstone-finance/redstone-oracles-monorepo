@@ -16,23 +16,23 @@ const contractAddressForAsset = (
 
 const FEED_MAPPINGS: FeedMapping[] = [
   {
-    feed: "GILTS",
+    feed: "USDe",
     asset: {
       tag: "Stellar",
       address: contractAddressForAsset(
-        "GILTS",
-        "GCRYUGD5NVARGXT56XEZI5CIFCQETYHAPQQTHO2O3IQZTHDH4LATMYWC"
+        "USDE",
+        "GDJ5BNU5NN6NQ54D7OX6NQTUYNBZ42CAT33QGM5BIQ2QIYADAC5ICH47"
       ),
     },
     decimals: 8,
   },
   {
-    feed: "USDY",
+    feed: "sUSDe",
     asset: {
       tag: "Stellar",
       address: contractAddressForAsset(
-        "USDY",
-        "GAJMPX5NBOG6TQFPQGRABJEEB2YE7RFRLUKJDZAZGAD5GFX4J7TADAZ6"
+        "SUSDE",
+        "GDJ5BNU5NN6NQ54D7OX6NQTUYNBZ42CAT33QGM5BIQ2QIYADAC5ICH47"
       ),
     },
     decimals: 8,
