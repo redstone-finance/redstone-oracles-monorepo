@@ -3255,6 +3255,10 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "KRW",
       "rateFeed": false,
       "types": [
@@ -3270,6 +3274,10 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "KRW",
       "rateFeed": false,
       "types": [
@@ -3285,6 +3293,10 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "KRW",
       "rateFeed": false,
       "types": [
@@ -3300,6 +3312,10 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "KRW",
       "rateFeed": false,
       "types": [
@@ -3315,6 +3331,10 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "KRW",
       "rateFeed": false,
       "types": [
