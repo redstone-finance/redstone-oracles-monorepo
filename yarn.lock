@@ -8786,7 +8786,6 @@ __metadata:
     "@redstone-finance/agents": "workspace:*"
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
