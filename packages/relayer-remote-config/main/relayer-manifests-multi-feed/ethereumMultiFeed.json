@@ -150,13 +150,6 @@
     "USUAL": {
       "priceFeedAddress": "0x2240AE461B34CC56D654ba5FA5830A243Ca54840"
     },
-    "PROMPT": {
-      "priceFeedAddress": "0x25a23C034fbC1eea341F6c92C6D8e6baFCF5DA40",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
     "swETH_FUNDAMENTAL": {
       "priceFeedAddress": "0x061bB36F8b67bB922937C102092498dcF4619F86",
       "updateTriggersOverrides": {

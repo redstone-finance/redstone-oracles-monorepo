@@ -41,9 +41,6 @@
     "KAITO": {
       "priceFeedAddress": "0x3fd49f2146FE0e10c4AE7E3fE04b3d5126385Ac4"
     },
-    "PROMPT": {
-      "priceFeedAddress": "0xbbF121624c3b85C929Ac83872bf6c86b0976A55e"
-    },
     "thBILL_FUNDAMENTAL": {
       "priceFeedAddress": "0x83c6f7F61A55Fc7A1337AbD45733AD9c1c68076D",
       "updateTriggersOverrides": {
