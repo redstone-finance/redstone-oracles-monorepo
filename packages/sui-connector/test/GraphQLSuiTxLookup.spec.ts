@@ -1,8 +1,8 @@
 import { toBase64 } from "@mysten/bcs";
 import { MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE } from "@redstone-finance/multichain-kit";
+import { makeFeedIdBytes, makeSuiGraphQLClient, uint8ArrayToBcs } from "../src";
 import type { RawGqlTx } from "../src/client/graphql-types";
 import { GraphQLSuiTxLookup } from "../src/client/lookup/GraphQLSuiTxLookup";
-import { makeFeedIdBytes, makeSuiGraphQLClient, uint8ArrayToBcs } from "../src/util";
 import {
   ADAPTER_OBJECT_ID,
   CURSOR,
@@ -106,24 +106,24 @@ describe("GraphQLSuiTxLookup", () => {
     await expect(sut.fetchPage(PAGE)).rejects.toThrow(GRAPHQL_ERROR);
   });
 
-  it("should throw when the inputs of a transaction do not fit one page", async () => {
+  it("should skip a transaction whose inputs do not fit one page", async () => {
     const rawTx = makeRawTx();
     rawTx.kind.inputs.pageInfo.hasNextPage = true;
     stubPage([rawTx]);
 
-    await expect(sut.fetchPage(PAGE)).rejects.toThrow(
-      `Transaction ${DIGEST} carries more inputs than one GraphQL page`
-    );
+    const { data } = await sut.fetchPage(PAGE);
+
+    expect(data).toEqual([]);
   });
 
-  it("should throw when the events of a transaction do not fit one page", async () => {
+  it("should skip a transaction whose events do not fit one page", async () => {
     const rawTx = makeRawTx();
     rawTx.effects.events.pageInfo.hasNextPage = true;
     stubPage([rawTx]);
 
-    await expect(sut.fetchPage(PAGE)).rejects.toThrow(
-      `Transaction ${DIGEST} carries more events than one GraphQL page`
-    );
+    const { data } = await sut.fetchPage(PAGE);
+
+    expect(data).toEqual([]);
   });
 
   it("should page on when GraphQL has older transactions in the range", async () => {

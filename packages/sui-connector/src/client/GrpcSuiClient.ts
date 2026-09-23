@@ -11,6 +11,7 @@ import { RECEIVED_TRANSACTIONS_QUERY } from "./queries";
 import { SUB_INSTANCE_MODES, SuiClient } from "./SuiClient";
 
 export const MISSING_FIELD_MESSAGE = "Dynamic field not found";
+export const MAX_GRAPHQL_PAGE_SIZE = 50;
 const COIN_STRUCT_TAG = "0x2::coin::Coin";
 
 export class GrpcSuiClient extends SuiClient {
@@ -85,7 +86,7 @@ export class GrpcSuiClient extends SuiClient {
 
     const result = await this.graphqlClient.query({
       query: RECEIVED_TRANSACTIONS_QUERY,
-      variables: { address, last: limit, before: cursor ?? null },
+      variables: { address, last: Math.min(limit, MAX_GRAPHQL_PAGE_SIZE), before: cursor ?? null },
     });
 
     if (result.errors?.length) {
