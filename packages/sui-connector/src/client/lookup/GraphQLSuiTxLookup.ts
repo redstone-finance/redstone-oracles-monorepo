@@ -91,7 +91,9 @@ export class GraphQLSuiTxLookup extends PerManifestTxLookup {
   }
 
   private static normalize(tx: RawGqlTx) {
-    GraphQLSuiTxLookup.assertNotTruncated(tx);
+    if (GraphQLSuiTxLookup.isTruncated(tx)) {
+      return [];
+    }
 
     const inputs = GraphQLSuiTxLookup.parseInputs(tx.kind?.inputs?.nodes ?? []);
     const moveCalls = GraphQLSuiTxLookup.parseMoveCalls(tx.kind?.commands?.nodes ?? []);
@@ -136,7 +138,7 @@ export class GraphQLSuiTxLookup extends PerManifestTxLookup {
     });
   }
 
-  private static assertNotTruncated(tx: RawGqlTx) {
+  private static isTruncated(tx: RawGqlTx) {
     const connections = {
       events: tx.effects?.events?.pageInfo,
       inputs: tx.kind?.inputs?.pageInfo,
@@ -146,10 +148,13 @@ export class GraphQLSuiTxLookup extends PerManifestTxLookup {
       .filter(([, pageInfo]) => pageInfo?.hasNextPage)
       .map(([name]) => name);
 
-    RedstoneCommon.assert(
-      !truncated.length,
-      `Transaction ${tx.digest} carries more ${truncated.join(" and ")} than one GraphQL page`
-    );
+    if (truncated.length) {
+      logger.warn(
+        `Skipping transaction ${tx.digest}, it carries more ${truncated.join(" and ")} than one GraphQL page`
+      );
+    }
+
+    return truncated.length > 0;
   }
 
   private static parseInputs(rawInputs: RawGqlInput[]) {
