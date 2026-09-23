@@ -5,6 +5,7 @@ export * from "./axios-retry";
 export * from "./base64";
 export * from "./batch-promises";
 export * from "./big-numbers";
+export * from "./BlockNumberProvider";
 export * from "./CacheWithTtl";
 export * from "./clone";
 export * from "./conversions";

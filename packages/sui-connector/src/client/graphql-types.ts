@@ -28,31 +28,32 @@ export type RawGqlTxn = {
 };
 
 export type RawGqlGasSummary = {
-  computationCost?: string | null;
-  storageCost?: string | null;
-  storageRebate?: string | null;
-  nonRefundableStorageFee?: string | null;
+  computationCost?: string | number | null;
+  storageCost?: string | number | null;
+  storageRebate?: string | number | null;
 };
 
 export type RawGqlEventNode = {
   contents?: { type?: { repr?: string | null } | null; json?: unknown } | null;
 };
 
+export type RawGqlPageInfo = { hasNextPage?: boolean } | null;
+
 export type RawGqlEffects = {
-  checkpoint?: { sequenceNumber?: string | number; timestamp?: string } | null;
+  checkpoint?: { sequenceNumber?: string | number | null; timestamp?: string | null } | null;
   status?: string | null;
   gasEffects?: { gasSummary?: RawGqlGasSummary | null } | null;
-  events?: { nodes: RawGqlEventNode[] } | null;
+  events?: { nodes: RawGqlEventNode[]; pageInfo?: RawGqlPageInfo } | null;
 };
 
 export type RawGqlTx = {
   digest?: string;
   sender?: { address?: string } | null;
   effects?: RawGqlEffects | null;
-  gasInput?: { gasBudget?: string; gasPrice?: string } | null;
+  gasInput?: { gasBudget?: string | null; gasPrice?: string | null } | null;
   kind?: {
     __typename?: string;
-    inputs?: { nodes: RawGqlInput[] } | null;
-    commands?: { nodes: RawGqlTxn[] } | null;
+    inputs?: { nodes: RawGqlInput[]; pageInfo?: RawGqlPageInfo } | null;
+    commands?: { nodes: RawGqlTxn[]; pageInfo?: RawGqlPageInfo } | null;
   } | null;
 };

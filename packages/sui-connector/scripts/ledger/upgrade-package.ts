@@ -1,5 +1,6 @@
 import { Transaction, UpgradePolicy } from "@mysten/sui/transactions";
-import { buildPackage, DEFAULT_GAS_BUDGET, getDeployDir, readIds, SuiNetworkName } from "../../src";
+import { buildPackage, DEFAULT_GAS_BUDGET, SuiNetworkName } from "../../src";
+import { getDeployDir, readIds } from "../deployment-config";
 import { generateTransactionData } from "./generate-transaction-data";
 
 export function setUpUpgradeTx(tx: Transaction, network: SuiNetworkName) {

@@ -2,11 +2,11 @@ import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-fi
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { execSync } from "child_process";
 import "dotenv/config";
+import { readSuiConfig } from "../scripts/deployment-config";
 import {
   makeSuiClient,
   makeSuiJsonRpcClient,
   makeSuiKeypair,
-  readSuiConfig,
   SuiClient,
   SuiNetworkSchema,
   SuiWriteContractAdapter,

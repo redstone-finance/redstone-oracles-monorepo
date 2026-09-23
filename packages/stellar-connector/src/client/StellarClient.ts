@@ -19,10 +19,10 @@ import { StellarSigner } from "../stellar/StellarSigner";
 import { getLedgerCloseDate } from "../utils";
 import * as XdrUtils from "../XdrUtils";
 import { parseSimValAs } from "../XdrUtils";
-import { BlockNumberProvider } from "./BlockNumberProvider";
 import { HorizonClient } from "./HorizonClient";
 import { IStellarCaller, StellarInvocation } from "./IStellarCaller";
 import { LedgerEntriesCollector, LedgerEntriesCollectorDelegate } from "./LedgerEntriesCollector";
+import { StellarBlockNumberProvider } from "./StellarBlockNumberProvider";
 import { StellarMulticall } from "./StellarMulticall";
 
 export const SECS_PER_LEDGER = 5;
@@ -36,7 +36,7 @@ const RANDOM_ACCOUNT_FOR_SIMULATION = new Account(Keypair.random().publicKey(), 
 
 export class StellarClient implements IStellarCaller, LedgerEntriesCollectorDelegate {
   private readonly logger = loggerFactory("stellar-client");
-  private readonly blockNumberProvider: BlockNumberProvider;
+  private readonly blockNumberProvider: StellarBlockNumberProvider;
   private readonly ledgerEntriesCollector = new Collector.CollectorRegistry(
     (blockNumber?: number) => String(blockNumber ?? "latest"),
     (blockNumber?: number) => {
@@ -63,7 +63,7 @@ export class StellarClient implements IStellarCaller, LedgerEntriesCollectorDele
     private readonly horizon?: HorizonClient,
     private readonly multicall?: StellarMulticall
   ) {
-    this.blockNumberProvider = new BlockNumberProvider(server);
+    this.blockNumberProvider = new StellarBlockNumberProvider(server);
   }
 
   dispose() {

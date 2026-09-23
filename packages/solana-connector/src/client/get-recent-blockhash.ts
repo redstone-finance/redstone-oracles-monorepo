@@ -1,5 +1,6 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { SOLANA_SLOT_TIME_INTERVAL_MS, SolanaClient } from "./SolanaClient";
+import { SOLANA_SLOT_TIME_INTERVAL_MS } from "./SolanaBlockNumberProvider";
+import { SolanaClient } from "./SolanaClient";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 6,

@@ -21,7 +21,8 @@ import { RegularSolanaGasOracle } from "../gas-oracles/RegularSolanaGasOracle";
 import { PriceAdapterContract } from "../price_adapter/PriceAdapterContract";
 import { SolanaRustSdkErrroHandler } from "../price_adapter/SolanaRustSdkErrorHandler";
 import { getRecentBlockhash } from "./get-recent-blockhash";
-import { SOLANA_SLOT_TIME_INTERVAL_MS, SolanaClient } from "./SolanaClient";
+import { SOLANA_SLOT_TIME_INTERVAL_MS } from "./SolanaBlockNumberProvider";
+import { SolanaClient } from "./SolanaClient";
 import { SolanaTxSender } from "./SolanaTxSender";
 
 const COMPUTE_UNITS_PER_SIGNER = 40_000;

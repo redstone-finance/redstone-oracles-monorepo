@@ -1,5 +1,6 @@
 import { Transaction } from "@mysten/sui/transactions";
-import { DEFAULT_GAS_BUDGET, readIds, SuiNetworkName } from "../../src";
+import { DEFAULT_GAS_BUDGET, SuiNetworkName } from "../../src";
+import { readIds } from "../deployment-config";
 import { generateTransactionData } from "./generate-transaction-data";
 
 const VERSION = 2;

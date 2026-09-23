@@ -58,7 +58,7 @@ export class GraphQLSuiTxLookup extends PerManifestTxLookup {
       throw new Error(`GraphQL returned no transactions for objectId=${adapterContract}`);
     }
 
-    const rawNodes = transactions.nodes as unknown as RawGqlTx[];
+    const rawNodes: RawGqlTx[] = transactions.nodes;
     const allFromPage = rawNodes.flatMap((tx) => GraphQLSuiTxLookup.normalize(tx));
 
     const oldestRawBlockInPage = computeOldestBlockInPage(rawNodes, (tx) =>
@@ -78,7 +78,12 @@ export class GraphQLSuiTxLookup extends PerManifestTxLookup {
     );
 
     const nextCursor = transactions.pageInfo.startCursor;
-    if (hasMoreInRange && nextCursor) {
+    if (hasMoreInRange) {
+      RedstoneCommon.assert(
+        nextCursor,
+        `GraphQL left in-range transactions for objectId=${adapterContract} behind a page with no cursor`
+      );
+
       return { data, hasNextPage: true as const, nextCursor };
     }
 
@@ -86,6 +91,8 @@ export class GraphQLSuiTxLookup extends PerManifestTxLookup {
   }
 
   private static normalize(tx: RawGqlTx) {
+    GraphQLSuiTxLookup.assertNotTruncated(tx);
+
     const inputs = GraphQLSuiTxLookup.parseInputs(tx.kind?.inputs?.nodes ?? []);
     const moveCalls = GraphQLSuiTxLookup.parseMoveCalls(tx.kind?.commands?.nodes ?? []);
     const writes = extractWritePriceCalls(inputs, moveCalls);
@@ -107,7 +114,6 @@ export class GraphQLSuiTxLookup extends PerManifestTxLookup {
       computationCost: gas.computationCost ?? "0",
       storageCost: gas.storageCost ?? "0",
       storageRebate: gas.storageRebate ?? "0",
-      nonRefundableStorageFee: gas.nonRefundableStorageFee ?? "0",
     });
 
     const blockNumber = Number(tx.effects?.checkpoint?.sequenceNumber ?? 0);
@@ -130,13 +136,29 @@ export class GraphQLSuiTxLookup extends PerManifestTxLookup {
     });
   }
 
+  private static assertNotTruncated(tx: RawGqlTx) {
+    const connections = {
+      events: tx.effects?.events?.pageInfo,
+      inputs: tx.kind?.inputs?.pageInfo,
+      commands: tx.kind?.commands?.pageInfo,
+    };
+    const truncated = Object.entries(connections)
+      .filter(([, pageInfo]) => pageInfo?.hasNextPage)
+      .map(([name]) => name);
+
+    RedstoneCommon.assert(
+      !truncated.length,
+      `Transaction ${tx.digest} carries more ${truncated.join(" and ")} than one GraphQL page`
+    );
+  }
+
   private static parseInputs(rawInputs: RawGqlInput[]) {
     return rawInputs.map((input) => {
       if (input.__typename === GQL_TYPENAME_PURE && typeof input.bytes === "string") {
-        return { kind: "pure" as const, rawValue: Buffer.from(input.bytes, "base64") };
+        return { kind: "pureBcs" as const, bcsBytes: Buffer.from(input.bytes, "base64") };
       }
       if (input.__typename === GQL_TYPENAME_MOVE_VALUE && typeof input.bcs === "string") {
-        return { kind: "pure" as const, rawValue: Buffer.from(input.bcs, "base64") };
+        return { kind: "pureBcs" as const, bcsBytes: Buffer.from(input.bcs, "base64") };
       }
       if (input.__typename === GQL_TYPENAME_SHARED_INPUT && typeof input.address === "string") {
         return { kind: "shared" as const, objectId: input.address };
