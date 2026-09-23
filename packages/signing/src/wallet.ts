@@ -1,5 +1,6 @@
 import type { TransactionRequest } from "@ethersproject/abstract-provider";
 import { BytesLike } from "@ethersproject/bytes";
+import { Wallet as EthersWallet } from "@ethersproject/wallet";
 import {
   addressFromPrivateKey,
   generateKeypair,
@@ -44,6 +45,17 @@ export function createWallet(rawPrivateKey: string): Wallet {
     ) => signTypedData(domain, types, value, privateKey),
     signTransaction: (transaction: TransactionRequest) => signTransaction(transaction, privateKey),
   });
+}
+
+export const DEFAULT_EVM_DERIVATION_PATH = "m/44'/60'/0'/0/0";
+
+export function createWalletFromMnemonic(
+  mnemonic: string,
+  derivationPath = DEFAULT_EVM_DERIVATION_PATH
+): Wallet {
+  const normalizedMnemonic = mnemonic.trim().split(/\s+/).join(" ");
+
+  return createWallet(EthersWallet.fromMnemonic(normalizedMnemonic, derivationPath).privateKey);
 }
 
 export function createRandomWallet(options?: KeyGenerationOptions) {
