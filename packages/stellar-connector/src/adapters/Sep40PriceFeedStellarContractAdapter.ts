@@ -1,7 +1,7 @@
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import { Contract } from "@stellar/stellar-sdk";
 import { StellarClient } from "../client/StellarClient";
-import { getFeedSymbol } from "../sep-40-asset-symbols";
+import { getFeedId } from "../sep-40-asset-symbols";
 import { isStellarAsset, Sep40Asset } from "../sep-40-types";
 import { Sep40ContractReader } from "./Sep40ContractReader";
 import { StellarTokenReader } from "./StellarTokenReader";
@@ -10,7 +10,8 @@ export class Sep40PriceFeedStellarContractAdapter implements PriceFeedAdapter {
   protected readonly contract: Contract;
   private readonly reader: Sep40ContractReader;
   private asset?: Sep40Asset;
-  private tokenReader?: StellarTokenReader;
+  private baseAsset?: Sep40Asset;
+  private readonly tokenReaders = new Map<string, StellarTokenReader>();
 
   constructor(
     private readonly client: StellarClient,
@@ -26,9 +27,12 @@ export class Sep40PriceFeedStellarContractAdapter implements PriceFeedAdapter {
   }
 
   async getDataFeedId(blockNumber?: number) {
-    const symbol = await this.readAssetSymbol(blockNumber);
+    const [assetSymbol, baseAssetSymbol] = await Promise.all([
+      this.readAssetSymbol(blockNumber),
+      this.readBaseAssetSymbol(blockNumber),
+    ]);
 
-    return getFeedSymbol(symbol, this.feedId);
+    return getFeedId(assetSymbol, baseAssetSymbol);
   }
 
   async getDecimals(blockNumber?: number) {
@@ -60,14 +64,25 @@ export class Sep40PriceFeedStellarContractAdapter implements PriceFeedAdapter {
   }
 
   private async readAssetSymbol(blockNumber?: number) {
-    const asset = await this.getAsset();
+    return await this.readSymbolOf(await this.getAsset(), blockNumber);
+  }
 
+  private async readBaseAssetSymbol(blockNumber?: number) {
+    this.baseAsset ??= await this.reader.base(blockNumber);
+
+    return await this.readSymbolOf(this.baseAsset, blockNumber);
+  }
+
+  private async readSymbolOf(asset: Sep40Asset, blockNumber?: number) {
     if (!isStellarAsset(asset)) {
       return asset.symbol;
     }
 
-    this.tokenReader ??= new StellarTokenReader(this.client, asset.address.toString());
+    const address = asset.address.toString();
+    const tokenReader =
+      this.tokenReaders.get(address) ?? new StellarTokenReader(this.client, address);
+    this.tokenReaders.set(address, tokenReader);
 
-    return await this.tokenReader.symbol(blockNumber);
+    return await tokenReader.symbol(blockNumber);
   }
 }

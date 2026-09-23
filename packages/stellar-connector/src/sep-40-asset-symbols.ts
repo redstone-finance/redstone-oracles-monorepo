@@ -1,20 +1,25 @@
-const FEED_SYMBOL_OVERRIDES: Record<string, string | undefined> = {
+const FEED_ID_OVERRIDES: Record<string, string | undefined> = {
   native: "XLM",
   EURC: "EUROC",
-  xSolvBTC: "SolvBTC.BBN",
-  XAUM: "XAUm",
   USDE: "USDe",
   SUSDE: "sUSDe",
+  USDY: "USDY_FUNDAMENTAL/USD",
+  SolvBTC: "SolvBTC_FUNDAMENTAL/USD",
+  xSolvBTC: "SolvBTC.BBN_FUNDAMENTAL/USD",
+  XAUM: "XAUm_FUNDAMENTAL/USD",
+  deJTRSY: "deJTRSY_FUNDAMENTAL/USD",
+  deJAAA: "deJAAA_FUNDAMENTAL/USD",
+  "savUSD/avUSD": "savUSD_FUNDAMENTAL",
 };
 
-const FEED_SUFFIXES = ["_FUNDAMENTAL/USD", "_FUNDAMENTAL"];
+const USD_DENOMINATION = "USD";
 
-export function getFeedSymbol(assetSymbol: string, feedId: string) {
-  const symbol = FEED_SYMBOL_OVERRIDES[assetSymbol] ?? assetSymbol;
+export function getFeedId(assetSymbol: string, baseAssetSymbol: string) {
+  const assetPair = getAssetPair(assetSymbol, baseAssetSymbol);
 
-  return `${symbol}${getFeedSuffix(feedId)}`;
+  return FEED_ID_OVERRIDES[assetPair] ?? assetPair;
 }
 
-function getFeedSuffix(feedId: string) {
-  return FEED_SUFFIXES.find((suffix) => feedId.endsWith(suffix)) ?? "";
+function getAssetPair(assetSymbol: string, baseAssetSymbol: string) {
+  return baseAssetSymbol === USD_DENOMINATION ? assetSymbol : `${assetSymbol}/${baseAssetSymbol}`;
 }
