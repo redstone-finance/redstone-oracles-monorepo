@@ -1105,42 +1105,38 @@
     },
     "GAS_CURRENT": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "GAS_CURRENT_SYMBOL": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "GAS_FRONT": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "GAS_FRONT_SYMBOL": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "GAS.T": {
@@ -1169,42 +1165,38 @@
     },
     "WTI_CURRENT": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "WTI_CURRENT_SYMBOL": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "WTI_FRONT": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "WTI_FRONT_SYMBOL": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "WTI.T": {
@@ -1528,62 +1520,56 @@
     },
     "XCU_CURRENT": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "XCU_CURRENT_SYMBOL": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "XCU_FRONT": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "XCU_FRONT_SYMBOL": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "XCU_NEXT_FRONT": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "XCU_NEXT_FRONT_SYMBOL": {
       "source": [],
-      "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
-        "rwa"
+        "rwa",
+        "ui-no-display"
       ]
     },
     "XCU.T": {
@@ -1947,8 +1933,7 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt",
-        "uniswap-v3-bnb-btcb-3000-deferred"
+        "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2170,8 +2155,7 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt",
-        "uniswap-v3-ethereum-usdt-10000-deferred"
+        "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2276,8 +2260,7 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt",
-        "uniswap-v3-ethereum-weth-3000-deferred"
+        "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2295,9 +2278,7 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt",
-        "uniswap-v3-ethereum-weth-3000-deferred",
-        "uniswap-v4-ethereum-eth-3000-deferred"
+        "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2332,9 +2313,7 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt",
-        "uniswap-v2-ethereum-weth-deferred",
-        "uniswap-v3-ethereum-weth-3000-deferred"
+        "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2352,8 +2331,7 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt",
-        "pancake-swap-bnb-usdt-500-deferred"
+        "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2461,8 +2439,7 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt",
-        "uniswap-v2-ethereum-weth-deferred"
+        "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2495,17 +2472,7 @@
         "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
         "ws-spot-kraken-usd",
-        "ws-spot-kucoin-usdt",
-        "curve-arbitrumone-weth-deferred",
-        "sushiswap-ethereum-weth-deferred",
-        "uniswap-v2-ethereum-weth-deferred",
-        "uniswap-v3-arbitrumone-usdc-500-deferred",
-        "uniswap-v3-arbitrumone-weth-500-deferred",
-        "uniswap-v3-ethereum-usdt-3000-deferred",
-        "uniswap-v3-ethereum-usdt-500-deferred",
-        "uniswap-v3-ethereum-weth-3000-deferred",
-        "uniswap-v3-ethereum-weth-500-deferred",
-        "uniswap-v4-ethereum-usdt-3000-deferred"
+        "ws-spot-kucoin-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2545,13 +2512,6 @@
         "kucoin_deferred-usdt",
         "lbank_deferred-usdt",
         "mexc_deferred-usdt",
-        "curve-ethereum-dai-deferred",
-        "curve-ethereum-usdc-deferred",
-        "curve-ethereum-usdt-deferred",
-        "fluid-ethereum-usdt-deferred",
-        "uniswap-v3-ethereum-usdc-100-deferred",
-        "uniswap-v4-ethereum-usdt-45-deferred",
-        "uniswap-v4-ethereum-usdt-10-deferred",
         "ws-spot-xt-usdt"
       ],
       "deviationCheck": {
@@ -8462,7 +8422,10 @@
     "XAG_PERP": {
       "source": [],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "BTC_PERP_EMA_30S": {
       "source": [
