@@ -34,7 +34,7 @@ export function computeSuiGasUsed(gas: SuiNormalizedGas) {
 }
 
 export function buildNormalizedSuiTx(params: NormalizedSuiTxBase) {
-  const isFailed = params.effectFailed || hasSkippedFeed(params.events);
+  const isFailed = params.effectFailed || areAllFeedsSkipped(params.events);
 
   return params.writes.map(({ feedId, payload }) => ({
     blockNumber: params.blockNumber,
@@ -52,10 +52,10 @@ export function buildNormalizedSuiTx(params: NormalizedSuiTxBase) {
   }));
 }
 
-function hasSkippedFeed(events?: Events) {
-  return Object.values(events ?? {})
-    .filter(RedstoneCommon.isDefined)
-    .some((entry) => !entry.updated);
+function areAllFeedsSkipped(events?: Events) {
+  const entries = Object.values(events ?? {}).filter(RedstoneCommon.isDefined);
+
+  return entries.length > 0 && entries.every((entry) => !entry.updated);
 }
 
 function pickFeedEvents(feedId: string, events?: Events) {

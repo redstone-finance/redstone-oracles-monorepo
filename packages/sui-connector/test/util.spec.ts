@@ -3,17 +3,14 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import { hexToBytes, makeFeedIdBytes, serializeSigners, suiToMist } from "../src";
 
 const SIGNER = "0x8BB8F32Df04c8b654987DAaeD53D6B6091e3B774";
+const SIGNER_BYTES = [
+  139, 184, 243, 45, 240, 76, 139, 101, 73, 135, 218, 174, 213, 61, 107, 96, 145, 227, 183, 116,
+];
 const FEED_ID_BYTE_LENGTH = 32;
 
 describe("hexToBytes", () => {
-  it("should serialize signers properly", () => {
-    const want = [
-      139, 184, 243, 45, 240, 76, 139, 101, 73, 135, 218, 174, 213, 61, 107, 96, 145, 227, 183, 116,
-    ];
-    const got = hexToBytes(SIGNER);
-    for (let i = 0; i < got.length; i++) {
-      expect(got[i]).toEqual(want[i]);
-    }
+  it("should give every byte of the address", () => {
+    expect(Array.from(hexToBytes(SIGNER))).toEqual(SIGNER_BYTES);
   });
 
   it("should throw for an odd-length hex string", () => {
@@ -52,11 +49,8 @@ describe("makeFeedIdBytes", () => {
 
 describe("serializeSigners", () => {
   it("should serialize a signer as its raw bytes", () => {
-    expect(serializeSigners([SIGNER]).toBytes()).toEqual(
-      bcs
-        .vector(bcs.vector(bcs.u8()))
-        .serialize([RedstoneCommon.arrayify(SIGNER)])
-        .toBytes()
-    );
+    const parsed = bcs.vector(bcs.vector(bcs.u8())).parse(serializeSigners([SIGNER]).toBytes());
+
+    expect(parsed).toEqual([Array.from(RedstoneCommon.arrayify(SIGNER))]);
   });
 });

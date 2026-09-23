@@ -9,8 +9,7 @@ export class SuiRpcOpNormalizer extends RpcOpNormalizer {
         return RpcOpNormalizer.blockNumberTelemetry(result);
       case "getObject":
       case "getObjects":
-      case "getDynamicFieldValue":
-      case "listDynamicFields":
+      case "getDynamicFieldValues":
         return RpcOpNormalizer.callTelemetry();
       case "signAndExecuteTransaction":
         return RpcOpNormalizer.sendTelemetry();

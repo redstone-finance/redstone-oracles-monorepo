@@ -1,24 +1,21 @@
 import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { SuiClient } from "../client/SuiClient";
-import { SuiReader } from "./SuiReader";
-import {
-  PriceAdapterDataContent,
-  PriceAdapterDataJsonContent,
-  PriceDataFieldBcs,
-  PriceDataFieldJsonContent,
-} from "./types";
+import { makeFeedIdBytes, uint8ArrayToBcs } from "../util";
+import { PriceAdapterDataContent, PriceAdapterDataJsonContent, PriceDataBcs } from "./types";
+
+const FEED_ID_TYPE = "vector<u8>";
 
 export class SuiPricesContractReader {
   constructor(
-    private readonly suiReader: SuiReader,
+    private readonly client: SuiClient,
     private readonly priceAdapterObjectId: string
   ) {}
 
   static createMultiReader(client: SuiClient, priceAdapterObjectId: string) {
     return MultiExecutor.createForSubInstances(
       client,
-      (client) => new SuiPricesContractReader(new SuiReader(client), priceAdapterObjectId),
+      (client) => new SuiPricesContractReader(client, priceAdapterObjectId),
       {},
       {
         ...MultiExecutor.DEFAULT_CONFIG,
@@ -29,10 +26,8 @@ export class SuiPricesContractReader {
     );
   }
 
-  async getPriceAdapterObjectDataContent(_blockNumber?: number) {
-    const content = await this.suiReader.fetchObjectDataContent({
-      objectId: this.priceAdapterObjectId,
-    });
+  async getPriceAdapterObjectDataContent(blockNumber?: number) {
+    const content = await this.client.getObject(this.priceAdapterObjectId, blockNumber);
 
     if (!RedstoneCommon.isDefined(content.content)) {
       return PriceAdapterDataJsonContent.parse(content.json);
@@ -41,36 +36,39 @@ export class SuiPricesContractReader {
     return PriceAdapterDataContent.parse(content.content);
   }
 
-  async getContractDataFromPricesTable(pricesTableId: string, blockNumber?: number) {
-    const parsedResults = await this.getPriceDataContent(pricesTableId, blockNumber);
-
-    const parseLastValue = (value: string) => {
-      try {
-        return BigInt(value);
-      } catch {
-        return 0n;
-      }
-    };
+  async getContractDataFromPricesTable(
+    pricesTableId: string,
+    feedIds: string[],
+    blockNumber?: number
+  ) {
+    const parsedResults = await this.getPriceDataContent(pricesTableId, feedIds, blockNumber);
 
     const contractData = parsedResults.map((data) => [
       ContractParamsProvider.unhexlifyFeedId(data.feed_id),
       {
         lastDataPackageTimestampMS: parseInt(data.timestamp),
         lastBlockTimestampMS: parseInt(data.write_timestamp),
-        lastValue: parseLastValue(data.value),
+        lastValue: BigInt(data.value),
       },
     ]);
 
     return Object.fromEntries(contractData) as ContractData;
   }
 
-  private async getPriceDataContent(pricesTableId: string, _blockNumber?: number) {
-    const objects = await this.suiReader.fetchAllDynamicFieldObjects(pricesTableId);
-
-    return objects.map((object) =>
-      RedstoneCommon.isDefined(object.content)
-        ? PriceDataFieldBcs.parse(object.content).value
-        : PriceDataFieldJsonContent.parse(object.json).value
+  private async getPriceDataContent(
+    pricesTableId: string,
+    feedIds: string[],
+    blockNumber?: number
+  ) {
+    const values = await this.client.getDynamicFieldValues(
+      pricesTableId,
+      feedIds.map((feedId) => ({
+        type: FEED_ID_TYPE,
+        bcs: uint8ArrayToBcs(makeFeedIdBytes(feedId)).toBytes(),
+      })),
+      blockNumber
     );
+
+    return values.filter(RedstoneCommon.isDefined).map((value) => PriceDataBcs.parse(value));
   }
 }

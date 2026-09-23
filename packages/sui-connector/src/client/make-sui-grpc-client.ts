@@ -20,11 +20,13 @@ export function makeSuiGrpcClient(networkName: SuiNetworkName, url: string, toke
 }
 
 function makeMetadataInterceptor(meta: RpcMetadata) {
-  const withMeta = (options: RpcOptions) => ({ ...options, meta: { ...options.meta, ...meta } });
-
   return <RpcInterceptor>{
-    interceptUnary: (next, method, input, options) => next(method, input, withMeta(options)),
+    interceptUnary: (next, method, input, options) => next(method, input, withMeta(options, meta)),
     interceptServerStreaming: (next, method, input, options) =>
-      next(method, input, withMeta(options)),
+      next(method, input, withMeta(options, meta)),
   };
+}
+
+function withMeta(options: RpcOptions, meta: RpcMetadata) {
+  return { ...options, meta: { ...options.meta, ...meta } };
 }

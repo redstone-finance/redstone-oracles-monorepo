@@ -1,7 +1,7 @@
 import { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { signExecuteAndWait } from "../client/sign-execute-and-wait";
 import { SuiClient } from "../client/SuiClient";
 import { SuiNetworkName } from "../config";
 import { buildPackage } from "../util";
@@ -69,16 +69,7 @@ export class SuiContractDeployer {
   }
 
   private async executeAndExtractCreated(tx: Transaction) {
-    const result = await this.sui.signAndExecute(tx, this.keypair);
-
-    if (result.$kind === "FailedTransaction") {
-      throw new Error(
-        `Transaction failed, ${RedstoneCommon.stringifyError(result.FailedTransaction)}`
-      );
-    }
-    const txResult = result.Transaction;
-
-    await this.sui.waitForTransaction(txResult.digest);
+    const txResult = await signExecuteAndWait(this.sui, tx, this.keypair);
 
     const createdIds = txResult.effects.changedObjects
       .filter((obj) => obj.inputState === "DoesNotExist")
