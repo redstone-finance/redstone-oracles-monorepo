@@ -3057,23 +3057,6 @@
       "denomination": "ETH",
       "rateFeed": true
     },
-    "PROMPT": {
-      "source": [
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitrue-usdt",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
-        "okx-usdt",
-        "uniswap-v3-ethereum-usdc-3000",
-        "xt-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "EIGEN": {
       "source": [
         "binance-usdc",
