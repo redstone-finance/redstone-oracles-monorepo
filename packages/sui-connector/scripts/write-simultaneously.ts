@@ -4,11 +4,11 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import {
   makeSuiKeypair,
-  readSuiConfig,
   SuiClientBuilder,
   SuiNetworkSchema,
   SuiWriteContractAdapter,
 } from "../src";
+import { readSuiConfig } from "./deployment-config";
 import { getRpcUrls } from "./get-rpc-urls";
 
 async function writeSimultaneouslyToSui() {

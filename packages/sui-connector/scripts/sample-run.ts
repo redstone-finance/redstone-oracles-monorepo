@@ -4,12 +4,12 @@ import { RedstoneCommon, RpcTelemetry } from "@redstone-finance/utils";
 import "dotenv/config";
 import {
   makeSuiKeypair,
-  readSuiConfig,
   SuiBlockchainService,
   SuiClientBuilder,
   SuiNetworkSchema,
   SuiWriteContractAdapter,
 } from "../src";
+import { readSuiConfig } from "./deployment-config";
 import { getRpcUrls } from "./get-rpc-urls";
 
 const SMALL_FEED_SET = ["BTC", "ETH", "LBTC_FUNDAMENTAL"];

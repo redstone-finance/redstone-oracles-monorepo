@@ -1,4 +1,3 @@
-import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import {
   AccountInfo,
   Commitment,
@@ -17,11 +16,14 @@ import {
   TransactionMessage,
   VersionedTransaction,
 } from "@solana/web3.js";
-
-export const SOLANA_SLOT_TIME_INTERVAL_MS = 400;
+import { SolanaBlockNumberProvider } from "./SolanaBlockNumberProvider";
 
 export class SolanaClient {
-  constructor(readonly connection: Connection) {}
+  private readonly blockNumberProvider: SolanaBlockNumberProvider;
+
+  constructor(readonly connection: Connection) {
+    this.blockNumberProvider = new SolanaBlockNumberProvider(connection);
+  }
 
   async getAccountInfo<T>(
     address: PublicKey,
@@ -121,13 +123,7 @@ export class SolanaClient {
       return undefined;
     }
 
-    await RedstoneCommon.waitForBlockNumber(
-      () => this.connection.getSlot(),
-      slot,
-      `${description ?? ""} in slot ${slot}`,
-      SOLANA_SLOT_TIME_INTERVAL_MS,
-      Math.floor(MultiExecutor.SINGLE_EXECUTION_TIMEOUT_MS / SOLANA_SLOT_TIME_INTERVAL_MS)
-    );
+    await this.blockNumberProvider.waitForBlockNumber(slot, `${description ?? ""} in slot ${slot}`);
 
     return { minContextSlot: slot };
   }

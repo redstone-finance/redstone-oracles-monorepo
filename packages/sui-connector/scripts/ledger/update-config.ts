@@ -1,10 +1,5 @@
-import {
-  makeSuiDeployConfig,
-  readIds,
-  readSuiConfig,
-  SuiAdapterContractOps,
-  SuiNetworkName,
-} from "../../src";
+import { makeSuiDeployConfig, SuiAdapterContractOps, SuiNetworkName } from "../../src";
+import { readIds, readSuiConfig } from "../deployment-config";
 import { generateTransactionData } from "./generate-transaction-data";
 
 void generateTransactionData((tx, network: SuiNetworkName) =>

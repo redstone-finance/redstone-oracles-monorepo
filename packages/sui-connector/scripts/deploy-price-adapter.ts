@@ -6,15 +6,14 @@ import "dotenv/config";
 import { rmSync } from "fs";
 import { z } from "zod";
 import {
-  getDeployDir,
   makeSuiClient,
   makeSuiDeployConfig,
   makeSuiKeypair,
-  saveIds,
   SuiAdapterContractOps,
   SuiNetworkName,
   SuiNetworkSchema,
 } from "../src";
+import { getDeployDir, saveIds } from "./deployment-config";
 
 interface CliObjectChange {
   type: "published" | "created" | "mutated";
