@@ -1,28 +1,26 @@
 import { bcs } from "@mysten/sui/bcs";
 import type { SuiClientTypes } from "@mysten/sui/client";
-import { EventEntry, Events } from "@redstone-finance/multichain-kit";
+import { convertValueDec, EventEntry, Events } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { z } from "zod";
 import { SUI_PRICE_WRITE_EVENT_FRAGMENT, SUI_UPDATE_ERROR_EVENT_FRAGMENT } from "./SuiTxParsing";
-
-const logger = loggerFactory("sui-event-parsing");
 
 interface RawSuiEvent {
   type: string;
   json: unknown;
 }
 
-interface PriceWriteEventJson {
-  feed_id: string;
-  value: string;
-}
+const logger = loggerFactory("sui-event-parsing");
+const PriceWriteEventJsonSchema = z.object({
+  feed_id: z.string(),
+  value: z.string(),
+});
 
-interface UpdateErrorEventJson {
-  feed_id: string | number[];
-  error: string;
-}
-
-const PRICE_WRITE_VALUE_DECIMALS = 8;
+const UpdateErrorEventJsonSchema = z.object({
+  feed_id: z.union([z.string(), z.array(z.number())]),
+  error: z.string(),
+});
 
 const EVM_VALUE_UPDATE_EVENT_NAME = "ValueUpdate";
 const EVM_SKIP_BLOCK_TIMESTAMP_EVENT_NAME = "UpdateSkipDueToBlockTimestamp";
@@ -37,7 +35,7 @@ const DATA_TIMESTAMP_UPDATE_ERRORS = [
 ];
 
 const UNKNOWN_UPDATE_ERROR = "Unknown update error";
-
+const UNKNOWN_FEED_ID = "Unknown feed";
 const UpdateErrorEventBcs = bcs.struct("UpdateError", {
   feed_id: bcs.vector(bcs.u8()),
   error: bcs.string(),
@@ -65,8 +63,8 @@ export function extractSuiUpdateErrors(events: SuiClientTypes.Event[]) {
 function parseSuiEvent(event: RawSuiEvent) {
   try {
     if (isPriceWriteEventType(event.type)) {
-      const json = event.json as PriceWriteEventJson;
-      const value = Number(json.value) / 10 ** PRICE_WRITE_VALUE_DECIMALS;
+      const json = PriceWriteEventJsonSchema.parse(event.json);
+      const value = Number(convertValueDec(json.value));
 
       return {
         name: EVM_VALUE_UPDATE_EVENT_NAME,
@@ -77,7 +75,7 @@ function parseSuiEvent(event: RawSuiEvent) {
     }
 
     if (isUpdateErrorEventType(event.type)) {
-      const json = event.json as UpdateErrorEventJson;
+      const json = UpdateErrorEventJsonSchema.parse(event.json);
 
       return {
         name: getSkipEventName(json.error),
@@ -115,9 +113,11 @@ function getSkipEventName(error: string) {
 
 function decodeUpdateError(bytes: Uint8Array) {
   try {
-    return UpdateErrorEventBcs.parse(bytes).error;
+    const { feed_id, error } = UpdateErrorEventBcs.parse(bytes);
+
+    return { feedId: decodeBytesFeedId(feed_id), error };
   } catch {
-    return UNKNOWN_UPDATE_ERROR;
+    return { feedId: UNKNOWN_FEED_ID, error: UNKNOWN_UPDATE_ERROR };
   }
 }
 

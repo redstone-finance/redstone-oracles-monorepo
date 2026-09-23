@@ -14,15 +14,6 @@ export const PriceAdapterDataJsonContent = z.object({
   config: ConfigContent,
 });
 
-export const PriceDataFieldJsonContent = z.object({
-  value: z.object({
-    feed_id: z.array(z.number()),
-    value: z.coerce.string(),
-    timestamp: z.coerce.string(),
-    write_timestamp: z.coerce.string(),
-  }),
-});
-
 const ConfigBcs = bcs.struct("Config", {
   signer_count_threshold: bcs.u8(),
   signers: bcs.vector(bcs.vector(bcs.u8())),
@@ -52,9 +43,3 @@ export const PriceDataBcs = bcs.struct("PriceData", {
 });
 
 export type PriceData = typeof PriceDataBcs.$inferType;
-
-export const PriceDataFieldBcs = bcs.struct("PriceDataField", {
-  id: bcs.Address,
-  name: bcs.vector(bcs.u8()),
-  value: PriceDataBcs,
-});
