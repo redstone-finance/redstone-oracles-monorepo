@@ -1041,7 +1041,7 @@
       "name": "0G Aristotle Mainnet",
       "networkId": 16661,
       "currencySymbol": "0G",
-      "publicRpcUrls": ["http://evmrpc.0g.ai"],
+      "publicRpcUrls": ["https://evmrpc.0g.ai"],
       "avgBlockTimeMs": 900,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
