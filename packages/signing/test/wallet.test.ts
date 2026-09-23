@@ -3,6 +3,7 @@ import { Wallet as EthersWallet } from "@ethersproject/wallet";
 import {
   addressFromPrivateKey,
   createWallet,
+  createWalletFromMnemonic,
   hashTypedData,
   parseSignedTransaction,
   signTransaction,
@@ -112,5 +113,50 @@ describe("createWallet private key normalization", () => {
 
   test("Should treat prefixed and bare forms of the same key as one wallet", () => {
     expect(createWallet(BARE_KEY).address).toBe(createWallet(`0x${BARE_KEY}`).address);
+  });
+});
+
+const MNEMONIC =
+  "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about";
+
+describe("createWalletFromMnemonic", () => {
+  test("Should default to the first BIP-44 account address", () => {
+    expect(createWalletFromMnemonic(MNEMONIC).address).toBe(
+      "0x9858EfFD232B4033E47d90003D41EC34EcaEda94"
+    );
+  });
+
+  test("Should derive whichever BIP-44 level the path varies", () => {
+    // the two conventions disagree past index 0, which is why the path is configurable
+    expect(createWalletFromMnemonic(MNEMONIC, "m/44'/60'/0'/0/3").address).toBe(
+      "0xF3f50213C1d2e255e4B2bAD430F8A38EEF8D718E"
+    );
+    expect(createWalletFromMnemonic(MNEMONIC, "m/44'/60'/3'/0/0").address).toBe(
+      "0x8559A4270Db933caC30830f2be9D099fD477A51D"
+    );
+  });
+
+  test("Should reject a malformed derivation path", () => {
+    expect(() => createWalletFromMnemonic(MNEMONIC, "not-a-path")).toThrow();
+  });
+
+  test("Should tolerate the whitespace an SSM value comes with", () => {
+    expect(createWalletFromMnemonic(`\n  ${MNEMONIC.replace(" ", "\t")}  \n`).address).toBe(
+      "0x9858EfFD232B4033E47d90003D41EC34EcaEda94"
+    );
+  });
+
+  test("Should reject an invalid mnemonic without leaking it", () => {
+    const brokenMnemonic = MNEMONIC.replace(/about$/, "abandon");
+
+    expect(() => createWalletFromMnemonic(brokenMnemonic)).toThrow();
+
+    try {
+      createWalletFromMnemonic(brokenMnemonic);
+    } catch (e) {
+      expect(JSON.stringify(e, Object.getOwnPropertyNames(e))).not.toContain("abandon");
+    }
+
+    expect.assertions(2);
   });
 });
