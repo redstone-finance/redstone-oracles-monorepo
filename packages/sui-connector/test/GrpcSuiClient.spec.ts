@@ -1,7 +1,11 @@
 import { TypeTagSerializer } from "@mysten/sui/bcs";
 import { deriveDynamicFieldID, normalizeStructTag, SUI_TYPE_ARG } from "@mysten/sui/utils";
 import { makeFeedIdBytes, makeSuiClient, makeSuiGraphQLClient, uint8ArrayToBcs } from "../src";
-import { GrpcSuiClient, MISSING_FIELD_MESSAGE } from "../src/client/GrpcSuiClient";
+import {
+  GrpcSuiClient,
+  MAX_GRAPHQL_PAGE_SIZE,
+  MISSING_FIELD_MESSAGE,
+} from "../src/client/GrpcSuiClient";
 import type { ReceivedTransactionNodes } from "../src/client/graphql-types";
 import {
   ADAPTER_OBJECT_ID,
@@ -135,6 +139,18 @@ describe("GrpcSuiClient", () => {
       expect(query).toHaveBeenNthCalledWith(
         2,
         expect.objectContaining({ variables: { address: SENDER, last: LIMIT, before: CURSOR } })
+      );
+    });
+
+    it("should not ask for more transactions than one GraphQL page holds", async () => {
+      stubPage([]);
+
+      await sut.getReceivedCoinObjectIds({ address: SENDER, limit: MAX_GRAPHQL_PAGE_SIZE + 1 });
+
+      expect(query).toHaveBeenCalledWith(
+        expect.objectContaining({
+          variables: { address: SENDER, last: MAX_GRAPHQL_PAGE_SIZE, before: null },
+        })
       );
     });
 
