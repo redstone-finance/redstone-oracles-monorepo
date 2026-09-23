@@ -33,8 +33,13 @@ const PUBLIC_KEYS = {
   manual: {
     ssmParamPath: "/prod/on-chain-relayer/sui/mainnet/multi-feed/manual/private-key",
     publicKey:
-      "0x04e3a296586b79545eeb02e78e82291b17aac18004b4e6d30c1afa2b8d32376b6759b23efdf76705becc6d125fd887fb5c1a29f46ed578bd2e74bc41e87b4b1848",
-    address: "0x0502A26e16C4c915E0647bece301C93d71a0C15E",
+      "0x04d0234059ca3172a8d84f9dc561a031701dfd494e36a5180da10bcd458f26bde088a685a8892649ffdca8923183d8e42931cd48c3f225e2c98fab1e7cdaa1dd6e",
+    address: "0x7Fb5E2c404F98b7d2Fa684244BcE2E7996172e74",
+  },
+  rust: {
+    publicKey:
+      "0x043da0cb6515a0fa173504b235488fb69885741d0fe981c4aa49ea2fab45348bbf35f4296291f62c4de28a1dfc98da388f21502fdf997fb6fe3892362ca90f1be8",
+    address: "0x8d84576308ECd672C3327C643B0F6437E7cE9e03",
   },
 };
 

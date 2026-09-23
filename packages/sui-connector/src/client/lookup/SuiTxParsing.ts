@@ -10,10 +10,9 @@ export const SUI_UPDATE_ERROR_EVENT_FRAGMENT = "price_adapter::UpdateError";
 export const SUI_PRICE_WRITE_EVENT_FRAGMENT = "price_adapter::PriceWrite";
 
 interface SuiNormalizedGas {
-  computationCost: string;
-  storageCost: string;
-  storageRebate: string;
-  nonRefundableStorageFee: string;
+  computationCost: string | number;
+  storageCost: string | number;
+  storageRebate: string | number;
 }
 
 interface NormalizedSuiTxBase {
@@ -31,12 +30,7 @@ interface NormalizedSuiTxBase {
 }
 
 export function computeSuiGasUsed(gas: SuiNormalizedGas) {
-  return (
-    Number(gas.computationCost) +
-    Number(gas.storageCost) -
-    Number(gas.storageRebate) +
-    Number(gas.nonRefundableStorageFee)
-  );
+  return Number(gas.computationCost) + Number(gas.storageCost) - Number(gas.storageRebate);
 }
 
 export function buildNormalizedSuiTx(params: NormalizedSuiTxBase) {

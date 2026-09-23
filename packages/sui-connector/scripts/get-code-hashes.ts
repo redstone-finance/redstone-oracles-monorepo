@@ -2,7 +2,8 @@ import { fromBase64 } from "@mysten/bcs";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import * as crypto from "crypto";
 import "dotenv/config";
-import { buildPackage, getDeployDir, SuiNetworkSchema } from "../src";
+import { buildPackage, SuiNetworkSchema } from "../src";
+import { getDeployDir } from "./deployment-config";
 
 function main() {
   const packagePath = getDeployDir();

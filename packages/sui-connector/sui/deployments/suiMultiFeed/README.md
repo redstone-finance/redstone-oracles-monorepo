@@ -1,6 +1,6 @@
 ## Addresses
 
-* package_id: `0xc14f5281c41da172c1b72d07e3ae79e9ad1f12b6444b7bd23343b63bcf43ee46`
+* package_id: `0xbd6c028d49d92e7e7f5cf268a2c91c0551f20a3d1f79d27d02482a71a9eb6ac3`
 * adapter_id: `0x22794c3a37c5320e5acb6b9cdba6e256bc08867e9de8afd2a4b5d8ea7061fea3`
 
 
@@ -10,7 +10,7 @@
 Add RedStone price adapter to your Move.toml
 ```toml
 [dependencies]
-redstone_price_adapter = { git = "https://github.com/redstone-finance/redstone-oracles-monorepo", subdir = "packages/sui-connector/sui/deployments/suiMultifeed/price_adapter", rev = "main" }
+redstone_price_adapter = { git = "https://github.com/redstone-finance/redstone-oracles-monorepo", subdir = "packages/sui-connector/sui/deployments/suiMultiFeed/price_adapter", rev = "main" }
 ```
 ### imports
 ```rust
@@ -53,7 +53,7 @@ Assuming @package is address of the package with above functions you can read pr
 ```bash
 sui client call \
   --function price_and_timestamp \
-  --module price_adapter --package 0xc14f5281c41da172c1b72d07e3ae79e9ad1f12b6444b7bd23343b63bcf43ee46 --args 0x22794c3a37c5320e5acb6b9cdba6e256bc08867e9de8afd2a4b5d8ea7061fea3 --args 0x4c4254435f46554e44414d454e54414c00000000000000000000000000000000 \
+  --module price_adapter --package 0xbd6c028d49d92e7e7f5cf268a2c91c0551f20a3d1f79d27d02482a71a9eb6ac3 --args 0x22794c3a37c5320e5acb6b9cdba6e256bc08867e9de8afd2a4b5d8ea7061fea3 --args 0x4c4254435f46554e44414d454e54414c00000000000000000000000000000000 \
   --dev-inspect
 
 ```
@@ -62,6 +62,6 @@ Example call on original price_adapter contract:
 ```bash
 sui client call \
   --function price_and_timestamp \
-  --module price_adapter --package 0xc14f5281c41da172c1b72d07e3ae79e9ad1f12b6444b7bd23343b63bcf43ee46 --args 0x22794c3a37c5320e5acb6b9cdba6e256bc08867e9de8afd2a4b5d8ea7061fea3 --args 0x4c4254435f46554e44414d454e54414c00000000000000000000000000000000 \
+  --module price_adapter --package 0xbd6c028d49d92e7e7f5cf268a2c91c0551f20a3d1f79d27d02482a71a9eb6ac3 --args 0x22794c3a37c5320e5acb6b9cdba6e256bc08867e9de8afd2a4b5d8ea7061fea3 --args 0x4c4254435f46554e44414d454e54414c00000000000000000000000000000000 \
   --dev-inspect
 ```

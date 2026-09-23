@@ -8,7 +8,10 @@ const FEED_ID_ARG_ID = 1;
 const PAYLOAD_ARG_ID = 2;
 
 type ParsedInput =
-  { kind: "pure"; rawValue: unknown } | { kind: "shared"; objectId: string } | { kind: "other" };
+  | { kind: "pure"; rawValue: unknown }
+  | { kind: "pureBcs"; bcsBytes: Uint8Array }
+  | { kind: "shared"; objectId: string }
+  | { kind: "other" };
 
 interface ParsedMoveCall {
   functionName: string;
@@ -59,7 +62,22 @@ function resolveInput(inputs: ParsedInput[], moveCall: ParsedMoveCall, argId: nu
 function resolvePureValue(inputs: ParsedInput[], moveCall: ParsedMoveCall, argId: number) {
   const input = resolveInput(inputs, moveCall, argId);
 
-  return input?.kind === "pure" ? input.rawValue : undefined;
+  switch (input?.kind) {
+    case "pure":
+      return input.rawValue;
+    case "pureBcs":
+      return decodeVectorU8(input.bcsBytes);
+    default:
+      return undefined;
+  }
+}
+
+function decodeVectorU8(bcsBytes: Uint8Array) {
+  try {
+    return bcs.vector(bcs.u8()).parse(bcsBytes);
+  } catch {
+    return undefined;
+  }
 }
 
 function decodeFeedId(rawValue: unknown) {
@@ -68,9 +86,7 @@ function decodeFeedId(rawValue: unknown) {
   }
 
   try {
-    return ContractParamsProvider.unhexlifyFeedId(
-      bcs.vector(bcs.u8()).parse(RedstoneCommon.arrayify(rawValue as number[]))
-    );
+    return ContractParamsProvider.unhexlifyFeedId(RedstoneCommon.arrayify(rawValue as number[]));
   } catch {
     return undefined;
   }

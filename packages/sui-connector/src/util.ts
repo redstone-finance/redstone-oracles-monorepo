@@ -3,13 +3,12 @@ import type { Keypair } from "@mysten/sui/cryptography";
 import { SuiGraphQLClient } from "@mysten/sui/graphql";
 import { getJsonRpcFullnodeUrl, SuiJsonRpcClient } from "@mysten/sui/jsonRpc";
 import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";
+import { MIST_PER_SUI } from "@mysten/sui/utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { execSync } from "child_process";
-import fs from "fs";
-import path from "path";
-import { z } from "zod";
+import Decimal from "decimal.js";
 import { makeSuiGrpcClient } from "./client/make-sui-grpc-client";
-import { makeSuiConfig, SuiNetworkName } from "./config";
+import { SuiNetworkName } from "./config";
 import { getSuiNetworkName } from "./network-ids";
 
 export const GRAPHQL_URL = {
@@ -18,36 +17,7 @@ export const GRAPHQL_URL = {
   devnet: "https://graphql.devnet.sui.io/graphql",
   localnet: "http://localhost:9125/graphql",
 };
-
-interface Ids {
-  packageId: string;
-  priceAdapterObjectId: string;
-  adminCapId: string;
-  upgradeCapId: string;
-}
-
-export function getDeployDir() {
-  return RedstoneCommon.getFromEnv(
-    "DEPLOY_DIR",
-    z.string().optional().default("sui/contracts/price_adapter")
-  );
-}
-
-function getIdsFilePath(network: SuiNetworkName) {
-  return path.join(__dirname, `..`, getDeployDir(), `/object_ids.${network}.json`);
-}
-
-export function readIds(network: SuiNetworkName) {
-  return JSON.parse(fs.readFileSync(getIdsFilePath(network), "utf8")) as Ids;
-}
-
-export function saveIds(ids: Ids, network: SuiNetworkName) {
-  fs.writeFileSync(getIdsFilePath(network), JSON.stringify(ids, null, 4));
-}
-
-export function readSuiConfig(network: SuiNetworkName) {
-  return makeSuiConfig(readIds(network));
-}
+const FEED_ID_BYTE_LENGTH = 32;
 
 export function makeSuiKeypair(privateKey?: string): Keypair {
   const key = privateKey ?? RedstoneCommon.getFromEnv("PRIVATE_KEY");
@@ -99,17 +69,16 @@ export function makeSuiGraphQLClient(network: SuiNetworkName | number, url?: str
   });
 }
 
+export function suiToMist(amount: number) {
+  return BigInt(new Decimal(amount).times(MIST_PER_SUI.toString()).floor().toString());
+}
+
 export function hexToBytes(data: string): Uint8Array {
   if (!data.startsWith("0x")) {
     throw new Error("Hex string must start with 0x");
   }
 
-  return Uint8Array.from(
-    data
-      .slice(2)
-      .match(/.{2}/g)!
-      .map((byte) => parseInt(byte, 16))
-  );
+  return RedstoneCommon.arrayify(data);
 }
 
 export function serialize<T, U>(type: BcsType<T, U>, value: U, asOptional = false) {
@@ -125,7 +94,13 @@ export function serializeAddresses(addresses: string[], asOptional = false) {
 }
 
 export function makeFeedIdBytes(feedId: string): Uint8Array {
-  return Uint8Array.from(Buffer.from(feedId.padEnd(32, "\0")));
+  const bytes = Uint8Array.from(Buffer.from(feedId.padEnd(FEED_ID_BYTE_LENGTH, "\0")));
+  RedstoneCommon.assert(
+    bytes.length === FEED_ID_BYTE_LENGTH,
+    `Feed id ${feedId} takes ${bytes.length} bytes, expected ${FEED_ID_BYTE_LENGTH}`
+  );
+
+  return bytes;
 }
 
 export function uint8ArrayToBcs(uint8Array: Uint8Array) {

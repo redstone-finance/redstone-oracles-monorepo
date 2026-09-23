@@ -12,6 +12,7 @@ import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { SuiClient } from "../client/SuiClient";
 import { SuiConfig } from "../config";
+import { suiToMist } from "../util";
 import { MAX_PARALLEL_TRANSACTION_COUNT, SuiContractUpdater } from "./SuiContractUpdater";
 import { SuiPricesContractReader } from "./SuiPricesContractReader";
 
@@ -96,10 +97,8 @@ export class SuiWriteContractAdapter extends SuiContractAdapter implements Write
   }
 
   async transfer(toAddress: string, amount: number) {
-    amount = amount * 10 ** 9;
-
     const tx = new Transaction();
-    const [coin] = tx.splitCoins(tx.gas, [amount]);
+    const [coin] = tx.splitCoins(tx.gas, [tx.pure.u64(suiToMist(amount))]);
     tx.transferObjects([coin], toAddress);
 
     const signer = this.contractUpdater.getPrivateKey();
