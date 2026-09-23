@@ -4,6 +4,8 @@ import { MultiExecutor } from "@redstone-finance/utils";
 import { LegacySuiTxLookup } from "./lookup/LegacySuiTxLookup";
 import { SUB_INSTANCE_MODES, SuiClient } from "./SuiClient";
 
+const MISSING_FIELD_CODES = ["notExists", "dynamicFieldNotFound", "deleted"];
+
 export class LegacySuiClient extends SuiClient {
   private readonly batchingClient: SuiJsonRpcClient;
 
@@ -22,6 +24,14 @@ export class LegacySuiClient extends SuiClient {
 
   get txLookup() {
     return new LegacySuiTxLookup(this.client);
+  }
+
+  protected override isMissingFieldError(error: unknown) {
+    return (
+      error instanceof Error &&
+      LegacySuiClient.hasErrorCode(error) &&
+      MISSING_FIELD_CODES.includes(error.code)
+    );
   }
 
   async getBlockNumber() {

@@ -7,15 +7,21 @@ export const CHAIN_IDENTIFIER_QUERY = graphql(`
 `);
 
 export const RECEIVED_TRANSACTIONS_QUERY = graphql(`
-  query ReceivedTransactions($address: SuiAddress!, $first: Int, $after: String) {
-    transactions(first: $first, after: $after, filter: { affectedAddress: $address }) {
+  query ReceivedTransactions($address: SuiAddress!, $last: Int, $before: String) {
+    transactions(last: $last, before: $before, filter: { affectedAddress: $address }) {
       pageInfo {
-        hasNextPage
-        endCursor
+        hasPreviousPage
+        startCursor
       }
       nodes {
+        sender {
+          address
+        }
         effects {
-          objectChanges {
+          objectChanges(first: 50) {
+            pageInfo {
+              hasNextPage
+            }
             nodes {
               outputState {
                 address
@@ -79,10 +85,12 @@ export const AFFECTED_OBJECT_TRANSACTIONS_QUERY = graphql(`
               computationCost
               storageCost
               storageRebate
-              nonRefundableStorageFee
             }
           }
-          events {
+          events(first: 50) {
+            pageInfo {
+              hasNextPage
+            }
             nodes {
               contents {
                 type {
@@ -100,7 +108,10 @@ export const AFFECTED_OBJECT_TRANSACTIONS_QUERY = graphql(`
         kind {
           __typename
           ... on ProgrammableTransaction {
-            inputs {
+            inputs(first: 50) {
+              pageInfo {
+                hasNextPage
+              }
               nodes {
                 __typename
                 ... on Pure {
@@ -114,7 +125,10 @@ export const AFFECTED_OBJECT_TRANSACTIONS_QUERY = graphql(`
                 }
               }
             }
-            commands {
+            commands(first: 50) {
+              pageInfo {
+                hasNextPage
+              }
               nodes {
                 __typename
                 ... on MoveCallCommand {

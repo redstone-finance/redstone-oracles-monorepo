@@ -1,15 +1,20 @@
+import type { SuiClientTypes } from "@mysten/sui/client";
 import { Keypair } from "@mysten/sui/cryptography";
 import { SuiGraphQLClient } from "@mysten/sui/graphql";
 import { SuiGrpcClient } from "@mysten/sui/grpc";
 import { Transaction } from "@mysten/sui/transactions";
-import { SUI_TYPE_ARG } from "@mysten/sui/utils";
-import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
+import { normalizeStructTag, SUI_TYPE_ARG } from "@mysten/sui/utils";
+import { loggerFactory, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import type { ReceivedTransactionNodes } from "./graphql-types";
 import { GraphQLSuiTxLookup } from "./lookup/GraphQLSuiTxLookup";
 import { RECEIVED_TRANSACTIONS_QUERY } from "./queries";
 import { SUB_INSTANCE_MODES, SuiClient } from "./SuiClient";
 
+export const MISSING_FIELD_MESSAGE = "Dynamic field not found";
+const COIN_STRUCT_TAG = "0x2::coin::Coin";
+
 export class GrpcSuiClient extends SuiClient {
+  protected readonly logger = loggerFactory("sui-grpc-client");
   private readonly batchingClient: SuiGrpcClient;
 
   constructor(
@@ -40,8 +45,9 @@ export class GrpcSuiClient extends SuiClient {
     const { response } = await this.client.ledgerService.getCheckpoint({
       checkpointId: { oneofKind: undefined },
     });
+    RedstoneCommon.assert(response.checkpoint, "gRPC returned no checkpoint for the latest block");
 
-    return Number(response.checkpoint!.sequenceNumber);
+    return Number(response.checkpoint.sequenceNumber);
   }
 
   protected async fetchReferenceGasPrice() {
@@ -79,27 +85,44 @@ export class GrpcSuiClient extends SuiClient {
 
     const result = await this.graphqlClient.query({
       query: RECEIVED_TRANSACTIONS_QUERY,
-      variables: { address, first: limit, after: cursor ?? null },
+      variables: { address, last: limit, before: cursor ?? null },
     });
 
-    const data = result.data;
-
-    if (!RedstoneCommon.isDefined(data) || !RedstoneCommon.isDefined(data.transactions)) {
-      return { objectIds: [] };
+    if (result.errors?.length) {
+      throw new Error(
+        `GraphQL errors for address=${address}: ${result.errors.map((e) => e.message).join("; ")}`
+      );
     }
 
-    const objectIds = GrpcSuiClient.extractCoinObjectIds(
-      data.transactions.nodes,
-      coinType,
-      address
+    const transactions = result.data?.transactions;
+    RedstoneCommon.assert(
+      RedstoneCommon.isDefined(transactions),
+      `GraphQL returned no transactions for address=${address}`
     );
 
-    const { hasNextPage, endCursor } = data.transactions.pageInfo;
+    const objectIds = this.extractCoinObjectIds(transactions.nodes, coinType, address);
+    const { hasPreviousPage, startCursor } = transactions.pageInfo;
 
     return {
       objectIds,
-      cursor: hasNextPage ? (endCursor ?? undefined) : undefined,
+      cursor: hasPreviousPage ? (startCursor ?? undefined) : undefined,
     };
+  }
+
+  protected override isMissingFieldError(
+    error: unknown,
+    parentId: string,
+    name: SuiClientTypes.DynamicFieldName
+  ) {
+    const message = (error as { message?: unknown } | null)?.message;
+    if (typeof message !== "string") {
+      return false;
+    }
+
+    return (
+      message === MISSING_FIELD_MESSAGE ||
+      message.includes(GrpcSuiClient.deriveFieldId(parentId, name))
+    );
   }
 
   override async signAndExecute(tx: Transaction, keypair: Keypair) {
@@ -110,22 +133,38 @@ export class GrpcSuiClient extends SuiClient {
     });
   }
 
-  private static extractCoinObjectIds(
+  private extractCoinObjectIds(
     txNodes: ReceivedTransactionNodes,
     coinType: string,
     address: string
   ): string[] {
     const objectIds: string[] = [];
+    const expectedCoinType = normalizeStructTag(`${COIN_STRUCT_TAG}<${coinType}>`);
 
-    for (const tx of txNodes) {
-      for (const change of tx.effects!.objectChanges!.nodes) {
+    for (const tx of [...txNodes].reverse()) {
+      if (tx.sender?.address === address) {
+        continue;
+      }
+
+      const objectChanges = tx.effects?.objectChanges;
+      if (!objectChanges) {
+        this.logger.warn(`A transaction affecting ${address} came back without object changes`);
+        continue;
+      }
+      if (objectChanges.pageInfo.hasNextPage) {
+        this.logger.warn(
+          `Object changes of a transaction affecting ${address} exceed one GraphQL page`
+        );
+      }
+
+      for (const change of objectChanges.nodes) {
         const output = change.outputState;
         if (!output) {
           continue;
         }
 
-        const moveType = output.asMoveObject?.contents?.type!.repr;
-        if (!moveType?.includes(coinType)) {
+        const moveType = output.asMoveObject?.contents?.type?.repr;
+        if (!moveType || normalizeStructTag(moveType) !== expectedCoinType) {
           continue;
         }
 

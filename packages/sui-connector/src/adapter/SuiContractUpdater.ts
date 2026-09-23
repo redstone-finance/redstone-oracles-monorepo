@@ -160,7 +160,10 @@ export class SuiContractUpdater implements ContractUpdater {
     const { success, error } = txData.effects.status;
     const updateErrors = extractSuiUpdateErrors(txData.events);
     const status = !success || updateErrors.length > 0 ? "failure" : "success";
-    const causes = updateErrors.length > 0 ? updateErrors : [RedstoneCommon.stringifyError(error)];
+    const causes =
+      updateErrors.length > 0
+        ? updateErrors.map(({ feedId, error: cause }) => `${feedId}: ${cause}`)
+        : [RedstoneCommon.stringifyError(error)];
 
     return { status, causes };
   }

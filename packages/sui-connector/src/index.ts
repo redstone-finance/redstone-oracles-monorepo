@@ -2,7 +2,6 @@ export * from "./adapter/PriceAdapterConfig";
 export * from "./adapter/SuiAdapterContractOps";
 export * from "./adapter/SuiContractAdapter";
 export * from "./adapter/SuiContractUtil";
-export * from "./adapter/SuiReader";
 export * from "./client/get-sui-graphql-chain-identifier";
 export * from "./client/SuiApi";
 export * from "./client/SuiClient";

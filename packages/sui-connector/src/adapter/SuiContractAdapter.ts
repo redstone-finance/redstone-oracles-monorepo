@@ -7,9 +7,10 @@ import {
   TxDeliveryMan,
   WriteContractAdapter,
 } from "@redstone-finance/multichain-kit";
-import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
+import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
+import { signExecuteAndWait } from "../client/sign-execute-and-wait";
 import { SuiClient } from "../client/SuiClient";
 import { SuiConfig } from "../config";
 import { suiToMist } from "../util";
@@ -35,7 +36,7 @@ export class SuiContractAdapter implements ContractAdapter {
     this.reader = SuiPricesContractReader.createMultiReader(client, config.priceAdapterObjectId);
   }
 
-  async readContractData(feedIds: string[], blockNumber?: number): Promise<ContractData> {
+  async readContractData(feedIds: string[], blockNumber?: number) {
     const priceAdapterDataContent =
       await this.getPriceAdapterObjectDataContentMemoized(blockNumber);
 
@@ -44,10 +45,7 @@ export class SuiContractAdapter implements ContractAdapter {
       throw new Error("Prices table ID not found");
     }
 
-    return _.pick(
-      await this.reader.getContractDataFromPricesTable(pricesTableId, blockNumber),
-      feedIds
-    );
+    return await this.reader.getContractDataFromPricesTable(pricesTableId, feedIds, blockNumber);
   }
 
   async getUniqueSignerThreshold(blockNumber?: number): Promise<number> {
@@ -102,13 +100,20 @@ export class SuiWriteContractAdapter extends SuiContractAdapter implements Write
     tx.transferObjects([coin], toAddress);
 
     const signer = this.contractUpdater.getPrivateKey();
+    const { digest } = await signExecuteAndWait(this.client, tx, signer);
 
-    return await this.client.signAndExecute(tx, signer);
+    return digest;
   }
 
   static getContractUpdater(keypair: Keypair, client: SuiClient, config: SuiConfig) {
-    const cacheKey = keypair.toSuiAddress();
+    const cacheKey = [
+      keypair.toSuiAddress(),
+      config.packageId,
+      config.priceAdapterObjectId,
+      config.writePricesTxGasBudget,
+    ].join(":");
     const cache = SuiWriteContractAdapter.contractUpdaterCache;
+
     let updater = cache.get(cacheKey);
     if (!updater) {
       updater = new SuiContractUpdater(client, keypair, config);

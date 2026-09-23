@@ -6,6 +6,7 @@ import type {
   BlockchainServiceWithTxLookup,
   TxLookup,
 } from "@redstone-finance/multichain-kit";
+import { signExecuteAndWait } from "./client/sign-execute-and-wait";
 import type { SuiClient } from "./client/SuiClient";
 import { suiToMist } from "./util";
 
@@ -51,10 +52,7 @@ export class SuiBlockchainServiceWithTransfer
     const [coin] = tx.splitCoins(tx.gas, [tx.pure.u64(suiToMist(amount))]);
     tx.transferObjects([coin], toAddress);
 
-    const result = await this.client.signAndExecute(tx, this.keypair);
-    const txData = result.Transaction ?? result.FailedTransaction;
-
-    await this.client.waitForTransaction(txData.digest);
+    await signExecuteAndWait(this.client, tx, this.keypair);
   }
 
   getSignerAddress(): Promise<string> {

@@ -38,9 +38,14 @@ export class SuiPricesContractWriter {
       metadataTimestamp,
     };
 
-    const { payloads } = ContractParamsProvider.extractMissingValues(
+    const { missingFeedIds, payloads } = ContractParamsProvider.extractMissingValues(
       await paramsProvider.prepareSplitPayloads(unsignedMetadataArgs),
       this.logger
+    );
+
+    RedstoneCommon.assert(
+      Object.keys(payloads).length > 0,
+      `No data packages for feeds [${missingFeedIds.toString()}]`
     );
 
     for (const [feedId, payload] of Object.entries(payloads)) {
