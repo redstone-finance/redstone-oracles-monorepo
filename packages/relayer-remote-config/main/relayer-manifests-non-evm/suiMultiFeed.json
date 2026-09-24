@@ -16,9 +16,21 @@
     "BTC": {
       "updateTriggersOverrides": {
         "deviationPercentage": 0.2,
-        "timeSinceLastUpdateInMilliseconds": 86400000
+        "timeSinceLastUpdateInMilliseconds": 480000
       }
     },
-    "LBTC_FUNDAMENTAL": {}
+    "LBTC_FUNDAMENTAL": {},
+    "SUI": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 480000
+      }
+    },
+    "USDC": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 480000
+      }
+    }
   }
 }
