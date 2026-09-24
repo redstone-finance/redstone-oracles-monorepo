@@ -1,0 +1,12 @@
+[package]
+name = "price_feed_example"
+edition = "2024.beta"
+license = "GPL"
+authors = ["redstone"]
+version = "1.0.0"
+
+[dependencies]
+redstone_price_adapter = { local = "../price_adapter" }
+price_feed_btc = { local = "../price_feed_BTC" }
+price_feed_sui = { local = "../price_feed_SUI" }
+price_feed_usdc = { local = "../price_feed_USDC" }

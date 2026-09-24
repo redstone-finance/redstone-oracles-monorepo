@@ -1,0 +1,11 @@
+[package]
+name = "price_feed_btc"
+edition = "2024.beta"
+license = "GPL"
+authors = ["redstone"]
+version = "1.0.0"
+
+[dependencies]
+redstone_price_adapter = { local = "../price_adapter" }
+sui_system = { system = "sui_system" }
+bridge = { system = "bridge" }
