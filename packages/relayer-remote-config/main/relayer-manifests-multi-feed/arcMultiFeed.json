@@ -26,6 +26,13 @@
         "deviationPercentage": 0.000001,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "nOPAL_FUNDAMENTAL": {
+      "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.375,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
