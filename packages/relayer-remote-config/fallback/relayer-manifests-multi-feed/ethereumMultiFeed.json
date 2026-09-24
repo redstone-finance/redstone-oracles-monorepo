@@ -592,6 +592,13 @@
         "deviationPercentage": 0.0001,
         "timeSinceLastUpdateInMilliseconds": 3600000
       }
+    },
+    "CASH+_FUNDAMENTAL": {
+      "priceFeedAddress": "0x02Fe8D7d3150CB98a621Fca57aeb7C2ea2022D90",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
