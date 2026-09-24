@@ -90,10 +90,23 @@
         "ws-perp-coinbase-usdc",
         "ws-perp-mexc-usdt"
       ],
-      "priceAggregator": "geomean",
-      "geomeanAggregatorConfig": {
+      "priceAggregator": "twapValidatedGeomean",
+      "localCacheTTL": "1h",
+      "twapValidatedGeomeanAggregatorConfig": {
+        "twapFeed": "ANTHROPIC_PERP-TWAP-60",
+        "maxDeviationPercent": 5,
         "medianClamps": 25
       },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ANTHROPIC_PERP-TWAP-60": {
+      "source": [
+        "twap-local-lenient"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
