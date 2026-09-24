@@ -167,6 +167,20 @@
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "trUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "BceRwJ2EyqsPqrPekL3hh5S3y3V9J9N8F8hBcTM25mfV",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "strUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "EgNJuue9SS5zR19VTNLz589BdpVEEJ7ULbNRwQhwphCJ",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
