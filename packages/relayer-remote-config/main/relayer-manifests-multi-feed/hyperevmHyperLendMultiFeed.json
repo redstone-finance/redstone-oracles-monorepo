@@ -46,6 +46,9 @@
     },
     "kHYPE_FUNDAMENTAL": {
       "priceFeedAddress": "0x81151Ceeb6F4918B49A5ADf4157038642D63173c"
+    },
+    "ETH": {
+      "priceFeedAddress": "0x04Ef0593aEFBC9D6fA28fd386A8bE0E5eb34F70b"
     }
   }
 }
