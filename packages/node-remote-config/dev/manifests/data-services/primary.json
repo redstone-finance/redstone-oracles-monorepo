@@ -2659,7 +2659,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "securitize-tsso",
-        "maxAcceptableDeviation": 0.01
+        "maxAcceptableDeviation": 0.5
       },
       "denomination": "USD",
       "rateFeed": true,
@@ -2678,7 +2678,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "securitize-tsso",
-        "maxAcceptableDeviation": 0.01
+        "maxAcceptableDeviation": 0.5
       },
       "denomination": "USD",
       "rateFeed": true,
@@ -2697,7 +2697,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "securitize-tsso",
-        "maxAcceptableDeviation": 0.01
+        "maxAcceptableDeviation": 0.5
       },
       "denomination": "USD",
       "rateFeed": true,
