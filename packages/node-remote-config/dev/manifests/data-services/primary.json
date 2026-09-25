@@ -2932,7 +2932,7 @@
       "source": [
         "evm-fetcher-lombard-btcb-deferred"
       ],
-      "denomination": "BTC",
+      "denomination": "ratio",
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -3856,14 +3856,14 @@
       "source": [
         "accountable-uty"
       ],
-      "denomination": "USD",
+      "denomination": "ratio",
       "rateFeed": true
     },
     "UTY_PEGGED_FUNDAMENTAL": {
       "source": [
         "accountable-uty-pegged"
       ],
-      "denomination": "USD",
+      "denomination": "ratio",
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -3876,7 +3876,7 @@
       "source": [
         "accountable-yusd"
       ],
-      "denomination": "USD",
+      "denomination": "ratio",
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -4087,7 +4087,7 @@
       "source": [
         "ethereum-evm-fetcher-franklin-templeton"
       ],
-      "denomination": "USD",
+      "denomination": "ratio",
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -4100,7 +4100,7 @@
       "source": [
         "bnb-evm-fetcher-franklin-templeton"
       ],
-      "denomination": "USD",
+      "denomination": "ratio",
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -4113,7 +4113,7 @@
       "source": [
         "ethereum-evm-fetcher-franklin-templeton"
       ],
-      "denomination": "USD",
+      "denomination": "ratio",
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -4126,7 +4126,7 @@
       "source": [
         "accountable-yzusd"
       ],
-      "denomination": "USD",
+      "denomination": "ratio",
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -4738,7 +4738,7 @@
       "source": [
         "accountable-nusd"
       ],
-      "denomination": "USD",
+      "denomination": "ratio",
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -5142,7 +5142,7 @@
       "source": [
         "ethereum-evm-fetcher-stbl"
       ],
-      "denomination": "USD",
+      "denomination": "ratio",
       "rateFeed": true
     },
     "URANIUM": {
@@ -5684,14 +5684,14 @@
       "source": [
         "accountable-btccx"
       ],
-      "denomination": "BTC",
+      "denomination": "ratio",
       "rateFeed": true
     },
     "trUSD_FUNDAMENTAL": {
       "source": [
         "accountable-trusd"
       ],
-      "denomination": "USD",
+      "denomination": "ratio",
       "rateFeed": true
     },
     "USDY_FUNDAMENTAL/USD": {
@@ -5733,7 +5733,7 @@
       "source": [
         "accountable-theo"
       ],
-      "denomination": "USD",
+      "denomination": "ratio",
       "rateFeed": true
     },
     "reUSD_FUNDAMENTAL/USD": {
