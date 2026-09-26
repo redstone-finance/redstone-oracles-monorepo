@@ -27,11 +27,6 @@
     "lodash": "^4.17.23",
     "zod": "^4.1.12"
   },
-  "devDependencies": {
-    "@types/sinon": "^10.0.15",
-    "dotenv": "^16.0.3",
-    "sinon": "^18.0.0"
-  },
   "files": [
     "src",
     "dist"
