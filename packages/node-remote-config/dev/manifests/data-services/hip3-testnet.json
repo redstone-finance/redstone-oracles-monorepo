@@ -2357,6 +2357,7 @@
         "ws-safetrade-usdt",
         "pearl-otc-deferred"
       ],
+      "priceAggregator": "geomean",
       "denomination": "USD",
       "rateFeed": false
     },
