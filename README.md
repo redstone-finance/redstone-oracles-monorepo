@@ -40,3 +40,4 @@ Please feel free to contact us on [Discord](https://redstone.finance/discord) or
 ## 📜 License
 
 BUSL-1.1
+
