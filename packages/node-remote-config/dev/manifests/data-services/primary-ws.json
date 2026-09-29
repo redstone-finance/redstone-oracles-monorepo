@@ -227,6 +227,22 @@
     },
     "TWD_FX": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BRL_FX": {
+      "source": [],
+      "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "",
         "maxAcceptableDeviation": 1.5,
