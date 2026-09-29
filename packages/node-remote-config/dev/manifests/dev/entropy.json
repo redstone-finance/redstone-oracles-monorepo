@@ -73,11 +73,7 @@
       "rateFeed": false
     },
     "OPENAI_PRESTOCKS": {
-      "source": ["jupiter", "dex-screener"],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "jupiter"
-      },
+      "source": ["jupiter"],
       "denomination": "USD",
       "rateFeed": false
     },
