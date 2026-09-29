@@ -7854,16 +7854,6 @@
         "bitfinex-usd"
       ]
     },
-    "XRD": {
-      "source": [
-        "bitget-usdt",
-        "kucoin-usdt",
-        "mexc-usdt",
-        "gate-usdt",
-        "bitfinex-usd",
-        "bingx-usdt"
-      ]
-    },
     "WEMIX": {
       "source": [
         "bitget-usdt",
