@@ -1920,16 +1920,6 @@
       "denomination": "BTC",
       "rateFeed": false
     },
-    "XRD": {
-      "source": [
-        "gate-eth",
-        "gate-usdt",
-        "kucoin-usdt",
-        "mexc-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "AERO": {
       "source": [
         "binance-usdc",
@@ -5641,34 +5631,6 @@
       "primarySourceAggregatorConfig": {
         "primarySource": "polygon-eod-deferred"
       }
-    },
-    "TTV_BASE_USDC_FUNDAMENTAL": {
-      "source": [
-        "accountable-travessia"
-      ],
-      "denomination": "USDC",
-      "rateFeed": true
-    },
-    "TTV_MONAD_AUSD_FUNDAMENTAL": {
-      "source": [
-        "accountable-travessia"
-      ],
-      "denomination": "AUSD",
-      "rateFeed": true
-    },
-    "TTV_ETH_AUSD_FUNDAMENTAL": {
-      "source": [
-        "accountable-travessia"
-      ],
-      "denomination": "AUSD",
-      "rateFeed": true
-    },
-    "TTV_ETH_USDC_FUNDAMENTAL": {
-      "source": [
-        "accountable-travessia"
-      ],
-      "denomination": "USDC",
-      "rateFeed": true
     },
     "PAXG": {
       "source": [
