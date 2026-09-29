@@ -3976,6 +3976,13 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "a0G_FUNDAMENTAL": {
+      "source": [
+        "zero-gravity-evm-fetcher-ascend"
+      ],
+      "denomination": "0G",
+      "rateFeed": true
+    },
     "ANKR": {
       "source": [
         "binance-usdt",
