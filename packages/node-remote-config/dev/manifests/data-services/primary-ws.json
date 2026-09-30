@@ -2551,7 +2551,8 @@
         "kumbaya-megaeth-usdt0-100-deferred",
         "kumbaya-megaeth-btc.b-3000-deferred",
         "kumbaya-megaeth-usde-100-deferred",
-        "kumbaya-megaeth-weth-3000-deferred"
+        "kumbaya-megaeth-weth-3000-deferred",
+        "kumbaya-megaeth-mega-10000-deferred"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
