@@ -4530,7 +4530,8 @@
         "kumbaya-megaeth-usdt0-100",
         "kumbaya-megaeth-btc.b-3000",
         "kumbaya-megaeth-usde-100",
-        "kumbaya-megaeth-weth-3000"
+        "kumbaya-megaeth-weth-3000",
+        "kumbaya-megaeth-mega-10000"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -5321,8 +5322,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "xt-usdt",
-        "kumbaya-megaeth-usdm-10000"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
