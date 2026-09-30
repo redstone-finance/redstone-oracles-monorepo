@@ -32,10 +32,10 @@ export interface MetadataPerSource {
   timestampMilliseconds?: number;
 
   /**
-   * Rwa value timestamp: as reported by source, else when the node received it, else the iteration
-   * timestamp. Unlike timestampMilliseconds it is never age-filtered, so it may be arbitrarily old.
+   * Timestamp carried by the websocket event itself. Unlike timestampMilliseconds, which is used to filter out data
+   * older than the staleness threshold, this one is used to cross-validate websocket fetchers against each other.
    */
-  rwaTimestampMilliseconds?: number;
+  eventTimestampMilliseconds?: number;
 
   /**
    * Temporary carrier of the RWA market status from the fetcher to the node's metadata builder.
