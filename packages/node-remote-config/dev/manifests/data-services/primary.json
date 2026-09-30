@@ -5840,6 +5840,34 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "MEMORA_DEVNET_LAMPORTS": {
+      "source": [
+        "memora-solana-devnet"
+      ],
+      "comment": "the vault balance may jump by any amount, only the hard limits bound it",
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 100000000,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "other",
+      "rateFeed": false
+    },
+    "MEMORA_DEVNET_SLOT": {
+      "source": [
+        "memora-solana-devnet"
+      ],
+      "denomination": "other",
+      "rateFeed": false
+    },
+    "MEMORA_DEVNET_BLOCK_TIMESTAMP": {
+      "source": [
+        "memora-solana-devnet"
+      ],
+      "denomination": "other",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
@@ -5934,6 +5962,11 @@
       "aUSD",
       "ggAVAX",
       "sAVAX"
+    ],
+    "__MEMORA__": [
+      "MEMORA_DEVNET_LAMPORTS",
+      "MEMORA_DEVNET_SLOT",
+      "MEMORA_DEVNET_BLOCK_TIMESTAMP"
     ]
   }
 }
