@@ -5717,6 +5717,46 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "SGT1_SEPOLIA_FUNDAMENTAL/USD": {
+      "source": [
+        "realfi"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "SGT1_SEPOLIA_PUBLICATION_TS": {
+      "source": [
+        "realfi"
+      ],
+      "denomination": "other",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 0.1,
+          "maxDelayMilliseconds": 120000
+        }
+      }
+    },
+    "SGT2_SEPOLIA_FUNDAMENTAL/USD": {
+      "source": [
+        "realfi"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "SGT2_SEPOLIA_PUBLICATION_TS": {
+      "source": [
+        "realfi"
+      ],
+      "denomination": "other",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 0.1,
+          "maxDelayMilliseconds": 120000
+        }
+      }
+    },
     "thUSD_FUNDAMENTAL": {
       "source": [
         "accountable-theo"
