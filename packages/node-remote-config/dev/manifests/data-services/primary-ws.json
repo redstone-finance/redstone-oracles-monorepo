@@ -721,6 +721,10 @@
     },
     "NIKKEI225_CURRENT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -741,6 +745,10 @@
     },
     "NIKKEI225_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1121,6 +1129,10 @@
     },
     "GAS_CURRENT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1139,6 +1151,10 @@
     },
     "GAS_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1181,6 +1197,10 @@
     },
     "WTI_CURRENT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1199,6 +1219,10 @@
     },
     "WTI_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1257,6 +1281,10 @@
     },
     "XAG_CURRENT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1277,6 +1305,10 @@
     },
     "XAG_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1297,6 +1329,10 @@
     },
     "XAG_NEXT_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1350,6 +1386,10 @@
     },
     "XAU_CURRENT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1370,6 +1410,10 @@
     },
     "XAU_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1390,6 +1434,10 @@
     },
     "XAU_NEXT_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1443,6 +1491,10 @@
     },
     "XPT_CURRENT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1463,6 +1515,10 @@
     },
     "XPT_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1483,6 +1539,10 @@
     },
     "XPT_NEXT_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1536,6 +1596,10 @@
     },
     "XCU_CURRENT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1554,6 +1618,10 @@
     },
     "XCU_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1572,6 +1640,10 @@
     },
     "XCU_NEXT_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1627,6 +1699,10 @@
     },
     "USA100_CURRENT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1637,6 +1713,10 @@
     },
     "USA100_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1745,6 +1825,10 @@
     },
     "USA500_CURRENT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1755,6 +1839,10 @@
     },
     "USA500_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1829,6 +1917,10 @@
     },
     "XBR_CURRENT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -1849,6 +1941,10 @@
     },
     "XBR_FRONT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
