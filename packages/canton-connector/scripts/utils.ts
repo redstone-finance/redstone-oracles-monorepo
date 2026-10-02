@@ -24,7 +24,7 @@ function promptTotpSync(username: string): string {
     .trim();
 }
 
-function makeScriptKeycloakOptions(): KeycloakTokenProviderOptions {
+export function makeScriptKeycloakOptions(): KeycloakTokenProviderOptions {
   const params = makeKeycloakParams();
   const walletUsername = params.walletUsername ?? params.username;
 
