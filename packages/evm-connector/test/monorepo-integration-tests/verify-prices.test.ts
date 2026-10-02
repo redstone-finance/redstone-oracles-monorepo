@@ -1,9 +1,11 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { expect } from "chai";
+import hre from "hardhat";
 import { MOCK_SIGNERS, WrapperBuilder } from "../../src";
-import { SampleForLocalhostMockTest } from "../../typechain-types";
-import { deployContract } from "../tests-common";
+import { expectNumber } from "../assertions";
+import { deployContract } from "../commons";
+import { SampleForLocalhostMockTest } from "../contract-types";
 
 const dynamicDescribe = process.env.MONOREPO_INTEGRATION_TEST === "true" ? describe : describe.skip;
 
@@ -43,7 +45,8 @@ dynamicDescribe("verify prices test", function () {
       "the number of prices returned from contract does not equal expected number of prices"
     );
     for (let i = 0; i < values.length; i++) {
-      expect(values[i]).to.eq(
+      expectNumber(
+        values[i],
         BigNumber.from(expectedPrices[i] * 10 ** 8),
         `price for ${i} token is not what was expected`
       );
@@ -51,7 +54,10 @@ dynamicDescribe("verify prices test", function () {
   };
 
   this.beforeEach(async () => {
-    ({ contract } = await deployContract<SampleForLocalhostMockTest>("SampleForLocalhostMockTest"));
+    ({ contract } = await deployContract<SampleForLocalhostMockTest>(
+      hre,
+      "SampleForLocalhostMockTest"
+    ));
   });
 
   it("Should properly extract prices with small data packages", async () => {

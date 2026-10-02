@@ -1,4 +1,5 @@
 import { DataPackage, NumericDataPoint, utils } from "@redstone-finance/protocol";
+import hre from "hardhat";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
   MOCK_SIGNERS,
@@ -6,13 +7,13 @@ import {
   MockSignerAddress,
   WrapperBuilder,
 } from "../src";
-import { deployContract } from "../test/tests-common";
+import { deployContract } from "../test/commons";
 import {
   SampleChainableProxyConnector,
   SampleChainableStorageProxy,
   SampleChainableStorageProxyConsumer,
   SampleProxyConnectorConsumer,
-} from "../typechain-types";
+} from "../test/contract-types";
 interface BenchmarkTestCaseParams {
   requiredSignersCount: number;
   requestedSymbolsCount: number;
@@ -46,6 +47,7 @@ describe("Benchmark", function () {
 
   const initializeStorageProxyChain = async (chainLength: number, requiredSignersCount: number) => {
     const { contract: initialProxy } = await deployContract<SampleChainableStorageProxy>(
+      hre,
       "SampleChainableStorageProxy"
     );
 
@@ -55,6 +57,7 @@ describe("Benchmark", function () {
       initialProxy;
     for (let i = 0; i < chainLength - 2; i++) {
       const { contract: nextProxy } = await deployContract<SampleChainableStorageProxyConsumer>(
+        hre,
         "SampleChainableStorageProxyConsumer",
         initialProxy.address
       );
@@ -64,6 +67,7 @@ describe("Benchmark", function () {
 
     const { contract: customerContract } =
       await deployContract<SampleChainableStorageProxyConsumer>(
+        hre,
         "SampleChainableStorageProxyConsumer",
         initialProxy.address
       );
@@ -77,12 +81,14 @@ describe("Benchmark", function () {
     requiredSignersCount: number
   ) => {
     const { contract: initialProxy } = await deployContract<SampleChainableProxyConnector>(
+      hre,
       "SampleChainableProxyConnector"
     );
 
     let currentProxy = initialProxy;
     for (let i = 0; i < chainLength - 2; i++) {
       const { contract: nextProxy } = await deployContract<SampleChainableProxyConnector>(
+        hre,
         "SampleChainableProxyConnector"
       );
       await currentProxy.registerNextConnector(nextProxy.address);
@@ -90,6 +96,7 @@ describe("Benchmark", function () {
     }
 
     const { contract: consumerContract } = await deployContract<SampleProxyConnectorConsumer>(
+      hre,
       "SampleProxyConnectorConsumer"
     );
     await consumerContract.updateUniqueSignersThreshold(requiredSignersCount);

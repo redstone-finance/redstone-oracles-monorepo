@@ -1,4 +1,5 @@
 import { DataPackage, NumericDataPoint, utils } from "@redstone-finance/protocol";
+import hre from "hardhat";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
   MOCK_SIGNERS,
@@ -6,8 +7,8 @@ import {
   MockSignerAddress,
   WrapperBuilder,
 } from "../src";
-import { deployContract } from "../test/tests-common";
-import { Benchmark } from "../typechain-types";
+import { deployContract } from "../test/commons";
+import { Benchmark } from "../test/contract-types";
 
 interface BenchmarkTestCaseParams {
   requiredSignersCount: number;
@@ -32,7 +33,7 @@ describe("Benchmark", function () {
   const fullGasReport: Record<string, GasReport> = {};
 
   this.beforeEach(async () => {
-    ({ contract } = await deployContract<Benchmark>("Benchmark"));
+    ({ contract } = await deployContract<Benchmark>(hre, "Benchmark"));
   });
 
   this.afterAll(() => {

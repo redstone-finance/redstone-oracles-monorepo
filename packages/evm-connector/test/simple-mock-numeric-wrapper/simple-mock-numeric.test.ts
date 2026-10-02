@@ -1,8 +1,10 @@
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
+import hre from "hardhat";
 import { DEFAULT_TIMESTAMP_FOR_TESTS, WrapperBuilder } from "../../src";
-import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../../typechain-types";
-import { deployContract } from "../tests-common";
+import { expectCustomError } from "../assertions";
+import { deployContract } from "../commons";
+import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../contract-types";
 
 const dataPoints = [
   { dataFeedId: "ETH", value: 42 },
@@ -14,6 +16,7 @@ describe("Simple Mock Numeric Wrapper", function () {
 
   this.beforeEach(async () => {
     ({ contract } = await deployContract<SampleRedstoneConsumerNumericMockManyDataFeeds>(
+      hre,
       "SampleRedstoneConsumerNumericMockManyDataFeeds"
     ));
   });
@@ -99,14 +102,16 @@ describe("Simple Mock Numeric Wrapper", function () {
       dataPoints,
     });
 
-    await expect(
-      wrappedContract.save2ValuesInStorage([
-        utils.convertStringToBytes32(dataPoints[0].dataFeedId),
-        utils.convertStringToBytes32(dataPoints[1].dataFeedId),
-      ])
-    )
-      .to.be.revertedWithCustomError(wrappedContract, "InsufficientNumberOfUniqueSigners")
-      .withArgs(9, 10);
+    await expectCustomError(
+      wrappedContract,
+      "InsufficientNumberOfUniqueSigners",
+      async () =>
+        await wrappedContract.save2ValuesInStorage([
+          utils.convertStringToBytes32(dataPoints[0].dataFeedId),
+          utils.convertStringToBytes32(dataPoints[1].dataFeedId),
+        ]),
+      [9, 10]
+    );
   });
 
   it("Should revert for too old timestamp", async () => {
@@ -116,14 +121,16 @@ describe("Simple Mock Numeric Wrapper", function () {
       timestampMilliseconds: DEFAULT_TIMESTAMP_FOR_TESTS - 1,
     });
 
-    await expect(
-      wrappedContract.save2ValuesInStorage([
-        utils.convertStringToBytes32(dataPoints[0].dataFeedId),
-        utils.convertStringToBytes32(dataPoints[1].dataFeedId),
-      ])
-    )
-      .to.be.revertedWithCustomError(wrappedContract, "TimestampIsNotValid")
-      .withArgs();
+    await expectCustomError(
+      wrappedContract,
+      "TimestampIsNotValid",
+      async () =>
+        await wrappedContract.save2ValuesInStorage([
+          utils.convertStringToBytes32(dataPoints[0].dataFeedId),
+          utils.convertStringToBytes32(dataPoints[1].dataFeedId),
+        ]),
+      []
+    );
   });
 
   it("Should test getting data with timestamp", async () => {

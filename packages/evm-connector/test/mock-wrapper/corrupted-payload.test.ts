@@ -1,9 +1,12 @@
 import { Contract } from "@ethersproject/contracts";
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
+import hre from "hardhat";
 import { BaseWrapper, WrapperBuilder } from "../../src";
-import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../../typechain-types";
-import { deployContract, expectedNumericValues, mockNumericPackages } from "../tests-common";
+import { expectRevert } from "../assertions";
+import { deployContract } from "../commons";
+import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../contract-types";
+import { expectedNumericValues, mockNumericPackages } from "../tests-common";
 
 class CustomPayloadWrapper<T extends Contract> extends BaseWrapper<T> {
   constructor(private readonly customRedstonePayload: string) {
@@ -36,13 +39,15 @@ describe("Corrupted payload", function () {
       payload
     ).overwriteEthersContract(contract);
 
-    await expect(
-      wrappedContract.save2ValuesInStorage(["BTC", "ETH"].map(utils.convertStringToBytes32))
-    ).to.be.reverted;
+    await expectRevert(
+      async () =>
+        await wrappedContract.save2ValuesInStorage(["BTC", "ETH"].map(utils.convertStringToBytes32))
+    );
   };
 
   this.beforeEach(async () => {
     ({ contract } = await deployContract<SampleRedstoneConsumerNumericMockManyDataFeeds>(
+      hre,
       "SampleRedstoneConsumerNumericMockManyDataFeeds"
     ));
   });

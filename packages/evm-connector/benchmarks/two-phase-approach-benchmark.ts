@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { ContractTransaction } from "@ethersproject/contracts";
 import { DataPackage, NumericDataPoint, utils } from "@redstone-finance/protocol";
+import hre from "hardhat";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
   MOCK_SIGNERS,
@@ -8,8 +9,9 @@ import {
   MockSignerAddress,
   WrapperBuilder,
 } from "../src";
-import { deployContract, hardhatV5Provider } from "../test/tests-common";
-import { HashCalldataModel, StorageStructureModel } from "../typechain-types";
+import { deployContract } from "../test/commons";
+import { HashCalldataModel, StorageStructureModel } from "../test/contract-types";
+import { hardhatProvider } from "../test/hre-utils";
 
 interface BenchmarkTestCaseParams {
   passedArgumentsCount: number;
@@ -43,11 +45,15 @@ describe("Benchmark", function () {
   const fullGasReport: Record<string, GasReport> = {};
 
   this.beforeEach(async () => {
-    ({ contract: storageStructureModel } =
-      await deployContract<StorageStructureModel>("StorageStructureModel"));
+    ({ contract: storageStructureModel } = await deployContract<StorageStructureModel>(
+      hre,
+      "StorageStructureModel"
+    ));
 
-    ({ contract: hashCalldataModel } =
-      await deployContract<HashCalldataModel>("HashCalldataModel"));
+    ({ contract: hashCalldataModel } = await deployContract<HashCalldataModel>(
+      hre,
+      "HashCalldataModel"
+    ));
   });
 
   this.afterAll(() => {
@@ -178,7 +184,7 @@ describe("Benchmark", function () {
       const requestHashTx = await sendHashRequestFunction(...bytes32Symbols);
       const requestHashTxReceipt = await requestHashTx.wait();
 
-      const provider = hardhatV5Provider();
+      const provider = await hardhatProvider(hre);
       const blockNumber = await provider.getBlockNumber();
       const sender = await provider.getSigner(0).getAddress();
       const executeRequestHashTx = await executeHashRequestFunction(

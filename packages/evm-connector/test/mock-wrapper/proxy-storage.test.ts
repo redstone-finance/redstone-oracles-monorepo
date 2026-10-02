@@ -1,11 +1,13 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
+import hre from "hardhat";
 import { MockSignerIndex, WrapperBuilder, getMockNumericPackage, getRange } from "../../src";
-import { SampleStorageProxy, SampleStorageProxyConsumer } from "../../typechain-types";
+import { expectNumber } from "../assertions";
+import { deployContract } from "../commons";
+import { SampleStorageProxy, SampleStorageProxyConsumer } from "../contract-types";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
-  deployContract,
   expectedNumericValues,
   mockNumericPackages,
 } from "../tests-common";
@@ -47,9 +49,10 @@ describe("SampleStorageProxy", function () {
   const ethDataFeedId = utils.convertStringToBytes32("ETH");
 
   this.beforeEach(async () => {
-    ({ contract } = await deployContract<SampleStorageProxy>("SampleStorageProxy"));
+    ({ contract } = await deployContract<SampleStorageProxy>(hre, "SampleStorageProxy"));
 
     ({ contract: consumerContract } = await deployContract<SampleStorageProxyConsumer>(
+      hre,
       "SampleStorageProxyConsumer",
       contract.address
     ));
@@ -63,7 +66,7 @@ describe("SampleStorageProxy", function () {
 
     const fetchedValue = await wrappedContract.fetchValueUsingProxyDryRun(ethDataFeedId);
 
-    expect(fetchedValue).to.eq(expectedNumericValues.ETH);
+    expectNumber(fetchedValue, expectedNumericValues.ETH);
   });
 
   it("Should return correct structure containing oracle value using dry run", async () => {
@@ -131,7 +134,7 @@ describe("SampleStorageProxy", function () {
     await wrappedContract.saveOracleValueInContractStorage(ethDataFeedId);
 
     const fetchedValue = await consumerContract.getOracleValue(ethDataFeedId);
-    expect(fetchedValue).to.eq(expectedNumericValues.ETH);
+    expectNumber(fetchedValue, expectedNumericValues.ETH);
   });
 
   it("Should return correct oracle values for 10 assets", async () => {
@@ -144,12 +147,10 @@ describe("SampleStorageProxy", function () {
       await wrappedContract.saveOracleValueInContractStorage(
         utils.convertStringToBytes32(dataPoint.dataFeedId)
       );
-      await expect(
-        consumerContract.checkOracleValue(
-          utils.convertStringToBytes32(dataPoint.dataFeedId),
-          Math.round(dataPoint.value * 10 ** 8)
-        )
-      ).not.to.be.reverted;
+      await consumerContract.checkOracleValue(
+        utils.convertStringToBytes32(dataPoint.dataFeedId),
+        Math.round(dataPoint.value * 10 ** 8)
+      );
     }
   });
 
@@ -162,7 +163,6 @@ describe("SampleStorageProxy", function () {
     const dataValues = dataPoints.map((dataPoint) => Math.round(dataPoint.value * 10 ** 8));
 
     await wrappedContract.saveOracleValuesInContractStorage(dataFeedIdsBytes);
-    await expect(consumerContract.checkOracleValues(dataFeedIdsBytes, dataValues)).not.to.be
-      .reverted;
+    await consumerContract.checkOracleValues(dataFeedIdsBytes, dataValues);
   });
 });
