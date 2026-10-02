@@ -1,13 +1,16 @@
 import { consts, utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
+import hre from "hardhat";
 import { WrapperBuilder } from "../../src";
-import { SampleRedstoneConsumerNumericMock } from "../../typechain-types";
-import { deployContract, mockNumericPackages } from "../tests-common";
+import { deployContract } from "../commons";
+import { SampleRedstoneConsumerNumericMock } from "../contract-types";
+import { mockNumericPackages } from "../tests-common";
 
 describe("PopulateTransactionTest", function () {
   it("Should overwrite populateTransaction", async () => {
     // Deploying the contract
     const { contract } = await deployContract<SampleRedstoneConsumerNumericMock>(
+      hre,
       "SampleRedstoneConsumerNumericMock"
     );
 

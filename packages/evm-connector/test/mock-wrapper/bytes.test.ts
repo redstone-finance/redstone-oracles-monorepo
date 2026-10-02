@@ -1,5 +1,6 @@
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
+import hre from "hardhat";
 import {
   DEFAULT_DATA_FEED_ID_BYTES_32,
   DEFAULT_TIMESTAMP_FOR_TESTS,
@@ -8,8 +9,10 @@ import {
   MockPackageWithOneBytesDataPointArgs,
   WrapperBuilder,
 } from "../../src";
-import { SampleRedstoneConsumerBytesMock } from "../../typechain-types";
-import { deployContract, UNAUTHORISED_SIGNER_INDEX } from "../tests-common";
+import { expectCustomError } from "../assertions";
+import { deployContract } from "../commons";
+import { SampleRedstoneConsumerBytesMock } from "../contract-types";
+import { UNAUTHORISED_SIGNER_INDEX } from "../tests-common";
 
 describe("SampleRedstoneConsumerBytesMock", function () {
   let contract: SampleRedstoneConsumerBytesMock;
@@ -51,13 +54,18 @@ describe("SampleRedstoneConsumerBytesMock", function () {
     ...args: unknown[]
   ) => {
     const wrappedContract = WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
-    await expect(wrappedContract.saveOracleValueInContractStorage(DEFAULT_DATA_FEED_ID_BYTES_32))
-      .to.be.revertedWithCustomError(wrappedContract, revertMsg)
-      .withArgs(...args);
+    await expectCustomError(
+      wrappedContract,
+      revertMsg,
+      async () =>
+        await wrappedContract.saveOracleValueInContractStorage(DEFAULT_DATA_FEED_ID_BYTES_32),
+      args
+    );
   };
 
   this.beforeEach(async () => {
     ({ contract } = await deployContract<SampleRedstoneConsumerBytesMock>(
+      hre,
       "SampleRedstoneConsumerBytesMock"
     ));
   });
@@ -138,12 +146,14 @@ describe("SampleRedstoneConsumerBytesMock", function () {
 
   it("Should revert is data feed id not found", async () => {
     const wrappedContract = WrapperBuilder.wrap(contract).usingMockDataPackages(mockBytesPackages);
-    await expect(
-      wrappedContract.saveOracleValueInContractStorage(
-        utils.convertStringToBytes32("ANOTHER_DATA_FEED_ID")
-      )
-    )
-      .to.be.revertedWithCustomError(wrappedContract, "InsufficientNumberOfUniqueSigners")
-      .withArgs(0, 3);
+    await expectCustomError(
+      wrappedContract,
+      "InsufficientNumberOfUniqueSigners",
+      async () =>
+        await wrappedContract.saveOracleValueInContractStorage(
+          utils.convertStringToBytes32("ANOTHER_DATA_FEED_ID")
+        ),
+      [0, 3]
+    );
   });
 });

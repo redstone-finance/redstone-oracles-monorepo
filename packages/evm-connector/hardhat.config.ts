@@ -1,6 +1,5 @@
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-solhint";
-import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import { HardhatUserConfig } from "hardhat/config";
 import "solidity-coverage";
@@ -24,6 +23,9 @@ const config: HardhatUserConfig = {
   },
   mocha: {
     timeout: 300_000, // 300 seconds
+  },
+  typechain: {
+    dontOverrideCompile: true,
   },
   networks: {
     hardhat: {

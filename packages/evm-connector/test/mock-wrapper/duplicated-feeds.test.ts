@@ -1,14 +1,19 @@
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
+import hre from "hardhat";
 import { getRange, WrapperBuilder } from "../../src";
-import { SampleDuplicatedDataFeeds } from "../../typechain-types";
-import { deployContract, expectedNumericValues, mockNumericPackages } from "../tests-common";
+import { deployContract } from "../commons";
+import { SampleDuplicatedDataFeeds } from "../contract-types";
+import { expectedNumericValues, mockNumericPackages } from "../tests-common";
 
 describe("DuplicatedDataFeeds", function () {
   let contract: SampleDuplicatedDataFeeds;
 
   this.beforeEach(async () => {
-    ({ contract } = await deployContract<SampleDuplicatedDataFeeds>("SampleDuplicatedDataFeeds"));
+    ({ contract } = await deployContract<SampleDuplicatedDataFeeds>(
+      hre,
+      "SampleDuplicatedDataFeeds"
+    ));
   });
 
   const runTestForArrayOfDataFeeds = async (dataFeedIds: string[]) => {

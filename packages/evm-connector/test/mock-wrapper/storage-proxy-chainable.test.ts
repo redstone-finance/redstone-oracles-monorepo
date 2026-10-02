@@ -1,13 +1,14 @@
 import { utils } from "@redstone-finance/protocol";
-import { expect } from "chai";
+import hre from "hardhat";
 import { MockSignerIndex, WrapperBuilder, getMockNumericPackage, getRange } from "../../src";
+import { expectNumber } from "../assertions";
+import { deployContract } from "../commons";
 import {
   SampleChainableStorageProxy,
   SampleChainableStorageProxyConsumer,
-} from "../../typechain-types";
+} from "../contract-types";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
-  deployContract,
   expectedNumericValues,
   mockNumericPackages,
 } from "../tests-common";
@@ -32,15 +33,18 @@ describe("SampleChainableStorageProxy", function () {
 
   this.beforeEach(async () => {
     ({ contract } = await deployContract<SampleChainableStorageProxy>(
+      hre,
       "SampleChainableStorageProxy"
     ));
 
     const { contract: contractB } = await deployContract<SampleChainableStorageProxyConsumer>(
+      hre,
       "SampleChainableStorageProxyConsumer",
       contract.address
     );
 
     ({ contract: consumerContract } = await deployContract<SampleChainableStorageProxyConsumer>(
+      hre,
       "SampleChainableStorageProxyConsumer",
       contract.address
     ));
@@ -56,7 +60,7 @@ describe("SampleChainableStorageProxy", function () {
     await wrappedContract.processOracleValue(ethDataFeedId);
 
     const fetchedValue = await consumerContract.getComputationResult();
-    expect(fetchedValue).to.eq(expectedNumericValues.ETH * 42);
+    expectNumber(fetchedValue, expectedNumericValues.ETH * 42);
   });
 
   it("Should process oracle values for 10 assets", async () => {
@@ -81,7 +85,7 @@ describe("SampleChainableStorageProxy", function () {
 
     const computationResult = await consumerContract.getComputationResult();
 
-    expect(computationResult).to.eq(dataValues.reduce((a, b) => a + b, 0) * 42);
+    expectNumber(computationResult, dataValues.reduce((a, b) => a + b, 0) * 42);
   });
 
   it("Should process oracle values for 10 assets simultaneously", async () => {
@@ -105,6 +109,6 @@ describe("SampleChainableStorageProxy", function () {
     await wrappedContract.processOracleValues(dataFeedIdsBytes);
     const computationResult = await consumerContract.getComputationResult();
 
-    expect(computationResult).to.eq(dataValues.reduce((a, b) => a + b, 0) * 42);
+    expectNumber(computationResult, dataValues.reduce((a, b) => a + b, 0) * 42);
   });
 });

@@ -1,6 +1,4 @@
-import { Contract } from "@ethersproject/contracts";
-import { RedstoneCommon } from "@redstone-finance/utils";
-import { ethers } from "hardhat";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 import {
   getMockNumericPackage,
   getMockSignedDataPackageObj,
@@ -10,6 +8,7 @@ import {
   MockSignerIndex,
   MockStringPackageArgs,
 } from "../src";
+import { hardhatProvider } from "./hre-utils";
 
 export const NUMBER_OF_MOCK_NUMERIC_SIGNERS = 10;
 
@@ -94,30 +93,10 @@ export const expectedBytesValues = {
 
 export const UNAUTHORISED_SIGNER_INDEX = 19;
 
-export const getBlockTimestampMilliseconds = async () => {
-  const provider = hardhatV5Provider();
+export const getBlockTimestampMilliseconds = async (hre: HardhatRuntimeEnvironment) => {
+  const provider = await hardhatProvider(hre);
   const blockNum = await provider.getBlockNumber();
   const block = await provider.getBlock(blockNum);
 
   return block.timestamp * 1000;
 };
-
-export function hardhatV5Provider() {
-  return ethers.provider;
-}
-
-export async function hardhatSigners() {
-  return await ethers.getSigners();
-}
-
-export async function deployContract<Deployed extends Contract = Contract>(
-  contractName: string,
-  ...args: unknown[]
-) {
-  const contractFactory = await ethers.getContractFactory(contractName);
-  const { contract, address } = await RedstoneCommon.awaitDeployment(
-    await contractFactory.deploy(...args)
-  );
-
-  return { contract: contract as Deployed, address };
-}

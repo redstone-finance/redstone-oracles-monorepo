@@ -1,9 +1,11 @@
 import { utils } from "@redstone-finance/protocol";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
+import hre from "hardhat";
 import { DataPackagesWrapper, WrapperBuilder } from "../../src";
-import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../../typechain-types";
-import { deployContract, expectedNumericValues } from "../tests-common";
+import { deployContract } from "../commons";
+import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../contract-types";
+import { expectedNumericValues } from "../tests-common";
 import { getValidDataPackagesResponse } from "./helpers";
 
 chai.use(chaiAsPromised);
@@ -22,6 +24,7 @@ describe("DataPackagesWrapper", () => {
 
   beforeEach(async () => {
     ({ contract } = await deployContract<SampleRedstoneConsumerNumericMockManyDataFeeds>(
+      hre,
       "SampleRedstoneConsumerNumericMockManyDataFeeds"
     ));
   });

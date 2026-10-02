@@ -1,16 +1,18 @@
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
+import hre from "hardhat";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
   MockDataPackageConfig,
   WrapperBuilder,
   getMockNumericPackage,
 } from "../../src";
-import { SampleRedstoneConsumerNumericMock } from "../../typechain-types";
+import { expectCustomError } from "../assertions";
+import { deployContract } from "../commons";
+import { SampleRedstoneConsumerNumericMock } from "../contract-types";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
   UNAUTHORISED_SIGNER_INDEX,
-  deployContract,
   expectedNumericValues,
   mockNumericPackageConfigs,
   mockNumericPackages,
@@ -45,15 +47,20 @@ describe("SampleRedstoneConsumerNumericMock", function () {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
-    await expect(
-      wrappedContract.saveOracleValueInContractStorage(utils.convertStringToBytes32(dataFeedId))
-    )
-      .to.be.revertedWithCustomError(wrappedContract, revertMsg)
-      .withArgs(...args);
+    await expectCustomError(
+      wrappedContract,
+      revertMsg,
+      async () =>
+        await wrappedContract.saveOracleValueInContractStorage(
+          utils.convertStringToBytes32(dataFeedId)
+        ),
+      args
+    );
   };
 
   this.beforeEach(async () => {
     ({ contract } = await deployContract<SampleRedstoneConsumerNumericMock>(
+      hre,
       "SampleRedstoneConsumerNumericMock"
     ));
   });
