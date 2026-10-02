@@ -425,7 +425,9 @@
     "LUSD": {
       "source": [
         "curve-ethereum-3crv",
+        "curve-ethereum-bold",
         "uniswap-v3-ethereum-usdc-500",
+        "velodrome-optimism-bold",
         "velodrome-optimism-usdc"
       ],
       "deviationCheck": {
@@ -436,6 +438,24 @@
       },
       "denomination": "USD",
       "rateFeed": false
+    },
+    "BOLD": {
+      "source": [
+        "curve-ethereum-usdc",
+        "uniswap-v3-ethereum-usdc-500",
+        "uniswap-v4-ethereum-eth-3000",
+        "uniswap-v4-ethereum-usdc-500"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [],
+      "skipBroadcasting": true
     },
     "GHO": {
       "source": [
@@ -988,6 +1008,8 @@
         "bybit-btc",
         "bybit-usdt",
         "curve-arbitrumone-weth",
+        "curve-ethereum-usdt",
+        "curve-ethereum-usdt-2",
         "gate-usdt",
         "kraken-btc",
         "kraken-usd",
@@ -4806,11 +4828,16 @@
     },
     "JLP": {
       "source": [
+        "meteora-solana-mainnet-jitosol",
         "meteora-solana-mainnet-usdc",
         "meteora-solana-mainnet-usdc-2",
+        "meteora-solana-mainnet-usdc-3",
+        "meteora-solana-mainnet-wsol",
         "orca-solana-mainnet-cbbtc",
         "orca-solana-mainnet-usdc",
-        "orca-solana-mainnet-wsol"
+        "orca-solana-mainnet-usdc-2",
+        "orca-solana-mainnet-wsol",
+        "raydium-clmm-solana-mainnet-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
