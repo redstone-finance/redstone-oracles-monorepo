@@ -9076,6 +9076,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-corporate-actions-monitoring@workspace:packages/lambda/lambda-corporate-actions-monitoring":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-corporate-actions-monitoring@workspace:packages/lambda/lambda-corporate-actions-monitoring"
+  dependencies:
+    "@aws-sdk/client-dynamodb": "npm:^3.696.0"
+    "@redstone-finance/http-client": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-commons": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
+    "@redstone-finance/remote-config": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    "@types/lodash": "npm:^4.14.195"
+    dotenv: "npm:^16.0.3"
+    lodash: "npm:^4.17.23"
+    zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-deviation-monitoring@workspace:packages/lambda/lambda-deviation-monitoring":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-deviation-monitoring@workspace:packages/lambda/lambda-deviation-monitoring"
@@ -9356,24 +9375,6 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^4.1.12"
-  languageName: unknown
-  linkType: soft
-
-"@redstone-finance/lambda-massive-corporate-actions-monitoring@workspace:packages/lambda/lambda-massive-corporate-actions-monitoring":
-  version: 0.0.0-use.local
-  resolution: "@redstone-finance/lambda-massive-corporate-actions-monitoring@workspace:packages/lambda/lambda-massive-corporate-actions-monitoring"
-  dependencies:
-    "@aws-sdk/client-dynamodb": "npm:^3.696.0"
-    "@redstone-finance/http-client": "workspace:*"
-    "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/node-commons": "workspace:*"
-    "@redstone-finance/remote-config": "workspace:*"
-    "@redstone-finance/utils": "workspace:*"
-    "@types/aws-lambda": "npm:^8.10.145"
-    "@types/lodash": "npm:^4.14.195"
-    dotenv: "npm:^16.0.3"
-    lodash: "npm:^4.17.23"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
