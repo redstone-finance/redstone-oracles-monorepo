@@ -18,7 +18,9 @@
     "sample-run": "yarn build:turbo && yarn global:with-auth-gateways node dist/scripts/sample-run.js",
     "core-client-sample": "yarn build:turbo && yarn global:with-auth-gateways node dist/scripts/core-client-sample.js",
     "clear-old-pills": "yarn global:tsx scripts/clear-old-pills.ts",
-    "measure-canton-latency": "yarn global:tsx scripts/measure-canton-latency.ts"
+    "measure-canton-latency": "yarn global:tsx scripts/measure-canton-latency.ts",
+    "check-cc-balances": "yarn global:tsx scripts/check-cc-balances.ts",
+    "check-cc-transfer": "yarn global:tsx scripts/check-cc-transfer.ts"
   },
   "dependencies": {
     "@canton-network/core-token-standard-service": "^1.2.3",
