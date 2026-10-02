@@ -1,8 +1,10 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { expect } from "chai";
+import hre from "hardhat";
 import { getRange } from "../../src";
-import { SampleNumericArrayLib } from "../../typechain-types";
-import { deployContract } from "../tests-common";
+import { expectCustomError } from "../assertions";
+import { deployContract } from "../commons";
+import { SampleNumericArrayLib } from "../contract-types";
 
 describe("SampleNumericArrayLib", function () {
   let contract: SampleNumericArrayLib;
@@ -15,7 +17,7 @@ describe("SampleNumericArrayLib", function () {
   };
 
   beforeEach(async () => {
-    ({ contract } = await deployContract<SampleNumericArrayLib>("SampleNumericArrayLib"));
+    ({ contract } = await deployContract<SampleNumericArrayLib>(hre, "SampleNumericArrayLib"));
   });
 
   it("Should store array in storage", async () => {
@@ -63,9 +65,12 @@ describe("SampleNumericArrayLib", function () {
   });
 
   it("Should revert trying to pick a median value from an empty array", async () => {
-    await expect(contract.testMedianSelection([]))
-      .to.be.revertedWithCustomError(contract, "CanNotPickMedianOfEmptyArray")
-      .withArgs();
+    await expectCustomError(
+      contract,
+      "CanNotPickMedianOfEmptyArray",
+      () => contract.testMedianSelection([]),
+      []
+    );
   });
 
   it("Should properly sort 1-elem array", async () => {

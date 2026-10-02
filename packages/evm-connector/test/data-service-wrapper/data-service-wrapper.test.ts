@@ -1,12 +1,14 @@
 import { utils } from "@redstone-finance/protocol";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
+import hre from "hardhat";
 import { DataServiceWrapper, MOCK_SIGNERS, WrapperBuilder } from "../../src";
+import { deployContract } from "../commons";
 import {
   SampleRedstoneConsumerNumericMockManyDataFeeds,
   SampleRedstoneDataServiceConsumerMock,
-} from "../../typechain-types";
-import { deployContract, expectedNumericValues } from "../tests-common";
+} from "../contract-types";
+import { expectedNumericValues } from "../tests-common";
 import { server } from "./mock-server";
 
 chai.use(chaiAsPromised);
@@ -66,6 +68,7 @@ describe("DataServiceWrapper", () => {
 
     beforeEach(async () => {
       ({ contract } = await deployContract<SampleRedstoneConsumerNumericMockManyDataFeeds>(
+        hre,
         "SampleRedstoneConsumerNumericMockManyDataFeeds"
       ));
     });
@@ -125,6 +128,7 @@ describe("DataServiceWrapper", () => {
 
     beforeEach(async () => {
       ({ contract } = await deployContract<SampleRedstoneDataServiceConsumerMock>(
+        hre,
         "SampleRedstoneDataServiceConsumerMock"
       ));
     });

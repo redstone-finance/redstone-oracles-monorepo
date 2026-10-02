@@ -1,5 +1,6 @@
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
+import hre from "hardhat";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
   getMockNumericPackage,
@@ -10,9 +11,10 @@ import {
   MockWrapper,
   WrapperBuilder,
 } from "../../src";
-import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../../typechain-types";
+import { expectCustomError } from "../assertions";
+import { deployContract } from "../commons";
+import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../contract-types";
 import {
-  deployContract,
   expectedNumericValues,
   mockNumericPackageConfigs,
   mockNumericPackages,
@@ -56,15 +58,18 @@ describe("SampleRedstoneConsumerNumericMockManyDataFeeds", function () {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
-    await expect(
-      wrappedContract.save2ValuesInStorage(dataFeedIds.map(utils.convertStringToBytes32))
-    )
-      .to.be.revertedWithCustomError(wrappedContract, revertMsg)
-      .withArgs(...args);
+    await expectCustomError(
+      wrappedContract,
+      revertMsg,
+      async () =>
+        await wrappedContract.save2ValuesInStorage(dataFeedIds.map(utils.convertStringToBytes32)),
+      args
+    );
   };
 
   this.beforeEach(async () => {
     ({ contract } = await deployContract<SampleRedstoneConsumerNumericMockManyDataFeeds>(
+      hre,
       "SampleRedstoneConsumerNumericMockManyDataFeeds"
     ));
   });

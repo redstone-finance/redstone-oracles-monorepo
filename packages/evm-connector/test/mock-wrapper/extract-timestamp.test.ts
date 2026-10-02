@@ -1,7 +1,9 @@
-import { expect } from "chai";
+import hre from "hardhat";
 import { DEFAULT_TIMESTAMP_FOR_TESTS, getMockNumericPackage, WrapperBuilder } from "../../src";
-import { SampleRedstoneConsumerNumericMock } from "../../typechain-types";
-import { deployContract, mockNumericPackages } from "../tests-common";
+import { expectCustomError, expectNumber } from "../assertions";
+import { deployContract } from "../commons";
+import { SampleRedstoneConsumerNumericMock } from "../contract-types";
+import { mockNumericPackages } from "../tests-common";
 
 const getSimpleTestPackageWithTimestamp = (timestamp: number) =>
   getMockNumericPackage({
@@ -15,6 +17,7 @@ describe("Extract Timestamp", function () {
 
   beforeEach(async () => {
     ({ contract: sampleContract } = await deployContract<SampleRedstoneConsumerNumericMock>(
+      hre,
       "SampleRedstoneConsumerNumericMock"
     ));
   });
@@ -25,7 +28,7 @@ describe("Extract Timestamp", function () {
 
     const timestamp = await wrappedContract.extractTimestampFromRedstonePayload();
 
-    expect(timestamp).to.be.equal(DEFAULT_TIMESTAMP_FOR_TESTS);
+    expectNumber(timestamp, DEFAULT_TIMESTAMP_FOR_TESTS);
   });
 
   it("Should revert if 2 timestamps are not equal", async () => {
@@ -34,9 +37,11 @@ describe("Extract Timestamp", function () {
       getSimpleTestPackageWithTimestamp(DEFAULT_TIMESTAMP_FOR_TESTS + 1),
     ]);
 
-    await expect(
-      wrappedContract.extractTimestampFromRedstonePayload()
-    ).to.be.revertedWithCustomError(wrappedContract, "DataPackageTimestampsMustBeEqual");
+    await expectCustomError(
+      wrappedContract,
+      "DataPackageTimestampsMustBeEqual",
+      async () => await wrappedContract.extractTimestampFromRedstonePayload()
+    );
   });
 
   it("Should revert if one of many timestamps is different", async () => {
@@ -48,8 +53,10 @@ describe("Extract Timestamp", function () {
       getSimpleTestPackageWithTimestamp(DEFAULT_TIMESTAMP_FOR_TESTS),
     ]);
 
-    await expect(
-      wrappedContract.extractTimestampFromRedstonePayload()
-    ).to.be.revertedWithCustomError(wrappedContract, "DataPackageTimestampsMustBeEqual");
+    await expectCustomError(
+      wrappedContract,
+      "DataPackageTimestampsMustBeEqual",
+      async () => await wrappedContract.extractTimestampFromRedstonePayload()
+    );
   });
 });

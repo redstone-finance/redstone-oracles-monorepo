@@ -1,7 +1,8 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { expect } from "chai";
-import { SampleBitmapLib } from "../../typechain-types";
-import { deployContract } from "../tests-common";
+import hre from "hardhat";
+import { deployContract } from "../commons";
+import { SampleBitmapLib } from "../contract-types";
 
 describe("SampleBitmapLib", function () {
   let contract: SampleBitmapLib,
@@ -23,7 +24,7 @@ describe("SampleBitmapLib", function () {
   };
 
   this.beforeAll(async () => {
-    ({ contract } = await deployContract<SampleBitmapLib>("SampleBitmapLib"));
+    ({ contract } = await deployContract<SampleBitmapLib>(hre, "SampleBitmapLib"));
   });
 
   it("Bitmap should be empty in the beginning", async () => {

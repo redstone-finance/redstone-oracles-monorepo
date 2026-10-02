@@ -1,9 +1,12 @@
 import { utils } from "@redstone-finance/protocol";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
+import hre from "hardhat";
 import { WrapperBuilder } from "../../src";
-import { SampleRedstoneConsumerNumericMock } from "../../typechain-types";
-import { deployContract, hardhatV5Provider, mockNumericPackages } from "../tests-common";
+import { deployContract } from "../commons";
+import { SampleRedstoneConsumerNumericMock } from "../contract-types";
+import { hardhatProvider } from "../hre-utils";
+import { mockNumericPackages } from "../tests-common";
 
 chai.use(chaiAsPromised);
 
@@ -15,12 +18,13 @@ describe("SignerOrProviderTest", function () {
 
   this.beforeEach(async () => {
     ({ contract: deployedContract } = await deployContract<SampleRedstoneConsumerNumericMock>(
+      hre,
       "SampleRedstoneConsumerNumericMock"
     ));
   });
 
   it("Should call static function without signer", async () => {
-    const contract = deployedContract.connect(hardhatV5Provider());
+    const contract = deployedContract.connect(await hardhatProvider(hre));
 
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
@@ -30,7 +34,7 @@ describe("SignerOrProviderTest", function () {
   });
 
   it("Should revert with non-static function without signer", async () => {
-    const contract = deployedContract.connect(hardhatV5Provider());
+    const contract = deployedContract.connect(await hardhatProvider(hre));
 
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);

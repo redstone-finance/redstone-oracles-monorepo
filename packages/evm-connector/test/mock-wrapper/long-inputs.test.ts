@@ -1,4 +1,5 @@
 import { expect } from "chai";
+import hre from "hardhat";
 import {
   DEFAULT_DATA_FEED_ID_BYTES_32,
   getMockPackageWithOneBytesDataPoint,
@@ -6,8 +7,8 @@ import {
   MockSignerIndex,
   WrapperBuilder,
 } from "../../src";
-import { SampleRedstoneConsumerBytesMockStrings } from "../../typechain-types";
-import { deployContract } from "../tests-common";
+import { deployContract } from "../commons";
+import { SampleRedstoneConsumerBytesMockStrings } from "../contract-types";
 
 describe("Long Inputs", function () {
   let contract: SampleRedstoneConsumerBytesMockStrings;
@@ -26,6 +27,7 @@ describe("Long Inputs", function () {
 
   this.beforeEach(async () => {
     ({ contract } = await deployContract<SampleRedstoneConsumerBytesMockStrings>(
+      hre,
       "SampleRedstoneConsumerBytesMockStrings"
     ));
   });

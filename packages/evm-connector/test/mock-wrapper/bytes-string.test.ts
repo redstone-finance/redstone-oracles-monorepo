@@ -1,4 +1,5 @@
 import { expect } from "chai";
+import hre from "hardhat";
 import {
   DEFAULT_DATA_FEED_ID_BYTES_32,
   MockDataPackageConfig,
@@ -7,8 +8,10 @@ import {
   getMockPackageWithOneBytesDataPoint,
   getRange,
 } from "../../src";
-import { SampleRedstoneConsumerBytesMockStrings } from "../../typechain-types";
-import { UNAUTHORISED_SIGNER_INDEX, deployContract } from "../tests-common";
+import { expectCustomError } from "../assertions";
+import { deployContract } from "../commons";
+import { SampleRedstoneConsumerBytesMockStrings } from "../contract-types";
+import { UNAUTHORISED_SIGNER_INDEX } from "../tests-common";
 
 describe("SampleRedstoneConsumerBytesMockStrings", function () {
   let contract: SampleRedstoneConsumerBytesMockStrings;
@@ -40,13 +43,17 @@ describe("SampleRedstoneConsumerBytesMockStrings", function () {
   ) => {
     const wrappedContract = WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
 
-    await expect(wrappedContract.saveLatestValueInStorage(DEFAULT_DATA_FEED_ID_BYTES_32))
-      .to.be.revertedWithCustomError(wrappedContract, revertMsg)
-      .withArgs(...args);
+    await expectCustomError(
+      wrappedContract,
+      revertMsg,
+      async () => await wrappedContract.saveLatestValueInStorage(DEFAULT_DATA_FEED_ID_BYTES_32),
+      args
+    );
   };
 
   this.beforeEach(async () => {
     ({ contract } = await deployContract<SampleRedstoneConsumerBytesMockStrings>(
+      hre,
       "SampleRedstoneConsumerBytesMockStrings"
     ));
   });

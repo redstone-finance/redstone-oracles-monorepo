@@ -1,10 +1,13 @@
 import { Signer } from "@ethersproject/abstract-signer";
 import { utils } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { expect } from "chai";
+import hre from "hardhat";
 import { getMockNumericPackage, getRange, MockSignerIndex, WrapperBuilder } from "../../src";
-import { SampleSyntheticToken } from "../../typechain-types";
-import { deployContract, hardhatSigners, NUMBER_OF_MOCK_NUMERIC_SIGNERS } from "../tests-common";
+import { expectNumber } from "../assertions";
+import { deployContract } from "../commons";
+import { SampleSyntheticToken } from "../contract-types";
+import { hardhatSigners } from "../hre-utils";
+import { NUMBER_OF_MOCK_NUMERIC_SIGNERS } from "../tests-common";
 
 // TODO audit: measure how many bytes do we add to the consumer contracts
 
@@ -22,14 +25,16 @@ describe("SampleSyntheticToken", function () {
   };
 
   beforeEach(async () => {
-    ({ contract: sampleContract } =
-      await deployContract<SampleSyntheticToken>("SampleSyntheticToken"));
+    ({ contract: sampleContract } = await deployContract<SampleSyntheticToken>(
+      hre,
+      "SampleSyntheticToken"
+    ));
     await sampleContract.initialize(
       utils.convertStringToBytes32("REDSTONE"),
       "SYNTH-REDSTONE",
       "SREDSTONE"
     );
-    [signer] = await hardhatSigners();
+    [signer] = await hardhatSigners(hre);
     address = await signer.getAddress();
 
     const mockDataPackages = getRange({
@@ -55,20 +60,20 @@ describe("SampleSyntheticToken", function () {
   });
 
   it("Maker balance should be 0", async () => {
-    expect(await wrappedContract.balanceOf(address)).to.equal(0);
+    expectNumber(await wrappedContract.balanceOf(address), 0);
   });
 
   it("Should mint", async () => {
     const tx = await wrappedContract.mint(toEth(100), { value: toEth(20) });
     await tx.wait();
 
-    expect(await wrappedContract.balanceOf(address)).to.equal(toEth(100));
-    expect(await wrappedContract.balanceValueOf(address)).to.equal(toVal(20000));
-    expect(await wrappedContract.totalValue()).to.equal(toVal(20000));
-    expect(await wrappedContract.collateralOf(address)).to.equal(toEth(20));
-    expect(await wrappedContract.collateralValueOf(address)).to.equal(toVal(40000));
-    expect(await wrappedContract.debtOf(address)).to.equal(toEth(100));
-    expect(await wrappedContract.debtValueOf(address)).to.equal(toVal(20000));
-    expect(await wrappedContract.solvencyOf(address)).to.equal(2000);
+    expectNumber(await wrappedContract.balanceOf(address), toEth(100));
+    expectNumber(await wrappedContract.balanceValueOf(address), toVal(20000));
+    expectNumber(await wrappedContract.totalValue(), toVal(20000));
+    expectNumber(await wrappedContract.collateralOf(address), toEth(20));
+    expectNumber(await wrappedContract.collateralValueOf(address), toVal(40000));
+    expectNumber(await wrappedContract.debtOf(address), toEth(100));
+    expectNumber(await wrappedContract.debtValueOf(address), toVal(20000));
+    expectNumber(await wrappedContract.solvencyOf(address), 2000);
   });
 });

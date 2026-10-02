@@ -1,10 +1,11 @@
 import { utils } from "@redstone-finance/protocol";
-import { expect } from "chai";
+import hre from "hardhat";
 import { MockSignerIndex, WrapperBuilder, getMockNumericPackage, getRange } from "../../src";
-import { SampleChainableProxyConnector, SampleProxyConnectorConsumer } from "../../typechain-types";
+import { expectNumber } from "../assertions";
+import { deployContract } from "../commons";
+import { SampleChainableProxyConnector, SampleProxyConnectorConsumer } from "../contract-types";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
-  deployContract,
   expectedNumericValues,
   mockNumericPackages,
 } from "../tests-common";
@@ -29,16 +30,19 @@ describe("SampleChainableProxyConnector", function () {
 
   this.beforeEach(async () => {
     ({ contract } = await deployContract<SampleChainableProxyConnector>(
+      hre,
       "SampleChainableProxyConnector"
     ));
 
     const { contract: contractB } = await deployContract<SampleChainableProxyConnector>(
+      hre,
       "SampleChainableProxyConnector"
     );
 
     await contract.registerNextConnector(contractB.address);
 
     ({ contract: consumerContract } = await deployContract<SampleProxyConnectorConsumer>(
+      hre,
       "SampleProxyConnectorConsumer"
     ));
 
@@ -52,7 +56,7 @@ describe("SampleChainableProxyConnector", function () {
     await wrappedContract.processOracleValue(ethDataFeedId);
 
     const fetchedValue = await consumerContract.getComputationResult();
-    expect(fetchedValue).to.eq(expectedNumericValues.ETH * 42);
+    expectNumber(fetchedValue, expectedNumericValues.ETH * 42);
   });
 
   it("Should process oracle values for 10 assets", async () => {
@@ -77,7 +81,7 @@ describe("SampleChainableProxyConnector", function () {
 
     const computationResult = await consumerContract.getComputationResult();
 
-    expect(computationResult).to.eq(dataValues.reduce((a, b) => a + b, 0) * 42);
+    expectNumber(computationResult, dataValues.reduce((a, b) => a + b, 0) * 42);
   });
 
   it("Should process oracle values for 10 assets simultaneously", async () => {
@@ -101,6 +105,6 @@ describe("SampleChainableProxyConnector", function () {
     await wrappedContract.processOracleValues(dataFeedIdsBytes);
     const computationResult = await consumerContract.getComputationResult();
 
-    expect(computationResult).to.eq(dataValues.reduce((a, b) => a + b, 0) * 42);
+    expectNumber(computationResult, dataValues.reduce((a, b) => a + b, 0) * 42);
   });
 });
