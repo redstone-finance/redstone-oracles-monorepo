@@ -25,6 +25,9 @@
     },
     "0G": {
       "priceFeedAddress": "0xefe76D1C11F267d8735D240f53317F238D8C77c9"
+    },
+    "a0G_FUNDAMENTAL": {
+      "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db"
     }
   }
 }

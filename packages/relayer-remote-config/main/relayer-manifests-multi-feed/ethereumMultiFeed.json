@@ -599,6 +599,13 @@
         "deviationPercentage": 0.000001,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "ARKVX_FUNDAMENTAL": {
+      "priceFeedAddress": "0xd4A22ce54cB5e06AFcf042Dc62121d9C6a4E9A75",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
