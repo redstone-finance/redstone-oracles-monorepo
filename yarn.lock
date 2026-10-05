@@ -8491,8 +8491,6 @@ __metadata:
   resolution: "@redstone-finance/erc7412@workspace:packages/erc7412"
   dependencies:
     "@babel/preset-typescript": "npm:^7.23.2"
-    "@ethersproject/abi": "npm:^5.6.3"
-    "@ethersproject/providers": "npm:^5.6.8"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
     "@nomicfoundation/hardhat-toolbox": "npm:^2.0.2"
@@ -8652,8 +8650,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/evm-multicall@workspace:packages/evm-multicall"
   dependencies:
-    "@ethersproject/abi": "npm:^5.6.3"
-    "@ethersproject/providers": "npm:^5.6.8"
     "@ethersproject/wallet": "npm:^5.7.0"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
@@ -10313,7 +10309,6 @@ __metadata:
   dependencies:
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/abstract-provider": "npm:^5.7.0"
-    "@ethersproject/abstract-signer": "npm:^5.7.0"
     "@ethersproject/address": "npm:^5.7.0"
     "@ethersproject/bignumber": "npm:^5.7.0"
     "@ethersproject/contracts": "npm:^5.7.0"
