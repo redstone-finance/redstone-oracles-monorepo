@@ -249,6 +249,13 @@
         "deviationPercentage": 0.000001,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "PGNGI+_FUNDAMENTAL": {
+      "priceFeedAddress": "0x2240AE461B34CC56D654ba5FA5830A243Ca54840",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
