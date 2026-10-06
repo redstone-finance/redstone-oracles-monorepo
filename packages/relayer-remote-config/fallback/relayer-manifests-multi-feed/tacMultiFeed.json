@@ -34,9 +34,6 @@
     },
     "TAC": {
       "priceFeedAddress": "0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D"
-    },
-    "gTAC_FUNDAMENTAL": {
-      "priceFeedAddress": "0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b"
     }
   }
 }

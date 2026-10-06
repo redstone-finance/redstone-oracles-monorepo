@@ -49,13 +49,6 @@
         "timeSinceLastUpdateInMilliseconds": 600000
       }
     },
-    "THE": {
-      "priceFeedAddress": "0xFB1267A29C0aa19daae4a483ea895862A69e4AA5",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.3,
-        "timeSinceLastUpdateInMilliseconds": 900000
-      }
-    },
     "bfBTC_FUNDAMENTAL": {
       "priceFeedAddress": "0x53E57c2acBa2f9919ff545aa595Ff691B90d36a8"
     },

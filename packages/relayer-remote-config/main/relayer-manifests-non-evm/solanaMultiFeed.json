@@ -126,13 +126,6 @@
         "timeSinceLastUpdateInMilliseconds": 60000
       }
     },
-    "NUSD_FUNDAMENTAL": {
-      "priceFeedAddress": "F5PCF1BEEYmtcDiuCQ3Ru7LCdTo85jo8qEaQcAABWYj9",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 21600000
-      }
-    },
     "JupUSD": {
       "priceFeedAddress": "TJ1xyzZhUX8H8thjF5Uc9DANrSw5zfBNiUrCjw9DCmJ",
       "updateTriggersOverrides": {
