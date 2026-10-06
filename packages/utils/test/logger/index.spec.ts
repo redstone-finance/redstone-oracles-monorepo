@@ -1,5 +1,11 @@
 import { type ConsolaInstance } from "consola";
-import { createSanitizedLogger, maskHostname, MAX_DEPTH, sanitizeValue } from "../../src";
+import {
+  createSanitizedLogger,
+  loggerFactory,
+  maskHostname,
+  MAX_DEPTH,
+  sanitizeValue,
+} from "../../src";
 
 const createMockLogger = () => {
   const capturedArgs: unknown[][] = [];
@@ -342,6 +348,115 @@ describe("Logger Sanitization Logic", () => {
       nested: "[Max Depth Reached]",
       url: "https://example.com/...ret2",
       value: 2,
+    });
+  });
+
+  describe("JSON output", () => {
+    let writeSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      writeSpy = jest.spyOn(process.stdout, "write").mockImplementation(() => true);
+    });
+
+    afterEach(() => {
+      writeSpy.mockRestore();
+      delete process.env.REDSTONE_FINANCE_STRICT_JSON_LOGS;
+    });
+
+    const logLine = (message: unknown, ...rest: unknown[]): string => {
+      loggerFactory("json-output").info(message, ...rest);
+      const lines = writeSpy.mock.calls.map(([line]) => String(line));
+      expect(lines).toHaveLength(1);
+
+      return lines[0];
+    };
+
+    test("leaves quotes unescaped and serialized JSON as a string by default", () => {
+      const line = logLine('data={"t":1}', JSON.stringify({ "3Crv": { lower: 0.62 } }));
+      expect(line).toContain('"args":["data={"t":1}","{"3Crv":{"lower":0.62}}"]');
+    });
+  });
+
+  describe("strict JSON output", () => {
+    let writeSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      process.env.REDSTONE_FINANCE_STRICT_JSON_LOGS = "true";
+      writeSpy = jest.spyOn(process.stdout, "write").mockImplementation(() => true);
+    });
+
+    afterEach(() => {
+      writeSpy.mockRestore();
+      delete process.env.REDSTONE_FINANCE_STRICT_JSON_LOGS;
+    });
+
+    const logArgs = (message: unknown, ...rest: unknown[]): unknown[] => {
+      loggerFactory("json-output").info(message, ...rest);
+      const lines = writeSpy.mock.calls.map(([line]) => String(line));
+      expect(lines).toHaveLength(1);
+
+      return (JSON.parse(lines[0]) as { args: unknown[] }).args;
+    };
+
+    test("writes valid JSON that keeps quotes, backslashes, newlines, entities and bigints", () => {
+      const args = logArgs(
+        'Failed to parseEventToPrice data={"t":1}',
+        "path C:\\new",
+        "line1\nline2",
+        "&quot;quoted&quot;",
+        10n
+      );
+      expect(args).toEqual([
+        'Failed to parseEventToPrice data={"t":1}',
+        "path C:\\new",
+        "line1\nline2",
+        "&quot;quoted&quot;",
+        "10",
+      ]);
+    });
+
+    test("nests serialized JSON arguments as objects", () => {
+      const hardLimits = {
+        "3Crv": { lower: 0.62, upper: 1.45 },
+        wstUSR_FUNDAMENTAL: { lower: 1.1 },
+      };
+      const deepest = Array.from({ length: MAX_DEPTH - 1 }).reduce<object>(
+        (inner) => ({ inner }),
+        {}
+      );
+      const args = logArgs(
+        "Hard limits",
+        JSON.stringify(hardLimits),
+        JSON.stringify([1, "a"]),
+        JSON.stringify(deepest)
+      );
+      expect(args).toEqual(["Hard limits", hardLimits, [1, "a"], deepest]);
+    });
+
+    test("keeps serialized JSON as a string when parsing would change it", () => {
+      const lossy = '{"amount":12345678901234567890}';
+      const formatted = '{ "a": 1 }';
+      const invalid = '{"a":';
+      const deep = JSON.stringify(
+        Array.from({ length: MAX_DEPTH }).reduce<object>((inner) => ({ inner }), {})
+      );
+      expect(logArgs("Values", lossy, formatted, invalid, deep)).toEqual([
+        "Values",
+        lossy,
+        formatted,
+        invalid,
+        deep,
+      ]);
+    });
+
+    test("keeps a serialized JSON first argument as a string", () => {
+      const message = JSON.stringify({ message: "not a log object", type: "error" });
+      expect(logArgs(message)).toEqual([message]);
+    });
+
+    test("masks sensitive keys inside serialized JSON", () => {
+      const args = logArgs("Config", JSON.stringify({ apiKey: "super-secret-api-key-1234" }));
+      expect(args).toEqual(["Config", { apiKey: "supe..." }]);
     });
   });
 
