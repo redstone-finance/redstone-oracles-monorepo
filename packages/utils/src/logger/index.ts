@@ -80,12 +80,18 @@ export const loggerFactory = (
       "REDSTONE_FINANCE_ENABLE_JSON_LOGS",
       z.boolean().default(defaultEnableJsonLogs)
     );
+    // Off: quotes are left unescaped so it preserves good readability in CloudWatch
+    // On: every line is valid JSON, for log routing that has to parse it and correctly forward to destination (CW or S3)
+    const strictJsonLogs = getFromEnv(
+      "REDSTONE_FINANCE_STRICT_JSON_LOGS",
+      z.boolean().default(false)
+    );
     const defaultLogLevel = getLogLevel();
     const logLevel = customLogLevels
       ? getCustomLogLevel(moduleName, customLogLevels, defaultLogLevel)
       : defaultLogLevel;
 
-    const reporters = enableJsonLogs ? [new JSONReporter()] : undefined;
+    const reporters = enableJsonLogs ? [new JSONReporter(strictJsonLogs)] : undefined;
 
     const logger = createConsola({
       ...(reporters ? { reporters } : []),
@@ -93,7 +99,7 @@ export const loggerFactory = (
       level: logLevel,
     }).withTag(moduleName);
 
-    return createSanitizedLogger(logger);
+    return createSanitizedLogger(logger, strictJsonLogs);
   } else {
     return console;
   }
@@ -103,7 +109,10 @@ export const getLogLevel = () => {
   return getFromEnv("REDSTONE_FINANCE_LOG_LEVEL", z.number().default(DEFAULT_LOG_LEVEL));
 };
 
-export function createSanitizedLogger(logger: RedstoneLogger): RedstoneLogger {
+export function createSanitizedLogger(
+  logger: RedstoneLogger,
+  parseSerializedJsonArgs = false
+): RedstoneLogger {
   const methods = ["log", "info", "warn", "error", "debug", "trace"] as const;
   const sanitizedLogger = { ...logger } as RedstoneLogger;
 
@@ -124,7 +133,7 @@ export function createSanitizedLogger(logger: RedstoneLogger): RedstoneLogger {
           return;
         }
 
-        const sanitizedArgs = args.map((arg) => {
+        const sanitizedArgs = args.map((arg, index) => {
           // 2. Lazy Evaluation:
           // Because we successfully passed the level check above, we now
           // execute the function (if it is one) to retrieve the log message/object.
@@ -136,7 +145,9 @@ export function createSanitizedLogger(logger: RedstoneLogger): RedstoneLogger {
               : arg;
 
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- add reason here, please
-          return sanitizeValue(val);
+          return sanitizeValue(
+            parseSerializedJsonArgs && index > 0 ? parseSerializedJson(val) : val
+          );
         });
 
         original.apply(logger, sanitizedArgs);
@@ -160,6 +171,27 @@ function getCustomLogLevel(
   }
 
   return defaultLogLevel;
+}
+
+function objectDepth(val: unknown): number {
+  if (isPrimitive(val)) {
+    return 0;
+  }
+
+  return 1 + Math.max(0, ...Object.values(val as object).map(objectDepth));
+}
+
+function parseSerializedJson(val: unknown): unknown {
+  if (typeof val !== "string" || !(val.startsWith("{") || val.startsWith("["))) {
+    return val;
+  }
+  try {
+    const parsed: unknown = JSON.parse(val);
+
+    return JSON.stringify(parsed) === val && objectDepth(parsed) <= MAX_DEPTH ? parsed : val;
+  } catch {
+    return val;
+  }
 }
 
 const isPrimitive = (val: unknown) => {
@@ -259,9 +291,11 @@ function parseLogLevels(): Record<string, LogLevel> | null {
 }
 
 class JSONReporter {
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
+  constructor(private readonly strict: boolean) {}
+
   log(logObj: LogObject) {
     // used only in node environment
-    process.stdout.write(unescapeString(JSONstringify(logObj)) + "\n");
+    const line = JSONstringify(logObj);
+    process.stdout.write((this.strict ? line : unescapeString(line)) + "\n");
   }
 }
