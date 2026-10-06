@@ -1771,7 +1771,8 @@
     "PRL_PERP": {
       "source": [
         "ws-safetrade-usdt",
-        "pearl-otc-deferred"
+        "pearl-otc-deferred",
+        "ws-perp-lighter-usd"
       ],
       "priceAggregator": "geomean",
       "denomination": "USD",
