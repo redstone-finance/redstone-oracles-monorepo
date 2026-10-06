@@ -4800,6 +4800,20 @@
       "denomination": "other",
       "rateFeed": false
     },
+    "mzPRIME_FUNDAMENTAL": {
+      "source": [
+        "accountable-mzprime"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "mzPRIME_TOTAL_SUPPLY": {
+      "source": [
+        "accountable-mzprime-total-supply"
+      ],
+      "denomination": "other",
+      "rateFeed": false
+    },
     "DLF_FUNDAMENTAL": {
       "source": [
         "accountable-dlf"
