@@ -2526,7 +2526,6 @@
         "pearl-otc-deferred",
         "ws-perp-lighter-usd"
       ],
-      "priceAggregator": "geomean",
       "denomination": "USD",
       "rateFeed": false
     },
