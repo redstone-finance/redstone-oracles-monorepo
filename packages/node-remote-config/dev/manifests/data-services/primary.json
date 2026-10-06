@@ -5895,6 +5895,14 @@
       ],
       "denomination": "other",
       "rateFeed": false
+    },
+    "USDH": {
+      "source": [
+        "fixed-value"
+      ],
+      "fixedValue": 1,
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
