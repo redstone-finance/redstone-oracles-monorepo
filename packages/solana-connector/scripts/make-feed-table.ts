@@ -55,7 +55,6 @@ void makeFeedTable([
   "MXNe",
   "USDC",
   "SOL",
-  "NUSD_FUNDAMENTAL",
   "CURR",
   "JupUSD",
   "STAC_FUNDAMENTAL",

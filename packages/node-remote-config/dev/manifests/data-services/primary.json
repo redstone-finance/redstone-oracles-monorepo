@@ -2124,20 +2124,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "THE": {
-      "source": [
-        "binance-usdc",
-        "binance-usdt",
-        "bingx-usdt",
-        "gate-usdt",
-        "lbank-usdt",
-        "mexc-usdc",
-        "mexc-usdt",
-        "xt-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "BUIDL_FUNDAMENTAL": {
       "source": [
         "securitize-tsso",
@@ -4424,19 +4410,6 @@
       "denomination": "USDC",
       "rateFeed": false
     },
-    "gTAC_FUNDAMENTAL": {
-      "source": [
-        "tac-evm-fetcher-gtac"
-      ],
-      "denomination": "TAC",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
     "IR": {
       "source": [
         "bitget-usdt",
@@ -4772,19 +4745,6 @@
       ],
       "rateFeed": false,
       "denomination": "USD"
-    },
-    "NUSD_FUNDAMENTAL": {
-      "source": [
-        "accountable-nusd"
-      ],
-      "denomination": "ratio",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 0.1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
     },
     "mzUSD_FUNDAMENTAL": {
       "source": [

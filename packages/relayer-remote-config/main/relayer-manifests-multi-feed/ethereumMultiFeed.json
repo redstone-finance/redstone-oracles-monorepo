@@ -328,13 +328,6 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "NUSD_FUNDAMENTAL": {
-      "priceFeedAddress": "0x5e7281f74e74D76347f0b8f4a36Fd3cb29c19d95",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 43200000
-      }
-    },
     "weETH/ETH": {
       "priceFeedAddress": "0x8751F736E94F6CD167e8C5B97E245680FbD9CC36"
     },
