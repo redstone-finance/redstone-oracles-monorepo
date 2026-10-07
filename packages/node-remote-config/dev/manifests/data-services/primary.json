@@ -4858,6 +4858,55 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "SPLUS_RESERVES": {
+      "source": [
+        "sierra-splus"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "SPLUS_TOTAL_SUPPLY": {
+      "source": [
+        "sierra-splus"
+      ],
+      "denomination": "other",
+      "rateFeed": true
+    },
+    "SPLUS_RESERVE_USDC": {
+      "source": [
+        "sierra-splus"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "SPLUS_RESERVE_USDC_PCT": {
+      "source": [
+        "sierra-splus"
+      ],
+      "denomination": "percentage",
+      "rateFeed": true
+    },
+    "SPLUS_RESERVE_PRIME+": {
+      "source": [
+        "sierra-splus"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "SPLUS_RESERVE_PRIME+_PCT": {
+      "source": [
+        "sierra-splus"
+      ],
+      "denomination": "percentage",
+      "rateFeed": true
+    },
+    "SPLUS_PRIME+_RECONCILIATION": {
+      "source": [
+        "sierra-splus"
+      ],
+      "denomination": "ratio",
+      "rateFeed": true
+    },
     "eUSD_FUNDAMENTAL/USD": {
       "source": [
         "evm-fetcher-parallel-eusd"
