@@ -5,10 +5,12 @@ import type { Transaction } from "@mysten/sui/transactions";
 import { deriveDynamicFieldID } from "@mysten/sui/utils";
 import type { TxLookup } from "@redstone-finance/multichain-kit";
 import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
+import _ from "lodash";
 import { SuiBlockNumberProvider } from "./SuiBlockNumberProvider";
 import { SuiObjectsClient } from "./SuiObjectsClient";
 
 const REFERENCE_GAS_PRICE_TTL_MS = 60_000;
+const MAX_NONCE = 0xffff_ffff;
 const CORE_SUB_INSTANCE_MODES = {
   getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
   waitForTransaction: MultiExecutor.ExecutionMode.AGREEMENT,
@@ -24,6 +26,7 @@ const COMMON_OUTER_MODES = {
   signAndExecuteTransaction: MultiExecutor.ExecutionMode.RACE,
   getReferenceGasPrice: MultiExecutor.ExecutionMode.AGREEMENT,
   getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
+  getAddressBalance: MultiExecutor.ExecutionMode.AGREEMENT,
   waitForTransaction: MultiExecutor.ExecutionMode.AGREEMENT,
 };
 
@@ -71,12 +74,40 @@ export abstract class SuiClient {
     return (await this.core.getChainIdentifier()).chainIdentifier;
   }
 
+  async getValidDuringExpiration() {
+    const [{ systemState }, chain] = await Promise.all([
+      this.core.getCurrentSystemState(),
+      this.getChainIdentifier(),
+    ]);
+
+    return {
+      ValidDuring: {
+        minEpoch: systemState.epoch,
+        maxEpoch: String(BigInt(systemState.epoch) + 1n),
+        minTimestamp: null,
+        maxTimestamp: null,
+        chain,
+        nonce: _.random(MAX_NONCE),
+      },
+    };
+  }
+
   async getBalance(address: string) {
-    const {
-      balance: { balance },
-    } = await this.core.getBalance({ owner: address });
+    const { balance } = await this.fetchBalance(address);
 
     return BigInt(balance);
+  }
+
+  async getAddressBalance(address: string) {
+    const { addressBalance } = await this.fetchBalance(address);
+
+    return BigInt(addressBalance);
+  }
+
+  private async fetchBalance(address: string) {
+    const { balance } = await this.core.getBalance({ owner: address });
+
+    return balance;
   }
 
   async waitForTransaction(txId: string) {
