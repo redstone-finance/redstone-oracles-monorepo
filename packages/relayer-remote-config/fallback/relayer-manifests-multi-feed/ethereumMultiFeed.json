@@ -10,7 +10,10 @@
   "adapterContract": "0xd72a6BA4a87DDB33e801b3f1c7750b2d0911fC6C",
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-prod",
-  "feedsToBeUpdatedTogether": [["mzUSD_FUNDAMENTAL", "mzUSD_TOTAL_SUPPLY"]],
+  "feedsToBeUpdatedTogether": [
+    ["mzUSD_FUNDAMENTAL", "mzUSD_TOTAL_SUPPLY"],
+    ["mzPRIME_FUNDAMENTAL", "mzPRIME_TOTAL_SUPPLY"]
+  ],
   "priceFeeds": {
     "LBTC_FUNDAMENTAL": {
       "priceFeedAddress": "0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81",
@@ -591,6 +594,18 @@
       "updateTriggersOverrides": {
         "deviationPercentage": 0.000001,
         "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "mzPRIME_FUNDAMENTAL": {
+      "priceFeedAddress": "0x9f0d1AEe42454d7e1FABd4522b415022B928a9c7",
+      "updateTriggersOverrides": {
+        "cron": ["0 10 * * *"]
+      }
+    },
+    "mzPRIME_TOTAL_SUPPLY": {
+      "priceFeedAddress": "0x736771260B9A0E1715A3Bf3aC05Dd6D71A8838b9",
+      "updateTriggersOverrides": {
+        "cron": ["0 10 * * *"]
       }
     }
   }
