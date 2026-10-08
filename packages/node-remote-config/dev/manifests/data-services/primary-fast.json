@@ -122,7 +122,6 @@
         "kraken-usd",
         "mexc-usdc",
         "mexc-usdt",
-        "okx-usd",
         "okx-usdc",
         "xt-usdc",
         "xt-usdt"
@@ -147,7 +146,6 @@
         "kraken-eur",
         "kraken-usd",
         "kucoin-usdt",
-        "okx-usd",
         "okx-usdt",
         "xt-usdc",
         "xt-usdt"
