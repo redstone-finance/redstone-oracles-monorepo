@@ -48,6 +48,7 @@ export class SuiClientBuilder extends MultiExecutor.ClientBuilder<SuiClient> {
         signAndExecute: MultiExecutor.ExecutionMode.RACE,
         getReferenceGasPrice: MultiExecutor.ExecutionMode.AGREEMENT,
         getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
+        getAddressBalance: MultiExecutor.ExecutionMode.AGREEMENT,
         waitForTransaction: MultiExecutor.ExecutionMode.AGREEMENT,
         listCoins: MultiExecutor.ExecutionMode.AGREEMENT,
         getObjects: MultiExecutor.ExecutionMode.AGREEMENT,
