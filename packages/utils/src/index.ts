@@ -11,6 +11,7 @@ export * as MathUtils from "./math";
 export * from "./monitoring";
 export * as MultiExecutor from "./multi-executor";
 export * from "./NetworkId";
+export * from "./node-type";
 export * from "./operation-queue/OperationQueue";
 export * from "./operation-queue/SetOperationQueue";
 export * as RpcTelemetry from "./rpc-telemetry";
