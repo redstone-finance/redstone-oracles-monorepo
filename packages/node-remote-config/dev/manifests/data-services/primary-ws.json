@@ -2956,6 +2956,14 @@
         "rwa"
       ]
     },
+    "XBR.Y_PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "CURR": {
       "source": [],
       "priceAggregator": "redstoneX",
@@ -9692,6 +9700,14 @@
       ]
     },
     "XAG_PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XAU_PERP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
