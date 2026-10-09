@@ -42,14 +42,6 @@
     "lodash": "^4.17.23",
     "zod": "^4.1.12"
   },
-  "devDependencies": {
-    "@ledgerhq/hw-transport-node-hid": "^6.29.5",
-    "@mysten/ledgerjs-hw-app-sui": "^0.4.2",
-    "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*",
-    "@redstone-finance/chain-configs": "workspace:*",
-    "@redstone-finance/suiangria": "git+https://github.com/redstone-finance/suiangria.git#v0.0.4",
-    "secp256k1": "^5.0.1"
-  },
   "files": [
     "src",
     "dist"
