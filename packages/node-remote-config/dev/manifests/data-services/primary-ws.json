@@ -519,6 +519,966 @@
         "rwa"
       ]
     },
+    "AAOI---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "AMAT---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "AMD---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ARM---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ASML---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ASTS---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "AVGO---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "AXTI---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BABA---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BBX---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BE---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BMNR---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BRKB---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BX---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CBRS---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "COHR---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "COIN---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CRCL---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CRDO---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CRM---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CRWD---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CRWV---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CSCO---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "DELL---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "DIS---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "DRAM---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "EWJ---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "EWT---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "EWY---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "EWZ---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "FLNC---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GLW---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GS---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "HD---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "HOOD---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "IBM---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "INTC---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "IREN---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "IWM---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "JPM---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "KORU---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "KSTR---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "LITE---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "LLY---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "MRNA---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "MRVL---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "MSTR---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "MU---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NBIS---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NFLX---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NOK---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NOW---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NVO---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ONDS---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ORCL---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "PAYP---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "PLTR---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "QCOM---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "QNTX---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "QQQ---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "RKLB---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SKHY---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SMCI---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SNDK---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SOXL---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SPCX---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SPY---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SQQQ---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "STRC---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "STXX---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "TQQQ---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "TSM---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "UBER---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "URNM---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USAR---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "UVXY---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "V---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "WDC---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "WMT---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XLE---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "AAPL": {
       "source": [],
       "priceAggregator": "redstoneX",
@@ -1482,6 +2442,27 @@
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
         "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XPD": {
+      "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 1,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -8846,7 +9827,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "TSLA_EMA_30S": {
+    "TSLA---PRE_AFTER_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -8898,6 +9879,5632 @@
       "rateFeed": false
     },
     "grvt:TSLA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AAOI---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AAOI": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AAOI_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AAOI_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AAOI_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:AAOI_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AAPL---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AAPL": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AAPL_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AAPL_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AAPL_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:AAPL_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMAT---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AMAT": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AMAT_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AMAT_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AMAT_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:AMAT_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMD---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AMD": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AMD_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AMD_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AMD_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:AMD_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMZN---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AMZN": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AMZN_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AMZN_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AMZN_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:AMZN_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ARM---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ARM": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ARM_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ARM_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ARM_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ARM_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ASML---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ASML": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ASML_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ASML_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ASML_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ASML_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ASTS---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ASTS": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ASTS_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ASTS_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ASTS_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ASTS_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AVGO---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AVGO": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AVGO_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AVGO_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AVGO_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:AVGO_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AXTI---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AXTI": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AXTI_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AXTI_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AXTI_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:AXTI_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BABA---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BABA": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BABA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BABA_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BABA_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BABA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BBX---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BBX": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BBX_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BBX_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BBX_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BBX_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BE---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BE": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BE_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BE_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BE_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BE_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BMNR---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BMNR": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BMNR_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BMNR_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BMNR_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BMNR_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BRKB---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BRKB": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BRKB_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BRKB_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BRKB_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BRKB_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BX---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BX": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BX_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BX_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BX_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BX_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XBR.Y_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BZ": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BZ_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BZ_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BZ_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BZ_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CBRS---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CBRS": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CBRS_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CBRS_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CBRS_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:CBRS_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "WTI.Y_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CL": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CL_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CL_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CL_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:CL_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "COHR---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_COHR": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_COHR_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:COHR_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:COHR_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:COHR_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "COIN---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_COIN": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_COIN_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:COIN_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:COIN_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:COIN_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XCU.Y_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_COPPER": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_COPPER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:COPPER_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:COPPER_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:COPPER_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CRCL---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CRCL": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CRCL_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CRCL_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CRCL_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:CRCL_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CRDO---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CRDO": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CRDO_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CRDO_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CRDO_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:CRDO_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CRM---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CRM": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CRM_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CRM_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CRM_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:CRM_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CRWD---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CRWD": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CRWD_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CRWD_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CRWD_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:CRWD_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CRWV---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CRWV": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CRWV_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CRWV_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CRWV_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:CRWV_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CSCO---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CSCO": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CSCO_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CSCO_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CSCO_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:CSCO_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "DELL---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_DELL": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_DELL_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:DELL_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:DELL_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:DELL_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "DIS---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_DIS": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_DIS_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:DIS_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:DIS_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:DIS_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "DRAM---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_DRAM": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_DRAM_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:DRAM_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:DRAM_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:DRAM_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "EWJ---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_EWJ": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_EWJ_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:EWJ_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:EWJ_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:EWJ_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "EWT---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_EWT": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_EWT_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:EWT_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:EWT_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:EWT_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "EWY---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_EWY": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_EWY_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:EWY_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:EWY_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:EWY_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "EWZ---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_EWZ": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_EWZ_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:EWZ_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:EWZ_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:EWZ_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "FLNC---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_FLNC": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_FLNC_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:FLNC_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:FLNC_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:FLNC_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GLW---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_GLW": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_GLW_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:GLW_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:GLW_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:GLW_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GOOGL---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_GOOGL": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_GOOGL_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:GOOGL_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:GOOGL_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:GOOGL_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GS---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_GS": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_GS_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:GS_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:GS_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:GS_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HD---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_HD": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_HD_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:HD_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:HD_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:HD_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HOOD---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_HOOD": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_HOOD_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:HOOD_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:HOOD_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:HOOD_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HYUNDAI_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_HYUNDAI": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_HYUNDAI_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:HYUNDAI_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:HYUNDAI_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:HYUNDAI_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IBM---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_IBM": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_IBM_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:IBM_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:IBM_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:IBM_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "INTC---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_INTC": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_INTC_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:INTC_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:INTC_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:INTC_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IREN---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_IREN": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_IREN_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:IREN_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:IREN_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:IREN_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IWM---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_IWM": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_IWM_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:IWM_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:IWM_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:IWM_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "JPM---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_JPM": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_JPM_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:JPM_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:JPM_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:JPM_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "KORU---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KORU": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KORU_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KORU_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KORU_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:KORU_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "KSTR---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KSTR": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KSTR_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KSTR_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KSTR_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:KSTR_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LITE---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LITE": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LITE_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LITE_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LITE_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:LITE_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LLY---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LLY": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LLY_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LLY_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LLY_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:LLY_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "META---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_META": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_META_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:META_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:META_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:META_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MINIMAX_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MINIMAX": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MINIMAX_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MINIMAX_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MINIMAX_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:MINIMAX_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MRNA---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MRNA": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MRNA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MRNA_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MRNA_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:MRNA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MRVL---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MRVL": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MRVL_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MRVL_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MRVL_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:MRVL_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MSFT---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MSFT": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MSFT_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MSFT_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MSFT_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:MSFT_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MSTR---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MSTR": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MSTR_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MSTR_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MSTR_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:MSTR_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MU---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MU": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MU_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MU_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MU_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:MU_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NBIS---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NBIS": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NBIS_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NBIS_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NBIS_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:NBIS_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NFLX---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NFLX": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NFLX_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NFLX_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NFLX_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:NFLX_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NOK---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NOK": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NOK_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NOK_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NOK_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:NOK_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NOW---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NOW": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NOW_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NOW_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NOW_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:NOW_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NVDA---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NVDA": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NVDA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NVDA_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NVDA_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:NVDA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NVO---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NVO": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NVO_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NVO_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NVO_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:NVO_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ONDS---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ONDS": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ONDS_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ONDS_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ONDS_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ONDS_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORCL---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ORCL": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ORCL_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ORCL_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ORCL_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ORCL_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PAYP---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PAYP": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PAYP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PAYP_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PAYP_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:PAYP_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PLTR---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PLTR": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PLTR_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PLTR_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PLTR_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:PLTR_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "QCOM---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_QCOM": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_QCOM_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:QCOM_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:QCOM_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:QCOM_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "QNTX---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_QNTX": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_QNTX_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:QNTX_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:QNTX_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:QNTX_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "QQQ---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_QQQ": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_QQQ_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:QQQ_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:QQQ_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:QQQ_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "RKLB---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_RKLB": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_RKLB_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:RKLB_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:RKLB_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:RKLB_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SAMSUNG_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SAMSUNG": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SAMSUNG_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SAMSUNG_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SAMSUNG_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:SAMSUNG_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SKHY---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SKHY": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SKHY_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SKHY_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SKHY_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:SKHY_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SK_HYNIX_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SKHYNIX": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SKHYNIX_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SKHYNIX_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SKHYNIX_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:SKHYNIX_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SMCI---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SMCI": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SMCI_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SMCI_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SMCI_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:SMCI_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SNDK---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SNDK": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SNDK_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SNDK_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SNDK_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:SNDK_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SOXL---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SOXL": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SOXL_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SOXL_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SOXL_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:SOXL_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SPCX---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SPACEX": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SPACEX_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SPACEX_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SPACEX_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:SPACEX_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SPY---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SPY": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SPY_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SPY_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SPY_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:SPY_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SQQQ---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SQQQ": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SQQQ_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SQQQ_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SQQQ_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:SQQQ_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "STRC---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_STRC": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_STRC_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:STRC_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:STRC_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:STRC_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "STXX---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_STXX": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_STXX_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:STXX_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:STXX_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:STXX_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TQQQ---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_TQQQ": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_TQQQ_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:TQQQ_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:TQQQ_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:TQQQ_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TSM---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_TSM": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_TSM_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:TSM_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:TSM_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:TSM_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "UBER---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_UBER": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_UBER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:UBER_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:UBER_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:UBER_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "URNM---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_URNM": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_URNM_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:URNM_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:URNM_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:URNM_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USAR---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_USAR": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_USAR_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:USAR_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:USAR_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:USAR_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "UVXY---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_UVXY": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_UVXY_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:UVXY_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:UVXY_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:UVXY_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "V---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_V": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_V_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:V_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:V_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:V_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "WDC---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_WDC": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_WDC_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:WDC_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:WDC_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:WDC_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "WMT---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_WMT": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_WMT_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:WMT_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:WMT_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:WMT_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAG_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XAG": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XAG_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XAG_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XAG_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:XAG_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAU_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XAU": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XAU_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XAU_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XAU_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:XAU_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XLE---PRE_AFTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XLE": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XLE_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XLE_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XLE_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:XLE_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XPD_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XPD": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XPD_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XPD_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XPD_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:XPD_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XPT_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XPT": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XPT_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XPT_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XPT_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:XPT_MARK": {
       "source": [
         "grvt-calculator"
       ],

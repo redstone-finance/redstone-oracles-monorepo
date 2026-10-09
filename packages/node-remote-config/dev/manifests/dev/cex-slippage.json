@@ -1488,8 +1488,10 @@
     "CHF": {
       "source": []
     },
-    "NOK": {
-      "source": []
+    "NOK_FX": {
+      "source": [
+        "twelve-data"
+      ]
     },
     "MXN": {
       "source": []

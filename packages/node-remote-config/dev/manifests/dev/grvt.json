@@ -239,7 +239,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "TSLA": {
+    "TSLA---PRE_AFTER": {
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
@@ -251,7 +251,7 @@
         "rwa"
       ]
     },
-    "TSLA_EMA_30S": {
+    "TSLA---PRE_AFTER_EMA_30S": {
       "source": [
         "ema"
       ],
