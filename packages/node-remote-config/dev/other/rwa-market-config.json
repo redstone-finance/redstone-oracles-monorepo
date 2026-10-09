@@ -330,6 +330,8 @@
   "USA500_FRONT_SYMBOL": "CmeEquities",
 
   "XYZ100---PERP": "AlwaysOpen",
+  "XAU_PERP": "AlwaysOpen",
+  "XBR.Y_PERP": "AlwaysOpen",
   "DNMR": "AlwaysOpen",
   "FTSE100": "AlwaysOpen",
   "SOYBEAN": "AlwaysOpen",
