@@ -10332,6 +10332,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/ws-broker-e2e@workspace:packages/ws-broker-e2e":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/ws-broker-e2e@workspace:packages/ws-broker-e2e"
+  dependencies:
+    "@types/ws": "npm:^8.18.1"
+    ws: "npm:^8.18.3"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/ws-test-server@workspace:packages/websocket-server":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/ws-test-server@workspace:packages/websocket-server"
