@@ -1075,7 +1075,8 @@
       "publicRpcUrls": [
         "https://mainnet.sorobanrpc.com",
         "https://soroban-rpc.mainnet.stellar.gateway.fm",
-        "https://stellar.api.onfinality.io/public"
+        "https://stellar.api.onfinality.io/public",
+        "https://horizon.stellar.org#type=horizon"
       ],
       "avgBlockTimeMs": 5000,
       "multicall3": {

@@ -19,7 +19,7 @@ import { StellarSigner } from "../stellar/StellarSigner";
 import { getLedgerCloseDate } from "../utils";
 import * as XdrUtils from "../XdrUtils";
 import { parseSimValAs } from "../XdrUtils";
-import { HorizonClient } from "./HorizonClient";
+import { HorizonClient, HorizonHistoryQuery } from "./HorizonClient";
 import { IStellarCaller, StellarInvocation } from "./IStellarCaller";
 import { LedgerEntriesCollector, LedgerEntriesCollectorDelegate } from "./LedgerEntriesCollector";
 import { StellarBlockNumberProvider } from "./StellarBlockNumberProvider";
@@ -545,6 +545,24 @@ export class StellarClient implements IStellarCaller, LedgerEntriesCollectorDele
 
   async getNetworkStats(force = false): Promise<Horizon.HorizonApi.FeeStatsResponse | undefined> {
     return await this.horizon?.getNetworkStats(force);
+  }
+
+  async getAccountPayments(query: HorizonHistoryQuery) {
+    RedstoneCommon.assert(
+      RedstoneCommon.isDefined(this.horizon),
+      "Horizon client is required to fetch account payments"
+    );
+
+    return await this.horizon.getPayments(query);
+  }
+
+  async getAccountOperations(query: HorizonHistoryQuery) {
+    RedstoneCommon.assert(
+      RedstoneCommon.isDefined(this.horizon),
+      "Horizon client is required to fetch account operations"
+    );
+
+    return await this.horizon.getOperations(query);
   }
 }
 
