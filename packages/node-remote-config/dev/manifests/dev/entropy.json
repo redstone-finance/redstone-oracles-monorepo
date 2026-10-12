@@ -61,7 +61,8 @@
         "medianClamps": 25
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["pre-ipo"]
     },
     "OPENAI_SECONDARIES": {
       "source": ["notice", "hiive"],
@@ -70,12 +71,14 @@
         "medianClamps": 25
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["pre-ipo"]
     },
     "OPENAI_PRESTOCKS": {
       "source": ["jupiter"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["pre-ipo"]
     },
     "ORACLE_ani:DOG": {
       "source": ["ws-hyperliquid-perps-ani", "ws-hydromancer-perps-ani"],
