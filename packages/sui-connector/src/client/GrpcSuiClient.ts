@@ -60,6 +60,7 @@ export class GrpcSuiClient extends SuiClient {
   async getTimeForBlock(block: number) {
     const { response } = await this.client.ledgerService.getCheckpoint({
       checkpointId: { oneofKind: "sequenceNumber", sequenceNumber: BigInt(block) },
+      readMask: { paths: ["summary.timestamp"] },
     });
     const ts = response.checkpoint?.summary?.timestamp;
     if (!ts) {
