@@ -98,7 +98,10 @@
         "medianClamps": 25
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "pre-ipo"
+      ]
     },
     "ANTHROPIC_PERP-TWAP-60": {
       "source": [
@@ -260,7 +263,10 @@
         "medianClamps": 25
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "pre-ipo"
+      ]
     },
     "ORACLE_io:OAI": {
       "source": [

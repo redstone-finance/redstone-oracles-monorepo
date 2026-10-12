@@ -9947,7 +9947,10 @@
         "medianClamps": 25
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "pre-ipo"
+      ]
     },
     "ANTHROPIC_PERP_EMA_30S": {
       "source": [
