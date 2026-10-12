@@ -4862,49 +4862,98 @@
     },
     "SPLUS_RESERVES": {
       "source": [
-        "sierra-splus"
+        "sierra-splus-prime-plus"
       ],
       "denomination": "USD",
       "rateFeed": true
     },
     "SPLUS_TOTAL_SUPPLY": {
       "source": [
-        "sierra-splus"
+        "sierra-splus-prime-plus"
       ],
       "denomination": "other",
       "rateFeed": true
     },
     "SPLUS_RESERVE_USDC": {
       "source": [
-        "sierra-splus"
+        "sierra-splus-prime-plus"
       ],
       "denomination": "USD",
       "rateFeed": true
     },
     "SPLUS_RESERVE_USDC_PCT": {
       "source": [
-        "sierra-splus"
+        "sierra-splus-prime-plus"
       ],
       "denomination": "percentage",
       "rateFeed": true
     },
     "SPLUS_RESERVE_PRIME+": {
       "source": [
-        "sierra-splus"
+        "sierra-splus-prime-plus"
       ],
       "denomination": "USD",
       "rateFeed": true
     },
     "SPLUS_RESERVE_PRIME+_PCT": {
       "source": [
-        "sierra-splus"
+        "sierra-splus-prime-plus"
       ],
       "denomination": "percentage",
       "rateFeed": true
     },
     "SPLUS_PRIME+_RECONCILIATION": {
       "source": [
-        "sierra-splus"
+        "sierra-splus-prime-plus"
+      ],
+      "denomination": "ratio",
+      "rateFeed": true
+    },
+    "PRIME+_RESERVES": {
+      "source": [
+        "sierra-splus-prime-plus"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "PRIME+_RESERVE_MMF": {
+      "source": [
+        "sierra-splus-prime-plus"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "PRIME+_RESERVE_MMF_PCT": {
+      "source": [
+        "sierra-splus-prime-plus"
+      ],
+      "denomination": "percentage",
+      "rateFeed": true
+    },
+    "PRIME+_RESERVE_USD": {
+      "source": [
+        "sierra-splus-prime-plus"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "PRIME+_RESERVE_USD_PCT": {
+      "source": [
+        "sierra-splus-prime-plus"
+      ],
+      "denomination": "percentage",
+      "rateFeed": true
+    },
+    "PRIME+_RESERVES_TS": {
+      "source": [
+        "sierra-splus-prime-plus"
+      ],
+      "denomination": "other",
+      "rateFeed": true
+    },
+    "PRIME+_RESERVES_RECONCILIATION": {
+      "source": [
+        "sierra-splus-prime-plus"
       ],
       "denomination": "ratio",
       "rateFeed": true
