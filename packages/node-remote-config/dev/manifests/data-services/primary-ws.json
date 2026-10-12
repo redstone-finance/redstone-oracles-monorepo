@@ -2067,6 +2067,166 @@
         "rwa"
       ]
     },
+    "INTC_PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "INTC---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "MRVL_PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "MRVL---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "MU_PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "MU---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SNDK_PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "SNDK---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SPCX_PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "SPCX---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "DRAM_PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "DRAM---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "EWY_PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "EWY---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SKHY_PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "SKHY---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XYZ100---PERP": {
       "source": [],
       "denomination": "USD",
