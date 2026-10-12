@@ -2889,7 +2889,8 @@
     "USA100_D_RATE.Y": {
       "source": [],
       "broadcasters": [
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "ratio",
       "rateFeed": false,
@@ -2906,7 +2907,8 @@
     "USA500_D_RATE.Y": {
       "source": [],
       "broadcasters": [
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "ratio",
       "rateFeed": false,
@@ -6475,7 +6477,8 @@
         "primarySource": "ws-hyperliquid-perps-xyz"
       },
       "broadcasters": [
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6490,7 +6493,8 @@
         "primarySource": "ws-hyperliquid-perps-xyz"
       },
       "broadcasters": [
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "USD",
       "rateFeed": false
