@@ -1929,6 +1929,10 @@
     },
     "TSLA_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -1949,6 +1953,10 @@
     },
     "NVDA_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -1969,6 +1977,10 @@
     },
     "AAPL_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -1989,6 +2001,10 @@
     },
     "MSFT_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -2009,6 +2025,10 @@
     },
     "AMZN_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -2029,6 +2049,10 @@
     },
     "GOOGL_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -2049,6 +2073,10 @@
     },
     "META_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -2069,6 +2097,10 @@
     },
     "INTC_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -2089,6 +2121,10 @@
     },
     "MRVL_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -2109,6 +2145,10 @@
     },
     "MU_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -2129,6 +2169,10 @@
     },
     "SNDK_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -2149,6 +2193,10 @@
     },
     "SPCX_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -2169,6 +2217,10 @@
     },
     "DRAM_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -2189,6 +2241,10 @@
     },
     "EWY_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -2209,6 +2265,10 @@
     },
     "SKHY_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [
@@ -2385,6 +2445,10 @@
     },
     "WTI.Y_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3120,6 +3184,10 @@
     },
     "XBR.Y_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -9865,6 +9933,10 @@
     },
     "XAG_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -9873,6 +9945,10 @@
     },
     "XAU_PERP": {
       "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
