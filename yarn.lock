@@ -9552,6 +9552,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     axios: "npm:^1.19"
     dotenv: "npm:^16.0.3"
+    jsonc-parser: "npm:^3.3.1"
     mongodb: "npm:^5.9.0"
     openpgp: "npm:^6.1.0"
     prettier: "npm:^3"
