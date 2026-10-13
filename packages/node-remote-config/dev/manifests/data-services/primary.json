@@ -5754,7 +5754,8 @@
     },
     "BTCcx_FUNDAMENTAL": {
       "source": [
-        "accountable-btccx"
+        "accountable-btccx",
+        "concrete-btccx-api"
       ],
       "denomination": "ratio",
       "rateFeed": true
