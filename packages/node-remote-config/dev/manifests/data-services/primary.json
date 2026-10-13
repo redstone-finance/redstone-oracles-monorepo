@@ -3495,23 +3495,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "MOG": {
-      "source": [
-        "bingx-usdt",
-        "bitget-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "kraken-eur",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
-        "xt-usdt",
-        "uniswap-v2-ethereum-weth"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "PENGU": {
       "source": [
         "binance-usdc",
