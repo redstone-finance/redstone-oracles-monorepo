@@ -226,7 +226,6 @@
     "FXS": {
       "source": [
         "binance-usdt",
-        "bingx-usdt",
         "bybit-usdt",
         "gate-usdt",
         "mexc-usdt",
@@ -237,8 +236,6 @@
     },
     "FRAX": {
       "source": [
-        "binance-usdt",
-        "lbank-usdt",
         "curve-ethereum-3crv",
         "curve-ethereum-pyusd",
         "curve-ethereum-sdai",
@@ -459,7 +456,6 @@
     },
     "GHO": {
       "source": [
-        "bitget-usdt",
         "gate-usdt",
         "curve-ethereum-cbbtc",
         "curve-ethereum-crvusd",
@@ -989,7 +985,6 @@
     "XVS": {
       "source": [
         "binance-usdt",
-        "bingx-usdt",
         "bitrue-usdt",
         "gate-usdt",
         "lbank-usdt",
@@ -1142,7 +1137,6 @@
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "okx-usd",
         "okx-usdt",
         "xt-usdt"
       ],
@@ -1243,7 +1237,6 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "mexc-usdc",
         "mexc-usdt",
         "okx-usdc",
         "okx-usdt",
@@ -2932,7 +2925,6 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "mexc-usdc",
         "mexc-usdt",
         "xt-usdt"
       ],
@@ -3107,10 +3099,8 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "mexc-usdc",
         "mexc-usdt",
-        "okx-usdt",
-        "xt-usdt"
+        "okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3550,7 +3540,6 @@
     },
     "SUSHI": {
       "source": [
-        "binance-usdc",
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
@@ -3565,8 +3554,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdc",
-        "okx-usdt",
-        "xt-usdt"
+        "okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3634,12 +3622,10 @@
     "TAC": {
       "source": [
         "bitget-usdt",
-        "bybit-usdt",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "mexc-usdt",
-        "pancake-swap-bnb-usd1-500"
+        "mexc-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3902,7 +3888,6 @@
         "kucoin-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "okx-usd",
         "okx-usdt",
         "xt-usdt"
       ],
@@ -4065,7 +4050,6 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "mexc-usdc",
         "mexc-usdt",
         "pancake-swap-bnb-usdt-100"
       ],
@@ -4399,9 +4383,7 @@
       "source": [
         "bitget-usdt",
         "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "mexc-usdt"
+        "kucoin-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4717,7 +4699,6 @@
         "bybit-usdc",
         "bybit-usdt",
         "gate-usdt",
-        "htx-usdt",
         "kraken-eur",
         "kraken-usd",
         "kucoin-usdt",
