@@ -171,4 +171,13 @@ describe("Curated rpc list", () => {
     assertPickedPercentage("C", 20);
     assertPickedPercentage("D", 10);
   });
+
+  it("releases rpcs from quarantine until enough eligible ones are healthy", () => {
+    const list = createList(["X", "A", "B"], 0.1, 2);
+
+    list.scoreRpc("A", { error: true });
+    clock.tick(10);
+
+    expect(list.getBestProviders((rpc) => rpc !== "X")).toStrictEqual(["A", "B"]);
+  });
 });

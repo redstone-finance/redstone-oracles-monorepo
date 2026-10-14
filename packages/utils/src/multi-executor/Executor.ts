@@ -15,7 +15,7 @@ export abstract class Executor<R> {
 
   static getPromises<R>(functions: FnBox<R>[], timeoutMs?: number) {
     const result = functions
-      .filter((func) => !func.delegate?.isQuarantined?.(func))
+      .filter((func) => this.isEligibleBox(func) && !func.delegate?.isQuarantined?.(func))
       .map((func) => this.execFn(func, timeoutMs));
 
     if (!result.length) {
@@ -67,6 +67,10 @@ export abstract class Executor<R> {
       `${prefix} ${result} in ${durationMs.toFixed(1)} [ms]`;
 
     return { prefix, message, suffix };
+  }
+
+  private static isEligibleBox<R>({ description, isEligible }: FnBox<R>) {
+    return !description || !isEligible || isEligible(description);
   }
 
   abstract execute(functions: FnBox<R>[]): Promise<R>;

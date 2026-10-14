@@ -1,7 +1,8 @@
 import _ from "lodash";
 import { NetworkId } from "../NetworkId";
+import { memoizeSync } from "../common";
 import { CuratedRpcList } from "../curated-list";
-import { FnBox, FnDelegate } from "./FnBox";
+import { Eligibility, FnBox, FnDelegate } from "./FnBox";
 import { FnDelegateConfig } from "./config";
 
 const MIN_PROVIDER_COUNT = 1;
@@ -9,8 +10,11 @@ const MIN_REFRESH_TIME_INTERVAL_MS = 5;
 
 export class QuarantinedListFnDelegate implements FnDelegate {
   private curatedList: CuratedRpcList;
-  private lastListUpdateTimestamp: number;
-  private healthyIdentifiers: string[];
+  private readonly bestProviders = memoizeSync({
+    functionToMemoize: (eligibleIdentifiers: string[]) =>
+      this.curatedList.getBestProviders((rpc) => eligibleIdentifiers.includes(rpc)),
+    ttl: MIN_REFRESH_TIME_INTERVAL_MS,
+  });
 
   private static configCache: {
     [p: string]: FnDelegateConfig | undefined;
@@ -38,8 +42,6 @@ export class QuarantinedListFnDelegate implements FnDelegate {
     networkId: NetworkId,
     minimalProviderCount = MIN_PROVIDER_COUNT
   ) {
-    this.lastListUpdateTimestamp = 0;
-    this.healthyIdentifiers = identifiers;
     this.curatedList = new CuratedRpcList(
       {
         rpcIdentifiers: identifiers,
@@ -71,18 +73,14 @@ export class QuarantinedListFnDelegate implements FnDelegate {
       return false;
     }
 
-    const healthyIdentifiers = this.getHealthyIdentifiers();
+    const healthyIdentifiers = this.getHealthyIdentifiers(fnBox.isEligible);
 
     return !healthyIdentifiers.includes(fnBox.description);
   }
 
-  private getHealthyIdentifiers() {
-    const now = Date.now();
-    if (this.lastListUpdateTimestamp + MIN_REFRESH_TIME_INTERVAL_MS < now) {
-      this.healthyIdentifiers = this.curatedList.getBestProviders();
-      this.lastListUpdateTimestamp = now;
-    }
-
-    return this.healthyIdentifiers;
+  private getHealthyIdentifiers(isEligible?: Eligibility) {
+    return this.bestProviders(
+      this.curatedList.config.rpcIdentifiers.filter((rpc) => !isEligible || isEligible(rpc))
+    );
   }
 }
