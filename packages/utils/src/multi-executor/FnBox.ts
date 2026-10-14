@@ -1,3 +1,5 @@
+export type Eligibility = (description: string) => boolean;
+
 export type FnBox<R> = {
   fn: AsyncFn<R>;
   index: number;
@@ -5,6 +7,7 @@ export type FnBox<R> = {
   description?: string;
   delegate?: FnDelegate;
   shouldAbort?: () => boolean;
+  isEligible?: Eligibility;
 };
 
 export interface FnDelegate {

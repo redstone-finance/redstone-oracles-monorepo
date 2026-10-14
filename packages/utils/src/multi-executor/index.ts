@@ -5,6 +5,7 @@ export * from "./ClientBuilder";
 export * from "./CompositeFnDelegate";
 export * from "./config";
 export * from "./ConsensusExecutor";
+export * from "./EligibilityExecutor";
 export * from "./ExecutionAbortedError";
 export * from "./Executor";
 export * from "./FallbackExecutor";

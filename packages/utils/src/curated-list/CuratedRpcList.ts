@@ -2,6 +2,7 @@ import { z } from "zod";
 import { assert, getFromEnv, minToMs, secToMs, setUnrefInterval, TimerId } from "../common";
 import { loggerFactory, RedstoneLogger } from "../logger";
 import { weightedRandom } from "../math";
+import { Eligibility } from "../multi-executor/FnBox";
 import { NetworkId } from "../NetworkId";
 
 type Score = {
@@ -133,17 +134,23 @@ export class CuratedRpcList {
     this.updateEvaluationTimer();
   }
 
-  getBestProviders(): RpcIdentifier[] {
+  getBestProviders(isEligible: Eligibility = () => true): RpcIdentifier[] {
     const healthyProviders = Object.entries(this.state)
-      .filter(([_, { inQuarantine }]) => !inQuarantine)
+      .filter(([rpc, { inQuarantine }]) => !inQuarantine && isEligible(rpc))
       .map(([rpc]) => rpc);
+    const minimalEligibleCount = Math.min(
+      this.config.minimalProvidersCount,
+      this.config.rpcIdentifiers.filter(isEligible).length
+    );
 
-    if (healthyProviders.length < this.config.minimalProvidersCount) {
-      this.logger.debug(`Not enough healthy providers, have to release one from quarantine`);
+    if (healthyProviders.length < minimalEligibleCount) {
+      this.logger.debug(
+        `Not enough healthy eligible providers, have to release one from quarantine`
+      );
 
       this.freeOneRpcFromQuarantine();
 
-      return this.getBestProviders();
+      return this.getBestProviders(isEligible);
     }
 
     return healthyProviders;
