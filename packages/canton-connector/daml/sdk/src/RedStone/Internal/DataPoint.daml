@@ -1,9 +1,10 @@
 module RedStone.Internal.DataPoint where
 
-import RedStone.Internal.Bytes as B
-import RedStone.Internal.Trim
-import RedStone.Internal.Protocol
 import RedStone.U256
+import RedStone.Internal.Bytes as B
+import RedStone.Internal.Flow
+import RedStone.Internal.Protocol
+import RedStone.Internal.Trim
 
 -- Public
 
@@ -14,7 +15,6 @@ data DataPoint = DataPoint
   deriving (Eq, Show)
 
 trimDataPoint valueSize bytes =
-  let
-    (valueRest, value) = bytesTrim valueSize bytes
-    (feedIdRest, feedId) = bytesTrim feed_id_bs valueRest
-  in (feedIdRest, DataPoint (trimTrailingZeros feedId) (u256FromBeByteList value))
+  bytesTrim valueSize bytes
+  >?> \(valueRest, value) -> bytesTrim feed_id_bs valueRest
+  >? \(feedIdRest, feedId) -> (feedIdRest, DataPoint (trimTrailingZeros feedId) (u256FromBeByteList value))

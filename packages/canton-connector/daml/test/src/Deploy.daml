@@ -1,17 +1,17 @@
 module Deploy where
 
-import Daml.Script
 import DA.Map as M
-import Splice.Api.FeaturedAppRightV2
+import Daml.Script
 import IRedStonePricePillFactory
 import IRedStoneRewardFactory
+import RedStoneAdapter
 import RedStoneCore
 import RedStoneCoreClient
-import RedStoneAdapter
 import RedStonePricePillFactory
 import RedStoneRewardFactory
-import Input
+import Splice.Api.FeaturedAppRightV2
 import Helpers.MockFeatured
+import Input
 
 main : Input -> Script ()
 main input = script do

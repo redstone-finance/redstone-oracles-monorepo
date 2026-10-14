@@ -1,7 +1,7 @@
 module RedStoneAdapter.Config where
 
+import RedStone.PrimaryProdConfig
 import Time
-import RedStone.Config
 
 adapter_config_fun = redstonePrimaryProdDefaultConfig
 unique_signer_count = redstonePrimaryProdDefaultBaseConfig.signerCountThreshold

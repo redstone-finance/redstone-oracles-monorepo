@@ -1,15 +1,15 @@
 module Run where
 
 import Daml.Script
-import Splice.Api.FeaturedAppRightV2
-import IRedStoneCore
 import IRedStoneAdapter
+import IRedStoneCore
+import Splice.Api.FeaturedAppRightV2
 import WritePricesContext
-import Input
 import Helpers.FindContract
 import Helpers.MockFeatured
 import Helpers.Utils
 import Helpers.VerifyResults
+import Input
 
 main : Input -> Script ()
 main input = script do

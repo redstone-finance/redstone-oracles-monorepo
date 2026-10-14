@@ -4,13 +4,13 @@ module RedStone.Tests.Suites.Verify
 )
 where
 
-import RedStone.Tests.Test
-import RedStone.Tests.Run
 import RedStone.Internal.Verify
+import RedStone.Tests.Run
+import RedStone.Tests.Test
 
 runTests : (Action m, ActionFail m, CanAbort m) => m ()
 runTests = do
-  runSuite timestampSuite
+  runResultOkSuite identity timestampSuite
 
 testBlockTimestamp = 2_000_000_000_000
 testMaxDelayMs = 900_000

@@ -3,16 +3,19 @@ module RedStone.GetPrices(
     , getPricesNumeric
 ) where
 
-import RedStone.Processor
 import RedStone.Config
+import RedStone.Processor
 import RedStone.Result
 
+-- Public
 
 getPrices = getPricesAny processPayload
 getPricesNumeric = getPricesAny processPayloadNumeric
 
+-- Private
+
 getPricesAny process config payloadHex = do
     config <- verifyConfigAgainstLedger config
-    let (values, timestamp) = process config payloadHex
+    let (values, timestamp) = resultUnwrap $ process config payloadHex
 
     return $ (map resultUnwrap values, timestamp)

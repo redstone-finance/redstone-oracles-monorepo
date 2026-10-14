@@ -1,11 +1,13 @@
 module PriceUpdateEvent where
 
 import RedStoneTypes
-import RedStone.ProcessorTypes (ProcessorError)
+
+data SkipReason = SkipReason with message : Text
+  deriving (Eq, Show)
 
 data PriceUpdate
   = Updated (RedStonePriceData RedStoneValue)
-  | Skipped ProcessorError
+  | Skipped SkipReason
   deriving (Eq, Show)
 
 template PriceUpdateEvent

@@ -5,7 +5,7 @@ sinclude .env
 CANTON_API=$(API)
 PACKAGE_IDS=$(DEPLOY_DIR)/package-ids.json
 
-ADAPTER_NAME=RedStoneAdapter-v19-0.4.0
+ADAPTER_NAME=RedStoneAdapter-v20-0.4.0
 ADAPTER_TEMPLATE_ID=$(shell jq -r '.templates.adapter' $(PACKAGE_IDS))
 
 CORE_NAME=RedStoneCore-v19-0.4.0

@@ -3,11 +3,14 @@ module RedStone.Tests.Run
     runSuite
 , runSuites
 , runErrorSuite
+, runResultOkSuite
+, runResultErrorSuite
 )
 where
-import DA.Foldable (forA_)
 import DA.Exception (message, ActionCatch)
+import DA.Foldable (forA_)
 import DA.Text as T
+import RedStone.Result (Result(..))
 
 test run tc = do
   let output = run tc.input
@@ -42,6 +45,33 @@ runErrorSuite suite = do
   forA_ suite.cases $ runErrorTest suite.run
   debug "=== All tests passed! ==="
   debug ""
+
+runResultOkSuite check suite = do
+  debug $ "=== Starting " <> suite.name <> " ==="
+  forA_ suite.cases $ runResultOkTest suite.test check
+  debug "=== All tests passed! ==="
+  debug ""
+
+runResultOkTest run check tc = case run tc.input of
+  Ok value -> assertEq ("Testing " <> tc.name) tc.output (check value)
+  outcome -> do
+    debug $ "✗ " <> tc.name <> " FAILED"
+    debug $ "  Expected Ok, got: " <> show outcome
+    fail $ tc.name <> " failed: expected Ok"
+
+runResultErrorSuite suite = do
+  debug $ "=== Starting " <> suite.name <> " ==="
+  forA_ suite.cases $ runResultErrorTest suite.run
+  debug "=== All tests passed! ==="
+  debug ""
+
+runResultErrorTest run tc = case run tc.input of
+  Error e | T.isInfixOf tc.expectedSubstring (show e) -> debug $ "✓ " <> tc.name
+  outcome -> do
+    debug $ "✗ " <> tc.name <> " FAILED"
+    debug $ "  Expected Error containing: " <> show tc.expectedSubstring
+    debug $ "  Got:                       " <> show outcome
+    fail $ tc.name <> " failed: expected an Error containing the substring"
 
 attempt : ActionCatch m => (t -> b) -> t -> m (Either Text b)
 attempt run input =

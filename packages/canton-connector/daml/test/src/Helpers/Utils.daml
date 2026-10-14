@@ -1,10 +1,10 @@
 module Helpers.Utils where
 
-import Daml.Script
 import DA.Assert
 import DA.Foldable
 import DA.List
 import DA.Optional
+import Daml.Script
 
 submitDisclosed subject disclosures cmds = do
     let areSome = dedup $ map isSome disclosures

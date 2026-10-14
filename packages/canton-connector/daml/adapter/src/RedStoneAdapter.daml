@@ -3,18 +3,19 @@ module RedStoneAdapter where
 import DA.List(dedup)
 import DA.Map as M
 import DA.Optional(mapOptional)
-import RedStone.GetPrices as G
-import RedStoneTypes
-import IRedStoneCore
 import IRedStoneAdapter
+import IRedStoneCore
 import IRedStonePricePill
 import IRedStonePricePillFactory
 import IRedStoneRewardFactory
+import RedStone.GetPrices as G
+import RedStone.Result (resultUnwrap)
+import RedStoneTypes
 import WritePricesContext
-import Internal.ProcessPayload
-import Internal.PillRecord
-import Internal.Rewards
 import RedStoneAdapter.Config(unique_signer_count, adapter_config_fun)
+import Internal.PillRecord
+import Internal.ProcessPayload
+import Internal.Rewards
 
 template RedStoneAdapter
   with
@@ -37,7 +38,7 @@ template RedStoneAdapter
 
       iRedStoneCore_GetPricesImpl caller feedIds currentTime payloadHex =
         maybeCreateRewardsWithoutState caller rewardFactory (length feedIds)
-          >> uncurry RedStoneResult <$> G.getPricesNumeric (adapter_config_fun feedIds currentTime) payloadHex
+          >> uncurry RedStoneResult <$> G.getPricesNumeric (resultUnwrap $ adapter_config_fun feedIds currentTime) payloadHex
 
     interface instance IRedStoneAdapter for RedStoneAdapter where
       view = RedStoneAdapterView with adapterId

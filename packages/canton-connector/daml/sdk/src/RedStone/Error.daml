@@ -1,0 +1,26 @@
+module RedStone.Error where
+
+import RedStone.Result (Result(..))
+
+-- Public
+
+data ErrorCode =
+  Configuration
+  | Parse
+  | Verification
+  | Processing
+  deriving (Eq, Ord, Show)
+
+data RedStoneError a = RedStoneError
+  with
+    code : ErrorCode
+    message : Text
+    arg : a
+  deriving (Eq, Ord);
+
+instance Show a => Show (RedStoneError a) where
+    show e = "[RedStoneError." <> show e.code <> "] " <> e.message <> " with: " <> show e.arg
+
+infixl 1 ???
+(???) : Show a => Bool -> RedStoneError a -> Result () (RedStoneError Text)
+cond ??? RedStoneError code message arg = if cond then Ok () else Error $ RedStoneError code message $ show arg

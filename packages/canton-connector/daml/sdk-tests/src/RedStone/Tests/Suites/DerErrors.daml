@@ -4,17 +4,17 @@ module RedStone.Tests.Suites.DerErrors
 ) where
 
 import DA.Exception (ActionCatch)
-import RedStone.Tests.Test
-import RedStone.Tests.Run
 import RedStone.Internal.Der
 import RedStone.Internal.Hex
+import RedStone.Tests.Run
+import RedStone.Tests.Test
 
 runTests : (Action m, ActionFail m, ActionCatch m, CanAbort m) => m ()
 runTests = do
-  runErrorSuite signatureToDerErrorSuite
-  runErrorSuite publicKeyToDerErrorSuite
+  runResultErrorSuite signatureToDerErrorSuite
+  runResultErrorSuite publicKeyToDerErrorSuite
 
-runSig hex = listToHex (signatureToDer (hexToList hex))
+runSig hex = signatureToDer (hexToList hex)
 
 signatureToDerErrorSuite = ErrorTestSuite with
   name = "Der signatureToDer Errors"
@@ -36,13 +36,16 @@ signatureToDerErrorSuite = ErrorTestSuite with
         input = "0000000000000000000000000000000000000000000000000000000000000001" <>
                 "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
         expectedSubstring = "Signature s value is over N/2"
+    , ErrorTestCase with
+        name = "r value equal to N rejected"
+        input = "fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141" <>
+                "4175202bafcbd5854274988d892680d3c3f0abcca4925bbbf7bf9428c28e3ebd"
+        expectedSubstring = "Signature r value is not below N"
     ]
-
-runPubKey hex = publicKeyToDer hex
 
 publicKeyToDerErrorSuite = ErrorTestSuite with
   name = "Der publicKeyToDer Errors"
-  run = runPubKey
+  run = publicKeyToDer
   cases =
     [ ErrorTestCase with
         name = "key with wrong length rejected"

@@ -1,8 +1,8 @@
 module Archive where
 
 import Daml.Script
-import Input
 import Helpers.FindContract (findAnyAdapter)
+import Input
 
 main : Input -> Script ()
 main input = script do

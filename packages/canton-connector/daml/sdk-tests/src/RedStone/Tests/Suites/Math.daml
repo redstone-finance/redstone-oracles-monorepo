@@ -4,9 +4,9 @@ module RedStone.Tests.Suites.Math
 )
 where
 
-import RedStone.Tests.Test
-import RedStone.Tests.Run
 import RedStone.Internal.Math
+import RedStone.Tests.Run
+import RedStone.Tests.Test
 
 runTests : (Action m, ActionFail m, CanAbort m) => m ()
 runTests = do

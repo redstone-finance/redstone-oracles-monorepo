@@ -11,16 +11,17 @@ import DA.Assert
 import DA.List as L
 import DA.Map as M
 import DA.Optional
-import RedStone.Config(verifyConfigAgainstLedger)
-import RedStone.Processor
 import IRedStonePricePillFactory
 import IRedStoneRewardFactory
+import RedStone.Config(verifyConfigAgainstLedger)
+import RedStone.Processor
+import RedStone.Result (resultUnwrap)
 import RedStoneTypes
+import RedStoneAdapter.Config(adapter_config_fun, pill_staleness_ms)
 import Internal.Events
 import Internal.PillRecord
 import Internal.Rewards
 import Internal.Verify
-import RedStoneAdapter.Config(adapter_config_fun, pill_staleness_ms)
 
 data WriteContext = WriteContext
   with
@@ -68,8 +69,8 @@ processAndWritePrices ctx factories adapterId currentState feedIds currentTime p
 -- Private
 
 checkNewValues feedData feedIds currentTime payloadHex = do
-  config <- verifyConfigAgainstLedger $ adapter_config_fun feedIds currentTime
-  let result = processPayloadNumeric config payloadHex
+  config <- verifyConfigAgainstLedger $ resultUnwrap $ adapter_config_fun feedIds currentTime
+  let result = resultUnwrap $ processPayloadNumeric config payloadHex
   let newValues = determineNewValues (config.currentTimestamp, feedData) feedIds result
 
   pure $ (newValues, config)

@@ -1,8 +1,16 @@
-module RedStone.ProcessorTypes where
+module RedStone.ProcessorTypes
+  (
+    DecimalValue
+    , value_divisor
+    , ProcessorOutcome
+    , ProcessorRawOutcome
+    , u256ToDecimalValue
+  ) where
 
 import DA.Numeric
-import RedStone.U256
+import RedStone.Error
 import RedStone.Result
+import RedStone.U256
 
 -- Public
 
@@ -11,13 +19,12 @@ import RedStone.Result
 type DecimalValue = Numeric 8 -- 8 decimals
 value_divisor: DecimalValue = 10.0 ^ 8
 
-data ProcessorError = ProcessorError with message : Text
-  deriving (Eq, Show, Ord)
-
-type ProcessorOutcome  = ([Result DecimalValue ProcessorError], Int)
-type ProcessorRawOutcome = ([Result U256 ProcessorError], Int)
-
-divByDivisor a = div a value_divisor
+type ProcessorOutcome  = ([Result DecimalValue (RedStoneError Text)], Int)
+type ProcessorRawOutcome = ([Result U256 (RedStoneError Text)], Int)
 
 u256ToDecimalValue: U256 -> DecimalValue
 u256ToDecimalValue = divByDivisor . u256ToNumeric
+
+-- Private
+
+divByDivisor a = div a value_divisor

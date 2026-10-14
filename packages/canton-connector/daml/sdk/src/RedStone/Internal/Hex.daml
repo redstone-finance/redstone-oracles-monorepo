@@ -4,12 +4,20 @@ module RedStone.Internal.Hex (
   , hexToList
 ) where
 
-import DA.Text as T
 import DA.List as L
 import DA.Map as Map
 import DA.Optional
+import DA.Text as T
 
 -- Public
+
+data HexBytes = HexBytes
+  with
+    bytes: [Int]
+  deriving (Eq)
+
+instance Show HexBytes where
+  show HexBytes{bytes} = show $ listToHex bytes
 
 listToHex list = implode $ map toHex list
 
@@ -26,15 +34,10 @@ hexCharToIntMap = Map.fromList
   , ("a",10),("b",11),("c",12),("d",13),("e",14),("f",15)
   , ("A",10),("B",11),("C",12),("D",13),("E",14),("F",15) ]
 
-data HexBytes = HexBytes
-  with
-    bytes: [Int]
-  deriving (Eq)
-
-instance Show HexBytes where
-  show HexBytes{bytes} = show $ listToHex bytes
-
-hexCharToInt c = Map.lookup c hexCharToIntMap
+toHex a = let
+    high = a / hex_range
+    low = a % hex_range
+  in hexDigit high <> hexDigit low
 
 hexDigit n = case n of
   n | n >= 0 && n < hex_range -> hexDigits !! n
@@ -42,7 +45,4 @@ hexDigit n = case n of
 
 pairToByte (a, b) = hex_range * (fromSome (hexCharToInt a)) + (fromSome (hexCharToInt b))
 
-toHex a = let
-    high = a / hex_range
-    low = a % hex_range
-  in hexDigit high <> hexDigit low
+hexCharToInt c = Map.lookup c hexCharToIntMap

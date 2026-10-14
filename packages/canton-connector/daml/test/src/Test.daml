@@ -1,14 +1,14 @@
 module Test where
 
-import Daml.Script
 import DA.Assert
 import DA.Map as M
-import RedStoneAdapter
-import IRedStoneCore
+import Daml.Script
 import IRedStoneAdapter
+import IRedStoneCore
+import RedStoneAdapter
 import WritePricesContext
-import Input
 import Helpers.VerifyResults
+import Input
 
 main : Input -> Script ()
 main input = script do

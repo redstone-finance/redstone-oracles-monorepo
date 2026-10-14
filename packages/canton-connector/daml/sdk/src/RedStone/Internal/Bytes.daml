@@ -1,8 +1,9 @@
 module RedStone.Internal.Bytes where
 
 import DA.List as L
-import RedStone.Internal.Trim
+import RedStone.Internal.Flow
 import RedStone.Internal.Math
+import RedStone.Internal.Trim
 
 -- Public
 
@@ -11,14 +12,12 @@ data Bytes = Bytes
     revList : [Int]
   deriving (Eq, Show)
 
-fromList list = Bytes (L.reverse list)
+fromList list = Bytes $ L.reverse list
 
 bytesTrim n Bytes{revList} =
-    let
-        (rest, trimmed) = trimStart n revList
-    in (Bytes rest, trimmed)
+    trimStart n revList
+    >? \(rest, trimmed) -> (Bytes rest, trimmed)
 
 bytesTrimNum n bytes =
-    let
-        (rest, trimmed) = bytesTrim n bytes
-    in (rest, beByteListToInt trimmed)
+    bytesTrim n bytes
+    >? \(rest, trimmed) -> (rest, beByteListToInt trimmed)

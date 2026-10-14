@@ -1,17 +1,17 @@
 module RewardsBatching where
 
-import Daml.Script
 import DA.Assert
 import DA.List (head)
 import DA.Optional (fromSome)
 import DA.Time
-import Splice.Api.FeaturedAppRightV2
+import Daml.Script
 import IRedStoneAdapter
-import WritePricesContext
 import RedStoneAdapter
-import Input
+import Splice.Api.FeaturedAppRightV2
+import WritePricesContext
 import Helpers.Setup
 import Helpers.Utils
+import Input
 
 getRewardState updater = do
   (cid, adapter) <- head <$> query @RedStoneAdapter updater

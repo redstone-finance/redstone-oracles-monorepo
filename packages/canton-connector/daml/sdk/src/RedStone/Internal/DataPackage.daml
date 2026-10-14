@@ -1,10 +1,18 @@
-module RedStone.Internal.DataPackage where
+module RedStone.Internal.DataPackage
+  (
+    DataPackage(..)
+    , trimDataPackage
+  ) where
 
+import RedStone.Error
+import RedStone.Result (Result(Ok))
 import RedStone.Internal.Bytes
-import RedStone.Internal.Trim
-import RedStone.Internal.Protocol
+import RedStone.Internal.Const
 import RedStone.Internal.DataPoint
+import RedStone.Internal.Flow
 import RedStone.Internal.Hex
+import RedStone.Internal.Protocol
+import RedStone.Internal.Trim
 
 -- Public
 
@@ -17,18 +25,21 @@ data DataPackage = DataPackage
   deriving (Eq, Show)
 
 trimDataPackage bytes =
-  let
-    (signatureRest, signature) = bytesTrim signature_bs bytes
-    (dataPointCountRest, dataPointCount) = bytesTrimNum data_point_count_bs signatureRest
-    (valueSizeRest, valueSize) = bytesTrimNum value_size_bs dataPointCountRest
-    (timestampRest, timestamp) = bytesTrimNum timestamp_bs valueSizeRest
+  bytesTrim signature_bs bytes
+  >?> \(signatureRest, signature) -> bytesTrimNum data_point_count_bs signatureRest
+  >?> \(dataPointCountRest, dataPointCount) -> trimValueSize dataPointCountRest
+  >?> \(valueSizeRest, valueSize) -> bytesTrimNum timestamp_bs valueSizeRest
+  >?> \(timestampRest, timestamp) -> bytesTrim (signableSize dataPointCount valueSize) signatureRest
+  >?> \(_, signableBytes) -> trimMulti (trimDataPoint valueSize) dataPointCount timestampRest
+  >? \(dataPointsRest, dataPoints) -> (dataPointsRest, DataPackage dataPoints timestamp (HexBytes signature) (HexBytes signableBytes))
 
-    signableSize =
-        dataPointCount * (valueSize + feed_id_bs) + value_size_bs
-            + timestamp_bs + data_point_count_bs
+-- Private
 
-    (_, signableBytes) = bytesTrim signableSize signatureRest
+trimValueSize bytes =
+  bytesTrimNum value_size_bs bytes
+  >?> \(valueSizeRest, valueSize) -> valueSize <= uint256_size_bytes ??? RedStoneError Verification "Value byte size over 32" valueSize
+  ?> Ok (valueSizeRest, valueSize)
 
-    (dataPointsRest, dataPoints) = trimMulti (trimDataPoint valueSize) dataPointCount timestampRest
-
-  in (dataPointsRest, DataPackage dataPoints timestamp (HexBytes signature) (HexBytes signableBytes))
+signableSize dataPointCount valueSize =
+    dataPointCount * (valueSize + feed_id_bs) + value_size_bs
+        + timestamp_bs + data_point_count_bs

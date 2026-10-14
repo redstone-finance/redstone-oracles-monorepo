@@ -7,10 +7,10 @@ data TestCase input output  = TestCase with
   output : output
     deriving (Eq, Show)
 
-data TestSuite input output = TestSuite with
+data TestSuite input output result = TestSuite with
   name : Text
   cases : [TestCase input output]
-  test : input -> output
+  test : input -> result
 
 data Input a b = Input with
     input : a
@@ -25,7 +25,7 @@ data ErrorTestCase input = ErrorTestCase with
   expectedSubstring : Text
     deriving (Eq, Show)
 
-data ErrorTestSuite input = ErrorTestSuite with
+data ErrorTestSuite input output = ErrorTestSuite with
   name : Text
   cases : [ErrorTestCase input]
-  run : input -> Text
+  run : input -> output

@@ -4,10 +4,10 @@ module RedStone.Tests.Suites.U256Errors
 ) where
 
 import DA.Exception (ActionCatch)
-import RedStone.Tests.Test
-import RedStone.Tests.Run
-import RedStone.Tests.Helpers (maxU256)
 import RedStone.U256
+import RedStone.Tests.Helpers (maxU256)
+import RedStone.Tests.Run
+import RedStone.Tests.Test
 
 runTests : (Action m, ActionFail m, ActionCatch m, CanAbort m) => m ()
 runTests = do

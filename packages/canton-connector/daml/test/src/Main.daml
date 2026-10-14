@@ -1,8 +1,9 @@
 module Main where
 
 import Daml.Script
+import RedStone.PrimaryProdConfig
 import RedStone.Processor
-import RedStone.Config
+import RedStone.Result (resultUnwrap)
 import Input
 
 main : Input -> Script ()
@@ -10,7 +11,7 @@ main input = script do
 
 currentTime <- getTime
 
-let config = (redstonePrimaryProdDefaultConfig input.feedIds currentTime) with maxAllowedPackageTimestampDelayMs = 30 * 60_000
+let config = (resultUnwrap $ redstonePrimaryProdDefaultConfig input.feedIds currentTime) with maxAllowedPackageTimestampDelayMs = 30 * 60_000
 
 let resultNumeric = processPayloadNumeric config input.payload
 let result = processPayload config input.payload

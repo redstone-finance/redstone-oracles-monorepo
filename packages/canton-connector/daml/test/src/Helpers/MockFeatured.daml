@@ -1,7 +1,7 @@
 module Helpers.MockFeatured where
 
-import Splice.Api.FeaturedAppRightV2
 import DA.Optional(fromOptional)
+import Splice.Api.FeaturedAppRightV2
 
 template MockFeaturedAppActivityMarker
   with
