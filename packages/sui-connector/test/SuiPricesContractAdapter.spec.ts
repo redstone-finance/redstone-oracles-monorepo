@@ -5,14 +5,12 @@ import "dotenv/config";
 import { readSuiConfig } from "../scripts/deployment-config";
 import {
   makeSuiClient,
-  makeSuiJsonRpcClient,
   makeSuiKeypair,
   SuiClient,
   SuiNetworkSchema,
   SuiWriteContractAdapter,
 } from "../src";
 import { GrpcSuiClient } from "../src/client/GrpcSuiClient";
-import { LegacySuiClient } from "../src/client/LegacySuiClient";
 
 const DATA_SERVICE_ID = "redstone-primary-prod";
 const WRITE_TEST_TIMEOUT = RedstoneCommon.secsToMs(40);
@@ -25,14 +23,6 @@ const makeClients: Record<string, () => SuiClient> = {
     });
 
     return new GrpcSuiClient(makeSuiClient(network));
-  },
-  legacy: () => {
-    const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
-    execSync("yarn deploy", {
-      stdio: ["inherit", "inherit", "inherit"],
-    });
-
-    return new LegacySuiClient(makeSuiJsonRpcClient(network));
   },
 };
 

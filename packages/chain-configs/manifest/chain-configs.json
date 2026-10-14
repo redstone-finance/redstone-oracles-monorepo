@@ -813,8 +813,7 @@
       "currencySymbol": "SUI",
       "publicRpcUrls": [
         "https://fullnode.testnet.sui.io:443#type=grpc",
-        "https://graphql.testnet.sui.io/graphql#type=graphql",
-        "https://sui-testnet.gateway.tatum.io/"
+        "https://graphql.testnet.sui.io/graphql#type=graphql"
       ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
@@ -831,12 +830,7 @@
       "currencySymbol": "SUI",
       "publicRpcUrls": [
         "https://fullnode.mainnet.sui.io:443#type=grpc",
-        "https://graphql.mainnet.sui.io/graphql#type=graphql",
-        "https://rpc.ankr.com/sui",
-        "https://1rpc.io/sui",
-        "https://sui.blockpi.network/v1/rpc/public",
-        "https://sui-mainnet-endpoint.blockvision.org/",
-        "https://endpoints.omniatech.io/v1/sui/mainnet/public"
+        "https://graphql.mainnet.sui.io/graphql#type=graphql"
       ],
       "avgBlockTimeMs": 200,
       "multicall3": {
