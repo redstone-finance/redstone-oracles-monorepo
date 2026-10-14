@@ -6,15 +6,16 @@ where
 
 import DA.Date
 import DA.Time
-import RedStone.Tests.Test
-import RedStone.Tests.Run
 import RedStone.Config
+import RedStone.PrimaryProdConfig
+import RedStone.Tests.Run
+import RedStone.Tests.Test
 
 runTests : (Action m, ActionFail m, CanAbort m) => m ()
 runTests = do
-  runSuite configFeedIdsSuite
-  runSuite configSignersSuite
-  runSuite configThresholdSuite
+  runResultOkSuite (\a -> a.feedIds) configFeedIdsSuite
+  runResultOkSuite (length . (\a -> a.signers)) configSignersSuite
+  runResultOkSuite (\a -> a.signerCountThreshold) configThresholdSuite
 
 testTime = time (date 2026 Apr 1) 12 0 0
 
@@ -25,14 +26,14 @@ testSigners =
   ]
 
 mkConfig (feedIds, signers, threshold) =
-  config (defaultBaseConfig signers) { signerCountThreshold = threshold } feedIds testTime
+  config redstonePrimaryProdDefaultBaseConfig { signers, signerCountThreshold = threshold } feedIds testTime
 
 -- Feed IDs validation
 
 configFeedIdsSuite = TestSuite with
   cases = configFeedIdsCases
   name = "Config Feed IDs Validation"
-  test = (\a -> a.feedIds) . mkConfig
+  test = mkConfig
 
 configFeedIdsCases =
     [ TestCase with
@@ -50,7 +51,7 @@ configFeedIdsCases =
 configSignersSuite = TestSuite with
   cases = configSignersCases
   name = "Config Signers Validation"
-  test = length . (\a -> a.signers) . mkConfig
+  test = mkConfig
 
 configSignersCases =
     [ TestCase with
@@ -68,7 +69,7 @@ configSignersCases =
 configThresholdSuite = TestSuite with
   cases = configThresholdCases
   name = "Config Threshold Validation"
-  test = (\a -> a.signerCountThreshold) . mkConfig
+  test = mkConfig
 
 configThresholdCases =
     [ TestCase with

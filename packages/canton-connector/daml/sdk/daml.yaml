@@ -1,5 +1,5 @@
 sdk-version: 3.4.11
-name: redstone-sdk-v19
+name: redstone-sdk-v20
 version: 0.4.0
 source: src
 dependencies:
@@ -7,6 +7,10 @@ dependencies:
   - daml-stdlib
 exposed-modules:
   - RedStone.Config
+  - RedStone.Error
+  - RedStone.GetPrices
+  - RedStone.PrimaryDemoConfig
+  - RedStone.PrimaryProdConfig
   - RedStone.Processor
   - RedStone.ProcessorTypes
   - RedStone.Result

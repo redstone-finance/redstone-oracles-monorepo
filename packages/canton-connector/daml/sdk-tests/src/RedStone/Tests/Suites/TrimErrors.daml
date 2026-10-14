@@ -1,0 +1,37 @@
+module RedStone.Tests.Suites.TrimErrors
+(
+    runTests
+) where
+
+import RedStone.Internal.Bytes
+import RedStone.Tests.Run
+import RedStone.Tests.Test
+
+runTests : (Action m, ActionFail m, CanAbort m) => m ()
+runTests = do
+  runResultErrorSuite bytesTrimErrorSuite
+  runResultErrorSuite bytesTrimNumErrorSuite
+
+bytesTrimErrorSuite = ErrorTestSuite with
+  name = "BytesTrim Errors"
+  run = uncurry bytesTrim
+  cases =
+    [ ErrorTestCase with
+        name = "trimming more bytes than available rejected"
+        input = (4, fromList [1, 2, 3])
+        expectedSubstring = "List too short"
+    , ErrorTestCase with
+        name = "negative trim length rejected"
+        input = (-1, fromList [1, 2, 3])
+        expectedSubstring = "Negative trim length"
+    ]
+
+bytesTrimNumErrorSuite = ErrorTestSuite with
+  name = "BytesTrimNum Errors"
+  run = uncurry bytesTrimNum
+  cases =
+    [ ErrorTestCase with
+        name = "number longer than the available bytes rejected"
+        input = (2, fromList [255])
+        expectedSubstring = "List too short"
+    ]

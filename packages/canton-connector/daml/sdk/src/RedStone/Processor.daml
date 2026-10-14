@@ -10,15 +10,17 @@ import DA.List as L
 import DA.Map as M
 import DA.Optional
 import DA.Set as S
-import RedStone.Internal.DataPoint(DataPoint(..))
 import RedStone.Config
+import RedStone.Error
 import RedStone.ProcessorTypes
 import RedStone.Result
 import RedStone.U256
 import RedStone.Internal.Bytes as B
-import RedStone.Internal.DataPackage
 import RedStone.Internal.CryptoVerify
-import RedStone.Internal.Error
+import RedStone.Internal.DataPackage
+import RedStone.Internal.DataPoint(DataPoint(..))
+import RedStone.Internal.Der
+import RedStone.Internal.Flow
 import RedStone.Internal.Hex
 import RedStone.Internal.Median
 import RedStone.Internal.Protocol
@@ -28,44 +30,18 @@ import RedStone.Internal.Verify
 -- Public
 
 processPayload config hex =
-  let
-    _ = verifyPayloadLength hex
-  in processPayloadBytes config (B.fromList $ hexToList hex)
+  verifyPayloadHex hex
+  >? B.fromList . hexToList
+  >?> processPayloadBytes config
 
-processPayloadNumeric: Config -> Text -> ProcessorOutcome
+processPayloadNumeric: Config -> Text -> Result ProcessorOutcome (RedStoneError Text)
 processPayloadNumeric config hex =
-  let
-    (values, timestamp) = processPayload config hex
-  in (map (mapResultOk u256ToDecimalValue) values, timestamp)
-
--- Private
-
-aggregate = map (mapResult median (\e -> ProcessorError (show e)))
-
-processPayloadBytes config bytes = (!!!) $ do
-  let (dataPackageCountRest, dataPackageCount) = trimMetadata bytes
-  let (Bytes{revList=dataPackagesRest}, dataPackages) = trimMulti trimDataPackage dataPackageCount dataPackageCountRest
-  _ <- L.null dataPackagesRest ??? RedStoneError Processing "Non-empty payload remainder" (L.reverse dataPackagesRest)
-  let timestamp = verifyTimestamps config dataPackages
-  let feedValues = getFeedValues config dataPackages
-  pure (aggregate feedValues, timestamp)
-
-getFeedValues config dataPackages =
-  let
-    seqlt n = [0..(n-1)]
-    dataPointsWithSignerIndices = getDataPointsWithSignerIndices $ getDataPackageSignerIndices config.signers dataPackages
-    makeMatrix input = map (\feedId -> map (\signerIndex -> M.lookup (feedId, Ok signerIndex) input) (seqlt $ L.length config.signers)) config.feedIds
-    (matrixInput, conflictedFeeds) = buildMatrixInput dataPointsWithSignerIndices
-    feedValues = map catOptionals $ makeMatrix matrixInput
-
-    classify (feedId, values)
-      | S.member feedId conflictedFeeds = Error $ verificationError  "Same signer submitted conflicting values for feed" $ map Some values
-      | L.length values < config.signerCountThreshold = Error $ verificationError "Signer count not achieved" $ map Some values
-      | otherwise = Ok values
-  in zipWith (curry classify) config.feedIds feedValues
+  processPayload config hex
+  >? \(values, timestamp) -> (map (>? u256ToDecimalValue) values, timestamp)
 
 buildMatrixInput dataPointsWithSignerIndices =
   let
+    step acc (_, Error _) = acc
     step (matrix, conflicts) (DataPoint{feedId, value}, index) =
       let key = (feedId, index)
       in case M.lookup key matrix of
@@ -75,7 +51,42 @@ buildMatrixInput dataPointsWithSignerIndices =
           | otherwise -> (matrix, S.insert feedId conflicts)
   in L.foldl step (M.empty, S.empty) dataPointsWithSignerIndices
 
+-- Private
+
+processPayloadBytes config bytes =
+  trimMetadata bytes
+  >?> \(dataPackageCountRest, dataPackageCount) -> trimDataPackages dataPackageCount dataPackageCountRest
+  >?> \dataPackages -> verifyTimestamps config dataPackages
+  >? \timestamp -> (aggregate $ getFeedValues config dataPackages, timestamp)
+
+trimDataPackages dataPackageCount bytes =
+  trimMulti trimDataPackage dataPackageCount bytes
+  >?> \(Bytes{revList=dataPackagesRest}, dataPackages) -> L.null dataPackagesRest ??? RedStoneError Parse "Non-empty payload remainder" (L.reverse dataPackagesRest)
+  ?> Ok dataPackages
+
+aggregate = map (>? median)
+
+getFeedValues config dataPackages =
+  let
+    seqlt n = [0..(n-1)]
+    dataPointsWithSignerIndices = getDataPointsWithSignerIndices $ map (withSignerIndex config.signers) dataPackages
+    makeMatrix input = map (\feedId -> map (\signerIndex -> M.lookup (feedId, Ok signerIndex) input) (seqlt $ L.length config.signers)) config.feedIds
+    (matrixInput, conflictedFeeds) = buildMatrixInput dataPointsWithSignerIndices
+    feedValues = map catOptionals $ makeMatrix matrixInput
+
+    classify (feedId, values)
+      | S.member feedId conflictedFeeds = Error $ RedStoneError Processing "Same signer submitted conflicting values for feed" $ show $ map Some values
+      | L.length values < config.signerCountThreshold = Error $ RedStoneError Processing "Signer count not achieved" $ show $ map Some values
+      | otherwise = Ok values
+  in zipWith (curry classify) config.feedIds feedValues
+
 getDataPointsWithSignerIndices dataPackageSignerIndices =
   let
     dataPointsWithSignerIndices = concatMap (\(dataPackage, signIndex) -> map (\(dataPoint) -> (dataPoint, signIndex)) dataPackage.dataPoints) dataPackageSignerIndices
   in L.filter (\(dataPoint, _) -> isNotZero dataPoint.value) dataPointsWithSignerIndices
+
+withSignerIndex publicKeysDer dataPackage =
+  ( dataPackage
+  , signatureToDer dataPackage.signature.bytes
+    >?> \signatureDer -> getSignerIndex publicKeysDer (listToHex signatureDer) dataPackage
+  )

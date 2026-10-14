@@ -3,16 +3,18 @@ module RedStone.Tests.Suites.Der
     runTests
 ) where
 
-import RedStone.Tests.Test
-import RedStone.Tests.Run
+import DA.Text as T
 import RedStone.Internal.Der
 import RedStone.Internal.Hex
+import RedStone.Tests.Run
+import RedStone.Tests.Test
 
 runTests : (Action m, ActionFail m, CanAbort m) => m ()
 runTests = do
-  runSuite testSuite
+  runResultOkSuite listToHex testSuite
+  runResultOkSuite identity publicKeySuite
 
-testSuite = TestSuite with cases = testCases, name = "Der Conversion Tests", test = listToHex . signatureToDer . hexToList
+testSuite = TestSuite with cases = testCases, name = "Der Conversion Tests", test = signatureToDer . hexToList
 
 testCases =
     [ TestCase with
@@ -36,3 +38,26 @@ testCases =
         output = "3040021f0092c0d2912df895a1cbd44b001b77215ea67e3091f7fa743590192209e7ee021d09748b68e92c84bdad0afe3f51511ad9803e65ed3e376f2373f5355000"
         input = "000092c0d2912df895a1cbd44b001b77215ea67e3091f7fa743590192209e7ee00000009748b68e92c84bdad0afe3f51511ad9803e65ed3e376f2373f5355000"
      ]
+
+derPublicKeyPrefix = "3056301006072a8648ce3d020106052b8104000a034200"
+publicKey = "049a0e6cada7938a0fc616578aff2b11337d90ec4e99e9fee95e57e9d8371562b31698225fb73c666ba586842b913e67ad289f374f7a46fc873342f805a8683d4e"
+
+publicKeySuite = TestSuite with
+  cases = publicKeyCases
+  name = "Der Public Key Tests"
+  test = publicKeyToDer
+
+publicKeyCases =
+    [ TestCase with
+        name = "65-byte key converted to DER"
+        input = publicKey
+        output = derPublicKeyPrefix <> publicKey
+    , TestCase with
+        name = "64-byte key converted to DER"
+        input = T.drop 2 publicKey
+        output = derPublicKeyPrefix <> publicKey
+    , TestCase with
+        name = "DER key kept as it is"
+        input = derPublicKeyPrefix <> publicKey
+        output = derPublicKeyPrefix <> publicKey
+    ]

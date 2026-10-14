@@ -1,0 +1,34 @@
+module RedStone.Tests.Suites.ProtocolErrors
+(
+    runTests
+)
+where
+
+import DA.List as L
+import DA.Text as T
+import RedStone.Internal.Const
+import RedStone.Internal.Protocol
+import RedStone.Tests.Run
+import RedStone.Tests.Test
+
+runTests : (Action m, ActionFail m, CanAbort m) => m ()
+runTests = do
+  runResultErrorSuite verifyPayloadHexErrorSuite
+
+verifyPayloadHexErrorSuite = ErrorTestSuite with
+  name = "Verify Payload Hex Errors"
+  run = verifyPayloadHex
+  cases =
+    [ ErrorTestCase with
+        name = "payload over max_payload_hex_chars rejected"
+        input = T.implode (L.replicate (max_payload_hex_chars + 2) "a")
+        expectedSubstring = "Payload too large"
+    , ErrorTestCase with
+        name = "non-hex payload rejected"
+        input = "zz"
+        expectedSubstring = "Payload is not a valid hex string"
+    , ErrorTestCase with
+        name = "odd-length payload rejected"
+        input = "abc"
+        expectedSubstring = "Payload is not a valid hex string"
+    ]

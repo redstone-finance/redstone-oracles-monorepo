@@ -1,14 +1,14 @@
 module PartialNewData where
 
-import Daml.Script
 import DA.Assert
 import DA.Map as M
+import Daml.Script
 import IRedStoneAdapter
-import WritePricesContext
 import IRedStonePricePill
-import Input
+import WritePricesContext
 import Helpers.Setup
 import Helpers.Utils
+import Input
 
 pillMap viewer = do
   pills <- queryInterface @IRedStonePricePill viewer

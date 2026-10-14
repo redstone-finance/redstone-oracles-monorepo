@@ -7,6 +7,9 @@ module RedStone.Internal.Trim
   ) where
 
 import DA.List as L
+import RedStone.Error
+import RedStone.Result (Result(..))
+import RedStone.Internal.Flow
 
 -- Public
 
@@ -15,16 +18,17 @@ trimTrailingZeros = L.dropWhileEnd (== 0)
 
 trimStart = trimMulti trimOneElement
 
-trimMulti = trimMultiAcc []
+trimMulti _ n _ | n < 0 =
+  Error $ RedStoneError Parse "Negative trim length" $ show n
+trimMulti trimSingle n list = trimMultiAcc [] trimSingle n list
 
 -- Private
 
 trimMultiAcc acc trimSingle n list = case n of
-  0 -> (list, acc)
+  0 -> Ok (list, acc)
   _ ->
-    let
-      (rest, trimmed) = trimSingle list
-    in trimMultiAcc (trimmed :: acc) trimSingle (n - 1) rest
+    trimSingle list
+    >?> \(rest, trimmed) -> trimMultiAcc (trimmed :: acc) trimSingle (n - 1) rest
 
-trimOneElement [] = error $ "List too short"
-trimOneElement (h :: t) = (t, h)
+trimOneElement [] = Error $ RedStoneError Parse "List too short" $ show ([] : [Int])
+trimOneElement (h :: t) = Ok (t, h)

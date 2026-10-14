@@ -1,8 +1,8 @@
 module Core where
 
 import Daml.Script
-import RedStoneCore
 import IRedStoneCore
+import RedStoneCore
 import Input
 
 main : Input -> Script ()

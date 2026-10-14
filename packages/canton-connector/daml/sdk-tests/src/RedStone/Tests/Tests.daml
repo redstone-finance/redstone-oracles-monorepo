@@ -13,12 +13,14 @@ import RedStone.Tests.Suites.Der as Der
 import RedStone.Tests.Suites.DerErrors as DerErrors
 import RedStone.Tests.Suites.Hex as Hex
 import RedStone.Tests.Suites.Math as Math
-import RedStone.Tests.Suites.Median as Median
 import RedStone.Tests.Suites.MatrixInput as MatrixInput
+import RedStone.Tests.Suites.Median as Median
 import RedStone.Tests.Suites.MedianExtended as MedianExtended
 import RedStone.Tests.Suites.ProcessorErrors as ProcessorErrors
 import RedStone.Tests.Suites.Protocol as Protocol
+import RedStone.Tests.Suites.ProtocolErrors as ProtocolErrors
 import RedStone.Tests.Suites.Trim as Trim
+import RedStone.Tests.Suites.TrimErrors as TrimErrors
 import RedStone.Tests.Suites.U256 as U256
 import RedStone.Tests.Suites.U256Conversion as U256Conversion
 import RedStone.Tests.Suites.U256Errors as U256Errors
@@ -37,7 +39,9 @@ runAllTests = do
   Hex.runTests
   Math.runTests
   Protocol.runTests
+  ProtocolErrors.runTests
   Trim.runTests
+  TrimErrors.runTests
   DataPoint.runTests
   Config.runTests
   ConfigErrors.runTests

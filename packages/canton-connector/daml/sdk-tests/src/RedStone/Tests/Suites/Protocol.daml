@@ -4,16 +4,16 @@ module RedStone.Tests.Suites.Protocol
 )
 where
 
-import RedStone.Tests.Test
-import RedStone.Tests.Run
-import RedStone.Internal.Protocol
 import RedStone.Internal.Bytes
 import RedStone.Internal.Hex
+import RedStone.Internal.Protocol
+import RedStone.Tests.Run
+import RedStone.Tests.Test
 
 runTests : (Action m, ActionFail m, CanAbort m) => m ()
 runTests = do
-  runSuite markerSuite
-  runSuite metadataSuite
+  runResultOkSuite identity markerSuite
+  runResultOkSuite identity metadataSuite
 
 markerHex = "000002ed57011e0000"
 payloadTailHex = "1c000f000000000002ed57011e0000"

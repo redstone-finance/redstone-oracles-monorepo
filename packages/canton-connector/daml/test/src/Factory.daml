@@ -1,23 +1,23 @@
 module Factory where
 
-import Daml.Script
 import DA.Assert
+import DA.Foldable(forA_)
 import DA.Map as M
 import DA.Optional(fromSome)
-import DA.Foldable(forA_)
-import Splice.Api.FeaturedAppRightV2
-import IRedStonePricePill
-import IRedStoneRewardFactory
-import RedStoneRewardFactory
-import RedStonePricePillFactory
-import IRedStonePricePillFactory
+import Daml.Script
 import IRedStoneAdapter
-import WritePricesContext
+import IRedStonePricePill
+import IRedStonePricePillFactory
+import IRedStoneRewardFactory
 import RedStoneAdapter
+import RedStonePricePillFactory
+import RedStoneRewardFactory
+import Splice.Api.FeaturedAppRightV2
 import Time
-import Input
+import WritePricesContext
 import Helpers.MockFeatured
 import Helpers.Utils
+import Input
 
 main : Input -> Script ()
 main input = script do

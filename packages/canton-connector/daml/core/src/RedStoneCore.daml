@@ -1,8 +1,9 @@
 module RedStoneCore where
 
-import RedStone.GetPrices as G
 import Featured
 import IRedStoneCore
+import RedStone.GetPrices as G
+import RedStone.Result (resultUnwrap)
 import RedStoneTypes
 import RedStoneCore.Config
 
@@ -28,5 +29,5 @@ template RedStoneCore
             (Some featured, Some party) -> takeReward party featured
             _ -> pure ()
 
-          let config = adapter_config_fun feedIds currentTime
+          let config = resultUnwrap $ adapter_config_fun feedIds currentTime
           uncurry RedStoneResult <$> G.getPricesNumeric config payloadHex

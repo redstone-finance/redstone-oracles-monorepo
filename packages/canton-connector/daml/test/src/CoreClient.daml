@@ -1,13 +1,13 @@
 module CoreClient where
 
 import Daml.Script
-import Splice.Api.FeaturedAppRightV2
 import IRedStoneCore
 import RedStoneCore
 import RedStoneCoreClient
-import Input
+import Splice.Api.FeaturedAppRightV2
 import Helpers.MockFeatured
 import Helpers.Utils
+import Input
 
 main : Input -> Script ()
 main input = script do

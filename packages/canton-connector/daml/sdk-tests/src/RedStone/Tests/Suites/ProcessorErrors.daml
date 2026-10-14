@@ -9,15 +9,17 @@ import DA.Exception (ActionCatch)
 import DA.List as L
 import DA.Text as T
 import DA.Time
-import RedStone.Tests.Test
-import RedStone.Tests.Run
 import RedStone.Config
-import RedStone.Internal.Const
+import RedStone.PrimaryProdConfig
 import RedStone.Processor
+import RedStone.Result (Result(..))
+import RedStone.Internal.Const
+import RedStone.Tests.Run
+import RedStone.Tests.Test
 
 runTests : (Action m, ActionFail m, ActionCatch m, CanAbort m) => m ()
 runTests = do
-  runErrorSuite processPayloadErrorSuite
+  runResultErrorSuite processPayloadErrorSuite
 
 okTime = time (date 2026 Apr 1) 12 0 0
 
@@ -27,9 +29,11 @@ okSigners =
   , "04490f08821dea02d23683f170459aa6317dd65b544aac1df514f2e657f87ac00b81757edce3e78785e00dcd92e2dc8ddd9a680dc929a0c91062d87ae000a217ce"
   ]
 
-okConfig = config (defaultBaseConfig okSigners) { signerCountThreshold = 2 } [[69,84,72]] okTime
+okConfig = config redstonePrimaryProdDefaultBaseConfig { signers = okSigners, signerCountThreshold = 2 } [[69,84,72]] okTime
 
-runProcess hex = show $ processPayload okConfig hex
+runProcess hex = case okConfig of
+  Ok validConfig -> processPayload validConfig hex
+  Error e -> Error e
 
 processPayloadErrorSuite = ErrorTestSuite with
   name = "Processor processPayload Errors"

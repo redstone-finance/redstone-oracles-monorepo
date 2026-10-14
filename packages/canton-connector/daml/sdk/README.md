@@ -23,9 +23,9 @@
 - To process payload use `processPayload` or `processPayloadNumeric` function defined in the module.
 
 ```haskell
-processPayloadNumeric: Config -> Text -> ProcessorOutcome
+processPayloadNumeric: Config -> Text -> Result ProcessorOutcome (RedStoneError Text)
 
-processPayload: Config -> Text -> ProcessorRawOutcome
+processPayload: Config -> Text -> Result ProcessorRawOutcome (RedStoneError Text)
 ```
 
 #### Parameters
@@ -59,7 +59,7 @@ processPayload: Config -> Text -> ProcessorRawOutcome
 (
 [
   Ok 3114.205,
-  Error \"[RedStone.VerificationError] Signer count not achieved with: [Some 9007390000000,Some 9007390000000]\"
+  Error \"[RedStone.ProcessingError] Signer count not achieved with: [Some 9007390000000,Some 9007390000000]\"
 ],
 1765215110000
 )
@@ -102,26 +102,24 @@ To create a config, use one of the following functions
 config baseConfig feedIds currentTime
 ```
 
-Common contract default base config for different signers
-
-```haskell
-default_signer_count_threshold = 3
-
-defaultBaseConfig signers = BaseConfig with
-    signers
-    signerCountThreshold = default_signer_count_threshold
-    maxAllowedPackageTimestampDelayMs = 3 * one_min_ms
-    maxAllowedPackageTimestampAheadMs = 1 * one_min_ms
-```
-
-Complete config for `redstone-primary-prod` dataServiceId, to use with passing only `feedIds` and `currentTimestamp`
+Complete config for `redstone-primary-prod` dataServiceId (module `RedStone.PrimaryProdConfig`), to use with passing only `feedIds` and `currentTimestamp`
 
 ```haskell
 redstone_primary_prod_public_keys = ...
 
-redstonePrimaryProdDefaultBaseConfig = defaultBaseConfig redstone_primary_prod_public_keys
+redstone_primary_prod_signer_count_threshold = 3
+max_allowed_package_timestamp_delay_ms = 3 * one_min_ms
+max_allowed_package_timestamp_ahead_ms = 1 * one_min_ms
+
+redstonePrimaryProdDefaultBaseConfig = BaseConfig with
+    signers = redstone_primary_prod_public_keys
+    signerCountThreshold = redstone_primary_prod_signer_count_threshold
+    maxAllowedPackageTimestampDelayMs = max_allowed_package_timestamp_delay_ms
+    maxAllowedPackageTimestampAheadMs = max_allowed_package_timestamp_ahead_ms
 redstonePrimaryProdDefaultConfig = config redstonePrimaryProdDefaultBaseConfig
 ```
+
+The same for `redstone-primary-demo` lives in module `RedStone.PrimaryDemoConfig` (`redstonePrimaryDemoDefaultBaseConfig`, `redstonePrimaryDemoDefaultConfig`). For other signers, override `signers` and `signerCountThreshold` in `redstonePrimaryProdDefaultBaseConfig`.
 
 ## Example usage
 
@@ -130,7 +128,8 @@ module Main where
 
 import Daml.Script
 import RedStone.Processor
-import RedStone.Config
+import RedStone.PrimaryProdConfig
+import RedStone.Result (resultUnwrap)
 
 data Input = Input with
   feedIds: [[Int]]
@@ -141,7 +140,7 @@ main : Input -> Script ()
 main input = script do
     currentTime <- getTime
 
-    let config = redstonePrimaryProdDefaultConfig input.feedIds currentTime
+    let config = resultUnwrap $ redstonePrimaryProdDefaultConfig input.feedIds currentTime
 
     let resultNumeric = processPayloadNumeric config input.payload
     let result = processPayload config input.payload

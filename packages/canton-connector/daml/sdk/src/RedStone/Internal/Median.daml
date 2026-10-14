@@ -34,7 +34,7 @@ median l =
     len = L.length sortedList
     mid = len / 2
   in if len % 2 == 1
-     then (sortedList !! mid)
+     then sortedList !! mid
      else avg (sortedList !! (mid - 1)) (sortedList !! mid)
 
 -- Private

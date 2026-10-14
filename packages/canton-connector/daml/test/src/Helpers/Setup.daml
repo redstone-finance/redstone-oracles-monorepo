@@ -1,14 +1,14 @@
 module Helpers.Setup where
 
-import Daml.Script
 import DA.Map as M
-import Splice.Api.FeaturedAppRightV2
+import Daml.Script
 import IRedStoneAdapter
 import IRedStonePricePillFactory
 import IRedStoneRewardFactory
 import RedStoneAdapter
 import RedStonePricePillFactory
 import RedStoneRewardFactory
+import Splice.Api.FeaturedAppRightV2
 import Helpers.MockFeatured
 
 data TestParties = TestParties with

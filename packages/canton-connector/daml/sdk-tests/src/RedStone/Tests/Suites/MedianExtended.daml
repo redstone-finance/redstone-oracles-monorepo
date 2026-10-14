@@ -4,11 +4,11 @@ module RedStone.Tests.Suites.MedianExtended
 )
 where
 
-import RedStone.Tests.Test
-import RedStone.Tests.Run
-import RedStone.Tests.Helpers
 import RedStone.U256
 import RedStone.Internal.Median
+import RedStone.Tests.Helpers
+import RedStone.Tests.Run
+import RedStone.Tests.Test
 
 runTests : (Action m, ActionFail m, CanAbort m) => m ()
 runTests = do

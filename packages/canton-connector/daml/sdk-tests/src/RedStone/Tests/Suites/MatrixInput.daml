@@ -6,12 +6,12 @@ where
 
 import DA.Map as M
 import DA.Set as S
-import RedStone.Tests.Test
-import RedStone.Tests.Run
-import RedStone.Tests.Helpers (n)
-import RedStone.Internal.DataPoint
 import RedStone.Processor (buildMatrixInput)
 import RedStone.Result
+import RedStone.Internal.DataPoint
+import RedStone.Tests.Helpers (n)
+import RedStone.Tests.Run
+import RedStone.Tests.Test
 
 runTests : (Action m, ActionFail m, CanAbort m) => m ()
 runTests = do
@@ -58,9 +58,13 @@ conflictCases =
       name = "error signer-index entries are skipped and never conflict"
       input = [point eth 10 0, errPoint eth 99 "bad"]
       output = []
+  , TestCase with
+      name = "same error signer-index entries with different values -> no conflict"
+      input = [errPoint eth 10 "bad", errPoint eth 11 "bad"]
+      output = []
   ]
 
-thresholdSuite : TestSuite [(DataPoint, Result Int Text)] Int
+thresholdSuite : TestSuite [(DataPoint, Result Int Text)] Int Int
 thresholdSuite = TestSuite with
   name = "buildMatrixInput matrix size (for Signer count not achieved)"
   cases = thresholdCases

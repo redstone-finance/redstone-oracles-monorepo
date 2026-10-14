@@ -4,8 +4,8 @@ import DA.Assert
 import DA.List
 import DA.Optional
 import DA.Time
-import Time
 import RedStoneTypes
+import Time
 
 verifyOneResult currentTime readResult feedResult = do
   debug $ "Read result: " <> show readResult

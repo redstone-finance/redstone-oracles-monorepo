@@ -1,13 +1,13 @@
 module PillArchival where
 
-import Daml.Script
 import DA.Assert
 import DA.List (sort)
 import DA.Map as M
-import Internal.PillRecord
+import Daml.Script
 import IRedStonePricePill
 import RedStoneTypes
 import Time (one_min_ms)
+import Internal.PillRecord
 
 pill_keep_ms = 60_000
 

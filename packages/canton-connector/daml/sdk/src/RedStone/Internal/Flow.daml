@@ -1,0 +1,31 @@
+module RedStone.Internal.Flow
+  (
+    (>?>)
+    , (>?)
+    , (?>)
+    , traverseResult
+  ) where
+
+import RedStone.Result (Result(..), mapResultOk)
+
+-- Public
+
+infixl 1 >?>
+(Ok x) >?> next = next x
+(Error e) >?> _ = Error e
+
+infixl 1 >?
+result >? f = mapResultOk f result
+
+infixr 0 ?>
+(Ok _) ?> next = next
+(Error e) ?> _ = Error e
+
+traverseResult f = traverseResultAcc f []
+
+-- Private
+
+traverseResultAcc _ acc [] = Ok $ reverse acc
+traverseResultAcc f acc (x :: xs) =
+  f x
+  >?> \value -> traverseResultAcc f (value :: acc) xs

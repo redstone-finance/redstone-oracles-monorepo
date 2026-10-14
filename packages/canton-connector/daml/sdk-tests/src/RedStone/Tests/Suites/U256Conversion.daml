@@ -4,10 +4,10 @@ module RedStone.Tests.Suites.U256Conversion
 )
 where
 
-import RedStone.Tests.Test
-import RedStone.Tests.Run
-import RedStone.U256
 import RedStone.ProcessorTypes
+import RedStone.U256
+import RedStone.Tests.Run
+import RedStone.Tests.Test
 
 runTests : (Action m, ActionFail m, CanAbort m) => m ()
 runTests = do

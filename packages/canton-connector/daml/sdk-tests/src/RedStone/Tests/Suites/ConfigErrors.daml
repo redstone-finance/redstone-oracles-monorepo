@@ -7,15 +7,17 @@ where
 import DA.Date
 import DA.Exception (ActionCatch)
 import DA.List as L
+import DA.Text as T
 import DA.Time
-import RedStone.Tests.Test
-import RedStone.Tests.Run
 import RedStone.Config
+import RedStone.PrimaryProdConfig
 import RedStone.Internal.Const
+import RedStone.Tests.Run
+import RedStone.Tests.Test
 
 runTests : (Action m, ActionFail m, ActionCatch m, CanAbort m) => m ()
 runTests = do
-  runErrorSuite configErrorSuite
+  runResultErrorSuite configErrorSuite
 
 okTime = time (date 2026 Apr 1) 12 0 0
 preMinTime = time (date 2024 Jan 1) 12 0 0
@@ -47,18 +49,17 @@ defaultInput = CfgInput with
 
 mkConfig inp =
   let
-    base = (defaultBaseConfig inp.signers)
-      { signerCountThreshold = inp.threshold
+    base = redstonePrimaryProdDefaultBaseConfig
+      { signers = inp.signers
+      , signerCountThreshold = inp.threshold
       , maxAllowedPackageTimestampAheadMs = inp.maxAllowedPackageTimestampAheadMs
       , maxAllowedPackageTimestampDelayMs = inp.maxAllowedPackageTimestampDelayMs
       }
   in config base inp.feedIds inp.currentTime
 
-runConfig inp = show $ mkConfig inp
-
 configErrorSuite = ErrorTestSuite with
   name = "Config Errors"
-  run = runConfig
+  run = mkConfig
   cases =
     [ ErrorTestCase with
         name = "empty feedIds rejected"
@@ -116,4 +117,12 @@ configErrorSuite = ErrorTestSuite with
         name = "currentTime before min_acceptable_timestamp rejected"
         input = defaultInput { currentTime = preMinTime }
         expectedSubstring = "Wrong currentTimestamp"
+    , ErrorTestCase with
+        name = "malformed public key rejected"
+        input = defaultInput { signers = ["00112233"], threshold = 1 }
+        expectedSubstring = "Expected 65 bytes"
+    , ErrorTestCase with
+        name = "same signer with and without 04 prefix rejected"
+        input = defaultInput { signers = [head okSigners, T.drop 2 (head okSigners)] }
+        expectedSubstring = "signers are empty or not unique"
     ]

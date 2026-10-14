@@ -1,0 +1,17 @@
+module RedStone.PrimaryDemoConfig where
+
+import RedStone.Config
+import RedStone.PrimaryProdConfig
+
+-- Public
+
+redstone_primary_demo_public_keys = ["041c320fdaca2d381101d85f2e0fcf9c6d6ebb88f2a3b71a20ecf229c1cd0e81b541d6960b58666fce5abba84a460590c72f4e871d87b451f0b7823f98d0c41970"
+                        ,"04440a1d2f497db99d7282bf6ccaf133995ed05f992c177c1eaf7b861a9e64261d1da123bcefa6bed232755197fc5082d42696e72aaf42b45771eba336d693b9b3"]
+
+redstone_primary_demo_signer_count_threshold = 1
+
+redstonePrimaryDemoDefaultBaseConfig = redstonePrimaryProdDefaultBaseConfig
+  with
+    signers = redstone_primary_demo_public_keys
+    signerCountThreshold = redstone_primary_demo_signer_count_threshold
+redstonePrimaryDemoDefaultConfig = config redstonePrimaryDemoDefaultBaseConfig

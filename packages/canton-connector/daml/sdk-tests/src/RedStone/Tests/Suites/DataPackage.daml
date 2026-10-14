@@ -5,19 +5,21 @@ module RedStone.Tests.Suites.DataPackage
 where
 
 import DA.List as L
-import RedStone.Tests.Test
-import RedStone.Tests.Run
+import DA.Text as T
+import RedStone.U256
 import RedStone.Internal.Bytes
 import RedStone.Internal.DataPackage
 import RedStone.Internal.DataPoint
 import RedStone.Internal.Hex
 import RedStone.Internal.Trim
-import RedStone.U256
+import RedStone.Tests.Run
+import RedStone.Tests.Test
 
 runTests : (Action m, ActionFail m, CanAbort m) => m ()
 runTests = do
-  runSuite parseSuite
-  runSuite structureSuite
+  runResultOkSuite fst parseSuite
+  runResultOkSuite snd structureSuite
+  runResultErrorSuite valueSizeErrorSuite
 
 dataPackageHex1 = "4554480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000360cafc94e018d79bf0ba00000002000000151afa8c5c3caf6004b42c0fb17723e524f993b9ecbad3b9bce5ec74930fa436a3660e8edef10e96ee5f222de7ef5787c02ca467c0ec18daa2907b43ac20c63c11c"
 dataPackageHex2 = "4554480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000360cdd851e018d79bf0ba000000020000001473fd9dc72e6814a7de719b403cf4c9eba08934a643fd0666c433b806b31e69904f2226ffd3c8ef75861b11b5e32a1fda4b1458e0da4605a772dfba2a812f3ee1b"
@@ -27,7 +29,7 @@ parseMultiPackages n = trimMulti trimDataPackage n . fromList . hexToList
 parseSuite = TestSuite with
   cases = parseCases
   name  = "DataPackage Parse"
-  test = \(hex, count) -> (fst . parseMultiPackages count) hex
+  test = \(hex, count) -> parseMultiPackages count hex
 
 parseCases =
     [ TestCase with
@@ -65,7 +67,7 @@ dp2 = DataPackage with
 structureSuite = TestSuite with
   cases = structureCases
   name = "DataPackage Structure"
-  test = \(hex, count) -> (snd . parseMultiPackages count) hex
+  test = \(hex, count) -> parseMultiPackages count hex
 
 structureCases =
     [ TestCase with
@@ -84,4 +86,16 @@ structureCases =
         name = "two packages parsed from concatenated input with prefix"
         input = ("da4687f1914a1c" <> twoPackagesHex, 2)
         output = [dp1, dp2]
+    ]
+
+oversizedValueHex = T.replace "0ba000000020000001" "0ba000000021000001" dataPackageHex1
+
+valueSizeErrorSuite = ErrorTestSuite with
+  name = "DataPackage Value Size Errors"
+  run = trimDataPackage . fromList . hexToList
+  cases =
+    [ ErrorTestCase with
+        name = "value byte size over 32 rejected"
+        input = oversizedValueHex
+        expectedSubstring = "Value byte size over 32"
     ]

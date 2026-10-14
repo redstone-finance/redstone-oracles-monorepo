@@ -4,10 +4,12 @@ module RedStone.Internal.Der
   , publicKeyToDer
 ) where
 
-import DA.Text as T
-import DA.List as L
 import DA.Crypto.Text as C
-import RedStone.Internal.Error
+import DA.List as L
+import DA.Text as T
+import RedStone.Error
+import RedStone.Result (Result(Ok))
+import RedStone.Internal.Flow
 
 -- Public
 
@@ -20,17 +22,18 @@ signatureToDer fullSignature =
 
     seq = concatMap derEncodeList [r, s]
     der = 0x30 :: (L.length seq) :: seq
-  in (!!!) $ do
-    _ <- sigLen == sig_rs_length || sigLen == sig_rsv_length ??? otherError "Wrong signature length" sigLen
-    _ <- validRecoveryByte vBytes ??? otherError "Invalid signature recovery byte (v)" vBytes
-    _ <- isCanonicalS s ??? otherError "Signature s value is over N/2" s
-    pure der
+  in sigLen == sig_rs_length || sigLen == sig_rsv_length ??? RedStoneError Parse "Wrong signature length" sigLen
+  ?> validRecoveryByte vBytes ??? RedStoneError Verification "Invalid signature recovery byte (v)" vBytes
+  ?> isValidR r ??? RedStoneError Verification "Signature r value is not below N" r
+  ?> isCanonicalS s ??? RedStoneError Verification "Signature s value is over N/2" s
+  ?> Ok der
 
-publicKeyToDer pubKeyHex = (!!!) $ do
-  _ <- C.isHex pubKeyHex && T.length pubKeyHex % 2 == 0 ??? otherError "Public key must be an even-length hex string" pubKeyHex
+publicKeyToDer pubKeyHex | isDerPublicKey pubKeyHex = Ok pubKeyHex
+publicKeyToDer pubKeyHex =
   let normalized = if T.length pubKeyHex / 2 == public_key_length then "04" <> pubKeyHex else pubKeyHex
-  _ <- T.length normalized / 2 == public_key_length + 1 && T.take 2 normalized == "04" ??? otherError "Expected 65 bytes starting with 04 (or 64 bytes without prefix)" normalized
-  pure $ der_public_key_prefix <> normalized
+  in C.isHex pubKeyHex && T.length pubKeyHex % 2 == 0 ??? RedStoneError Configuration "Public key must be an even-length hex string" pubKeyHex
+  ?> T.length normalized / 2 == public_key_length + 1 && T.take 2 normalized == "04" ??? RedStoneError Configuration "Expected 65 bytes starting with 04 (or 64 bytes without prefix)" normalized
+  ?> Ok $ der_public_key_prefix <> normalized
 
 -- Private
 
@@ -39,12 +42,13 @@ sig_rs_length = 64
 sig_rsv_length = 65
 public_key_length = 64
 
-der_public_key_prefix = "3056" <> "3010" <> "06072a8648ce3d0201" <> "06052b8104000a" <> "0342" <> "00"
+secp256k1_N =
+  [ 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+  , 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFE
+  , 0xBA, 0xAE, 0xDC, 0xE6, 0xAF, 0x48, 0xA0, 0x3B
+  , 0xBF, 0xD2, 0x5E, 0x8C, 0xD0, 0x36, 0x41, 0x41
+  ]
 
-validRecoveryByte vBytes = case vBytes of
-  [] -> True
-  [v] -> v == 0 || v == 1 || v == 27 || v == 28
-  _ -> False
 secp256k1_N_div_2 =
   [ 0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
   , 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
@@ -52,7 +56,7 @@ secp256k1_N_div_2 =
   , 0xDF, 0xE9, 0x2F, 0x46, 0x68, 0x1B, 0x20, 0xA0
   ]
 
-isCanonicalS sBytes = sBytes <= secp256k1_N_div_2
+der_public_key_prefix = "3056" <> "3010" <> "06072a8648ce3d0201" <> "06052b8104000a" <> "0342" <> "00"
 
 derEncodeList list =
   let
@@ -61,3 +65,17 @@ derEncodeList list =
       [] -> [0x00]
       (h :: _) -> if h >= 0x80 then 0x00 :: stripped else stripped
   in 0x02 :: (L.length list') :: list'
+
+validRecoveryByte vBytes = case vBytes of
+  [] -> True
+  [v] -> v == 0 || v == 1 || v == 27 || v == 28
+  _ -> False
+
+isValidR rBytes = rBytes < secp256k1_N
+
+isCanonicalS sBytes = sBytes <= secp256k1_N_div_2
+
+isDerPublicKey pubKeyHex =
+  C.isHex pubKeyHex
+    && T.isPrefixOf der_public_key_prefix pubKeyHex
+    && T.length pubKeyHex == T.length der_public_key_prefix + 2 * (public_key_length + 1)

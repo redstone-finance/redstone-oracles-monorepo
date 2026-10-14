@@ -12,11 +12,11 @@ import RedStone.Internal.Trim
 
 -- Public
 
-leByteListToInt list = leByteListToIntAcc identity byte_range 1 0 (trimTrailingZeros list)
+leByteListToInt list = leByteListToIntAcc identity byte_range 1 0 $ trimTrailingZeros list
 beByteListToInt list = leByteListToInt $ L.reverse list
 
 leByteListToNumeric: [Int] -> Numeric 0
-leByteListToNumeric list = leByteListToIntAcc intToNumeric (intToNumeric byte_range) 1.0 0.0 (trimTrailingZeros list)
+leByteListToNumeric list = leByteListToIntAcc intToNumeric (intToNumeric byte_range) 1.0 0.0 $ trimTrailingZeros list
 beByteListToNumeric list = leByteListToNumeric $ L.reverse list
 
 -- Private
