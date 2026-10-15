@@ -20,7 +20,7 @@
     "@ethersproject/logger": "^5.7.0",
     "@ethersproject/sha2": "^5.7.0",
     "@types/lodash": "^4.14.195",
-    "axios": "^1.19",
+    "axios": "^1.20",
     "consola": "^3.4.2",
     "date-fns": "^3.6.0",
     "decimal.js": "^10.4.3",

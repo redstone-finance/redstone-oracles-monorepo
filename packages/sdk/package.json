@@ -20,7 +20,7 @@
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "@types/lodash": "^4.14.195",
-    "axios": "^1.19",
+    "axios": "^1.20",
     "lodash": "^4.17.23",
     "zod": "^4.1.12"
   },
