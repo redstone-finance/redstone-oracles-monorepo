@@ -10022,7 +10022,6 @@ __metadata:
     bignumber.js: "npm:^9.3.0"
     dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.23"
-    redstone-api: "npm:^0.4.13"
     ws: "npm:^8.18.3"
     zod: "npm:^4.1.12"
   languageName: unknown
