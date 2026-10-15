@@ -1,0 +1,36 @@
+module RedStone.SignedDataPackage
+  (
+    SignedDataPackage(..)
+    , serializeSignedDataPackage
+  ) where
+
+import DA.List as L
+import RedStone.Config (PublicKey)
+import RedStone.ToBeByteList
+import RedStone.Internal.Const
+import RedStone.Internal.Hex
+import RedStone.Internal.Math
+import RedStone.Internal.Protocol
+
+-- Public
+
+data SignedDataPackage v = SignedDataPackage
+  with
+    dataPoints : [([Int], v)]
+    timestamp : Int
+    valueSize : Int
+    signatureDer : Text
+    publicKeyDer : PublicKey
+  deriving (Eq, Show)
+
+serializeSignedDataPackage SignedDataPackage{dataPoints, timestamp, valueSize} =
+  listToHex $ concatMap (serializeDataPoint valueSize) dataPoints
+    <> intToBeByteList timestamp_bs timestamp
+    <> intToBeByteList value_size_bs valueSize
+    <> intToBeByteList data_point_count_bs (L.length dataPoints)
+
+-- Private
+
+serializeDataPoint valueSize (feedId, value) =
+  feedId <> L.replicate (feed_id_bs - L.length feedId) 0
+    <> L.drop (uint256_size_bytes - valueSize) (toBeByteList value)

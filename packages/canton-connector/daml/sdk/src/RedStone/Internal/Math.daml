@@ -4,10 +4,17 @@ module RedStone.Internal.Math
     , beByteListToInt
     , leByteListToNumeric
     , beByteListToNumeric
+    , beByteListToNumericResult
+    , beByteListToIntResult
+    , intToBeByteList
 ) where
 
 import DA.List as L
+import RedStone.Error
+import RedStone.Result (Result(Ok))
 import RedStone.Internal.Const
+import RedStone.Internal.Flow
+import RedStone.Internal.Hex
 import RedStone.Internal.Trim
 
 -- Public
@@ -18,6 +25,23 @@ beByteListToInt list = leByteListToInt $ L.reverse list
 leByteListToNumeric: [Int] -> Numeric 0
 leByteListToNumeric list = leByteListToIntAcc intToNumeric (intToNumeric byte_range) 1.0 0.0 $ trimTrailingZeros list
 beByteListToNumeric list = leByteListToNumeric $ L.reverse list
+
+beByteListToNumericResult list =
+  let
+    trimmed = trimLeadingZeros list
+  in (L.length trimmed, trimmed) <= (L.length numeric_max_bytes, numeric_max_bytes) ??? RedStoneError Processing "Value over Numeric range" ("0x" <> listToHex trimmed)
+    >?> \_ -> Ok $ beByteListToNumeric trimmed
+
+beByteListToIntResult list =
+  let
+    trimmed = trimLeadingZeros list
+    hex = listToHex trimmed
+  in (L.length trimmed, trimmed) <= (L.length int_max_bytes, int_max_bytes)
+    ??? RedStoneError Processing "Value over Int range" hex >?> \_ ->
+      Ok $ beByteListToInt trimmed
+
+intToBeByteList 0 _ = []
+intToBeByteList size n = intToBeByteList (size - 1) (n / byte_range) <> [n % byte_range]
 
 -- Private
 

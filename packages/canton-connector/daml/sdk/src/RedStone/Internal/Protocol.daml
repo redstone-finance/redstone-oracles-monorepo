@@ -42,7 +42,7 @@ trimMetadata bytes =
 
 verifyPayloadHex hex =
   T.length hex <= max_payload_hex_chars ??? RedStoneError Parse "Payload too large" (T.length hex, max_payload_hex_chars)
-  ?> C.isHex hex && T.length hex % 2 == 0 ??? RedStoneError Parse "Payload is not a valid hex string" hex
+  >?> \_ -> C.isHex hex && T.length hex % 2 == 0 ??? RedStoneError Parse "Payload is not a valid hex string" hex
   ?> Ok hex
 
 -- Private

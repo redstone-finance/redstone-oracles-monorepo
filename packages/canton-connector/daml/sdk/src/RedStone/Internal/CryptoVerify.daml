@@ -1,6 +1,7 @@
 module RedStone.Internal.CryptoVerify
 (
   getSignerIndex
+  , isValidSig
 ) where
 
 import DA.Crypto.Text as C
@@ -13,10 +14,8 @@ import RedStone.Internal.Hex
 
 getSignerIndex publicKeysDer signatureDer dataPackage =
     let
-        index = L.findIndex (isValidSig signatureDer dataPackage.signableBytes) publicKeysDer
+        index = L.findIndex (isValidSig signatureDer $ listToHex dataPackage.signableBytes.bytes) publicKeysDer
     in resultFromOptional (RedStoneError Processing "Wrong signer index" $ show dataPackage) index
 
--- Private
-
-isValidSig signatureDer HexBytes{bytes=signableBytes} =
-  C.secp256k1WithEcdsaOnly signatureDer $ C.keccak256 $ listToHex signableBytes
+isValidSig signatureDer signableHex =
+  C.secp256k1WithEcdsaOnly signatureDer $ C.keccak256 signableHex

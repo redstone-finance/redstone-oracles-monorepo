@@ -19,6 +19,7 @@ import RedStone.Tests.Suites.MedianExtended as MedianExtended
 import RedStone.Tests.Suites.ProcessorErrors as ProcessorErrors
 import RedStone.Tests.Suites.Protocol as Protocol
 import RedStone.Tests.Suites.ProtocolErrors as ProtocolErrors
+import RedStone.Tests.Suites.SignedDataPackage as SignedDataPackage
 import RedStone.Tests.Suites.Trim as Trim
 import RedStone.Tests.Suites.TrimErrors as TrimErrors
 import RedStone.Tests.Suites.U256 as U256
@@ -46,6 +47,7 @@ runAllTests = do
   Config.runTests
   ConfigErrors.runTests
   DataPackage.runTests
+  SignedDataPackage.runTests
   Verify.runTests
   VerifyErrors.runTests
   ProcessorErrors.runTests

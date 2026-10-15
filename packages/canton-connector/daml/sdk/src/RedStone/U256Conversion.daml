@@ -1,0 +1,82 @@
+module RedStone.U256Conversion
+  (
+    u256FromInt
+    , u256FromNumeric
+    , u256FromDecimalValue
+    , u256ToInt
+    , u256ToNumeric
+    , u256ToDecimalValue
+  ) where
+
+import DA.List as L
+import DA.Numeric (div, mul, shift)
+import RedStone.Error
+import RedStone.ProcessorTypes (DecimalValue, value_divisor)
+import RedStone.Result (Result(..))
+import RedStone.ToBeByteList
+import RedStone.U256
+import RedStone.Internal.Bytes
+import RedStone.Internal.Const
+import RedStone.Internal.Flow
+import RedStone.Internal.Math
+
+-- Public
+
+instance ToBeByteList U256 where
+  toBeByteList = u256ToBeByteList
+
+instance ToBeByteList DecimalValue where
+  toBeByteList = u256ToBeByteList . u256FromDecimalValue
+
+u256FromInt n =
+  if n < 0 then error $ "Value should be non-negative" else
+    u256FromBeByteList $ u256FromIntAcc [] n
+
+u256FromNumeric: Numeric 0 -> U256
+u256FromNumeric n =
+  if n < 0.0 then error $ "Value should be non-negative" else
+    u256 $ Bytes $ L.foldl (mulAddBytes numeric_chunk) [] $ splitNumeric n
+
+u256FromDecimalValue: DecimalValue -> U256
+u256FromDecimalValue = u256FromNumeric . mulByDivisor
+
+u256ToInt = beByteListToIntResult . u256ToBeByteList
+
+u256ToNumeric = beByteListToNumericResult . u256ToBeByteList
+
+u256ToDecimalValue: U256 -> Result DecimalValue (RedStoneError Text)
+u256ToDecimalValue value = u256ToNumeric value >? divByDivisor
+
+-- Private
+
+numeric_chunk = 10 ^ 13
+
+divByDivisor a = div a value_divisor
+mulByDivisor a = mul a value_divisor
+
+u256FromIntAcc acc remaining =
+  if remaining == 0 then acc else
+    u256FromIntAcc ((remaining % byte_range) :: acc) (remaining / byte_range)
+
+splitNumeric: Numeric 0 -> [Int]
+splitNumeric n =
+  let
+    (chunk1, rest1) = splitShifted (shift n : Numeric 26)
+    (chunk2, rest2) = splitShifted (shift rest1 : Numeric 13)
+  in [chunk1, chunk2, truncate rest2]
+
+splitShifted: NumericScale s => Numeric s -> (Int, Numeric 0)
+splitShifted shifted =
+  let
+    high = truncate shifted
+  in (high, shift $ shifted - intToNumeric high)
+
+mulAddBytes factor revList carry = mulAddBytesAcc factor [] revList carry
+
+mulAddBytesAcc _ acc [] 0 = L.reverse acc
+mulAddBytesAcc factor acc [] carry =
+  mulAddBytesAcc factor (carry % byte_range :: acc) [] (carry / byte_range)
+mulAddBytesAcc factor acc (byte :: rest) carry =
+  let
+    value = byte * factor + carry
+  in mulAddBytesAcc factor (value % byte_range :: acc) rest (value / byte_range)

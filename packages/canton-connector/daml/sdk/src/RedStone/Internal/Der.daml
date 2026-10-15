@@ -13,6 +13,7 @@ import RedStone.Internal.Flow
 
 -- Public
 
+signatureToDer fullSignature | isDerSignature fullSignature = Ok fullSignature
 signatureToDer fullSignature =
   let
     sigLen = L.length fullSignature
@@ -74,6 +75,11 @@ validRecoveryByte vBytes = case vBytes of
 isValidR rBytes = rBytes < secp256k1_N
 
 isCanonicalS sBytes = sBytes <= secp256k1_N_div_2
+
+isDerSignature (0x30 :: seqLength :: 0x02 :: rLength :: rest) = case L.drop rLength rest of
+  0x02 :: sLength :: s -> seqLength == rLength + sLength + 4 && L.length s == sLength
+  _ -> False
+isDerSignature _ = False
 
 isDerPublicKey pubKeyHex =
   C.isHex pubKeyHex

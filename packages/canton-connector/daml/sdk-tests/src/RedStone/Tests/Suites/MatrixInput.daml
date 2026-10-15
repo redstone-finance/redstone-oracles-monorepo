@@ -8,7 +8,9 @@ import DA.Map as M
 import DA.Set as S
 import RedStone.Processor (buildMatrixInput)
 import RedStone.Result
+import RedStone.Internal.DataPackage
 import RedStone.Internal.DataPoint
+import RedStone.Internal.Hex (HexBytes(..))
 import RedStone.Tests.Helpers (n)
 import RedStone.Tests.Run
 import RedStone.Tests.Test
@@ -22,8 +24,10 @@ eth = [69, 84, 72]
 btc = [66, 84, 67]
 
 dp feedId v = DataPoint with feedId, value = n v
-point feedId v idx = (dp feedId v, Ok idx)
-errPoint feedId v err = (dp feedId v, Error err)
+pkg dataPoints = DataPackage with
+  dataPoints, timestamp = 0, valueSize = 0, signature = HexBytes [], signableBytes = HexBytes []
+point feedId v idx = (dp feedId v, pkg [dp feedId v], Ok idx)
+errPoint feedId v err = (dp feedId v, pkg [dp feedId v], Error err)
 
 conflictedFeeds input = S.toList $ snd $ buildMatrixInput input
 matrixEntries input = M.size $ fst $ buildMatrixInput input
@@ -64,7 +68,7 @@ conflictCases =
       output = []
   ]
 
-thresholdSuite : TestSuite [(DataPoint, Result Int Text)] Int Int
+thresholdSuite : TestSuite [(DataPoint, DataPackage, Result Int Text)] Int Int
 thresholdSuite = TestSuite with
   name = "buildMatrixInput matrix size (for Signer count not achieved)"
   cases = thresholdCases
@@ -83,6 +87,12 @@ thresholdCases =
       name = "duplicate (signer, feed) does not double-count"
       input = [point eth 10 0, point eth 10 0]
       output = 1
+  , TestCase with
+      name = "multi-point package -> 1 slot per data point"
+      input =
+        let multiPointPackage = pkg [dp eth 10, dp btc 20]
+        in [(dp eth 10, multiPointPackage, Ok 0), (dp btc 20, multiPointPackage, Ok 0)]
+      output = 2
   , TestCase with
       name = "empty input -> 0 slots"
       input = []

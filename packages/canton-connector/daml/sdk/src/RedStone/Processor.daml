@@ -2,6 +2,8 @@ module RedStone.Processor
  (
   processPayload
   , processPayloadNumeric
+  , processPayloadPackages
+  , processPayloadPackagesNumeric
   -- Exposed for testing — pure helpers of the aggregation pipeline.
   , buildMatrixInput
  ) where
@@ -14,7 +16,9 @@ import RedStone.Config
 import RedStone.Error
 import RedStone.ProcessorTypes
 import RedStone.Result
+import RedStone.SignedDataPackage
 import RedStone.U256
+import RedStone.U256Conversion
 import RedStone.Internal.Bytes as B
 import RedStone.Internal.CryptoVerify
 import RedStone.Internal.DataPackage
@@ -29,35 +33,50 @@ import RedStone.Internal.Verify
 
 -- Public
 
-processPayload config hex =
-  verifyPayloadHex hex
-  >? B.fromList . hexToList
-  >?> processPayloadBytes config
+processPayload: Config -> Text -> Result ProcessorRawOutcome (RedStoneError Text)
+processPayload config =
+  processPayloadWith config $ aggregate . map (>? map (.value))
 
 processPayloadNumeric: Config -> Text -> Result ProcessorOutcome (RedStoneError Text)
 processPayloadNumeric config hex =
   processPayload config hex
-  >? \(values, timestamp) -> (map (>? u256ToDecimalValue) values, timestamp)
+  >? \(values, timestamp) -> (map (>?> u256ToDecimalValue) values, timestamp)
+
+processPayloadPackages: Config -> Text -> Result ProcessorRawPackagesOutcome (RedStoneError Text)
+processPayloadPackages config = processPayloadWith config $ getFeedPackages config.signers
+
+processPayloadPackagesNumeric: Config -> Text -> Result ProcessorPackagesOutcome (RedStoneError Text)
+processPayloadPackagesNumeric config hex =
+  processPayloadPackages config hex
+  >? \(packages, timestamp) -> (map (>?> traverseResult toDecimalPackage) packages, timestamp)
 
 buildMatrixInput dataPointsWithSignerIndices =
   let
-    step acc (_, Error _) = acc
-    step (matrix, conflicts) (DataPoint{feedId, value}, index) =
+    step acc (_, _, Error _) = acc
+    step (matrix, conflicts) (DataPoint{feedId, value}, dataPackage, Ok index) =
       let key = (feedId, index)
       in case M.lookup key matrix of
-        None -> (M.insert key value matrix, conflicts)
+        None -> (M.insert key MatrixEntry{value, dataPackage, index} matrix, conflicts)
         Some existing
-          | existing == value -> (matrix, conflicts)
+          | existing.value == value -> (matrix, conflicts)
           | otherwise -> (matrix, S.insert feedId conflicts)
   in L.foldl step (M.empty, S.empty) dataPointsWithSignerIndices
 
 -- Private
 
-processPayloadBytes config bytes =
-  trimMetadata bytes
+data MatrixEntry = MatrixEntry with
+    value : U256
+    dataPackage : DataPackage
+    index : Int
+  deriving (Eq, Show)
+
+processPayloadWith config process hex =
+  verifyPayloadHex hex
+  >? B.fromList . hexToList
+  >?> trimMetadata
   >?> \(dataPackageCountRest, dataPackageCount) -> trimDataPackages dataPackageCount dataPackageCountRest
   >?> \dataPackages -> verifyTimestamps config dataPackages
-  >? \timestamp -> (aggregate $ getFeedValues config dataPackages, timestamp)
+  >? \timestamp -> (process $ getFeedEntries config dataPackages, timestamp)
 
 trimDataPackages dataPackageCount bytes =
   trimMulti trimDataPackage dataPackageCount bytes
@@ -66,27 +85,49 @@ trimDataPackages dataPackageCount bytes =
 
 aggregate = map (>? median)
 
-getFeedValues config dataPackages =
+getFeedEntries config dataPackages =
   let
     seqlt n = [0..(n-1)]
     dataPointsWithSignerIndices = getDataPointsWithSignerIndices $ map (withSignerIndex config.signers) dataPackages
-    makeMatrix input = map (\feedId -> map (\signerIndex -> M.lookup (feedId, Ok signerIndex) input) (seqlt $ L.length config.signers)) config.feedIds
+    makeMatrix input = map (\feedId -> map (\signerIndex -> M.lookup (feedId, signerIndex) input) (seqlt $ L.length config.signers)) config.feedIds
     (matrixInput, conflictedFeeds) = buildMatrixInput dataPointsWithSignerIndices
-    feedValues = map catOptionals $ makeMatrix matrixInput
+    feedEntries = map catOptionals $ makeMatrix matrixInput
 
-    classify (feedId, values)
-      | S.member feedId conflictedFeeds = Error $ RedStoneError Processing "Same signer submitted conflicting values for feed" $ show $ map Some values
-      | L.length values < config.signerCountThreshold = Error $ RedStoneError Processing "Signer count not achieved" $ show $ map Some values
-      | otherwise = Ok values
-  in zipWith (curry classify) config.feedIds feedValues
+    classify feedId entries
+      | S.member feedId conflictedFeeds = Error $ RedStoneError Processing "Same signer submitted conflicting values for feed" $ show $ map (Some . (.value)) entries
+      | L.length entries < config.signerCountThreshold = Error $ RedStoneError Processing "Signer count not achieved" $ show $ map (Some . (.value)) entries
+      | otherwise = Ok entries
+  in zipWith classify config.feedIds feedEntries
 
 getDataPointsWithSignerIndices dataPackageSignerIndices =
   let
-    dataPointsWithSignerIndices = concatMap (\(dataPackage, signIndex) -> map (\(dataPoint) -> (dataPoint, signIndex)) dataPackage.dataPoints) dataPackageSignerIndices
-  in L.filter (\(dataPoint, _) -> isNotZero dataPoint.value) dataPointsWithSignerIndices
+    dataPointsWithSignerIndices = concatMap (\(dataPackage, signIndex) -> map (\(dataPoint) -> (dataPoint, dataPackage, signIndex)) dataPackage.dataPoints) dataPackageSignerIndices
+  in L.filter (\(dataPoint, _, _) -> isNotZero dataPoint.value) dataPointsWithSignerIndices
 
 withSignerIndex publicKeysDer dataPackage =
   ( dataPackage
   , signatureToDer dataPackage.signature.bytes
     >?> \signatureDer -> getSignerIndex publicKeysDer (listToHex signatureDer) dataPackage
   )
+
+getFeedPackages publicKeysDer = map (>?> traverseResult (toSignedDataPackage publicKeysDer))
+
+toSignedDataPackage publicKeysDer MatrixEntry{dataPackage, index} =
+  signatureToDer dataPackage.signature.bytes
+  >? \signatureDer -> SignedDataPackage with
+      dataPoints = map (\DataPoint{feedId, value} -> (feedId, value)) dataPackage.dataPoints
+      timestamp = dataPackage.timestamp
+      valueSize = dataPackage.valueSize
+      signatureDer = listToHex signatureDer
+      publicKeyDer = publicKeysDer !! index
+
+toDecimalPackage SignedDataPackage{dataPoints, timestamp, valueSize, signatureDer, publicKeyDer} =
+  traverseResult toDecimalPoint dataPoints
+  >? \decimalPoints -> SignedDataPackage with
+      dataPoints = decimalPoints
+      timestamp
+      valueSize
+      signatureDer
+      publicKeyDer
+
+toDecimalPoint (feedId, value) = u256ToDecimalValue value >? \decimalValue -> (feedId, decimalValue)

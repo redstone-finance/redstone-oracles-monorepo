@@ -1,0 +1,78 @@
+module RedStone.Tests.Suites.SignedDataPackage
+(
+    runTests
+)
+where
+
+import RedStone.ProcessorTypes (DecimalValue)
+import RedStone.SignedDataPackage
+import RedStone.U256Conversion
+import RedStone.Internal.CryptoVerify (isValidSig)
+import RedStone.Internal.Hex
+import RedStone.Tests.Helpers (n)
+import RedStone.Tests.Run
+import RedStone.Tests.Test
+
+runTests : (Action m, ActionFail m, CanAbort m) => m ()
+runTests = do
+  runSuite serializationSuite
+  runSuite decimalSerializationSuite
+  runSuite signatureSuite
+
+eth = [69, 84, 72]
+btc = [66, 84, 67]
+feedIdPadding = listToHex $ replicate 29 0
+ethSignedBytes = "4554480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000360cafc94e018d79bf0ba000000020000001"
+
+ethPackage = ethPackageWith [(eth, u256FromInt 232141080910)]
+
+ethPackageWith dataPoints = SignedDataPackage with
+  dataPoints
+  timestamp = 1707144580000
+  valueSize = 32
+  signatureDer = "3044022051afa8c5c3caf6004b42c0fb17723e524f993b9ecbad3b9bce5ec74930fa436a02203660e8edef10e96ee5f222de7ef5787c02ca467c0ec18daa2907b43ac20c63c1"
+  publicKeyDer = "3056301006072a8648ce3d020106052b8104000a03420004ea48ca25db5d352ec62c4f92e8c115068e92a327f3536479a0185ec6e0f8d26db4409bffdc8c6ea898743f908861a47fdb4a52e44d129a56418a1c08008fd425"
+
+serializationSuite = TestSuite with
+  cases = serializationCases
+  name = "SignedDataPackage Serialization"
+  test = serializeSignedDataPackage
+
+serializationCases =
+    [ TestCase with
+        name = "ETH package gives its signed bytes"
+        input = ethPackage
+        output = ethSignedBytes
+    , TestCase with
+        name = "unsorted ETH, BTC points keep their order with 8-byte values"
+        input = ethPackage with
+          dataPoints = [(eth, n 10), (btc, n 20)]
+          valueSize = 8
+        output = "455448" <> feedIdPadding <> "000000000000000a"
+          <> "425443" <> feedIdPadding <> "0000000000000014"
+          <> "018d79bf0ba0" <> "00000008" <> "000002"
+    ]
+
+decimalSerializationSuite = TestSuite with
+  cases = decimalSerializationCases
+  name = "SignedDataPackage Decimal Serialization"
+  test = serializeSignedDataPackage
+
+decimalSerializationCases =
+    [ TestCase with
+        name = "ETH package with a decimal value gives its signed bytes"
+        input = ethPackageWith [(eth, 2321.4108091 : DecimalValue)]
+        output = ethSignedBytes
+    ]
+
+signatureSuite = TestSuite with
+  cases = signatureCases
+  name = "SignedDataPackage Signature"
+  test = \signedDataPackage -> isValidSig signedDataPackage.signatureDer (serializeSignedDataPackage signedDataPackage) signedDataPackage.publicKeyDer
+
+signatureCases =
+    [ TestCase with
+        name = "ETH package signature verifies with the signer key"
+        input = ethPackage
+        output = True
+    ]

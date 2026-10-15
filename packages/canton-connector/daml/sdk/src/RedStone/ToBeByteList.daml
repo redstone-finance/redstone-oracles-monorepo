@@ -1,0 +1,9 @@
+module RedStone.ToBeByteList
+  (
+    ToBeByteList(..)
+  ) where
+
+-- Public
+
+class ToBeByteList v where
+  toBeByteList : v -> [Int]
