@@ -103,7 +103,7 @@
   "resolutions": {
     "@ton/sandbox@npm:^0.32.2": "0.44.0",
     "adm-zip": "^0.6.0",
-    "axios": "^1.19",
+    "axios": "^1.20",
     "bn.js@npm:4.11.6": "^4.0.0",
     "bn.js@npm:5.2.1": "^5.2.0",
     "brace-expansion@npm:5.0.6": "^5",
