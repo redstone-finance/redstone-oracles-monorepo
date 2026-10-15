@@ -9517,6 +9517,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-ssm-parameters-manager@workspace:packages/lambda/lambda-ssm-parameters-manager":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-ssm-parameters-manager@workspace:packages/lambda/lambda-ssm-parameters-manager"
+  dependencies:
+    "@aws-sdk/client-ssm": "npm:^3.696.0"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    aws-sdk-client-mock: "npm:3.1.0"
+    dotenv: "npm:^16.0.3"
+    zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-stellar-ttl-extender@workspace:packages/lambda/lambda-stellar-ttl-extender":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-stellar-ttl-extender@workspace:packages/lambda/lambda-stellar-ttl-extender"
