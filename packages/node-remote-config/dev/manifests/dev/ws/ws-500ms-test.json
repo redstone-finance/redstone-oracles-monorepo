@@ -2898,10 +2898,6 @@
     },
     "XBR_CURRENT": {
       "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
-      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -2922,10 +2918,6 @@
     },
     "XBR_FRONT": {
       "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
-      },
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
