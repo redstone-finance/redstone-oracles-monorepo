@@ -1,24 +1,24 @@
-sdk-version: 3.4.11
+sdk-version: 3.5.12
 name: redstone-test-v20
-version: 0.4.0
+version: 0.5.0
 source: src
 dependencies:
   - daml-prim
   - daml-stdlib
   - daml-script
 data-dependencies:
-  - ../common/.daml/dist/redstone-common-v19-0.4.0.dar
-  - ../types/.daml/dist/redstone-types-v19-0.4.0.dar
-  - ../interface/.daml/dist/redstone-interface-v19-0.4.0.dar
-  - ../price_pill/.daml/dist/redstone-price-pill-v19-0.4.0.dar
-  - ../core/.daml/dist/redstone-core-v19-0.4.1.dar
-  - ../adapter/.daml/dist/redstone-adapter-v20-0.4.0.dar
-  - ../price_feed/.daml/dist/redstone-price-feed-v19-0.4.0.dar
-  - ../sdk/.daml/dist/redstone-sdk-v20-0.4.0.dar
-  - ../sdk-tests/.daml/dist/redstone-sdk-tests-v20-0.4.0.dar
-  - ../featured/.daml/dist/redstone-featured-v19-0.4.0.dar
-  - ../factory/.daml/dist/redstone-factory-v19-0.4.0.dar
-  - ../reward_factory/.daml/dist/redstone-reward-factory-v19-0.4.1.dar
+  - ../common/.daml/dist/redstone-common-v20-0.5.0.dar
+  - ../types/.daml/dist/redstone-types-v20-0.5.0.dar
+  - ../interface/.daml/dist/redstone-interface-v20-0.5.0.dar
+  - ../price_pill/.daml/dist/redstone-price-pill-v20-0.5.0.dar
+  - ../core/.daml/dist/redstone-core-v20-0.5.0.dar
+  - ../adapter/.daml/dist/redstone-adapter-v20-0.5.0.dar
+  - ../price_feed/.daml/dist/redstone-price-feed-v20-0.5.0.dar
+  - ../sdk/.daml/dist/redstone-sdk-v20-0.5.0.dar
+  - ../sdk-tests/.daml/dist/redstone-sdk-tests-v20-0.5.0.dar
+  - ../featured/.daml/dist/redstone-featured-v20-0.5.0.dar
+  - ../factory/.daml/dist/redstone-factory-v20-0.5.0.dar
+  - ../reward_factory/.daml/dist/redstone-reward-factory-v20-0.5.0.dar
   - ../featured/dars/splice-api-featured-app-v2-1.0.0.dar
 build-options:
   - --target=2.1

@@ -1,6 +1,6 @@
-sdk-version: 3.4.11
+sdk-version: 3.5.12
 name: redstone-adapter-v20
-version: 0.4.0
+version: 0.5.0
 source: src
 dependencies:
   - daml-prim
@@ -9,10 +9,10 @@ exposed-modules:
   - RedStoneAdapter
   - PriceUpdateEvent
 data-dependencies:
-  - ../common/.daml/dist/redstone-common-v19-0.4.0.dar
-  - ../types/.daml/dist/redstone-types-v19-0.4.0.dar
-  - ../sdk/.daml/dist/redstone-sdk-v20-0.4.0.dar
-  - ../interface/.daml/dist/redstone-interface-v19-0.4.0.dar
-  - ../price_pill/.daml/dist/redstone-price-pill-v19-0.4.0.dar
+  - ../common/.daml/dist/redstone-common-v20-0.5.0.dar
+  - ../types/.daml/dist/redstone-types-v20-0.5.0.dar
+  - ../sdk/.daml/dist/redstone-sdk-v20-0.5.0.dar
+  - ../interface/.daml/dist/redstone-interface-v20-0.5.0.dar
+  - ../price_pill/.daml/dist/redstone-price-pill-v20-0.5.0.dar
 build-options:
   - --target=2.1

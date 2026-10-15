@@ -1,6 +1,6 @@
-sdk-version: 3.4.11
+sdk-version: 3.5.12
 name: redstone-sdk-v20
-version: 0.4.0
+version: 0.5.0
 source: src
 dependencies:
   - daml-prim
@@ -16,7 +16,7 @@ exposed-modules:
   - RedStone.Result
   - RedStone.U256
 data-dependencies:
-  - ../common/.daml/dist/redstone-common-v19-0.4.0.dar
+  - ../common/.daml/dist/redstone-common-v20-0.5.0.dar
 build-options:
   - -Wno-crypto-text-is-alpha
   - --target=2.1

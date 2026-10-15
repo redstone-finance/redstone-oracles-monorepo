@@ -1,9 +1,12 @@
 include ./ops.mk
 
-VERSION=-v20-0.4.0
+VERSION=-v20-0.5.0
 LEDGER_HOST=localhost
 LEDGER_PORT=6865
-DAML=daml # dpm
+JSON_API_PORT=7575
+JSON_API=http://$(LEDGER_HOST):$(JSON_API_PORT)
+PARTIES=RedStoneOracleOwner RedStoneOracleUpdater RedStoneOracleViewer Client Beneficiary
+DAML=dpm
 
 TEST_DAR=.daml/dist/redstone-test$(VERSION).dar
 
@@ -62,18 +65,20 @@ ledger-%: build_test
 	--input-file input.json \
 	--dar $(TEST_DAR)
 
-start:
-	cd $(DEPLOY_DIR)/test && $(DAML) start
+start: build_test
+	cd $(DEPLOY_DIR)/test && $(DAML) sandbox \
+	--ledger-api-port $(LEDGER_PORT) \
+	--json-api-port $(JSON_API_PORT) \
+	--dar $(TEST_DAR)
 
 start_daemon:
 	make start & \
 	sleep 20
 
 ledger_upload: build
-	cd $(DEPLOY_DIR)/test && daml ledger upload-dar \
-		--host $(LEDGER_HOST) \
-		--port $(LEDGER_PORT) \
-		$(TEST_DAR)
+	curl -sf -X POST "$(JSON_API)/v2/packages" \
+	-H "Content-Type: application/octet-stream" \
+	--data-binary @$(DEPLOY_DIR)/test/$(TEST_DAR)
 
 ledger_deploy: build ledger-Deploy
 
@@ -83,14 +88,14 @@ start_local: start_daemon allocate_parties get_party_suffix ledger_deploy
 archive: ledger-Archive
 
 allocate_parties:
-	@$(DAML) ledger allocate-parties RedStoneOracleOwner RedStoneOracleUpdater RedStoneOracleViewer Client Beneficiary \
-	--host $(LEDGER_HOST) \
-	--port $(LEDGER_PORT)
+	@for party in $(PARTIES); do \
+	curl -sf -X POST "$(JSON_API)/v2/parties" \
+	-H "Content-Type: application/json" \
+	-d "{\"partyIdHint\": \"$$party\", \"identityProviderId\": \"\"}" || exit 1; \
+	done
 
 list_parties:
-	@$(DAML) ledger list-parties \
-	--host $(LEDGER_HOST) \
-	--port $(LEDGER_PORT)
+	@curl -sf "$(JSON_API)/v2/parties"
 
 get_party_suffix:
 	@HASH=$$(make list_parties | grep -o '[a-f0-9]\{68\}' | head -1); \

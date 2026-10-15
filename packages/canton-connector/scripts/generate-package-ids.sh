@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Generates package-ids.json from built DARs.
 # Usage: ./generate-package-ids.sh
-# Requires: daml CLI, jq
+# Requires: dpm CLI, jq
 
 extract_dar_field() {
   local dir=$1
@@ -21,7 +21,7 @@ extract_dar_field() {
   dar_name=$(basename "$dar" .dar)
 
   local line
-  line=$(daml damlc inspect-dar --no-legacy-assistant-warning "$dar" 2>&1 |
+  line=$(dpm damlc inspect-dar "$dar" 2>&1 |
     grep "^$dar_name-" |
     head -1)
 
