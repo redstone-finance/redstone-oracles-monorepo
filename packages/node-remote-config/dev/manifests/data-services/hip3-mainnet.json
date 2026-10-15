@@ -202,7 +202,7 @@
     },
     "io:ANTH_MARK_0": {
       "source": [
-        "hip3-entropy-pre-ipo-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -213,7 +213,7 @@
     },
     "io:ANTH_MARK_1": {
       "source": [
-        "hip3-entropy-pre-ipo-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -224,7 +224,7 @@
     },
     "io:ANTH_EXT": {
       "source": [
-        "hip3-entropy-pre-ipo-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -235,7 +235,7 @@
     },
     "io:ANTH": {
       "source": [
-        "hip3-entropy-pre-ipo-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -363,7 +363,7 @@
     },
     "io:OAI_MARK_0": {
       "source": [
-        "hip3-entropy-pre-ipo-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -374,7 +374,7 @@
     },
     "io:OAI_MARK_1": {
       "source": [
-        "hip3-entropy-pre-ipo-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -385,7 +385,7 @@
     },
     "io:OAI_EXT": {
       "source": [
-        "hip3-entropy-pre-ipo-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -396,7 +396,7 @@
     },
     "io:OAI": {
       "source": [
-        "hip3-entropy-pre-ipo-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -570,7 +570,7 @@
     },
     "io:SNDK_MARK_0": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -581,7 +581,7 @@
     },
     "io:SNDK_MARK_1": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -592,7 +592,7 @@
     },
     "io:SNDK_EXT": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -603,7 +603,7 @@
     },
     "io:SNDK": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -777,7 +777,7 @@
     },
     "io:DRAM_MARK_0": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -788,7 +788,7 @@
     },
     "io:DRAM_MARK_1": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -799,7 +799,7 @@
     },
     "io:DRAM_EXT": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -810,7 +810,7 @@
     },
     "io:DRAM": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -984,7 +984,7 @@
     },
     "io:IONQ_MARK_0": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -995,7 +995,7 @@
     },
     "io:IONQ_MARK_1": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1006,7 +1006,7 @@
     },
     "io:IONQ_EXT": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1017,7 +1017,7 @@
     },
     "io:IONQ": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1191,7 +1191,7 @@
     },
     "io:EWY_MARK_0": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1202,7 +1202,7 @@
     },
     "io:EWY_MARK_1": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1213,7 +1213,7 @@
     },
     "io:EWY_EXT": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1224,7 +1224,7 @@
     },
     "io:EWY": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1398,7 +1398,7 @@
     },
     "io:NBIS_MARK_0": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1409,7 +1409,7 @@
     },
     "io:NBIS_MARK_1": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1420,7 +1420,7 @@
     },
     "io:NBIS_EXT": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1431,7 +1431,7 @@
     },
     "io:NBIS": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1605,7 +1605,7 @@
     },
     "io:GPRO_MARK_0": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1616,7 +1616,7 @@
     },
     "io:GPRO_MARK_1": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1627,7 +1627,7 @@
     },
     "io:GPRO_EXT": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1638,7 +1638,7 @@
     },
     "io:GPRO": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1780,7 +1780,7 @@
     },
     "io:TCNT_MARK_0": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1791,7 +1791,7 @@
     },
     "io:TCNT_MARK_1": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1802,7 +1802,7 @@
     },
     "io:TCNT_EXT": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1813,7 +1813,7 @@
     },
     "io:TCNT": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1955,7 +1955,7 @@
     },
     "io:XIAOMI_MARK_0": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1966,7 +1966,7 @@
     },
     "io:XIAOMI_MARK_1": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1977,7 +1977,7 @@
     },
     "io:XIAOMI_EXT": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -1988,7 +1988,7 @@
     },
     "io:XIAOMI": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2112,7 +2112,7 @@
     },
     "io:PRL_MARK_0": {
       "source": [
-        "hip3-entropy-pre-ipo-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2123,7 +2123,7 @@
     },
     "io:PRL_MARK_1": {
       "source": [
-        "hip3-entropy-pre-ipo-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2134,7 +2134,7 @@
     },
     "io:PRL_EXT": {
       "source": [
-        "hip3-entropy-pre-ipo-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2145,7 +2145,7 @@
     },
     "io:PRL": {
       "source": [
-        "hip3-entropy-pre-ipo-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2319,7 +2319,7 @@
     },
     "io:NVDA_MARK_0": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2330,7 +2330,7 @@
     },
     "io:NVDA_MARK_1": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2341,7 +2341,7 @@
     },
     "io:NVDA_EXT": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",
@@ -2352,7 +2352,7 @@
     },
     "io:NVDA": {
       "source": [
-        "hip3-entropy-equity-mainnet-fetcher"
+        "hip3-entropy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3",

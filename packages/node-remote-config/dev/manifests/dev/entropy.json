@@ -1,7 +1,9 @@
 {
   "interval": 1000,
   "priceAggregator": "median",
-  "defaultSource": ["coingecko"],
+  "defaultSource": [
+    "coingecko"
+  ],
   "sourceTimeout": 8000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
@@ -10,10 +12,19 @@
       "maxDelayMilliseconds": 1000
     }
   },
-  "defaultBroadcasters": ["redstone-packages", "influx"],
+  "defaultBroadcasters": [
+    "redstone-packages",
+    "influx"
+  ],
   "tokens": {
     "USDT": {
-      "source": ["bitstamp-usd", "coinbase-usd", "gemini-usd", "kraken-usd", "okx-usd"],
+      "source": [
+        "bitstamp-usd",
+        "coinbase-usd",
+        "gemini-usd",
+        "kraken-usd",
+        "okx-usd"
+      ],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -22,7 +33,10 @@
       },
       "denomination": "USD",
       "rateFeed": false,
-      "broadcasters": ["influx", "s3"]
+      "broadcasters": [
+        "influx",
+        "s3"
+      ]
     },
     "USDC": {
       "source": [
@@ -50,110 +64,205 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": ["influx", "s3"],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "OPENAI_PERP": {
-      "source": ["ws-perp-binance-usdt", "ws-perp-coinbase-usdc", "ws-perp-mexc-usdt"],
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-coinbase-usdc",
+        "ws-perp-mexc-usdt"
+      ],
       "priceAggregator": "geomean",
       "geomeanAggregatorConfig": {
         "medianClamps": 25
       },
       "denomination": "USD",
       "rateFeed": false,
-      "types": ["pre-ipo"]
+      "types": [
+        "pre-ipo"
+      ]
     },
     "OPENAI_SECONDARIES": {
-      "source": ["notice", "hiive"],
+      "source": [
+        "notice",
+        "hiive"
+      ],
       "priceAggregator": "geomean",
       "geomeanAggregatorConfig": {
         "medianClamps": 25
       },
       "denomination": "USD",
       "rateFeed": false,
-      "types": ["pre-ipo"]
+      "types": [
+        "pre-ipo"
+      ]
     },
     "OPENAI_PRESTOCKS": {
-      "source": ["jupiter"],
+      "source": [
+        "jupiter"
+      ],
       "denomination": "USD",
       "rateFeed": false,
-      "types": ["pre-ipo"]
+      "types": [
+        "pre-ipo"
+      ]
     },
     "ORACLE_ani:DOG": {
-      "source": ["ws-hyperliquid-perps-ani", "ws-hydromancer-perps-ani"],
+      "source": [
+        "ws-hyperliquid-perps-ani",
+        "ws-hydromancer-perps-ani"
+      ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-hyperliquid-perps-ani"
       },
-      "broadcasters": ["influx"],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "MARK_ani:DOG": {
-      "source": ["ws-hyperliquid-perps-ani", "ws-hydromancer-perps-ani"],
+      "source": [
+        "ws-hyperliquid-perps-ani",
+        "ws-hydromancer-perps-ani"
+      ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-hyperliquid-perps-ani"
       },
-      "broadcasters": ["influx"],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "MID_ani:DOG": {
-      "source": ["ws-hyperliquid-perps-ani", "ws-hydromancer-perps-ani"],
+      "source": [
+        "ws-hyperliquid-perps-ani",
+        "ws-hydromancer-perps-ani"
+      ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-hyperliquid-perps-ani"
       },
-      "broadcasters": ["influx"],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "MID_ani:DOG_EMA_HALF_5M": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_ani:DOG_EMA_HALF_3M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_ani:DOG_EMA_HALF_1H": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPENAI": {
+      "source": [],
+      "fixedValue": 1000,
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "ENTROPY_DEPTH_ani:DOG": {
-      "source": ["ws-hyperliquid-perps-ani"],
-      "broadcasters": ["influx"],
+      "source": [
+        "ws-hyperliquid-perps-ani"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "ENTROPY_DEPTH_ani:DOG_EMA_HALF_5M": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "ani:DOG_MARK_0": {
-      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3", "influx"],
+      "source": [
+        "hip3-entropy-testnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "ani:DOG_MARK_1": {
-      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3", "influx"],
+      "source": [
+        "hip3-entropy-testnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "ani:DOG_EXT": {
-      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3", "influx"],
+      "source": [
+        "hip3-entropy-testnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "ani:DOG": {
-      "source": ["hip3-entropy-pre-ipo-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3", "influx"],
+      "source": [
+        "hip3-entropy-testnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3",
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_ani:DOG": {
-      "source": ["ws-hyperliquid-perps-ani"],
+      "source": [
+        "ws-hyperliquid-perps-ani"
+      ],
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
