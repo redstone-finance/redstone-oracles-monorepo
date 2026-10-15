@@ -63,4 +63,5 @@ void makeFeedTable([
   "HINC_SOLANA_FUNDAMENTAL",
   "trUSD_FUNDAMENTAL",
   "strUSD_FUNDAMENTAL",
+  "CURR_EOD",
 ]);
