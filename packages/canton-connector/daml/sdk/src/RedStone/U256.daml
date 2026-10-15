@@ -9,15 +9,13 @@ module RedStone.U256
     , mod2
     , isZero
     , isNotZero
-    , toIntU256
-    , u256FromInt
-    , u256ToInt
-    , u256ToNumeric
     , u256ToHex
+    , u256ToBeByteList
   )
 where
 
 import DA.List as L
+import RedStone.Result
 import RedStone.Internal.Bytes
 import RedStone.Internal.Const
 import RedStone.Internal.Hex
@@ -35,7 +33,9 @@ instance Ord U256 where
   compare = compareU256
 
 instance Show U256 where
-  show = showU256
+  show value = case beByteListToIntResult $ u256ToBeByteList value of
+    Ok n -> show n
+    Error _ -> "0x" <> u256ToHex value
 
 u256FromBeByteList list = u256 $ fromList list
 u256 bytes = U256 $ Bytes $ normalizeBytes bytes
@@ -57,39 +57,13 @@ mod2 (U256 (Bytes (x::_))) = u256FromBeByteList [x % 2]
 isZero (U256 (Bytes revList)) = all (== 0) revList
 isNotZero v = not $ isZero v
 
-toIntU256 (U256 (Bytes revList)) = leByteListToInt revList
-
-u256FromInt n =
-  if n < 0 then error $ "Value should be non-negative" else
-    u256FromBeByteList $ u256FromIntAcc [] n
-
-u256ToInt (U256 (Bytes revList)) =
-  let
-    first8 = take int_size_bytes revList
-    rest = drop int_size_bytes revList
-
-    hasHighBytes = any (/= 0) rest
-
-    value = leByteListToInt first8
-  in if hasHighBytes || value < 0
-     then None
-     else Some value
-
-u256ToNumeric (U256 (Bytes revList)) = leByteListToNumeric revList
-
 u256ToHex (U256 (Bytes revList)) = hexlify revList
+
+u256ToBeByteList (U256 (Bytes revList)) = L.reverse revList
 
 -- Private
 
 compareU256 (U256 (Bytes revList1)) (U256 (Bytes revList2)) = compare (L.reverse revList1) (L.reverse revList2)
-
-showU256 u =
-  let
-    (U256 (Bytes revList)) = u
-    text = case u256ToInt u of
-      Some n -> show n
-      None -> "0x" <> hexlify revList
-  in text
 
 hexlify revList =
   let
@@ -125,7 +99,3 @@ addBytes (x::xs) (y::ys) carry =
       newByte = sum % byte_range
       newCarry = sum / byte_range
     in newByte :: addBytes xs ys newCarry
-
-u256FromIntAcc acc remaining =
-  if remaining == 0 then acc else
-    u256FromIntAcc ((remaining % byte_range) :: acc) (remaining / byte_range)

@@ -14,7 +14,10 @@ exposed-modules:
   - RedStone.Processor
   - RedStone.ProcessorTypes
   - RedStone.Result
+  - RedStone.SignedDataPackage
+  - RedStone.ToBeByteList
   - RedStone.U256
+  - RedStone.U256Conversion
 data-dependencies:
   - ../common/.daml/dist/redstone-common-v20-0.5.0.dar
 build-options:

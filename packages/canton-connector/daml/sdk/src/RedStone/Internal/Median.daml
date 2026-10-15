@@ -12,15 +12,12 @@ import RedStone.U256
 
 class Averageable a where
   avg : a -> a -> a
-  toInt : a -> Int
 
 instance Averageable Int where
   avg = avgInt
-  toInt = identity
 
 instance Averageable U256 where
   avg = avgU256
-  toInt = toIntU256
 
 median : (Ord a, Averageable a) => [a] -> a
 median [] = error "Empty list"

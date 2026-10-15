@@ -20,6 +20,7 @@ data DataPackage = DataPackage
   with
     dataPoints : [DataPoint]
     timestamp : Int
+    valueSize : Int
     signature : HexBytes
     signableBytes : HexBytes
   deriving (Eq, Show)
@@ -31,7 +32,7 @@ trimDataPackage bytes =
   >?> \(valueSizeRest, valueSize) -> bytesTrimNum timestamp_bs valueSizeRest
   >?> \(timestampRest, timestamp) -> bytesTrim (signableSize dataPointCount valueSize) signatureRest
   >?> \(_, signableBytes) -> trimMulti (trimDataPoint valueSize) dataPointCount timestampRest
-  >? \(dataPointsRest, dataPoints) -> (dataPointsRest, DataPackage dataPoints timestamp (HexBytes signature) (HexBytes signableBytes))
+  >? \(dataPointsRest, dataPoints) -> (dataPointsRest, DataPackage dataPoints timestamp valueSize (HexBytes signature) (HexBytes signableBytes))
 
 -- Private
 

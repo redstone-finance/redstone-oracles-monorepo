@@ -4,6 +4,8 @@ byte_range = 256
 byte_max = byte_range - 1
 int_size_bytes = 8
 uint256_size_bytes = 32
+int_max_bytes = [127, 255, 255, 255, 255, 255, 255, 255]
+numeric_max_bytes = [75, 59, 76, 168, 90, 134, 196, 122, 9, 138, 34, 63, 255, 255, 255, 255]
 
 -- Safety bounds (DoS / malformed input mitigation).
 -- Per-feed and per-byte limits live with the protocol constants in RedStone.Internal.Protocol.

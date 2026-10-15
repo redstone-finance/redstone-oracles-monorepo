@@ -4,12 +4,13 @@ module RedStone.ProcessorTypes
     , value_divisor
     , ProcessorOutcome
     , ProcessorRawOutcome
-    , u256ToDecimalValue
+    , ProcessorPackagesOutcome
+    , ProcessorRawPackagesOutcome
   ) where
 
-import DA.Numeric
 import RedStone.Error
 import RedStone.Result
+import RedStone.SignedDataPackage (SignedDataPackage)
 import RedStone.U256
 
 -- Public
@@ -21,10 +22,5 @@ value_divisor: DecimalValue = 10.0 ^ 8
 
 type ProcessorOutcome  = ([Result DecimalValue (RedStoneError Text)], Int)
 type ProcessorRawOutcome = ([Result U256 (RedStoneError Text)], Int)
-
-u256ToDecimalValue: U256 -> DecimalValue
-u256ToDecimalValue = divByDivisor . u256ToNumeric
-
--- Private
-
-divByDivisor a = div a value_divisor
+type ProcessorPackagesOutcome = ([Result [SignedDataPackage DecimalValue] (RedStoneError Text)], Int)
+type ProcessorRawPackagesOutcome = ([Result [SignedDataPackage U256] (RedStoneError Text)], Int)
