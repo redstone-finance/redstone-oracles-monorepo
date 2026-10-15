@@ -1642,22 +1642,19 @@
     },
     "KOSPI200": {
       "source": [],
-      "denomination": "KRW",
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "points",
       "rateFeed": false,
       "types": [
         "rwa"
-      ],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
-      }
+      ]
     },
     "KOSPI200---REGULAR": {
       "source": [],
-      "denomination": "KRW",
+      "denomination": "points",
       "rateFeed": false,
       "types": [
         "rwa"
