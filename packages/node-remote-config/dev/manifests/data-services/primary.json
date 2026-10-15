@@ -2677,7 +2677,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 0.1,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2696,7 +2696,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 0.1,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2715,7 +2715,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 0.1,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
