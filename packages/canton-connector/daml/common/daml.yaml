@@ -1,6 +1,6 @@
-sdk-version: 3.4.11
-name: redstone-common-v19
-version: 0.4.0
+sdk-version: 3.5.12
+name: redstone-common-v20
+version: 0.5.0
 source: src
 dependencies:
   - daml-prim

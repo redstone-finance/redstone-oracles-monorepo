@@ -1,12 +1,12 @@
-sdk-version: 3.4.11
+sdk-version: 3.5.12
 name: redstone-sdk-tests-v20
-version: 0.4.0
+version: 0.5.0
 source: src
 dependencies:
   - daml-prim
   - daml-stdlib
 data-dependencies:
-  - ../sdk/.daml/dist/redstone-sdk-v20-0.4.0.dar
+  - ../sdk/.daml/dist/redstone-sdk-v20-0.5.0.dar
 build-options:
   - --target=2.1
   - -Wno-deprecated-exceptions

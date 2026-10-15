@@ -64,9 +64,9 @@
   },
   "localnet": {
     "signatory": "RedStoneOracleOwner::",
-    "interfaceId": "#redstone-interface-v19",
-    "pricePillInterfaceId": "#redstone-price-pill-v19",
-    "featuredInterfaceId": "#redstone-featured-v19",
+    "interfaceId": "#redstone-interface-v20",
+    "pricePillInterfaceId": "#redstone-price-pill-v20",
+    "featuredInterfaceId": "#redstone-featured-v20",
     "node": {
       "globalDomain": "",
       "participantPartyId": "",
@@ -84,7 +84,7 @@
     },
     "coreClient": {
       "contractId": "",
-      "packageId": "#redstone-core-v19"
+      "packageId": "#redstone-core-v20"
     },
     "featured-app-right": {
       "contractId": "001e3587b7d4035a728aa25cdd063414729ba3ce6c7be78be8e9f2b092054836f9ca121220c29dc5dc86cdb6b4b93e7e0d95fe8e8591f5ef1724b0626f3438fb795a38b9bb",
