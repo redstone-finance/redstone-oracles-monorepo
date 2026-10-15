@@ -9307,6 +9307,535 @@
         "crypto"
       ]
     },
+    "ADA": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ARB": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AVNT": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BARD": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BERA": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CC": {
+      "source": [
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CRV": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DOT": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "EIGEN": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GRVT": {
+      "source": [
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KAITO": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SHIB": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kSHIB": {
+      "source": [
+        "kilo-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LA": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LDO": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LINEA": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MOODENG": {
+      "source": [
+        "ws-spot-bitget-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "NEAR": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "OP": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PENDLE": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "POPCAT": {
+      "source": [
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PROVE": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "RIVER": {
+      "source": [
+        "ws-spot-bitget-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SEI": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "STRK": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TRUMP": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "VIRTUAL": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "WIF": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "WLD": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "XLM": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ZK": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
     "TUT_INDEX.BE": {
       "source": [
         "ws-extended-rfq"
@@ -15826,6 +16355,5934 @@
       "rateFeed": false
     },
     "grvt:NATGAS_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AAVE_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AAVE_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AAVE": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AAVE_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AAVE_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AAVE_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:AAVE_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ADA_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ADA_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ADA": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ADA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ADA_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ADA_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ADA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ARB_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ARB_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ARB": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ARB_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ARB_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ARB_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ARB_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ASTER_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ASTER_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ASTER": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ASTER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ASTER_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ASTER_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ASTER_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ATOM_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ATOM_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ATOM": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ATOM_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ATOM_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ATOM_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ATOM_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AVAX_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AVAX_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AVAX": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AVAX_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AVAX_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AVAX_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:AVAX_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AVNT_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AVNT_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AVNT": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AVNT_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AVNT_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AVNT_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:AVNT_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AXS_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AXS_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AXS": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_AXS_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AXS_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:AXS_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:AXS_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BARD_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BARD_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BARD": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BARD_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BARD_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BARD_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BARD_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BASED_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BASED_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BASED": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BASED_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BASED_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BASED_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BASED_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BCH_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BCH_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BCH": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BCH_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BCH_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BCH_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BCH_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BERA_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BERA_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BERA": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BERA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BERA_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BERA_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BERA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BNB_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BNB_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BNB": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_BNB_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BNB_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:BNB_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:BNB_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CC_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CC_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CC": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CC_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CC_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CC_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:CC_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CFX_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CFX_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CFX": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CFX_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CFX_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CFX_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:CFX_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CRV_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CRV_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CRV": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_CRV_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CRV_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:CRV_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:CRV_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "DOGE_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DOGE_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_DOGE": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_DOGE_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:DOGE_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:DOGE_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:DOGE_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "DOT_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DOT_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_DOT": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_DOT_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:DOT_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:DOT_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:DOT_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "EIGEN_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "EIGEN_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_EIGEN": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_EIGEN_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:EIGEN_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:EIGEN_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:EIGEN_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENA_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ENA_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ENA": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ENA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ENA_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ENA_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ENA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ETH_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ETH": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ETH_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ETH_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ETH_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ETH_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "FARTCOIN_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FARTCOIN_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_FARTCOIN": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_FARTCOIN_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:FARTCOIN_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:FARTCOIN_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:FARTCOIN_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "FIL_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FIL_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_FIL": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_FIL_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:FIL_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:FIL_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:FIL_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GIGGLE_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GIGGLE_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_GIGGLE": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_GIGGLE_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:GIGGLE_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:GIGGLE_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:GIGGLE_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GRVT_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GRVT_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_GRVT": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_GRVT_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:GRVT_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:GRVT_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:GRVT_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "H_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "H_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_H": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_H_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:H_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:H_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:H_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HBAR_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "HBAR_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_HBAR": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_HBAR_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:HBAR_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:HBAR_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:HBAR_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HYPE_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_HYPE": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_HYPE_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:HYPE_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:HYPE_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:HYPE_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ICP_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ICP_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ICP": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ICP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ICP_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ICP_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ICP_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "JUP_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "JUP_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_JUP": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_JUP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:JUP_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:JUP_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:JUP_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "KAIA_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KAIA_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KAIA": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KAIA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KAIA_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KAIA_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:KAIA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "KAITO_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KAITO_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KAITO": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KAITO_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KAITO_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KAITO_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:KAITO_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "kBONK_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kBONK_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KBONK": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KBONK_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KBONK_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KBONK_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:KBONK_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "kPEPE_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kPEPE_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KPEPE": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KPEPE_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KPEPE_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KPEPE_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:KPEPE_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "kSHIB_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kSHIB_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KSHIB": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_KSHIB_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KSHIB_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:KSHIB_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:KSHIB_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LA_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LA_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LA": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LA_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LA_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:LA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LDO_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LDO_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LDO": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LDO_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LDO_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LDO_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:LDO_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LINEA_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LINEA_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LINEA": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LINEA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LINEA_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LINEA_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:LINEA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LINK_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LINK_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LINK": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LINK_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LINK_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LINK_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:LINK_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LIT_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LIT_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LIT": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LIT_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LIT_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LIT_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:LIT_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LTC_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LTC_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LTC": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_LTC_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LTC_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:LTC_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:LTC_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MEGA_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MEGA_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MEGA": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MEGA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MEGA_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MEGA_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:MEGA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MON_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MON_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MON": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MON_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MON_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MON_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:MON_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MOODENG_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MOODENG_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MOODENG": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MOODENG_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MOODENG_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MOODENG_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:MOODENG_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MORPHO_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MORPHO_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MORPHO": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_MORPHO_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MORPHO_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:MORPHO_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:MORPHO_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NEAR_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "NEAR_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NEAR": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_NEAR_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NEAR_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:NEAR_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:NEAR_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ONDO_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ONDO_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ONDO": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ONDO_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ONDO_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ONDO_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ONDO_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OP_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "OP_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_OP": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_OP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:OP_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:OP_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:OP_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PAXG_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PAXG_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PAXG": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PAXG_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PAXG_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PAXG_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:PAXG_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PENDLE_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PENDLE_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PENDLE": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PENDLE_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PENDLE_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PENDLE_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:PENDLE_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PENGU_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PENGU_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PENGU": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PENGU_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PENGU_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PENGU_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:PENGU_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "POL_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "POL_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_POL": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_POL_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:POL_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:POL_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:POL_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "POPCAT_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "POPCAT_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_POPCAT": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_POPCAT_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:POPCAT_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:POPCAT_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:POPCAT_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PROVE_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PROVE_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PROVE": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PROVE_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PROVE_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PROVE_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:PROVE_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PUMP_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PUMP_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PUMP": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_PUMP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PUMP_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:PUMP_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:PUMP_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "RIVER_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "RIVER_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_RIVER": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_RIVER_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:RIVER_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:RIVER_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:RIVER_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SAHARA_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SAHARA_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SAHARA": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SAHARA_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SAHARA_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SAHARA_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:SAHARA_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SEI_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SEI_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SEI": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SEI_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SEI_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SEI_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:SEI_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SOL_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SOL": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SOL_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SOL_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SOL_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:SOL_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "STRK_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "STRK_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_STRK": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_STRK_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:STRK_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:STRK_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:STRK_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SUI_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SUI_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SUI": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_SUI_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SUI_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:SUI_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:SUI_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TAO_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TAO_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_TAO": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_TAO_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:TAO_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:TAO_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:TAO_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TRUMP_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TRUMP_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_TRUMP": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_TRUMP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:TRUMP_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:TRUMP_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:TRUMP_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "UNI_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "UNI_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_UNI": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_UNI_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:UNI_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:UNI_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:UNI_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "VIRTUAL_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "VIRTUAL_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_VIRTUAL": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_VIRTUAL_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:VIRTUAL_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:VIRTUAL_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:VIRTUAL_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "W_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "W_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_W": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_W_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:W_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:W_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:W_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "WIF_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "WIF_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_WIF": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_WIF_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:WIF_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:WIF_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:WIF_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "WLD_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "WLD_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_WLD": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_WLD_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:WLD_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:WLD_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:WLD_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "WLFI_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "WLFI_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_WLFI": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_WLFI_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:WLFI_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:WLFI_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:WLFI_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAUT_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "XAUT_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XAUT": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XAUT_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XAUT_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XAUT_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:XAUT_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XLM_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "XLM_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XLM": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XLM_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XLM_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XLM_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:XLM_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XMR_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "XMR_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XMR": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XMR_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XMR_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XMR_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:XMR_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XPL_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "XPL_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XPL": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XPL_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XPL_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XPL_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:XPL_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XRP_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "XRP_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XRP": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_XRP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XRP_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:XRP_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:XRP_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ZEC_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ZEC_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ZEC": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ZEC_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ZEC_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ZEC_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ZEC_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ZEN_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ZEN_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ZEN": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ZEN_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ZEN_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ZEN_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ZEN_MARK": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ZK_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ZK_PERP_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ZK": {
+      "source": [
+        "ws-grvt"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "GRVT_FAIR_ZK_EMA_30S": {
+      "source": [
+        "ema"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ZK_MARK_1": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "rateFeed": false
+    },
+    "grvt:ZK_ORACLE": {
+      "source": [
+        "grvt-calculator"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "grvt:ZK_MARK": {
       "source": [
         "grvt-calculator"
       ],
