@@ -45,10 +45,8 @@ export function assertThenReturnOrFail<T>(
 }
 
 export const assertWithLog = (condition: boolean, errMsg: string) => {
-  const logger = loggerFactory("utils/errors");
-
   if (!condition) {
-    logger.error(`Assertion failed: ${errMsg}`);
+    loggerFactory("utils/errors").error(`Assertion failed: ${errMsg}`);
   }
 };
 
