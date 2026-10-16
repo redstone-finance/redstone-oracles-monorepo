@@ -19,6 +19,7 @@ export * from "./Fetcher";
 export * from "./fs-path-safe";
 export * from "./hex";
 export * from "./js-utils";
+export * from "./maps";
 export * from "./memoize";
 export * from "./misc";
 export * from "./numbers";
