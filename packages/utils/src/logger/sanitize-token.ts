@@ -12,6 +12,10 @@ const NATS_SEED_LENGTH = 58;
 const KEPT_CHARACTERS = 4;
 const MIN_SECRET_LENGTH = 16;
 const MIN_PASSWORD_LENGTH = 8;
+// upper bounds keep the patterns linear on long unbroken runs (e.g. calldata in RPC errors)
+const MAX_SCHEME_LENGTH = 32;
+const MAX_USER_LENGTH = 128;
+const MAX_PASSWORD_LENGTH = 512;
 
 const SECRET_CHARACTERS = "[A-Za-z0-9_-]";
 const NON_SECRET_CHARACTERS = "[^A-Za-z0-9_-]";
@@ -24,7 +28,10 @@ const TEXT_BOUNDARY = `(^|[\\s"'([{,=])`;
 const PATH_BOUNDARY = `(^|[\\s"'/([{,=])`;
 const SECRET = `(${SECRET_CHARACTERS}{${MIN_SECRET_LENGTH},})`;
 
-const ANY_URL_PATTERN = /[a-z][a-z0-9+.-]*:\/\/[^\s"']+/g;
+const ANY_URL_PATTERN = new RegExp(
+  `[a-z][a-z0-9+.-]{0,${MAX_SCHEME_LENGTH - 1}}:\\/\\/[^\\s"']+`,
+  "g"
+);
 const HTTP_URL_PATTERN = /(https?|wss):\/\/[A-Za-z0-9\-._~:/?#[\]@!$&'()*+,;=%]+/g;
 const NATS_SEED_PATTERN = /(?:^|[^A-Z2-7])(S[A-Z2-7]{57})(?![A-Z2-7])/g;
 const PARAMS_START_PATTERN = /[?#]/;
@@ -40,7 +47,11 @@ const SECRET_PARAM_PATTERN = new RegExp(
   "g"
 );
 const CREDENTIALS_PATTERN = new RegExp(
-  `${PATH_BOUNDARY}(${PASSWORD_CHARACTERS}*:)?(${PASSWORD_CHARACTERS}{${MIN_PASSWORD_LENGTH},})@`,
+  `${PATH_BOUNDARY}(${PASSWORD_CHARACTERS}{0,${MAX_USER_LENGTH}}:)?(${PASSWORD_CHARACTERS}{${MIN_PASSWORD_LENGTH},${MAX_PASSWORD_LENGTH}})@`,
+  "g"
+);
+const OVERLONG_CREDENTIALS_PATTERN = new RegExp(
+  `(?:(?<=:)(${PASSWORD_CHARACTERS}{${MIN_PASSWORD_LENGTH},})|(?<!${PASSWORD_CHARACTERS})(${PASSWORD_CHARACTERS}{${MAX_PASSWORD_LENGTH + 1},}))@`,
   "g"
 );
 const HIGH_ENTROPY_SEGMENT = new RegExp(
@@ -58,6 +69,11 @@ export function sanitizeToken(message: string): string {
     );
   }
   if (message.includes(CREDENTIALS_MARKER)) {
+    sanitized = sanitized.replace(
+      OVERLONG_CREDENTIALS_PATTERN,
+      (_, afterColon: string | undefined, runStart: string | undefined) =>
+        `${keepLastCharacters(afterColon ?? runStart ?? "")}@`
+    );
     sanitized = sanitized.replace(
       CREDENTIALS_PATTERN,
       (_, boundary: string, user: string | undefined, secret: string) =>
@@ -107,7 +123,7 @@ export function sanitizeLogMessage(message: string): string {
         : keepLastCharacters(parsedUrl.pathname);
       parsedUrl.search = "";
 
-      return parsedUrl.toString().replace(/\/+$/, "");
+      return parsedUrl.toString().replace(/(?<!\/)\/+$/, "");
     } catch {
       return match;
     }
