@@ -55,6 +55,17 @@ describe("sanitizeToken", () => {
     expectRedacted(`${SECRET}@rpc.example.com`);
   });
 
+  it("should redact credentials longer than the bounded credentials pattern covers", () => {
+    const longPassword = "p".repeat(513);
+    expectRedacted(`redis://:${longPassword}@cache.example.com:6379`, longPassword);
+    expectRedacted(`mongodb://${"u".repeat(129)}:${PASSWORD}@cluster0.mongodb.net/db`, PASSWORD);
+    const longPasswordWithBoundary = `${"A".repeat(300)}=${"B".repeat(300)}`;
+    expectRedacted(
+      `redis://${longPasswordWithBoundary}@cache.example.com:6379`,
+      longPasswordWithBoundary
+    );
+  });
+
   it("should redact a nats seed wherever it appears", () => {
     expectRedacted(`NATS_NKEY_SEED=${NATS_SEED}`, NATS_SEED);
     expectRedacted(`connecting with seed ${NATS_SEED} now`, NATS_SEED);
@@ -150,6 +161,27 @@ describe("sanitizeLogMessage", () => {
       "connecting to tls://nats.example.com:4222/...5rS7"
     );
   });
+
+  it("should stay fast on a long hex payload next to a url", () => {
+    const calldata = `0x${"0123456789abcdef".repeat(12_500)}`;
+    const message = `call failed (url="https://rpc.example.com/v1?apiKey=${SECRET}", data="${calldata}")`;
+
+    const { result, elapsedMs } = measure(() => sanitizeLogMessage(message));
+
+    expect(elapsedMs).toBeLessThan(1_000);
+    expect(result).not.toContain(SECRET);
+    expect(result).toContain(calldata);
+  });
+
+  it("should stay fast on long comma separated values in a message with an @", () => {
+    const values = Array.from({ length: 40_000 }, (_, i) => i % 1_000).join(",");
+    const message = `at /app/node_modules/@redstone-finance/utils [${values}]`;
+
+    const { result, elapsedMs } = measure(() => sanitizeLogMessage(message));
+
+    expect(elapsedMs).toBeLessThan(1_000);
+    expect(result).toBe(message);
+  });
 });
 
 function expectRedacted(message: string, secret = SECRET) {
@@ -166,4 +198,11 @@ function expectUnchanged(message: string) {
 
 function redact(message: string, secret: string) {
   return message.replaceAll(secret, `...${secret.slice(-KEPT_CHARACTERS)}`);
+}
+
+function measure<T>(fn: () => T) {
+  const start = performance.now();
+  const result = fn();
+
+  return { result, elapsedMs: performance.now() - start };
 }
