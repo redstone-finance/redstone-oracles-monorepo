@@ -11,6 +11,7 @@
   "adapterContract": "RedStoneAdapter-v19-0.4.0",
   "adapterContractPackageId": "#redstone-interface-v19",
   "dataServiceId": "redstone-primary-prod",
+  "supportedNodeTypes": ["normal", "fast", "ws"],
   "priceFeeds": {
     "AAPL---24_7": { "priceFeedAddress": "RedStoneAdapter-v19-0.4.0" },
     "TSLA---24_7": { "priceFeedAddress": "RedStoneAdapter-v19-0.4.0" },

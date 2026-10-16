@@ -31,6 +31,7 @@
     },
     "USDm-TWAP-60": {},
     "TRY": {
+      "supportedNodeTypesOverride": ["normal", "fast", "ws"],
       "updateTriggersOverrides": {
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 900000
@@ -69,6 +70,7 @@
     },
     "MEGA": {},
     "wiTRY_FUNDAMENTAL/USDm": {
+      "supportedNodeTypesOverride": ["normal", "fast", "ws"],
       "updateTriggersOverrides": {
         "deviationPercentage": 0.000001,
         "timeSinceLastUpdateInMilliseconds": 60000

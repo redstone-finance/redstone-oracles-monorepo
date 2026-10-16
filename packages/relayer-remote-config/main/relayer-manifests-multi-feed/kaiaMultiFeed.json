@@ -43,6 +43,7 @@
     },
     "JPY_FX": {
       "priceFeedAddress": "0xF76Bf1a6E5543644B3D41Db2075467cE0B4BFcd4",
+      "supportedNodeTypesOverride": ["normal", "fast", "ws"],
       "updateTriggersOverrides": {
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
