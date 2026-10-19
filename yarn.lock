@@ -10011,6 +10011,7 @@ __metadata:
   dependencies:
     "@aws-sdk/client-ecs": "npm:^3.696.0"
     "@aws-sdk/client-s3": "npm:^3.696.0"
+    "@clickhouse/client": "npm:^1.23.1"
     "@ethersproject/bignumber": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-configs": "workspace:*"
