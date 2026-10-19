@@ -1,5 +1,4 @@
 import type { Keypair } from "@mysten/sui/cryptography";
-import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
 import type {
   BlockchainServiceWithTransfer,
@@ -8,7 +7,7 @@ import type {
 } from "@redstone-finance/multichain-kit";
 import { signExecuteAndWait } from "./client/sign-execute-and-wait";
 import type { SuiClient } from "./client/SuiClient";
-import { suiToMist } from "./util";
+import { makeSendFundsTx } from "./util";
 
 export class SuiBlockchainService implements BlockchainServiceWithTxLookup {
   constructor(protected readonly client: SuiClient) {}
@@ -48,9 +47,7 @@ export class SuiBlockchainServiceWithTransfer
   }
 
   async transfer(toAddress: string, amount: number) {
-    const tx = new Transaction();
-    const [coin] = tx.splitCoins(tx.gas, [tx.pure.u64(suiToMist(amount))]);
-    tx.transferObjects([coin], toAddress);
+    const tx = makeSendFundsTx(toAddress, amount);
 
     await signExecuteAndWait(this.client, tx, this.keypair);
   }

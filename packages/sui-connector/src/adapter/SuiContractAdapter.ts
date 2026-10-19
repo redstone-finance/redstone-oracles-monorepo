@@ -1,5 +1,4 @@
 import { Keypair } from "@mysten/sui/cryptography";
-import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
 import {
   ContractAdapter,
@@ -13,7 +12,7 @@ import _ from "lodash";
 import { signExecuteAndWait } from "../client/sign-execute-and-wait";
 import { SuiClient } from "../client/SuiClient";
 import { SuiConfig } from "../config";
-import { suiToMist } from "../util";
+import { makeSendFundsTx } from "../util";
 import { MAX_PARALLEL_TRANSACTION_COUNT, SuiContractUpdater } from "./SuiContractUpdater";
 import { SuiPricesContractReader } from "./SuiPricesContractReader";
 
@@ -95,10 +94,7 @@ export class SuiWriteContractAdapter extends SuiContractAdapter implements Write
   }
 
   async transfer(toAddress: string, amount: number) {
-    const tx = new Transaction();
-    const [coin] = tx.splitCoins(tx.gas, [tx.pure.u64(suiToMist(amount))]);
-    tx.transferObjects([coin], toAddress);
-
+    const tx = makeSendFundsTx(toAddress, amount);
     const signer = this.contractUpdater.getPrivateKey();
     const { digest } = await signExecuteAndWait(this.client, tx, signer);
 
