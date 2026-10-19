@@ -9,6 +9,7 @@ const FEED_ID_OVERRIDES: Record<string, string | undefined> = {
   XAUM: "XAUm_FUNDAMENTAL/USD",
   deJTRSY: "deJTRSY_FUNDAMENTAL/USD",
   deJAAA: "deJAAA_FUNDAMENTAL/USD",
+  earnUSDC: "earnUSDC_FUNDAMENTAL/USD",
   "savUSD/avUSD": "savUSD_FUNDAMENTAL",
 };
 
