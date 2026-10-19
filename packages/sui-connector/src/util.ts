@@ -3,7 +3,8 @@ import type { Keypair } from "@mysten/sui/cryptography";
 import { SuiGraphQLClient } from "@mysten/sui/graphql";
 import { getJsonRpcFullnodeUrl, SuiJsonRpcClient } from "@mysten/sui/jsonRpc";
 import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";
-import { MIST_PER_SUI } from "@mysten/sui/utils";
+import { Transaction } from "@mysten/sui/transactions";
+import { MIST_PER_SUI, SUI_TYPE_ARG } from "@mysten/sui/utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { execSync } from "child_process";
 import Decimal from "decimal.js";
@@ -18,6 +19,7 @@ export const GRAPHQL_URL = {
   localnet: "http://localhost:9125/graphql",
 };
 const FEED_ID_BYTE_LENGTH = 32;
+const SEND_FUNDS_TARGET = "0x2::coin::send_funds";
 
 export function makeSuiKeypair(privateKey?: string): Keypair {
   const key = privateKey ?? RedstoneCommon.getFromEnv("PRIVATE_KEY");
@@ -71,6 +73,18 @@ export function makeSuiGraphQLClient(network: SuiNetworkName | number, url?: str
 
 export function suiToMist(amount: number) {
   return BigInt(new Decimal(amount).times(MIST_PER_SUI.toString()).floor().toString());
+}
+
+export function makeSendFundsTx(toAddress: string, amount: number) {
+  const tx = new Transaction();
+  const [coin] = tx.splitCoins(tx.gas, [tx.pure.u64(suiToMist(amount))]);
+  tx.moveCall({
+    target: SEND_FUNDS_TARGET,
+    typeArguments: [SUI_TYPE_ARG],
+    arguments: [coin, tx.pure.address(toAddress)],
+  });
+
+  return tx;
 }
 
 export function hexToBytes(data: string): Uint8Array {
