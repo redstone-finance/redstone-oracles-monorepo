@@ -25,7 +25,6 @@ const BIG_FEED_SET = [
   "PUFFER",
   "ETHx/ETH",
   "eUSD",
-  "osETH/ETH",
   "sfrxETH/ETH",
   "sUSDe",
   "USDe",

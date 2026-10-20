@@ -652,23 +652,6 @@
       "denomination": "ETH",
       "rateFeed": false
     },
-    "osETH": {
-      "priceAggregator": "depth",
-      "source": [
-        "curve-ethereum-reth",
-        "fluid-ethereum-eth",
-        "balancer-v3-ethereum-waethweth"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "osETH/ETH": {
-      "source": [
-        "non-usd-based"
-      ],
-      "denomination": "ETH",
-      "rateFeed": false
-    },
     "eBTC/WBTC": {
       "source": [
         "ethereum-evm-fetcher-etherfi-rate-provider"
