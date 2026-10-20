@@ -53,16 +53,32 @@
       }
     },
     "SGT1_SEPOLIA_FUNDAMENTAL/USD": {
-      "priceFeedAddress": "0xe7f71d6a24EBc391f5ee57B867ED429EB7Bd74f4"
+      "priceFeedAddress": "0xe7f71d6a24EBc391f5ee57B867ED429EB7Bd74f4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     },
     "SGT1_SEPOLIA_PUBLICATION_TS": {
-      "priceFeedAddress": "0x65eD6a4ac085620eE943c0B15525C4428D23e4Db"
+      "priceFeedAddress": "0x65eD6a4ac085620eE943c0B15525C4428D23e4Db",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     },
     "SGT2_SEPOLIA_FUNDAMENTAL/USD": {
-      "priceFeedAddress": "0x24eDD61cdA334bFf871A80DEB135073a7d7a9187"
+      "priceFeedAddress": "0x24eDD61cdA334bFf871A80DEB135073a7d7a9187",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     },
     "SGT2_SEPOLIA_PUBLICATION_TS": {
-      "priceFeedAddress": "0xddE3b77040cee3387C0cA661d1b619C3acA203b0"
+      "priceFeedAddress": "0xddE3b77040cee3387C0cA661d1b619C3acA203b0",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
