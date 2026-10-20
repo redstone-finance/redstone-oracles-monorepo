@@ -35,6 +35,10 @@ export class CacheWithTtl<K, V> {
     this.cache.set(key, { value, setOn });
   }
 
+  delete(key: K) {
+    this.cache.delete(key);
+  }
+
   touch(key: K) {
     const entry = this.cache.get(key);
 
