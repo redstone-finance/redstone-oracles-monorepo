@@ -5771,6 +5771,13 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "APRIME_FUNDAMENTAL/USD": {
+      "source": [
+        "superstate-api"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "SGT1_SEPOLIA_FUNDAMENTAL/USD": {
       "source": [
         "realfi"
