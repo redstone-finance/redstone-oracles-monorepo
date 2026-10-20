@@ -1317,10 +1317,10 @@
       "networkId": 5042002,
       "currencySymbol": "USDC",
       "publicRpcUrls": [
-        "https://rpc.testnet.arc.network",
-        "https://rpc.blockdaemon.testnet.arc.network",
-        "https://rpc.drpc.testnet.arc.network",
-        "https://rpc.quicknode.testnet.arc.network"
+        "https://rpc.testnet.arc.io",
+        "https://rpc.blockdaemon.testnet.arc.io",
+        "https://rpc.drpc.testnet.arc.io",
+        "https://rpc.quicknode.testnet.arc.io"
       ],
       "avgBlockTimeMs": 500,
       "multicall3": {
