@@ -5,6 +5,7 @@
       "inputs": [
         "$TURBO_DEFAULT$",
         "$TURBO_ROOT$/tsconfig-build-common.json",
+        "!daml/**",
         "!test*/**",
         "!tsconfig.json",
         "scripts/**"

@@ -5,7 +5,8 @@ import { z } from "zod";
 import { CantonValidatorClient } from "../src";
 import * as AllDefs from "../src/canton-defs.json";
 import { ed25519PublicKeyHex, makeEd25519PrivateKey } from "../src/utils/ed25519";
-import { makeDefaultClientWithValidator, readNetwork, readZrodelkoPrivateKeyHex } from "./utils";
+import { readPartyPrivateKeyHex } from "./party-private-key";
+import { makeDefaultClientWithValidator, readNetwork, ZRODELKO_PARTY_HINT } from "./utils";
 
 async function getOrCreateSetupProposal(
   validatorClient: CantonValidatorClient,
@@ -80,7 +81,7 @@ async function main() {
     throw e;
   }
 
-  const privateKeyHex = await readZrodelkoPrivateKeyHex();
+  const privateKeyHex = await readPartyPrivateKeyHex(ZRODELKO_PARTY_HINT);
   const privateKey = makeEd25519PrivateKey(privateKeyHex);
   const publicKeyHex = ed25519PublicKeyHex(privateKeyHex);
 

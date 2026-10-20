@@ -8,6 +8,9 @@ import { IADAPTER_TEMPLATE_NAME } from "./adapters/PricesCantonReadOnlyAdapter";
 import { CantonClient } from "./client/CantonClient";
 import { combineIntoId } from "./utils/utils";
 
+export const PUBLISH_CHOICE = "RedStoneCapsOracle_Publish";
+export const REDSTONE_CAPS_ORACLE_TEMPLATE = "RedStoneCapsOracle:RedStoneCapsOracle";
+
 export class CantonTxLookup extends PerManifestTxLookup {
   constructor(
     private readonly cantonClient: CantonClient,
@@ -27,15 +30,12 @@ export class CantonTxLookup extends PerManifestTxLookup {
     if (!this.updaterPartyId) {
       throw new Error("CantonTxLookup requires updaterPartyId in env");
     }
-    const interfaceId = combineIntoId(manifest.adapterContractPackageId, IADAPTER_TEMPLATE_NAME);
-
     const updates = (
-      await this.cantonClient.getTransactionsForInterface(
+      await this.fetchUpdates(
         this.updaterPartyId,
-        interfaceId,
+        manifest.adapterContractPackageId,
         startBlock,
-        endBlock,
-        WRITE_PRICES_CHOICE
+        endBlock
       )
     ).sort((a, b) => a.block - b.block);
 
@@ -55,5 +55,30 @@ export class CantonTxLookup extends PerManifestTxLookup {
         events: update.priceEvents,
       })),
     };
+  }
+
+  private async fetchUpdates(
+    updaterPartyId: string,
+    packageId: string,
+    startBlock: number,
+    endBlock: number
+  ) {
+    if (packageId === this.cantonClient.getDefs().capsOracleId) {
+      return await this.cantonClient.getTransactionsForTemplate(
+        updaterPartyId,
+        combineIntoId(packageId, REDSTONE_CAPS_ORACLE_TEMPLATE),
+        startBlock,
+        endBlock,
+        PUBLISH_CHOICE
+      );
+    }
+
+    return await this.cantonClient.getTransactionsForInterface(
+      updaterPartyId,
+      combineIntoId(packageId, IADAPTER_TEMPLATE_NAME),
+      startBlock,
+      endBlock,
+      WRITE_PRICES_CHOICE
+    );
   }
 }

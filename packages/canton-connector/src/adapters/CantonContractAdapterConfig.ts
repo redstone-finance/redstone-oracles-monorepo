@@ -1,5 +1,6 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
+import { CantonNetwork, networkToChainId } from "../CantonNetwork";
 
 export type CantonContractAdapterConfig = {
   viewerPartyId: string;
@@ -39,4 +40,18 @@ export function readAdditionalPillViewers() {
 
 export function readUseConstTrafficMeter() {
   return RedstoneCommon.getFromEnv("CANTON_USE_CONST_TRAFFIC_METER", z.boolean().default(false));
+}
+
+export function readCantonPartyIds(network: CantonNetwork) {
+  const chainId = networkToChainId(network);
+  const perChain = (name: string) =>
+    RedstoneCommon.getFromEnv(`CANTON_${chainId}_${name}`, z.string().optional());
+
+  return {
+    viewerPartyId:
+      perChain("VIEWER_PARTY_ID") ?? RedstoneCommon.getFromEnv("CANTON_VIEWER_PARTY_ID"),
+    updaterPartyId:
+      perChain("UPDATER_PARTY_ID") ??
+      RedstoneCommon.getFromEnv("CANTON_UPDATER_PARTY_ID", z.string().optional()),
+  };
 }

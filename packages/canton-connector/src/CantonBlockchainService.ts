@@ -1,8 +1,8 @@
 import { BlockchainServiceWithTxLookup } from "@redstone-finance/multichain-kit";
 import Decimal from "decimal.js";
+import { readCantonPartyIds } from "./adapters/CantonContractAdapterConfig";
 import { CantonTxLookup } from "./CantonTxLookup";
 import { CantonClient } from "./client/CantonClient";
-import { readCantonPartyIds } from "./utils/utils";
 
 const CC_DECIMALS_18 = new Decimal(10).pow(18);
 
