@@ -69,9 +69,6 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "osETH/ETH": {
-      "priceFeedAddress": "0x66ac817f997Efd114EDFcccdce99F3268557B32C"
-    },
     "sfrxETH/ETH": {
       "priceFeedAddress": "0xdd60c54115C19e0c6360AD4762B88BB8076D50a8",
       "updateTriggersOverrides": {
