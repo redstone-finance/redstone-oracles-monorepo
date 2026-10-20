@@ -36,6 +36,19 @@ describe("CacheWithTtl", () => {
     expect(cache.get("a")).toBe(2);
   });
 
+  it("should delete a value without calling the cleanup handler", () => {
+    const cleanupHandler = jest.fn();
+    const cache = new CacheWithTtl<string, number>(TTL_MS, cleanupHandler);
+
+    cache.set("a", 1);
+    cache.delete("a");
+    jest.advanceTimersByTime(TTL_MS);
+    cache.clearStale();
+
+    expect(cache.get("a")).toBeUndefined();
+    expect(cleanupHandler).not.toHaveBeenCalled();
+  });
+
   it("should return undefined after ttl expires", () => {
     const cache = new CacheWithTtl<string, number>(TTL_MS);
 
