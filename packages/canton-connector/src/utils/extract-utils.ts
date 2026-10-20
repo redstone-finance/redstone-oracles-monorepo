@@ -102,9 +102,10 @@ export function extractUpdateMetadata(
   const priceEvents = extractPriceEvents(allEvents);
   const events = transaction.value.events;
 
-  const createdEvent = events.find((e) => "CreatedEvent" in e)?.CreatedEvent;
   const adapterId =
-    (createdEvent?.createArgument as { adapterId: string } | undefined)?.adapterId ?? "";
+    findCreatedArgumentText(events, "adapterId") ??
+    findCreatedArgumentText(allEvents, "definition") ??
+    "";
 
   const updates = [];
 
@@ -132,4 +133,14 @@ export function extractUpdateMetadata(
   }
 
   return updates;
+}
+
+function findCreatedArgumentText(events: Event[], field: "adapterId" | "definition") {
+  return events
+    .map((event) =>
+      "CreatedEvent" in event
+        ? (event.CreatedEvent.createArgument as Partial<Record<typeof field, unknown>>)[field]
+        : undefined
+    )
+    .find((value): value is string => typeof value === "string");
 }

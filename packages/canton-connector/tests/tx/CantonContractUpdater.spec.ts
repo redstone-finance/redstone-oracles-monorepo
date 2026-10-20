@@ -6,32 +6,10 @@ import { BASE_TS, CID, SIGNATORY, TX_HASH } from "../test-helpers";
 
 const ACT_AS = SIGNATORY;
 const CONTEXT = { updateStartTimeMs: BASE_TS };
-
-const makeParamsProvider = (feedIds: string[], payloadHex = "0xdeadbeef") => {
-  const getPayloadHex = jest.fn().mockResolvedValue(payloadHex);
-  const paramsProvider = {
-    getPayloadHex,
-    getArrayifiedFeedIds: jest
-      .fn()
-      .mockReturnValue(feedIds.map((id) => getCantonFeedId(id).map(Number))),
-    getDataFeedIds: jest.fn().mockReturnValue(feedIds),
-  } as unknown as ContractParamsProvider;
-
-  return { paramsProvider, getPayloadHex };
-};
-
-const makeExerciser = (
-  mocks: {
-    exerciseWritePricesChoice?: jest.Mock;
-    onError?: jest.Mock;
-  } = {}
-) => {
-  const exerciseWritePricesChoice = mocks.exerciseWritePricesChoice ?? jest.fn();
-  const onError = mocks.onError ?? jest.fn();
-  const exerciser: CantonChoiceExerciser = { exerciseWritePricesChoice, onError };
-
-  return { exerciser, exerciseWritePricesChoice, onError };
-};
+const ETH = "ETH";
+const BTC = "BTC";
+const CC = "CC";
+const PAYLOAD_HEX = "0xc0ffee";
 
 describe("CantonContractUpdater", () => {
   it("returns contractId as transactionHash when result is an ActiveContractData", async () => {
@@ -47,7 +25,7 @@ describe("CantonContractUpdater", () => {
     });
     const updater = new CantonContractUpdater(exerciser, ACT_AS);
 
-    const status = await updater.update(makeParamsProvider(["ETH", "BTC"]).paramsProvider, CONTEXT);
+    const status = await updater.update(makeParamsProvider([ETH, BTC]).paramsProvider, CONTEXT);
 
     expect(FP.unwrapOr(status, undefined)).toEqual({
       transactionHash: CID.ethPill,
@@ -65,7 +43,7 @@ describe("CantonContractUpdater", () => {
     });
     const updater = new CantonContractUpdater(exerciser, ACT_AS);
 
-    const status = await updater.update(makeParamsProvider(["CC"]).paramsProvider, CONTEXT);
+    const status = await updater.update(makeParamsProvider([CC]).paramsProvider, CONTEXT);
 
     expect(FP.unwrapOr(status, undefined)?.transactionHash).toBe(TX_HASH.generic);
   });
@@ -76,7 +54,7 @@ describe("CantonContractUpdater", () => {
     });
     const updater = new CantonContractUpdater(exerciser, ACT_AS);
 
-    const status = await updater.update(makeParamsProvider(["ETH"]).paramsProvider, CONTEXT);
+    const status = await updater.update(makeParamsProvider([ETH]).paramsProvider, CONTEXT);
 
     expect(FP.isErr(status)).toBe(true);
     expect(onError).toHaveBeenCalledTimes(1);
@@ -90,13 +68,13 @@ describe("CantonContractUpdater", () => {
       }),
     });
     const updater = new CantonContractUpdater(exerciser, ACT_AS);
-    const { paramsProvider, getPayloadHex } = makeParamsProvider(["BTC", "CC"], "0xc0ffee");
+    const { paramsProvider, getPayloadHex } = makeParamsProvider([BTC, CC]);
 
     await updater.update(paramsProvider, CONTEXT);
 
     expect(exerciseWritePricesChoice).toHaveBeenCalledWith(ACT_AS, {
-      feedIds: [getCantonFeedId("BTC"), getCantonFeedId("CC")],
-      payloadHex: "0xc0ffee",
+      feedIds: [getCantonFeedId(BTC), getCantonFeedId(CC)],
+      payloadHex: PAYLOAD_HEX,
     });
     expect(getPayloadHex).toHaveBeenCalledWith(false, {
       withUnsignedMetadata: true,
@@ -111,4 +89,32 @@ describe("CantonContractUpdater", () => {
 
     expect(updater.getSignerAddress()).toBe(ACT_AS);
   });
+
+  function makeParamsProvider(feedIds: string[]) {
+    const paramsProvider = new ContractParamsProvider({
+      dataPackagesIds: feedIds,
+      dataServiceId: "redstone-primary-prod",
+      uniqueSignersCount: 1,
+      authorizedSigners: [],
+      authenticatedGateways: [],
+    });
+    const getPayloadHex = jest
+      .spyOn(paramsProvider, "getPayloadHex")
+      .mockResolvedValue(PAYLOAD_HEX);
+
+    return { paramsProvider, getPayloadHex };
+  }
+
+  function makeExerciser(
+    mocks: {
+      exerciseWritePricesChoice?: jest.Mock;
+      onError?: jest.Mock;
+    } = {}
+  ) {
+    const exerciseWritePricesChoice = mocks.exerciseWritePricesChoice ?? jest.fn();
+    const onError = mocks.onError ?? jest.fn();
+    const exerciser: CantonChoiceExerciser = { exerciseWritePricesChoice, onError };
+
+    return { exerciser, exerciseWritePricesChoice, onError };
+  }
 });

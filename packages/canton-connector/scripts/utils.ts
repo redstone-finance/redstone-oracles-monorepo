@@ -1,4 +1,3 @@
-import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import { RedstoneCommon, RpcTelemetry } from "@redstone-finance/utils";
 import "dotenv/config";
 import { execSync } from "node:child_process";
@@ -15,6 +14,8 @@ import {
   networkToChainId,
   TokenProvider,
 } from "../src";
+
+export const ZRODELKO_PARTY_HINT = "zrodelko";
 
 function promptTotpSync(username: string): string {
   process.stderr.write(`\n[MFA] Enter TOTP code for ${username}: `);
@@ -59,7 +60,9 @@ export function makePartyId(partyName: string) {
 }
 
 export function makeDefaultClient() {
-  return makeDefaultClientWithValidator(false, makeKeycloakParams()).client;
+  const keycloakParams = makeKeycloakParams(readCantonAuth());
+
+  return makeDefaultClientWithValidator(false, keycloakParams).client;
 }
 
 export function makeDefaultScriptClient() {
@@ -114,24 +117,6 @@ export function makeWalletTokenProvider(): TokenProvider {
   return () => tokenProvider.getToken();
 }
 
-export async function readZrodelkoPrivateKeyHex(): Promise<string> {
-  const env = readNetwork() === "mainnet" ? "prod" : "dev";
-  const ssmParamPath = RedstoneCommon.getFromEnv(
-    "SSM_PARAM_PATH",
-    z.string().default(`/${env}/canton/zrodelko/private-key`)
-  );
-  const awsRegion = RedstoneCommon.getFromEnv("AWS_REGION", z.string().default("eu-west-1"));
-  const privateKey = await getSSMParameterValue(ssmParamPath, awsRegion);
-
-  if (!privateKey) {
-    throw new Error(`Parameter ${ssmParamPath} not found in SSM`);
-  }
-
-  const normalized = privateKey.replace(/^0x/i, "").toLowerCase();
-
-  if (!/^[a-f0-9]{64}$/.test(normalized)) {
-    throw new Error("Ed25519 private key must be a 32-byte hex string");
-  }
-
-  return normalized;
+function readCantonAuth() {
+  return RedstoneCommon.getFromEnv("CANTON_AUTH", z.string().optional());
 }

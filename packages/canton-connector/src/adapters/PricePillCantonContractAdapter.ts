@@ -7,7 +7,6 @@ import {
   CreatedArgumentCallback,
   createFeedIdFilter,
   IPRICE_PILL_TEMPLATE_NAME,
-  packageTimestampOf,
   parsePriceData,
   PriceData,
 } from "../utils/price-feed-utils";
@@ -59,7 +58,7 @@ export class PricePillCantonContractAdapter
 
   async getDescription(offset?: number) {
     const view = await this.readView(offset);
-    const timestamp = packageTimestampOf(view.priceData);
+    const timestamp = view.priceData.packageTimestamp;
 
     return `RedStone Price Pill of ${JSON.stringify(view.feedId)}, created by ${view.adapterId}; ${timestamp} valid to ${Number(timestamp) + Number(view.stalenessMs)}`;
   }
@@ -98,6 +97,6 @@ export class PricePillCantonContractAdapter
 
   private static newestPillSorter() {
     return ((createArgument: { priceData?: PriceData }) =>
-      -Number(packageTimestampOf(createArgument.priceData) ?? 0)) as CreatedArgumentCallback;
+      -Number(createArgument.priceData?.packageTimestamp ?? 0)) as CreatedArgumentCallback;
   }
 }

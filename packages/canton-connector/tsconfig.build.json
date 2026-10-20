@@ -1,3 +1,4 @@
 {
-  "extends": ["./tsconfig.json", "@redstone-finance/typescript-config/tsconfig-build-common.json"]
+  "extends": ["./tsconfig.json", "@redstone-finance/typescript-config/tsconfig-build-common.json"],
+  "files": ["scripts/sample-run.ts", "scripts/core-client-sample.ts", "scripts/utils.ts"]
 }

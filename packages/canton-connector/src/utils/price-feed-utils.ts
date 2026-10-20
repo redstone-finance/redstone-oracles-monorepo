@@ -19,21 +19,15 @@ export type CreatedArgumentCallback<R = unknown> = (
 ) => R;
 export type ContractFilter = CreatedArgumentCallback<boolean>;
 
-// `packageTimestamp` is the v19 field name; `timestamp` is the pre-v19 one still
-// live on mainnet. Read whichever is present so the indexer handles both.
 export type PriceData = {
   value: string;
-  packageTimestamp?: string;
-  timestamp?: string;
+  packageTimestamp: string;
   writeTimestamp: string;
 };
 
-export const packageTimestampOf = (priceData?: PriceData) =>
-  priceData?.packageTimestamp ?? priceData?.timestamp;
-
 export function parsePriceData(result: PriceData): LastRoundDetails {
   return {
-    lastDataPackageTimestampMS: Number.parseInt(packageTimestampOf(result) ?? "0"),
+    lastDataPackageTimestampMS: Number.parseInt(result.packageTimestamp),
     lastBlockTimestampMS: Number.parseInt(result.writeTimestamp),
     lastValue: convertDecimalValue(result.value),
   };
@@ -46,8 +40,7 @@ export function findNewestContract(events: CreatedEvent[]): CreatedEvent | undef
 
   return _.maxBy(events, (e) =>
     Number(
-      packageTimestampOf((e.createArgument as { priceData?: PriceData } | undefined)?.priceData) ??
-        0
+      (e.createArgument as { priceData?: PriceData } | undefined)?.priceData?.packageTimestamp ?? 0
     )
   );
 }
@@ -105,6 +98,31 @@ function extractPricePillEvent(createArgument: unknown): PriceEvent {
     priceData: PriceData;
   };
 
+  return makeValueUpdateEvent(feedId, priceData);
+}
+
+function extractPriceUpdateEvent(createArgument: unknown): PriceEvent {
+  const priceUpdateEvent = createArgument as {
+    feedId: CantonFeedId;
+    update: { tag: "Updated"; value: PriceData } | { tag: "Skipped"; value: { message: string } };
+  };
+
+  if (priceUpdateEvent.update.tag === "Updated") {
+    return makeValueUpdateEvent(priceUpdateEvent.feedId, priceUpdateEvent.update.value);
+  }
+
+  const feedIdStr = decodeCantonFeedId(priceUpdateEvent.feedId);
+  const name = classifySkipReason(priceUpdateEvent.update.value.message);
+
+  return {
+    name,
+    feedId: feedIdStr,
+    args: [feedIdStr],
+    updated: false,
+  };
+}
+
+function makeValueUpdateEvent(feedId: CantonFeedId, priceData: PriceData): PriceEvent {
   const feedIdStr = decodeCantonFeedId(feedId);
 
   return {
@@ -113,36 +131,6 @@ function extractPricePillEvent(createArgument: unknown): PriceEvent {
     args: [priceData.value, feedIdStr, priceData.writeTimestamp],
     updated: true,
     value: Number(priceData.value),
-  };
-}
-
-function extractPriceUpdateEvent(createArgument: unknown): PriceEvent | undefined {
-  const { feedId, isSkipped, error, update } = createArgument as {
-    feedId: CantonFeedId;
-    isSkipped: boolean;
-    error?: string | { message: string }; // pre-v19
-    update?: { tag: "Updated" } | { tag: "Skipped"; value: { message: string } }; // v19+
-  };
-
-  if (!isSkipped) {
-    return undefined;
-  }
-
-  const errorMessage = typeof error === "string" ? error : error?.message;
-  const message = update?.tag === "Skipped" ? update.value.message : errorMessage;
-
-  if (message === undefined) {
-    return undefined;
-  }
-
-  const feedIdStr = decodeCantonFeedId(feedId);
-  const name = classifySkipReason(message);
-
-  return {
-    name,
-    feedId: feedIdStr,
-    args: [feedIdStr],
-    updated: false,
   };
 }
 
@@ -176,9 +164,7 @@ export function extractPriceEvents(events: Event[]) {
 
     if (created.templateId.includes(PRICE_UPDATE_EVENT_TEMPLATE_NAME)) {
       const priceEvent = extractPriceUpdateEvent(created.createArgument);
-      if (priceEvent) {
-        result[priceEvent.feedId] = priceEvent;
-      }
+      result[priceEvent.feedId] = priceEvent;
     }
   }
 

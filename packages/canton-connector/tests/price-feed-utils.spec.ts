@@ -23,6 +23,7 @@ import {
   PRICE_ADAPTER_ID,
 } from "./test-helpers";
 
+const UPDATED_VALUE = "2438.897142";
 const pillEvent = (feedId: CantonFeedId, value: string, timestamp: string): Event => ({
   CreatedEvent: makeCreatedEvent({
     templateId: getPackageTemplateName(PRICE_PILL_TEMPLATE_NAME),
@@ -33,10 +34,28 @@ const pillEvent = (feedId: CantonFeedId, value: string, timestamp: string): Even
   }),
 });
 
-const skipEvent = (feedId: CantonFeedId, error: string): Event => ({
+const updateEvent = (feedId: CantonFeedId, value: string, timestamp: string): Event => ({
   CreatedEvent: makeCreatedEvent({
     templateId: getPackageTemplateName(PRICE_UPDATE_EVENT_TEMPLATE_NAME),
-    createArgument: { feedId: feedId.map(String), isSkipped: true, error },
+    createArgument: {
+      feedId: feedId.map(String),
+      isSkipped: false,
+      update: {
+        tag: "Updated",
+        value: { value, packageTimestamp: timestamp, writeTimestamp: timestamp },
+      },
+    },
+  }),
+});
+
+const skipEvent = (feedId: CantonFeedId, message: string): Event => ({
+  CreatedEvent: makeCreatedEvent({
+    templateId: getPackageTemplateName(PRICE_UPDATE_EVENT_TEMPLATE_NAME),
+    createArgument: {
+      feedId: feedId.map(String),
+      isSkipped: true,
+      update: { tag: "Skipped", value: { message } },
+    },
   }),
 });
 
@@ -213,6 +232,14 @@ describe("extractPriceEvents", () => {
     expect(result["CC"]).toMatchObject({ name: "ValueUpdate", feedId: "CC", value: 0.15 });
   });
 
+  it("emits the price pill ValueUpdate for an Updated PriceUpdateEvent", () => {
+    const result = extractPriceEvents([updateEvent(ETH_ARR, UPDATED_VALUE, String(BASE_TS))]);
+
+    expect(result).toEqual(
+      extractPriceEvents([pillEvent(ETH_ARR, UPDATED_VALUE, String(BASE_TS))])
+    );
+  });
+
   it("classifies 'Wrong timestamps' as UpdateSkipDueToDataTimestamp", () => {
     const result = extractPriceEvents([skipEvent(BTC_ARR, "Wrong timestamps of data package")]);
 
@@ -229,17 +256,6 @@ describe("extractPriceEvents", () => {
     const result = extractPriceEvents([skipEvent(ETH_ARR, "stale block")]);
 
     expect(result["ETH"].name).toBe("UpdateSkipDueToBlockTimestamp");
-  });
-
-  it("ignores non-skipped PriceUpdateEvents", () => {
-    const notSkipped: Event = {
-      CreatedEvent: makeCreatedEvent({
-        templateId: getPackageTemplateName(PRICE_UPDATE_EVENT_TEMPLATE_NAME),
-        createArgument: { feedId: ETH_ARR, isSkipped: false },
-      }),
-    };
-
-    expect(extractPriceEvents([notSkipped])).toEqual({});
   });
 
   it("ignores non-create events (e.g. archives)", () => {

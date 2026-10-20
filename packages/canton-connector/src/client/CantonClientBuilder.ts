@@ -23,7 +23,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
   protected override chainType = ChainTypeEnum.enum.canton;
   protected override telemetryOpNormalizer = new CantonRpcOpNormalizer();
   private tokenProviders: Record<string, TokenProvider | undefined> = {};
-  private defaultClientId?: string;
+  private defaultClientId = "DEFAULT_CLIENT_ID";
   private walletClientId?: string;
   private shouldBuildTransferService = false;
 
@@ -136,6 +136,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
         getMostActiveContractData: MultiExecutor.ExecutionMode.FALLBACK,
         getCreateContractEvents: MultiExecutor.ExecutionMode.FALLBACK,
         getTransactionsForInterface: MultiExecutor.ExecutionMode.FALLBACK,
+        getTransactionsForTemplate: MultiExecutor.ExecutionMode.FALLBACK,
         // the following use scan-api:
         getRemainingTraffic: MultiExecutor.ExecutionMode.FALLBACK,
         getTotalConsumedTraffic: MultiExecutor.ExecutionMode.FALLBACK,

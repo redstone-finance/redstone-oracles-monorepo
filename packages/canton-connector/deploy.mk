@@ -98,22 +98,25 @@ list-parties: get-token
 	  "$(CANTON_API)/v2/parties" | jq '.'
 
 deploy-core: check-party-suffix get-token
-	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
-	  -H "Content-Type: application/json" \
-	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
-	  -d '{ \
-		"commands": [{ \
-			"CreateCommand": { \
-				"templateId": "$(CORE_TEMPLATE_ID)", \
-				"createArguments": { \
-					"coreId": "$(CORE_NAME)", \
-					"owner": "$(PARTY_OWNER)", \
-					"viewers": ["$(PARTY_VIEWER)"], \
-					"shouldVerifyViewer": false, \
-					"beneficiary": "$(PARTY_BENEFICIARY)", \
-					"featuredCid": "$(FEATURED_CID)"}}}], \
-		"actAs": ["$(PARTY_OWNER)","$(PARTY_BENEFICIARY)"], \
-		"commandId": "deploy-core-$(shell date +%s)"}' | jq '.'
+	@TEMPLATE_ID="$(CORE_TEMPLATE_ID)" \
+	CREATE_ARGS='{ \
+		"coreId": "$(CORE_NAME)", \
+		"owner": "$(PARTY_OWNER)", \
+		"viewers": ["$(PARTY_VIEWER)"], \
+		"shouldVerifyViewer": false, \
+		"beneficiary": "$(PARTY_BENEFICIARY)", \
+		"featuredCid": "$(FEATURED_CID)"}' \
+	ACT_AS='["$(PARTY_OWNER)","$(PARTY_BENEFICIARY)"]' \
+	CMD_NAME=deploy-core \
+	CANTON_API="$(CANTON_API)" \
+	TOKEN="$(TOKEN)" \
+	JQ='.transaction as $$tx | [$$tx.events[] | .CreatedEvent // empty][0] | { \
+		synchronizerId: $$tx.synchronizerId, \
+		coreId: "$(CORE_NAME)", \
+		contractId, \
+		templateId, \
+		createdEventBlob}' \
+	./scripts/canton-cmd.sh
 
 deploy-core-client: check-party-suffix get-token
 	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
