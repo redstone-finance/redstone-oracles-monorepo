@@ -3951,6 +3951,20 @@
       "denomination": "0G",
       "rateFeed": true
     },
+    "iAI_FUNDAMENTAL": {
+      "source": [
+        "zero-gravity-evm-fetcher-comfy"
+      ],
+      "denomination": "0G",
+      "rateFeed": true
+    },
+    "iAI_FUNDAMENTAL/USD": {
+      "source": [
+        "usd-based"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "ANKR": {
       "source": [
         "binance-usdt",
