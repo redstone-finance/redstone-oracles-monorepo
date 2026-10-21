@@ -8647,6 +8647,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/knowledge-dumps@workspace:packages/knowledge-dumps":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/knowledge-dumps@workspace:packages/knowledge-dumps"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-admin-access-monitor@workspace:packages/lambda/lambda-admin-access-monitor":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-admin-access-monitor@workspace:packages/lambda/lambda-admin-access-monitor"
