@@ -10848,8 +10848,7 @@
       "source": [
         "ws-perp-binance-usdt",
         "ws-perp-coinbase-usdc",
-        "ws-perp-mexc-usdt",
-        "ws-tickerlayer"
+        "ws-perp-mexc-usdt"
       ],
       "priceAggregator": "geomean",
       "geomeanAggregatorConfig": {
