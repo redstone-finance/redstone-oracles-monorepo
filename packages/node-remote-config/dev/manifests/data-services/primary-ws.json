@@ -3928,10 +3928,6 @@
       "source": [
         "usd-based-deferred"
       ],
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
       "denomination": "USD",
       "rateFeed": true,
       "types": [
