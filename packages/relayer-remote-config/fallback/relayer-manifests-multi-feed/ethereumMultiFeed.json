@@ -418,7 +418,7 @@
     "XRP": {
       "priceFeedAddress": "0x64775db2ac856843E1f900f6249687d6D803B22d",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
+        "deviationPercentage": 0.25,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
     },
