@@ -66,6 +66,40 @@ export class SquadsMultisig {
     });
   }
 
+  async replaceMembers(
+    feePayer: PublicKey,
+    oldMembers: PublicKey[],
+    newMembers: PublicKey[],
+    newThreshold: number
+  ) {
+    const actions: types.ConfigAction[] = [
+      ...newMembers.map((newMember) => ({
+        __kind: "AddMember" as const,
+        newMember: {
+          key: newMember,
+          permissions: types.Permissions.all(),
+        },
+      })),
+      ...oldMembers.map((oldMember) => ({
+        __kind: "RemoveMember" as const,
+        oldMember,
+      })),
+      { __kind: "ChangeThreshold", newThreshold },
+    ];
+
+    const transactionIndex = (await this.multisigTransactionIndex()) + 1n;
+
+    console.log(`Config actions:`, actions);
+
+    return instructions.configTransactionCreate({
+      multisigPda: this.multisigPda,
+      transactionIndex,
+      creator: feePayer,
+      rentPayer: feePayer,
+      actions,
+    });
+  }
+
   async createVaultTransaction(
     member: PublicKey,
     ix: TransactionInstruction | TransactionInstruction[],

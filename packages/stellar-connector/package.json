@@ -32,6 +32,7 @@
     "cancel-ownership-transfer": "yarn global:tsx scripts/cancel-ownership-transfer.ts",
     "cancel-ownership-transfer-tx": "yarn global:tsx scripts/ledger/cancel-ownership-transfer-tx.ts",
     "change-owner-tx": "yarn global:tsx scripts/ledger/change-owner-tx.ts",
+    "change-multisig-signers-tx": "yarn global:tsx scripts/ledger/change-multisig-signers-tx.ts",
     "sign-tx": "yarn global:tsx ./scripts/ledger/sign-tx.ts",
     "combine-signatures": "yarn global:tsx ./scripts/ledger/combine-signatures.ts",
     "create-account": "yarn global:tsx ./scripts/create-account-with-funds.ts",

@@ -35,6 +35,7 @@
     "add-multi-sig-members": "yarn global:tsx scripts/ledger/add-multi-sig-members.ts",
     "manage-limits": "yarn global:tsx scripts/ledger/manage-limits.ts",
     "remove-multi-sig-members": "yarn global:tsx scripts/ledger/remove-multi-sig-members.ts",
+    "replace-multi-sig-members": "yarn global:tsx scripts/ledger/replace-multi-sig-members.ts",
     "execute-config-tx": "yarn global:tsx scripts/ledger/execute-config-tx.ts",
     "check-deployed-buffer": "yarn global:tsx scripts/check-deployed-bytecode.ts"
   },
