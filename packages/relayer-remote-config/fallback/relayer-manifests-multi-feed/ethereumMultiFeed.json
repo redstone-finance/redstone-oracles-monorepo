@@ -596,13 +596,13 @@
     "mzPRIME_FUNDAMENTAL": {
       "priceFeedAddress": "0x9f0d1AEe42454d7e1FABd4522b415022B928a9c7",
       "updateTriggersOverrides": {
-        "cron": ["0 10 * * *"]
+        "cron": ["5 12 * * *"]
       }
     },
     "mzPRIME_TOTAL_SUPPLY": {
       "priceFeedAddress": "0x736771260B9A0E1715A3Bf3aC05Dd6D71A8838b9",
       "updateTriggersOverrides": {
-        "cron": ["0 10 * * *"]
+        "cron": ["5 12 * * *"]
       }
     }
   }
