@@ -37,6 +37,7 @@
       },
       "denomination": "USD",
       "rateFeed": false,
+      "minValidSourcesCount": 3,
       "types": [
         "crypto"
       ]
@@ -66,6 +67,7 @@
       },
       "denomination": "USD",
       "rateFeed": false,
+      "minValidSourcesCount": 3,
       "types": [
         "crypto"
       ]
@@ -269,6 +271,7 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "minValidSourcesCount": 3,
       "types": [
         "crypto"
       ]
@@ -287,6 +290,7 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "minValidSourcesCount": 3,
       "types": [
         "crypto"
       ]

@@ -53,7 +53,8 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "minValidSourcesCount": 3
     },
     "USDT": {
       "source": [
@@ -74,7 +75,8 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "minValidSourcesCount": 3
     },
     "USDC_V2": {
       "source": [
@@ -200,7 +202,8 @@
         "xt-usdt"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "minValidSourcesCount": 3
     },
     "DAI": {
       "source": [
@@ -279,7 +282,8 @@
         "xt-usdt"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "minValidSourcesCount": 3
     },
     "stETH": {
       "source": [
