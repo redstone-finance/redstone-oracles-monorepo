@@ -3952,6 +3952,19 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "USDZ_FUNDAMENTAL/USD": {
+      "source": [
+        "zero-gravity-evm-fetcher-usdz"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "ANKR": {
       "source": [
         "binance-usdt",
