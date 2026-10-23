@@ -69,13 +69,6 @@
       }
     },
     "MEGA": {},
-    "wiTRY_FUNDAMENTAL/USDm": {
-      "supportedNodeTypesOverride": ["normal", "fast", "ws"],
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.000001,
-        "timeSinceLastUpdateInMilliseconds": 60000
-      }
-    },
     "XAUt/USDT": {
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
