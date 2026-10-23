@@ -87,6 +87,13 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "wiTRY_FUNDAMENTAL/USD": {
+      "supportedNodeTypesOverride": ["normal", "fast", "ws"],
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 60000
+      }
     }
   }
 }
