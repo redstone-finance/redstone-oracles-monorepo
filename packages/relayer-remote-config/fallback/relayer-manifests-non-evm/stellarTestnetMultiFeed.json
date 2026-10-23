@@ -41,6 +41,12 @@
         "deviationPercentage": 0.05,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "CETES": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
