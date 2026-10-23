@@ -27,6 +27,16 @@ export const WRITE_PRICE_FUNCTION = "try_write_price";
 export const PRICE_WRITE_TYPE = `${PACKAGE_ID}::${SUI_PRICE_WRITE_EVENT_FRAGMENT}`;
 export const UPDATE_ERROR_TYPE = `${PACKAGE_ID}::${SUI_UPDATE_ERROR_EVENT_FRAGMENT}`;
 export const REFERENCE_GAS_PRICE = 1000n;
+export const VALID_DURING_EXPIRATION = {
+  ValidDuring: {
+    minEpoch: "1",
+    maxEpoch: "2",
+    minTimestamp: null,
+    maxTimestamp: null,
+    chain: "35834a8a",
+    nonce: 1,
+  },
+};
 export const PAYLOAD_BYTES = Uint8Array.from([0x52, 0x45, 0x44, 0x53, 0x54, 0x4f, 0x4e, 0x45]);
 export const PAYLOAD_HEX = RedstoneCommon.hexlify(PAYLOAD_BYTES);
 export const GAS_SUMMARY = {

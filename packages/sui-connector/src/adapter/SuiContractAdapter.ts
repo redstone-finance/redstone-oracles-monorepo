@@ -12,6 +12,7 @@ import _ from "lodash";
 import { signExecuteAndWait } from "../client/sign-execute-and-wait";
 import { SuiClient } from "../client/SuiClient";
 import { SuiConfig } from "../config";
+import { SuiBalanceSweeper } from "../SuiBalanceSweeper";
 import { makeSendFundsTx } from "../util";
 import { MAX_PARALLEL_TRANSACTION_COUNT, SuiContractUpdater } from "./SuiContractUpdater";
 import { SuiPricesContractReader } from "./SuiPricesContractReader";
@@ -57,6 +58,7 @@ export class SuiContractAdapter implements ContractAdapter {
 
 export class SuiWriteContractAdapter extends SuiContractAdapter implements WriteContractAdapter {
   static contractUpdaterCache = new Map<string, SuiContractUpdater>();
+  static balanceSweepers = new Map<string, SuiBalanceSweeper>();
 
   private readonly txDeliveryMan: TxDeliveryMan;
   private readonly contractUpdater: SuiContractUpdater;
@@ -75,6 +77,7 @@ export class SuiWriteContractAdapter extends SuiContractAdapter implements Write
       "sui-tx-delivery-man"
     );
     this.contractUpdater = SuiWriteContractAdapter.getContractUpdater(keypair, client, config);
+    SuiWriteContractAdapter.startBalanceSweeper(keypair, client);
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
@@ -117,6 +120,18 @@ export class SuiWriteContractAdapter extends SuiContractAdapter implements Write
     }
 
     return updater;
+  }
+
+  static startBalanceSweeper(keypair: Keypair, client: SuiClient) {
+    const address = keypair.toSuiAddress();
+    const sweepers = SuiWriteContractAdapter.balanceSweepers;
+
+    if (sweepers.has(address)) {
+      return;
+    }
+    const sweeper = new SuiBalanceSweeper(client, keypair);
+    sweepers.set(address, sweeper);
+    sweeper.start();
   }
 }
 

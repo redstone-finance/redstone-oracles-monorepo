@@ -1,5 +1,4 @@
 import { SuiJsonRpcClient } from "@mysten/sui/jsonRpc";
-import { SUI_TYPE_ARG } from "@mysten/sui/utils";
 import { MultiExecutor } from "@redstone-finance/utils";
 import { LegacySuiTxLookup } from "./lookup/LegacySuiTxLookup";
 import { SUB_INSTANCE_MODES, SuiClient } from "./SuiClient";
@@ -48,49 +47,5 @@ export class LegacySuiClient extends SuiClient {
     });
 
     return new Date(Number(checkpoint.timestampMs));
-  }
-
-  async getReceivedCoinObjectIds({
-    address,
-    coinType = SUI_TYPE_ARG,
-    limit,
-    cursor,
-  }: {
-    address: string;
-    coinType?: string;
-    limit: number;
-    cursor?: string;
-  }) {
-    const txs = await this.client.queryTransactionBlocks({
-      filter: { ToAddress: address },
-      options: { showObjectChanges: true },
-      order: "descending",
-      limit,
-      cursor,
-    });
-
-    const objectIds: string[] = [];
-
-    for (const tx of txs.data) {
-      for (const change of tx.objectChanges ?? []) {
-        if (
-          (change.type === "created" || change.type === "mutated") &&
-          change.objectType.includes(coinType) &&
-          "owner" in change &&
-          typeof change.owner === "object" &&
-          "AddressOwner" in change.owner &&
-          change.owner.AddressOwner === address
-        ) {
-          objectIds.push(change.objectId);
-        }
-      }
-    }
-
-    const nextCursor = txs.hasNextPage ? (txs.nextCursor ?? undefined) : undefined;
-
-    return {
-      objectIds,
-      cursor: nextCursor,
-    };
   }
 }

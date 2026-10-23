@@ -16,12 +16,17 @@ export class SuiContractUtil {
     keypair: Keypair,
     gasBudget?: bigint
   ) {
-    const gasPrice = await this.computeGasPrice(client, gasMultiplier);
+    const [gasPrice, expiration] = await Promise.all([
+      this.computeGasPrice(client, gasMultiplier),
+      client.getValidDuringExpiration(),
+    ]);
     const maxGasBudget = gasBudget ?? DEFAULT_GAS_BUDGET;
 
     const tx = new Transaction();
     tx.setGasPrice(gasPrice);
     tx.setGasBudget(maxGasBudget);
+    tx.setGasPayment([]);
+    tx.setExpiration(expiration);
     tx.setSender(keypair.toSuiAddress());
 
     return tx;

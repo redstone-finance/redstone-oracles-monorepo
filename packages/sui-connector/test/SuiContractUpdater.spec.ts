@@ -1,6 +1,5 @@
 import type { SuiClientTypes } from "@mysten/sui/client";
 import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";
-import { ParallelTransactionExecutor } from "@mysten/sui/transactions";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { makeSuiClient, makeSuiConfig } from "../src";
 import { SuiContractUpdater } from "../src/adapter/SuiContractUpdater";
@@ -19,6 +18,7 @@ import {
   PACKAGE_ID,
   PAYLOAD_HEX,
   REFERENCE_GAS_PRICE,
+  VALID_DURING_EXPIRATION,
 } from "./fixtures";
 
 const UPDATE_START_TIME_MS = 1790080056000;
@@ -27,7 +27,7 @@ const GAS_ERROR = "Out of gas";
 
 describe("SuiContractUpdater", () => {
   let paramsProvider: ContractParamsProvider;
-  let executeTransaction: jest.SpyInstance;
+  let signAndExecute: jest.SpyInstance;
   let sut: SuiContractUpdater;
 
   beforeEach(() => {
@@ -38,19 +38,13 @@ describe("SuiContractUpdater", () => {
 
     const client = new GrpcSuiClient(makeSuiClient(NETWORK));
     jest.spyOn(client, "getReferenceGasPrice").mockResolvedValue(REFERENCE_GAS_PRICE);
-
-    const keypair = Secp256k1Keypair.generate();
-    const executor = new ParallelTransactionExecutor({
-      client: client.clientWithCoreApi,
-      signer: keypair,
-    });
-    executeTransaction = jest.spyOn(executor, "executeTransaction");
+    jest.spyOn(client, "getValidDuringExpiration").mockResolvedValue(VALID_DURING_EXPIRATION);
+    signAndExecute = jest.spyOn(client, "signAndExecute");
 
     sut = new SuiContractUpdater(
       client,
-      keypair,
-      makeSuiConfig({ packageId: PACKAGE_ID, priceAdapterObjectId: ADAPTER_OBJECT_ID }),
-      executor
+      Secp256k1Keypair.generate(),
+      makeSuiConfig({ packageId: PACKAGE_ID, priceAdapterObjectId: ADAPTER_OBJECT_ID })
     );
   });
 
@@ -90,7 +84,7 @@ describe("SuiContractUpdater", () => {
   });
 
   function stubExecution(events: SuiClientTypes.Event[], failure?: string) {
-    executeTransaction.mockResolvedValue({
+    signAndExecute.mockResolvedValue({
       $kind: "Transaction",
       Transaction: {
         digest: DIGEST,

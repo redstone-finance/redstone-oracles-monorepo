@@ -1,11 +1,5 @@
 import { ResultOf } from "@mysten/sui/graphql/schema";
-import { AFFECTED_OBJECT_TRANSACTIONS_QUERY, RECEIVED_TRANSACTIONS_QUERY } from "./queries";
-
-export type ReceivedTransactionsData = ResultOf<typeof RECEIVED_TRANSACTIONS_QUERY>;
-
-export type ReceivedTransactionNodes = NonNullable<
-  ReceivedTransactionsData["transactions"]
->["nodes"];
+import { AFFECTED_OBJECT_TRANSACTIONS_QUERY } from "./queries";
 
 export type AffectedObjectTransactionsData = ResultOf<typeof AFFECTED_OBJECT_TRANSACTIONS_QUERY>;
 

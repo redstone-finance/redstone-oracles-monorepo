@@ -10247,7 +10247,7 @@ __metadata:
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
-    "@redstone-finance/suiangria": "git+https://github.com/redstone-finance/suiangria.git#v0.0.4"
+    "@redstone-finance/suiangria": "git+https://github.com/redstone-finance/suiangria.git#v0.0.5"
     "@redstone-finance/utils": "workspace:*"
     decimal.js: "npm:^10.4.3"
     dotenv: "npm:^16.0.3"
@@ -10257,14 +10257,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/suiangria@git+https://github.com/redstone-finance/suiangria.git#v0.0.4":
+"@redstone-finance/suiangria@git+https://github.com/redstone-finance/suiangria.git#v0.0.5":
   version: 0.0.1
-  resolution: "@redstone-finance/suiangria@https://github.com/redstone-finance/suiangria.git#commit=b5982d3c43de1cd4b68ed3f4794b0cd35e5843c0"
+  resolution: "@redstone-finance/suiangria@https://github.com/redstone-finance/suiangria.git#commit=5bc59d079d05bdbb7396d05978f167cdc74a5315"
   dependencies:
     "@mysten/bcs": "npm:^2.0.2"
   peerDependencies:
     "@mysten/sui": ^2.4.0
-  checksum: 10c0/0d5bda51f785f563e083b9bcd5bc8486b86d8d74e8f2aaca0a141ca0d900384b9e82b8747c7d04070d0ca477212a621b09f873c16c1fdc539dfedd958385df8a
+  checksum: 10c0/d329be55ddaa3e99ccde35159488039dc37ae31bcb89351c291171390df79efe4e32c817f9d4a98c03e75703af789698f9c9df734d7da0cfa4781799faf757b8
   languageName: node
   linkType: hard
 
