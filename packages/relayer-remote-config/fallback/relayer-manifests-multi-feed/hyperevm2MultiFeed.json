@@ -52,13 +52,6 @@
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
     },
-    "syzUSD_FUNDAMENTAL/USD": {
-      "priceFeedAddress": "0xB5B408A269217f414da4Bb01225F7b57664eAf6F",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.05,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
     "SolvBTC_FUNDAMENTAL": {
       "priceFeedAddress": "0x58fa68A373956285dDfb340EDf755246f8DfCA16",
       "updateTriggersOverrides": {

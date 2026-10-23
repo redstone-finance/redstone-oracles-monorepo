@@ -98,13 +98,6 @@
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
     },
-    "yzUSD_FUNDAMENTAL": {
-      "priceFeedAddress": "0x5577797e21FBbB7458f500fa80770D80AAE39bca",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.05,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
     "syzUSD_FUNDAMENTAL/USD": {
       "priceFeedAddress": "0xa79F7363FCa5118B4141eCeff6dd2A83d5047344",
       "updateTriggersOverrides": {
@@ -138,13 +131,6 @@
     },
     "strUSD_FUNDAMENTAL": {
       "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 21600000
-      }
-    },
-    "etrUSD_FUNDAMENTAL/USD": {
-      "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 21600000

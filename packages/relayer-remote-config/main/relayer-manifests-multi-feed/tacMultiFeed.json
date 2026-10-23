@@ -31,9 +31,6 @@
     },
     "wstETH/ETH": {
       "priceFeedAddress": "0xE23eCA12D7D2ED3829499556F6dCE06642AFd990"
-    },
-    "TAC": {
-      "priceFeedAddress": "0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D"
     }
   }
 }
