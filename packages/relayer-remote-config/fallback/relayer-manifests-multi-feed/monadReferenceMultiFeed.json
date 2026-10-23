@@ -71,12 +71,6 @@
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
     },
-    "yzUSD_FUNDAMENTAL": {
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.05,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
     "syzUSD_FUNDAMENTAL/USD": {
       "updateTriggersOverrides": {
         "deviationPercentage": 0.05,
@@ -103,12 +97,6 @@
       }
     },
     "strUSD_FUNDAMENTAL": {
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 21600000
-      }
-    },
-    "etrUSD_FUNDAMENTAL/USD": {
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 21600000
