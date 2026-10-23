@@ -28,6 +28,13 @@
     },
     "a0G_FUNDAMENTAL": {
       "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db"
+    },
+    "iAI_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
