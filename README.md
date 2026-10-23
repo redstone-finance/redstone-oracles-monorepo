@@ -39,5 +39,7 @@ Please feel free to contact us on [Discord](https://redstone.finance/discord) or
 
 ## 📜 License
 
-BUSL-1.1
+BUSL-1.1, except the RedStone Daml SDK under `packages/canton-connector/daml/sdk`,
+`packages/canton-connector/daml/common` and `packages/canton-connector/daml/sdk-tests`,
+which is licensed under Apache-2.0 (see the `LICENSE` file in each of those directories).
 

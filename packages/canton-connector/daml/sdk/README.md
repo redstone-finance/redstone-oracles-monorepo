@@ -159,3 +159,8 @@ Use `make prepare_data` using the `Makefile` defined [here](../data.mk).
 
 The data preparation process used there, using the `requestDataPackages` function,
 is described in the TypeScript [`@redstone-finance/sdk`](../../../../packages/sdk/README.md) package.
+
+## License
+
+[Apache-2.0](./LICENSE). The `redstone-common-v20` package this SDK depends on is
+licensed the same way.
