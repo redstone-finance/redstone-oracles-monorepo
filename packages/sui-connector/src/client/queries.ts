@@ -6,48 +6,6 @@ export const CHAIN_IDENTIFIER_QUERY = graphql(`
   }
 `);
 
-export const RECEIVED_TRANSACTIONS_QUERY = graphql(`
-  query ReceivedTransactions($address: SuiAddress!, $last: Int, $before: String) {
-    transactions(last: $last, before: $before, filter: { affectedAddress: $address }) {
-      pageInfo {
-        hasPreviousPage
-        startCursor
-      }
-      nodes {
-        sender {
-          address
-        }
-        effects {
-          objectChanges(first: 50) {
-            pageInfo {
-              hasNextPage
-            }
-            nodes {
-              outputState {
-                address
-                asMoveObject {
-                  contents {
-                    type {
-                      repr
-                    }
-                  }
-                }
-                owner {
-                  ... on AddressOwner {
-                    owner: address {
-                      address
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`);
-
 export const AFFECTED_OBJECT_TRANSACTIONS_QUERY = graphql(`
   query AffectedObjectTransactions(
     $objectId: SuiAddress!

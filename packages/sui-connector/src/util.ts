@@ -19,7 +19,7 @@ export const GRAPHQL_URL = {
   localnet: "http://localhost:9125/graphql",
 };
 const FEED_ID_BYTE_LENGTH = 32;
-const SEND_FUNDS_TARGET = "0x2::coin::send_funds";
+export const SEND_FUNDS_TARGET = "0x2::coin::send_funds";
 
 export function makeSuiKeypair(privateKey?: string): Keypair {
   const key = privateKey ?? RedstoneCommon.getFromEnv("PRIVATE_KEY");

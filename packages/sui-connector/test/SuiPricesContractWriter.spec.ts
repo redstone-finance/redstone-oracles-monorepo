@@ -18,6 +18,7 @@ import {
   PAYLOAD_BYTES,
   PAYLOAD_HEX,
   REFERENCE_GAS_PRICE,
+  VALID_DURING_EXPIRATION,
   WRITE_PRICE_FUNCTION,
 } from "./fixtures";
 
@@ -30,6 +31,7 @@ describe("SuiPricesContractWriter", () => {
   beforeEach(() => {
     const client = new GrpcSuiClient(makeSuiClient(NETWORK));
     jest.spyOn(client, "getReferenceGasPrice").mockResolvedValue(REFERENCE_GAS_PRICE);
+    jest.spyOn(client, "getValidDuringExpiration").mockResolvedValue(VALID_DURING_EXPIRATION);
 
     sut = new SuiPricesContractWriter(
       client,

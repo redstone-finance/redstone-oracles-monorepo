@@ -54,16 +54,6 @@ export abstract class SuiClient {
   abstract getBlockNumber(): Promise<number>;
   abstract getTimeForBlock(block: number): Promise<Date>;
 
-  abstract getReceivedCoinObjectIds(params: {
-    address: string;
-    coinType?: string;
-    limit: number;
-    cursor?: string;
-  }): Promise<{
-    objectIds: string[];
-    cursor?: string;
-  }>;
-
   protected abstract fetchReferenceGasPrice(): Promise<bigint>;
 
   async getReferenceGasPrice() {

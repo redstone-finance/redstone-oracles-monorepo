@@ -61,6 +61,8 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
   async configure(configuration: ContractConfiguration) {
     const tx = new Transaction();
     tx.setSender(this.keypair.toSuiAddress());
+    tx.setGasPayment([]);
+    tx.setExpiration(await this.sui.getValidDuringExpiration());
 
     SuiAdapterContractOps.updateConfig(
       tx,
@@ -143,6 +145,7 @@ export async function getTestEnv(build: { modules: string[]; dependencies: strin
   const { client, sandbox } = createSandboxGrpcClient();
 
   sandbox.mintSui(keypair.toSuiAddress(), Number(100_000_000_000n * MIST_PER_SUI));
+  sandbox.mintSuiToAddressBalance(keypair.toSuiAddress(), Number(100_000_000_000n * MIST_PER_SUI));
   sandbox.clockApi().setTimeMs(Date.now());
 
   const grpcClient = new GrpcSuiClient(client);

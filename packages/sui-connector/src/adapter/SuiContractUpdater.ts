@@ -1,6 +1,6 @@
 import type { SuiClientTypes } from "@mysten/sui/client";
 import type { Keypair } from "@mysten/sui/cryptography";
-import { ParallelTransactionExecutor, Transaction } from "@mysten/sui/transactions";
+import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
 import { ContractUpdateContext, ContractUpdater } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
@@ -9,12 +9,9 @@ import { extractSuiUpdateErrors } from "../client/lookup/SuiEventParsing";
 import { computeSuiGasUsed } from "../client/lookup/SuiTxParsing";
 import { SuiClient } from "../client/SuiClient";
 import { SuiConfig } from "../config";
-import { SuiCoinProvider } from "../SuiCoinProvider";
 import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
 
 export const MAX_PARALLEL_TRANSACTION_COUNT = 8;
-const SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER = 2n;
-const SPLIT_COIN_TX_COST = MIST_PER_SUI / 100n;
 
 type ExecutedTransaction = NonNullable<
   SuiClientTypes.TransactionResult<{ effects: true; events: true }>["Transaction"]
@@ -23,18 +20,13 @@ type ExecutedTransaction = NonNullable<
 export class SuiContractUpdater implements ContractUpdater {
   protected readonly logger = loggerFactory("sui-contract-updater");
   private readonly writer: SuiPricesContractWriter;
-  private readonly coinProvider: SuiCoinProvider;
-  private inFlightCount = 0;
-  private reinitPromise?: Promise<ParallelTransactionExecutor>;
 
   constructor(
     private readonly client: SuiClient,
     private readonly keypair: Keypair,
-    private readonly config: SuiConfig,
-    private executor?: ParallelTransactionExecutor
+    config: SuiConfig
   ) {
     this.writer = new SuiPricesContractWriter(client, keypair, config);
-    this.coinProvider = new SuiCoinProvider(client);
   }
 
   async update(
@@ -63,7 +55,7 @@ export class SuiContractUpdater implements ContractUpdater {
 
   private async performExecutingTx(tx: Transaction) {
     const date = Date.now();
-    const result = await this.executeTxWithExecutor(tx, await this.getExecutor());
+    const result = await this.client.signAndExecute(tx, this.keypair);
 
     if (result.$kind === "FailedTransaction") {
       throw new Error(
@@ -87,73 +79,6 @@ export class SuiContractUpdater implements ContractUpdater {
     }
 
     return txData.digest;
-  }
-
-  private async executeTxWithExecutor(tx: Transaction, executor: ParallelTransactionExecutor) {
-    this.inFlightCount += 1;
-    try {
-      return await executor.executeTransaction(tx, {
-        effects: true,
-        events: true,
-      });
-    } catch (e) {
-      await this.maybeReinitializeExecutor();
-
-      throw e;
-    } finally {
-      this.inFlightCount -= 1;
-    }
-  }
-
-  private async maybeReinitializeExecutor() {
-    if (this.inFlightCount > 1 && !this.reinitPromise) {
-      this.logger.warn("Skipping gas objects reinitialization, other transactions are in flight");
-
-      return;
-    }
-
-    this.logger.warn("Reinitializing gas objects...");
-    try {
-      await this.initializeExecutorOnce();
-    } catch (e) {
-      this.logger.warn(`Failed to reinitialize gas objects: ${RedstoneCommon.stringifyError(e)}`);
-    }
-  }
-
-  private async getExecutor() {
-    return this.executor ?? (await this.initializeExecutorOnce());
-  }
-
-  private async initializeExecutorOnce() {
-    this.reinitPromise ??= this.initializeExecutor().finally(() => {
-      this.reinitPromise = undefined;
-    });
-
-    return await this.reinitPromise;
-  }
-
-  private async initializeExecutor() {
-    const initialCoinBalance =
-      SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER * this.config.writePricesTxGasBudget;
-    const minimumBalance =
-      initialCoinBalance * BigInt(MAX_PARALLEL_TRANSACTION_COUNT) + SPLIT_COIN_TX_COST;
-
-    const sourceCoins = await this.coinProvider.getSourceCoins(minimumBalance, this.keypair);
-
-    const executor = new ParallelTransactionExecutor({
-      client: this.client.clientWithCoreApi,
-      signer: this.keypair,
-      initialCoinBalance,
-      minimumCoinBalance: this.config.writePricesTxGasBudget,
-      defaultGasBudget: this.config.writePricesTxGasBudget,
-      maxPoolSize: MAX_PARALLEL_TRANSACTION_COUNT,
-      coinBatchSize: MAX_PARALLEL_TRANSACTION_COUNT,
-      sourceCoins,
-    });
-
-    this.executor = executor;
-
-    return executor;
   }
 
   private static getStatus(txData: ExecutedTransaction) {
