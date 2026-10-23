@@ -129,6 +129,13 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "wiTRY_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x197225B3B017eb9b72Ac356D6B3c267d0c04c57c",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 60000
+      }
     }
   },
   "transactionAdapters": ["megaEthBoltMultiFeed", "megaEthReferenceMultiFeed"]
