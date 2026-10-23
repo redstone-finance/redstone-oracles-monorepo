@@ -39,6 +39,7 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "minValidSourcesCount": 3,
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 2,
@@ -58,6 +59,7 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "minValidSourcesCount": 3,
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 2,
@@ -127,7 +129,8 @@
         "xt-usdt"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "minValidSourcesCount": 3
     },
     "ETH": {
       "source": [
@@ -151,7 +154,8 @@
         "xt-usdt"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "minValidSourcesCount": 3
     },
     "SOL": {
       "source": [
