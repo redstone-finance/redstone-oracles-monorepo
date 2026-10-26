@@ -1,0 +1,36 @@
+{
+  "interval": 1000,
+  "priceAggregator": "median",
+  "defaultSource": ["ws-ice-moon"],
+  "defaultBroadcasters": ["redstone-packages", "influx", "s3"],
+  "sourceTimeout": 8000,
+  "minValidSourcesPercentage": 1,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "AAPL": {
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MSFT": {
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TSLA": {
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IONQ": {
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NVDA": {
+      "denomination": "USD",
+      "rateFeed": false
+    }
+  }
+}
