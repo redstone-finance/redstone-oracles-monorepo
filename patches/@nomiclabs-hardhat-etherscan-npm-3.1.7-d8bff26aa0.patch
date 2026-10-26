@@ -1,0 +1,35 @@
+diff --git a/dist/src/etherscan/EtherscanService.js b/dist/src/etherscan/EtherscanService.js
+index 6050750ad114a6e8ca2fe68c7c3054f0f4085df9..d2b4f1efdb50373326700a88361ba7d798318161 100644
+--- a/dist/src/etherscan/EtherscanService.js
++++ b/dist/src/etherscan/EtherscanService.js
+@@ -46,7 +46,7 @@ exports.verifyContract = verifyContract;
+ async function getVerificationStatus(url, req) {
+     const parameters = new URLSearchParams({ ...req });
+     const urlWithQuery = new URL(url);
+-    urlWithQuery.search = parameters.toString();
++    parameters.forEach((value, key) => urlWithQuery.searchParams.set(key, value));
+     let response;
+     try {
+         response = await (0, undici_1.sendGetRequest)(urlWithQuery);
+@@ -109,7 +109,7 @@ async function isAlreadyVerified(apiURL, apiKey, address) {
+         apikey: apiKey,
+     });
+     const url = new URL(apiURL);
+-    url.search = parameters.toString();
++    parameters.forEach((value, key) => url.searchParams.set(key, value));
+     const response = await (0, undici_1.sendGetRequest)(url);
+     const json = await response.body.json();
+     if (json.message !== "OK") {
+diff --git a/dist/src/solc/version.js b/dist/src/solc/version.js
+index 3c16eda634df8baab8ae4b9484440746c113fc42..f3fc134b0f686134113b33e1d843e8d636ac2a47 100644
+--- a/dist/src/solc/version.js
++++ b/dist/src/solc/version.js
+@@ -4,7 +4,7 @@ exports.getVersions = exports.getLongVersion = void 0;
+ const plugins_1 = require("hardhat/plugins");
+ const constants_1 = require("../constants");
+ const undici_1 = require("../undici");
+-const COMPILERS_LIST_URL = "https://solc-bin.ethereum.org/bin/list.json";
++const COMPILERS_LIST_URL = "https://binaries.soliditylang.org/bin/list.json";
+ // TODO: this could be retrieved from the hardhat config instead.
+ async function getLongVersion(shortVersion) {
+     const versions = await getVersions();

@@ -7139,7 +7139,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nomiclabs/hardhat-etherscan@npm:^3.1.7":
+"@nomiclabs/hardhat-etherscan@npm:3.1.7":
   version: 3.1.7
   resolution: "@nomiclabs/hardhat-etherscan@npm:3.1.7"
   dependencies:
@@ -7156,6 +7156,26 @@ __metadata:
   peerDependencies:
     hardhat: ^2.0.4
   checksum: 10c0/3302820ac823fcb07a5ba278f3e2f07a7f6ba5e0679f0694860a2a189e91188993cc51a0001ec38c532381d3367da72dfcc9820c08ed6e5e0337651bf351dd9e
+  languageName: node
+  linkType: hard
+
+"@nomiclabs/hardhat-etherscan@patch:@nomiclabs/hardhat-etherscan@npm%3A3.1.7#~/patches/@nomiclabs-hardhat-etherscan-npm-3.1.7-d8bff26aa0.patch":
+  version: 3.1.7
+  resolution: "@nomiclabs/hardhat-etherscan@patch:@nomiclabs/hardhat-etherscan@npm%3A3.1.7#~/patches/@nomiclabs-hardhat-etherscan-npm-3.1.7-d8bff26aa0.patch::version=3.1.7&hash=f07e55"
+  dependencies:
+    "@ethersproject/abi": "npm:^5.1.2"
+    "@ethersproject/address": "npm:^5.0.2"
+    cbor: "npm:^8.1.0"
+    chalk: "npm:^2.4.2"
+    debug: "npm:^4.1.1"
+    fs-extra: "npm:^7.0.1"
+    lodash: "npm:^4.17.11"
+    semver: "npm:^6.3.0"
+    table: "npm:^6.8.0"
+    undici: "npm:^5.14.0"
+  peerDependencies:
+    hardhat: ^2.0.4
+  checksum: 10c0/2bff146d8c377caa32878f8728468d7224b58973fd529ba3c30d6b3d17a35f4c96e992d7fe54b89507f3d2832c154ec941163656e6df2b605939feaa3b58f7e0
   languageName: node
   linkType: hard
 
