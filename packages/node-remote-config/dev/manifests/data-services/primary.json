@@ -2588,7 +2588,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1,
+          "maxPercent": 3,
           "maxDelayMilliseconds": 120000
         }
       }
