@@ -101,6 +101,7 @@
     "node-datachannel": "0.25.0"
   },
   "resolutions": {
+    "@nomiclabs/hardhat-etherscan": "patch:@nomiclabs/hardhat-etherscan@npm%3A3.1.7#~/patches/@nomiclabs-hardhat-etherscan-npm-3.1.7-d8bff26aa0.patch",
     "@ton/sandbox@npm:^0.32.2": "0.44.0",
     "adm-zip": "^0.6.0",
     "axios": "^1.20",
