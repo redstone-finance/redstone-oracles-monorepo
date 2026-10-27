@@ -9235,6 +9235,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-monitoring-relayers@workspace:packages/lambda/lambda-monitoring-relayers"
   dependencies:
     "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
