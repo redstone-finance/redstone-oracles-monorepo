@@ -222,6 +222,44 @@
         "snoozed"
       ]
     },
+    "IMPACT_SELL_ani:DOG": {
+      "source": [
+        "ws-hyperliquid-perps-ani",
+        "ws-hydromancer-perps-ani"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-ani"
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
+    },
+    "IMPACT_BUY_ani:DOG": {
+      "source": [
+        "ws-hyperliquid-perps-ani",
+        "ws-hydromancer-perps-ani"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-ani"
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
+    },
     "ani:DOG_MARK_0": {
       "source": [
         "hip3-entropy-testnet-fetcher"
@@ -384,6 +422,44 @@
       "source": [
         "ema"
       ],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
+    },
+    "IMPACT_SELL_ani:DOG2": {
+      "source": [
+        "ws-hyperliquid-perps-ani",
+        "ws-hydromancer-perps-ani"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-ani"
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
+    },
+    "IMPACT_BUY_ani:DOG2": {
+      "source": [
+        "ws-hyperliquid-perps-ani",
+        "ws-hydromancer-perps-ani"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-ani"
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -769,6 +845,38 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "IMPACT_SELL_io:ANTH": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-io"
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_io:ANTH": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-io"
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "io:ANTH_MARK_0": {
       "source": [
         "hip3-entropy-mainnet-fetcher"
@@ -923,6 +1031,38 @@
       "source": [
         "ema"
       ],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_io:OAI": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-io"
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_io:OAI": {
+      "source": [
+        "ws-hyperliquid-perps-io",
+        "ws-hydromancer-perps-io"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-hyperliquid-perps-io"
+      },
       "broadcasters": [
         "influx",
         "s3"
