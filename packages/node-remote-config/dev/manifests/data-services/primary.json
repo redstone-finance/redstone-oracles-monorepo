@@ -4201,6 +4201,26 @@
         }
       }
     },
+    "metrUSD_FUNDAMENTAL": {
+      "source": [
+        "monad-evm-fetcher-tori"
+      ],
+      "denomination": "aUSD",
+      "rateFeed": true,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1,
+          "maxDelayMilliseconds": 120000
+        }
+      }
+    },
+    "metrUSD_FUNDAMENTAL/USD": {
+      "source": [
+        "usd-based"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "APR": {
       "source": [
         "bingx-usdt",
