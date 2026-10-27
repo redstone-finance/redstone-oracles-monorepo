@@ -91,6 +91,28 @@ export function makeInterfaceFilterByParty(interfaceId: string, partyId: string)
   return filtersByParty;
 }
 
+export function makeWildcardFilterByParty(partyId: string, viewInterfaceId: string) {
+  const filtersByParty: Map_Filters = {};
+  filtersByParty[partyId] = {
+    cumulative: [
+      { identifierFilter: { WildcardFilter: { value: { includeCreatedEventBlob: false } } } },
+      {
+        identifierFilter: {
+          InterfaceFilter: {
+            value: {
+              interfaceId: viewInterfaceId,
+              includeInterfaceView: true,
+              includeCreatedEventBlob: false,
+            },
+          },
+        },
+      },
+    ],
+  };
+
+  return filtersByParty;
+}
+
 export function makeTemplateFilterByParty(templateId: string, partyId: string) {
   const filtersByParty: Map_Filters = {};
   filtersByParty[partyId] = {

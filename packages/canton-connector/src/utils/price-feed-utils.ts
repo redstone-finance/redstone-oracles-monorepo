@@ -25,6 +25,12 @@ export type PriceData = {
   writeTimestamp: string;
 };
 
+export type PriceEvent = {
+  name: string;
+  feedId: string;
+  args: unknown[];
+} & ({ updated: true; value: number } | { updated: false });
+
 export function parsePriceData(result: PriceData): LastRoundDetails {
   return {
     lastDataPackageTimestampMS: Number.parseInt(result.packageTimestamp),
@@ -86,11 +92,17 @@ export function buildArrayifiedFeedIds(feedIds: string[]): Map<string, CantonFee
   return new Map(feedIds.map((feedId) => [feedId, getCantonFeedId(feedId)]));
 }
 
-type PriceEvent = {
-  name: string;
-  feedId: string;
-  args: unknown[];
-} & ({ updated: true; value: number } | { updated: false });
+export function makeValueUpdateEvent(feedId: CantonFeedId, priceData: PriceData): PriceEvent {
+  const feedIdStr = decodeCantonFeedId(feedId);
+
+  return {
+    name: "ValueUpdate",
+    feedId: feedIdStr,
+    args: [priceData.value, feedIdStr, priceData.writeTimestamp],
+    updated: true,
+    value: Number(priceData.value),
+  };
+}
 
 function extractPricePillEvent(createArgument: unknown): PriceEvent {
   const { feedId, priceData } = createArgument as {
@@ -119,18 +131,6 @@ function extractPriceUpdateEvent(createArgument: unknown): PriceEvent {
     feedId: feedIdStr,
     args: [feedIdStr],
     updated: false,
-  };
-}
-
-function makeValueUpdateEvent(feedId: CantonFeedId, priceData: PriceData): PriceEvent {
-  const feedIdStr = decodeCantonFeedId(feedId);
-
-  return {
-    name: "ValueUpdate",
-    feedId: feedIdStr,
-    args: [priceData.value, feedIdStr, priceData.writeTimestamp],
-    updated: true,
-    value: Number(priceData.value),
   };
 }
 
