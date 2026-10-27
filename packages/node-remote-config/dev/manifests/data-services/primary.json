@@ -5960,6 +5960,26 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "earnUSDC_PPS_FUNDAMENTAL": {
+      "source": [
+        "stellar-fetcher-gami"
+      ],
+      "denomination": "USDC",
+      "rateFeed": true,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 0.5,
+          "maxDelayMilliseconds": 120000
+        }
+      }
+    },
+    "earnUSDC_PPS_FUNDAMENTAL/USD": {
+      "source": [
+        "usd-based"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "MEMORA_DEVNET_LAMPORTS": {
       "source": [
         "memora-solana-devnet"
