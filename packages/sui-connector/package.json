@@ -38,7 +38,7 @@
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
-    "decimal.js": "^10.4.3",
+    "decimal.js": "^10.6.0",
     "dotenv": "^16.0.3",
     "lodash": "^4.17.23",
     "zod": "^4.1.12"
