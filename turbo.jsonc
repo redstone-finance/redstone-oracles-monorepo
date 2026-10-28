@@ -30,7 +30,7 @@
       "dependsOn": ["setup-dev"]
     },
     "compile": {
-      "inputs": ["hardhat.config.ts", "contracts/**"],
+      "inputs": ["package.json", "$TURBO_ROOT$/package.json", "hardhat.config.ts", "contracts/**"],
       "outputs": ["typechain-types/**", "artifacts/**", "cache/**"]
     },
     "lint": {

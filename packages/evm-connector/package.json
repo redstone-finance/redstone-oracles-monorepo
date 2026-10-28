@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "A tool to inject RedStone data into EVM compatible smart contracts",
   "main": "dist/src/index.js",
-  "exports": "./dist/src/index.js",
+  "exports": {
+    ".": "./dist/src/index.js",
+    "./contracts/*": "./contracts/*"
+  },
   "license": "MIT",
   "scripts": {
     "clean": "yarn global:ts-hardhat-clean",
