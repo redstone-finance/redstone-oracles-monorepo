@@ -22,6 +22,11 @@
       },
       "denomination": "USD",
       "rateFeed": false
+    },
+    "APRIME_STAGING_FUNDAMENTAL/USD": {
+      "source": ["superstate-api-staging"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }

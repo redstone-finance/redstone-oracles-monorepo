@@ -5836,6 +5836,13 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "APRIME_STAGING_FUNDAMENTAL/USD": {
+      "source": [
+        "superstate-api-staging"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "SGT1_SEPOLIA_FUNDAMENTAL/USD": {
       "source": [
         "realfi"
