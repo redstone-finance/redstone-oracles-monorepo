@@ -5,7 +5,7 @@ const UTF8_ENCODER = new TextEncoder();
 const UTF8_DECODER = new TextDecoder("utf-8", { fatal: true });
 
 export function toUtf8Bytes(text: string) {
-  return UTF8_ENCODER.encode(text);
+  return <Uint8Array>UTF8_ENCODER.encode(text);
 }
 
 export function toUtf8String(value: BytesLike) {
