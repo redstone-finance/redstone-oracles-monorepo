@@ -251,7 +251,8 @@
       ],
       "broadcasters": [
         "hyperliquid-hip3",
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -262,7 +263,8 @@
       ],
       "broadcasters": [
         "hyperliquid-hip3",
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -273,7 +275,8 @@
       ],
       "broadcasters": [
         "hyperliquid-hip3",
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -284,7 +287,8 @@
       ],
       "broadcasters": [
         "hyperliquid-hip3",
-        "influx"
+        "influx",
+        "s3"
       ],
       "denomination": "USD",
       "rateFeed": false
