@@ -9619,6 +9619,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-monitoring-core@workspace:packages/lambda/lambda-monitoring-core"
   dependencies:
+    "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/eth-contracts": "workspace:*"
     "@redstone-finance/evm-adapters": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
