@@ -21,7 +21,7 @@
     "@ethersproject/strings": "^5.7.0",
     "@ethersproject/units": "^5.7.0",
     "@redstone-finance/signing": "workspace:*",
-    "decimal.js": "^10.4.3"
+    "decimal.js": "^10.6.0"
   },
   "files": [
     "src",
