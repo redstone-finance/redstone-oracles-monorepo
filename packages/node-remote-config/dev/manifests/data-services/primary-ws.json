@@ -569,6 +569,10 @@
     },
     "AGPU---EXTENDED": {
       "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1103,30 +1107,6 @@
         "rwa"
       ]
     },
-    "BRKB---OVERNIGHT": {
-      "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
-      },
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "BRKB---EXTENDED": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "BSP---OVERNIGHT": {
       "source": [],
       "priceAggregator": "redstoneX",
@@ -1169,6 +1149,10 @@
     },
     "BWET---EXTENDED": {
       "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1577,6 +1561,10 @@
     },
     "CYPH---EXTENDED": {
       "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1769,6 +1757,10 @@
     },
     "EIDO---EXTENDED": {
       "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -1961,6 +1953,10 @@
     },
     "FWDI---EXTENDED": {
       "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2105,6 +2101,10 @@
     },
     "GPRO---EXTENDED": {
       "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -2545,6 +2545,10 @@
     },
     "KSTR---EXTENDED": {
       "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3655,7 +3659,7 @@
         "rwa"
       ]
     },
-    "SECZ_VIEW---OVERNIGHT": {
+    "SECZ---OVERNIGHT": {
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
@@ -3671,7 +3675,7 @@
         "rwa"
       ]
     },
-    "SECZ_VIEW---EXTENDED": {
+    "SECZ---EXTENDED": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -4129,6 +4133,10 @@
     },
     "STM---EXTENDED": {
       "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4201,6 +4209,10 @@
     },
     "TBT---EXTENDED": {
       "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4537,6 +4549,10 @@
     },
     "URNM---EXTENDED": {
       "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -4560,30 +4576,6 @@
       ]
     },
     "USAR---EXTENDED": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "USDE---OVERNIGHT": {
-      "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
-      },
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "USDE---EXTENDED": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -4873,6 +4865,10 @@
     },
     "ZCSH---EXTENDED": {
       "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -6847,7 +6843,7 @@
         "rwa"
       ]
     },
-    "SECZ_VIEW---PRE_AFTER": {
+    "SECZ---PRE_AFTER": {
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
@@ -7393,22 +7389,6 @@
       "redstoneXAggregatorConfig": {
         "priceValidationSources": []
       },
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "USDE---PRE_AFTER": {
-      "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
-      },
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
