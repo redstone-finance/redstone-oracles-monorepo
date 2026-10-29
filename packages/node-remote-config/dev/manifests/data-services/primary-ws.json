@@ -8535,6 +8535,1350 @@
         "rwa"
       ]
     },
+    "AAOI_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "AAOI---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "AMAT_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "AMAT---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "AMD_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "AMD---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ARM_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "ARM---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ASML_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "ASML---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ASTS_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "ASTS---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "AVGO_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "AVGO---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "AXTI_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "AXTI---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BABA_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "BABA---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BBX_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "BBX---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BE_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "BE---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BMNR_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "BMNR---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BRKB_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "BRKB---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CBRS_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "CBRS---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "COHR_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "COHR---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "COIN_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "COIN---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CRCL_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "CRCL---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CRDO_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "CRDO---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CRWD_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "CRWD---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CRWV_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "CRWV---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "DELL_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "DELL---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "EWJ_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "EWJ---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "EWT_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "EWT---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "FLNC_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "FLNC---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GLW_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "GLW---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "HOOD_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "HOOD---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "IBM_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "IBM---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "IREN_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "IREN---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "KORU_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "KORU---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "KSTR_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "KSTR---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "LITE_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "LITE---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "LLY_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "LLY---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "MRNA_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "MRNA---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "MSTR_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "MSTR---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NBIS_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "NBIS---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NFLX_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "NFLX---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NOK_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "NOK---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NOW_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "NOW---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ORCL_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "ORCL---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "PLTR_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "PLTR---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "QCOM_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "QCOM---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "QNTX_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "QNTX---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "QQQ_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "QQQ---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "RKLB_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "RKLB---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SMCI_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "SMCI---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SOXL_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "SOXL---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SPY_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "SPY---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SQQQ_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "SQQQ---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "STRC_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "STRC---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "STXX_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "STXX---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "TQQQ_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "TQQQ---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "TSM_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "TSM---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "URNM_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "URNM---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USAR_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "USAR---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "UVXY_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "UVXY---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "WDC_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "WDC---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XYZ100---PERP": {
       "source": [],
       "denomination": "USD",
@@ -17205,7 +18549,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "TSLA---PRE_AFTER_EMA_30S": {
+    "TSLA---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -17263,7 +18607,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "AAOI---PRE_AFTER_EMA_30S": {
+    "AAOI---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -17321,7 +18665,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "AAPL---PRE_AFTER_EMA_30S": {
+    "AAPL---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -17379,7 +18723,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "AMAT---PRE_AFTER_EMA_30S": {
+    "AMAT---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -17437,7 +18781,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "AMD---PRE_AFTER_EMA_30S": {
+    "AMD---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -17495,7 +18839,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "AMZN---PRE_AFTER_EMA_30S": {
+    "AMZN---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -17553,7 +18897,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ARM---PRE_AFTER_EMA_30S": {
+    "ARM---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -17611,7 +18955,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ASML---PRE_AFTER_EMA_30S": {
+    "ASML---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -17669,7 +19013,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ASTS---PRE_AFTER_EMA_30S": {
+    "ASTS---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -17727,7 +19071,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "AVGO---PRE_AFTER_EMA_30S": {
+    "AVGO---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -17785,7 +19129,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "AXTI---PRE_AFTER_EMA_30S": {
+    "AXTI---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -17843,7 +19187,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "BABA---PRE_AFTER_EMA_30S": {
+    "BABA---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -17901,7 +19245,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "BBX---PRE_AFTER_EMA_30S": {
+    "BBX---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -17959,7 +19303,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "BE---PRE_AFTER_EMA_30S": {
+    "BE---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -18017,7 +19361,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "BMNR---PRE_AFTER_EMA_30S": {
+    "BMNR---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -18075,7 +19419,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "BRKB---PRE_AFTER_EMA_30S": {
+    "BRKB---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -18249,7 +19593,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "CBRS---PRE_AFTER_EMA_30S": {
+    "CBRS---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -18365,7 +19709,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "COHR---PRE_AFTER_EMA_30S": {
+    "COHR---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -18423,7 +19767,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "COIN---PRE_AFTER_EMA_30S": {
+    "COIN---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -18539,7 +19883,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "CRCL---PRE_AFTER_EMA_30S": {
+    "CRCL---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -18597,7 +19941,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "CRDO---PRE_AFTER_EMA_30S": {
+    "CRDO---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -18713,7 +20057,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "CRWD---PRE_AFTER_EMA_30S": {
+    "CRWD---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -18771,7 +20115,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "CRWV---PRE_AFTER_EMA_30S": {
+    "CRWV---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -18887,7 +20231,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "DELL---PRE_AFTER_EMA_30S": {
+    "DELL---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -19003,7 +20347,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "DRAM---PRE_AFTER_EMA_30S": {
+    "DRAM---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -19061,7 +20405,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "EWJ---PRE_AFTER_EMA_30S": {
+    "EWJ---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -19119,7 +20463,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "EWT---PRE_AFTER_EMA_30S": {
+    "EWT---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -19177,7 +20521,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "EWY---PRE_AFTER_EMA_30S": {
+    "EWY---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -19293,7 +20637,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "FLNC---PRE_AFTER_EMA_30S": {
+    "FLNC---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -19351,7 +20695,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "GLW---PRE_AFTER_EMA_30S": {
+    "GLW---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -19409,7 +20753,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "GOOGL---PRE_AFTER_EMA_30S": {
+    "GOOGL---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -19583,7 +20927,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "HOOD---PRE_AFTER_EMA_30S": {
+    "HOOD---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -19641,7 +20985,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "HYUNDAI_EMA_30S": {
+    "HYUNDAI---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -19699,7 +21043,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IBM---PRE_AFTER_EMA_30S": {
+    "IBM---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -19757,7 +21101,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "INTC---PRE_AFTER_EMA_30S": {
+    "INTC---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -19815,7 +21159,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IREN---PRE_AFTER_EMA_30S": {
+    "IREN---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -19989,7 +21333,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "KORU---PRE_AFTER_EMA_30S": {
+    "KORU---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20047,7 +21391,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "KSTR---PRE_AFTER_EMA_30S": {
+    "KSTR---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20105,7 +21449,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "LITE---PRE_AFTER_EMA_30S": {
+    "LITE---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20163,7 +21507,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "LLY---PRE_AFTER_EMA_30S": {
+    "LLY---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20221,7 +21565,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "META---PRE_AFTER_EMA_30S": {
+    "META---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20279,7 +21623,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "MINIMAX_EMA_30S": {
+    "MINIMAX---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20337,7 +21681,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "MRNA---PRE_AFTER_EMA_30S": {
+    "MRNA---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20395,7 +21739,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "MRVL---PRE_AFTER_EMA_30S": {
+    "MRVL---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20453,7 +21797,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "MSFT---PRE_AFTER_EMA_30S": {
+    "MSFT---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20511,7 +21855,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "MSTR---PRE_AFTER_EMA_30S": {
+    "MSTR---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20569,7 +21913,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "MU---PRE_AFTER_EMA_30S": {
+    "MU---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20627,7 +21971,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "NBIS---PRE_AFTER_EMA_30S": {
+    "NBIS---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20685,7 +22029,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "NFLX---PRE_AFTER_EMA_30S": {
+    "NFLX---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20743,7 +22087,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "NOK---PRE_AFTER_EMA_30S": {
+    "NOK---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20801,7 +22145,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "NOW---PRE_AFTER_EMA_30S": {
+    "NOW---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20859,7 +22203,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "NVDA---PRE_AFTER_EMA_30S": {
+    "NVDA---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21033,7 +22377,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ORCL---PRE_AFTER_EMA_30S": {
+    "ORCL---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21149,7 +22493,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "PLTR---PRE_AFTER_EMA_30S": {
+    "PLTR---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21207,7 +22551,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "QCOM---PRE_AFTER_EMA_30S": {
+    "QCOM---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21265,7 +22609,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "QNTX---PRE_AFTER_EMA_30S": {
+    "QNTX---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21323,7 +22667,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "QQQ---PRE_AFTER_EMA_30S": {
+    "QQQ---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21381,7 +22725,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "RKLB---PRE_AFTER_EMA_30S": {
+    "RKLB---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21439,7 +22783,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SAMSUNG_EMA_30S": {
+    "SAMSUNG---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21497,7 +22841,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SKHY---PRE_AFTER_EMA_30S": {
+    "SKHY---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21555,7 +22899,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SK_HYNIX_EMA_30S": {
+    "SK_HYNIX---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21613,7 +22957,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SMCI---PRE_AFTER_EMA_30S": {
+    "SMCI---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21671,7 +23015,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SNDK---PRE_AFTER_EMA_30S": {
+    "SNDK---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21729,7 +23073,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SOXL---PRE_AFTER_EMA_30S": {
+    "SOXL---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21787,7 +23131,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SPCX---PRE_AFTER_EMA_30S": {
+    "SPCX---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21845,7 +23189,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SPY---PRE_AFTER_EMA_30S": {
+    "SPY---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21903,7 +23247,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SQQQ---PRE_AFTER_EMA_30S": {
+    "SQQQ---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21961,7 +23305,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "STRC---PRE_AFTER_EMA_30S": {
+    "STRC---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -22019,7 +23363,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "STXX---PRE_AFTER_EMA_30S": {
+    "STXX---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -22077,7 +23421,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "TQQQ---PRE_AFTER_EMA_30S": {
+    "TQQQ---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -22135,7 +23479,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "TSM---PRE_AFTER_EMA_30S": {
+    "TSM---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -22251,7 +23595,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "URNM---PRE_AFTER_EMA_30S": {
+    "URNM---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -22309,7 +23653,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "USAR---PRE_AFTER_EMA_30S": {
+    "USAR---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -22367,7 +23711,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "UVXY---PRE_AFTER_EMA_30S": {
+    "UVXY---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -22483,7 +23827,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "WDC---PRE_AFTER_EMA_30S": {
+    "WDC---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
