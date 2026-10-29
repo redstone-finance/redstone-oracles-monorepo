@@ -79,6 +79,9 @@ const showStack = (stack?: string) => {
   return "";
 };
 
+const stringifyCause = (message: string, cause: string) =>
+  message.includes(cause) ? "" : `cause: ${cause}`;
+
 export function stringifyError(e: unknown, noStack = false) {
   return sanitizeLogMessage(stringifyErrorUnsanitized(e, noStack));
 }
@@ -117,7 +120,7 @@ function stringifyErrorUnsanitized(e: unknown, noStack = false): string {
     } else if (error instanceof Error) {
       const causeString = error.cause
         ? typeof error.cause === "object"
-          ? `cause: ${stringifyErrorUnsanitized(error.cause, noStack)}`
+          ? stringifyCause(error.message, stringifyErrorUnsanitized(error.cause, noStack))
           : stringify(error.cause)
         : "";
       const stackString = noStack ? "" : showStack(error.stack);

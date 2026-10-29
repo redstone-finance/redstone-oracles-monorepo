@@ -12,6 +12,21 @@ describe("stringifyError", () => {
 
     expect(stringifyError(once)).toBe(once);
   });
+
+  it("skips the cause when the message already contains it", () => {
+    const cause = new TypeError("Cannot convert undefined or null to object");
+    const error = new Error(`getAmountOut failed error=${stringifyError(cause)}`, { cause });
+
+    expect(stringifyError(error, true)).toBe(
+      "getAmountOut failed error=Cannot convert undefined or null to object"
+    );
+  });
+
+  it("keeps the cause when the message does not contain it", () => {
+    const error = new Error("getAmountOut failed", { cause: new Error("boom") });
+
+    expect(stringifyError(error, true)).toBe("getAmountOut failed cause: boom");
+  });
 });
 
 describe("assertThenReturnOrFail", () => {
