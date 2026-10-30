@@ -22,11 +22,6 @@
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*"
   },
-  "devDependencies": {
-    "@redstone-finance/rpc-providers": "workspace:*",
-    "@redstone-finance/signing": "workspace:*",
-    "dotenv": "^16.0.3"
-  },
   "files": [
     "dist/src/**/*"
   ]
