@@ -222,6 +222,13 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "earnUSDC_PPS_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "CDTDRJMUKLND6X2B6XFOONCB6AAMX2QYD46ELKIT2RSC5LHOXDKHNUJ7",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
