@@ -1,4 +1,4 @@
-import { safelyConvertAnyValueToNumber } from "../../src/common/numbers";
+import { clamp, safelyConvertAnyValueToNumber } from "../../src/common/numbers";
 
 describe("utils/numbers", () => {
   describe("safelyConvertAnyValueToNumber", () => {
@@ -24,6 +24,25 @@ describe("utils/numbers", () => {
       for (const nanValue of nanValues) {
         expect(safelyConvertAnyValueToNumber(nanValue)).toBe(NaN);
       }
+    });
+  });
+
+  describe("clamp", () => {
+    it("returns the value when it is within bounds", () => {
+      expect(clamp(1, 2, 3)).toBe(2);
+    });
+
+    it("returns min when the value is below it", () => {
+      expect(clamp(1, 0, 3)).toBe(1);
+    });
+
+    it("returns max when the value is above it", () => {
+      expect(clamp(1, 4, 3)).toBe(3);
+    });
+
+    it("returns the bound when the value equals it", () => {
+      expect(clamp(1, 1, 3)).toBe(1);
+      expect(clamp(1, 3, 3)).toBe(3);
     });
   });
 });
