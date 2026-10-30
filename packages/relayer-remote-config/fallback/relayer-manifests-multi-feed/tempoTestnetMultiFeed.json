@@ -13,6 +13,13 @@
   "priceFeeds": {
     "USDC/EUROC": {
       "priceFeedAddress": "0xE94c9f9A1893f23be38A5C0394E46Ac05e8a5f8C"
+    },
+    "APRIME_STAGING_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0xFd7457B6f09990243Bf8E4C6C956EB909C0E6417",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
