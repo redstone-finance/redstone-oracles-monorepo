@@ -181,6 +181,13 @@
         "deviationPercentage": 0.05,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "PAXG": {
+      "priceFeedAddress": "0x4914B59AB7f030d605c336CDc3f7470a2e16A53b",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
