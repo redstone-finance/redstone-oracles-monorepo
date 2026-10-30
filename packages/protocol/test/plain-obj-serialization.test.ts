@@ -1,4 +1,5 @@
 import { toUtf8Bytes } from "@ethersproject/strings";
+import { UniversalSigner } from "@redstone-finance/signing";
 import {
   DataPackage,
   DataPoint,
@@ -173,47 +174,68 @@ describe("Fixed size data package", () => {
       dataPackageId: "redstone-test",
     };
 
+    const spyOnDeserialization = () => ({
+      dataPackageSpy: jest.spyOn(DataPackage, "fromObj"),
+      signatureSpy: jest.spyOn(UniversalSigner, "splitSignature"),
+    });
+
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
     it("should return a SignedDataPackage instance", () => {
       const lazy = SignedDataPackage.fromObjLazy(plainObj);
       expect(lazy).toBeInstanceOf(SignedDataPackage);
     });
 
-    it("should not call fromObj until property is accessed", () => {
-      const spy = jest.spyOn(SignedDataPackage, "fromObj");
-      const lazy = SignedDataPackage.fromObjLazy(plainObj);
+    it("should not deserialize anything until a property is accessed", () => {
+      const { dataPackageSpy, signatureSpy } = spyOnDeserialization();
 
-      expect(spy).not.toHaveBeenCalled();
+      SignedDataPackage.fromObjLazy(plainObj);
+
+      expect(dataPackageSpy).not.toHaveBeenCalled();
+      expect(signatureSpy).not.toHaveBeenCalled();
+    });
+
+    it("should deserialize only the data package when it is accessed", () => {
+      const { dataPackageSpy, signatureSpy } = spyOnDeserialization();
+      const lazy = SignedDataPackage.fromObjLazy(plainObj);
 
       void lazy.dataPackage;
 
-      expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(plainObj);
-
-      spy.mockRestore();
+      expect(dataPackageSpy).toHaveBeenCalledTimes(1);
+      expect(dataPackageSpy).toHaveBeenCalledWith(plainObj);
+      expect(signatureSpy).not.toHaveBeenCalled();
     });
 
-    it("should trigger deserialization via signature access too", () => {
-      const spy = jest.spyOn(SignedDataPackage, "fromObj");
+    it("should deserialize only the signature when it is accessed", () => {
+      const { dataPackageSpy, signatureSpy } = spyOnDeserialization();
       const lazy = SignedDataPackage.fromObjLazy(plainObj);
 
       void lazy.signature;
 
-      expect(spy).toHaveBeenCalledTimes(1);
-
-      spy.mockRestore();
+      expect(signatureSpy).toHaveBeenCalledTimes(1);
+      expect(dataPackageSpy).not.toHaveBeenCalled();
     });
 
-    it("should deserialize only once across multiple accesses", () => {
-      const spy = jest.spyOn(SignedDataPackage, "fromObj");
+    it("should deserialize each part only once across multiple accesses", () => {
+      const { dataPackageSpy, signatureSpy } = spyOnDeserialization();
       const lazy = SignedDataPackage.fromObjLazy(plainObj);
 
       void lazy.dataPackage;
       void lazy.signature;
       void lazy.dataPackage;
+      void lazy.signature;
 
-      expect(spy).toHaveBeenCalledTimes(1);
+      expect(dataPackageSpy).toHaveBeenCalledTimes(1);
+      expect(signatureSpy).toHaveBeenCalledTimes(1);
+    });
 
-      spy.mockRestore();
+    it("should read the data package of a package with an empty signature", () => {
+      const lazy = SignedDataPackage.fromObjLazy({ ...plainObj, signature: "" });
+
+      expect(lazy.dataPackage).toEqual(SignedDataPackage.fromObj(plainObj).dataPackage);
+      expect(() => lazy.signature).toThrow("Signature can not be empty");
     });
 
     it("should return the same dataPackage as fromObj", () => {

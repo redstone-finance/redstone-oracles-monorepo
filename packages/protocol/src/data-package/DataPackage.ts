@@ -1,7 +1,7 @@
 import { arrayify, concat, hexlify } from "@ethersproject/bytes";
 import type { Signature } from "@redstone-finance/signing";
 import { keccak256, UniversalSigner } from "@redstone-finance/signing";
-import { decodeBase64, encodeBase64 } from "../common/base64";
+import { encodeBase64 } from "../common/base64";
 import {
   DATA_POINT_VALUE_BYTE_SIZE_BS,
   DATA_POINTS_COUNT_BS,
@@ -11,6 +11,7 @@ import { Serializable } from "../common/Serializable";
 import { assert, convertIntegerNumberToBytes } from "../common/utils";
 import { deserializeDataPointFromObj } from "../data-point/data-point-deserializer";
 import { DataPoint, DataPointPlainObj } from "../data-point/DataPoint";
+import { deserializeSignature } from "./deserialize-signature";
 
 export interface DataPackagePlainObj {
   dataPoints: DataPointPlainObj[];
@@ -204,21 +205,22 @@ export class SignedDataPackage extends Serializable implements SignedDataPackage
 
   public static fromObjLazy(plainObject: SignedDataPackagePlainObj): SignedDataPackage {
     const dp = new SignedDataPackage(null as unknown as DataPackage, null as unknown as string);
-    let decoded: SignedDataPackageLike | undefined;
+    let dataPackage: DataPackage | undefined;
+    let signature: Signature | undefined;
 
     Object.defineProperty(dp, "dataPackage", {
       get() {
-        decoded ??= SignedDataPackage.fromObj(plainObject);
+        dataPackage ??= DataPackage.fromObj(plainObject);
 
-        return decoded.dataPackage;
+        return dataPackage;
       },
     });
 
     Object.defineProperty(dp, "signature", {
       get() {
-        decoded ??= SignedDataPackage.fromObj(plainObject);
+        signature ??= deserializeSignature(plainObject.signature);
 
-        return decoded.signature;
+        return signature;
       },
     });
 
@@ -238,12 +240,7 @@ export interface SignedDataPackageLike {
 export function deserializeSignedPackage(
   plainObject: SignedDataPackagePlainObj
 ): SignedDataPackageLike {
-  const signatureBase64 = plainObject.signature;
-  if (!signatureBase64) {
-    throw new Error("Signature can not be empty");
-  }
-  const signatureBytes: Uint8Array = decodeBase64(signatureBase64);
-  const parsedSignature = UniversalSigner.splitSignature(signatureBytes);
+  const parsedSignature = deserializeSignature(plainObject.signature);
 
   const { signature: _, ...unsignedDataPackagePlainObj } = plainObject;
   const unsignedDataPackage = DataPackage.fromObj(unsignedDataPackagePlainObj);

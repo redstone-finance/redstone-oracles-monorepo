@@ -9,7 +9,7 @@ import {
 
 type Config = { ttlMs: number; latestTtlMs?: number };
 
-const DEFAULT_CONFIG: Config = { ttlMs: RedstoneCommon.minToMs(5) };
+const DEFAULT_CONFIG: Config = { ttlMs: RedstoneCommon.minToMs(3) };
 
 export class DataPackagesResponseStorage {
   private readonly logger = loggerFactory("data-packages-response-storage");
