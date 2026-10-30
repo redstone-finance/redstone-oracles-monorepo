@@ -8,8 +8,8 @@
     "deviationPercentage": 1,
     "timeSinceLastUpdateInMilliseconds": 7000
   },
-  "adapterContract": "00a4751ca76ba06486ad0b8a57620408fb94ce0dbd7a39bf276d0242d356764d8cca121220b62bc431bdf6a1701797edfb382d07f53770155f8c5edc8cad4ae7456fc8d659",
-  "adapterContractPackageId": "#redstone-interface-v20",
+  "adapterContract": "00efb3fb422c45b9002ff1905cb6876a415b5640328b3dad059386104d604e5249ca12122090f7c618e6ff26ef434cdced89b63a6397cc3dffb804401914285c23c8f5085c",
+  "adapterContractPackageId": "#caps-redstone-oracle-v0",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "CC": {},
