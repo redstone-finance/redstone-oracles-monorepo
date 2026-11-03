@@ -7765,7 +7765,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "",
-        "maxAcceptableDeviation": 1,
+        "maxAcceptableDeviation": 2.5,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
