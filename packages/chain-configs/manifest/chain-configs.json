@@ -619,7 +619,7 @@
       "name": "TAC Saint Petersburg Testnet",
       "networkId": 2391,
       "currencySymbol": "TAC",
-      "publicRpcUrls": ["https://spb.rpc.tac.build", "https://rpc.ankr.com/tac_spb"],
+      "publicRpcUrls": ["https://rpc-public-spb.tac.build"],
       "avgBlockTimeMs": 2000,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
