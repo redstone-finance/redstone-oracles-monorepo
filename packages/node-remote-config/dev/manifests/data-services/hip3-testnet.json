@@ -758,6 +758,7 @@
     },
     "ANTHROPIC_PERP": {
       "source": [
+        "ws-hyperliquid-perps-xyz",
         "ws-perp-binance-usdt",
         "ws-perp-coinbase-usdc",
         "ws-perp-mexc-usdt"
