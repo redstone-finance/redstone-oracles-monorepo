@@ -25,7 +25,8 @@ async function main() {
   const contractAddress = RedstoneCommon.getFromEnv("CONTRACT_ADDRESS");
   const privateKey = RedstoneCommon.getFromEnv("PRIVATE_KEY");
   const rpcUrl = RedstoneCommon.getFromEnv("RPC_URL");
-  const provider = getJsonRpcProvider(rpcUrl);
+  const chainId = Number(RedstoneCommon.getFromEnv("CHAIN_ID"));
+  const provider = getJsonRpcProvider(rpcUrl, { network: { name: String(chainId), chainId } });
 
   const paramsProvider = new ContractParamsProvider(requestParams);
   const feeds = paramsProvider.getHexlifiedFeedIdsAsBytes32();
