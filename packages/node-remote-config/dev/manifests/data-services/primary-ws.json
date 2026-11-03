@@ -10930,6 +10930,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10981,6 +10988,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11311,6 +11325,13 @@
         "ws-spot-gate-usdt",
         "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11404,6 +11425,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12350,6 +12378,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12396,6 +12431,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12411,6 +12453,13 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12444,6 +12493,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12541,6 +12597,13 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12604,6 +12667,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12622,6 +12692,13 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 3,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12650,6 +12727,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12681,6 +12765,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12697,6 +12788,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12752,6 +12850,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 4,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12797,6 +12902,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12844,6 +12956,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12889,6 +13008,13 @@
         "ws-spot-htx-usdt",
         "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -12979,6 +13105,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13061,6 +13194,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13075,6 +13215,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13168,6 +13315,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13245,6 +13399,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13278,6 +13439,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13294,6 +13462,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13354,6 +13529,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13386,6 +13568,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13431,6 +13620,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13449,6 +13645,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13465,6 +13668,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13513,6 +13723,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13527,6 +13744,13 @@
         "ws-spot-bybit-usdt",
         "ws-spot-htx-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13585,6 +13809,13 @@
         "ws-spot-bitget-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13646,6 +13877,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13694,6 +13932,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13739,6 +13984,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13812,6 +14064,13 @@
         "ws-spot-binance-usdt",
         "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13893,6 +14152,13 @@
         "ws-spot-bybit-usdt",
         "ws-spot-htx-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13921,6 +14187,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13939,6 +14212,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13954,6 +14234,13 @@
         "ws-spot-gate-usdt",
         "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13962,6 +14249,13 @@
     },
     "W": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -13990,6 +14284,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-bitget-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -14038,6 +14339,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -14052,6 +14360,13 @@
         "ws-spot-gate-usdt",
         "ws-spot-bitget-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16539,6 +16854,13 @@
         "ws-spot-htx-usdt",
         "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16578,6 +16900,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16591,6 +16920,13 @@
         "ws-spot-gate-usdt",
         "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16605,6 +16941,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16648,6 +16991,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16663,6 +17013,13 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16679,6 +17036,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 3,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16728,6 +17092,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16756,6 +17127,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16770,6 +17148,13 @@
         "ws-spot-gate-usdt",
         "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16814,6 +17199,13 @@
         "ws-spot-htx-usdt",
         "ws-spot-kucoin-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16844,6 +17236,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16879,6 +17278,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16942,6 +17348,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -16977,6 +17390,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -17048,6 +17468,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -17078,6 +17505,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -17122,6 +17556,13 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -17140,6 +17581,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -17158,6 +17606,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -17210,6 +17665,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -17261,6 +17723,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -17364,6 +17833,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -17418,6 +17894,13 @@
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
