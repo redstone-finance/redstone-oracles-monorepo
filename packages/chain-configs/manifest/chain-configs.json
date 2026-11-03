@@ -602,7 +602,7 @@
       "name": "TAC Mainnet",
       "networkId": 239,
       "currencySymbol": "TAC",
-      "publicRpcUrls": ["https://rpc.ankr.com/tac", "https://rpc.tac.build"],
+      "publicRpcUrls": ["https://tac.drpc.org"],
       "avgBlockTimeMs": 1600,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
