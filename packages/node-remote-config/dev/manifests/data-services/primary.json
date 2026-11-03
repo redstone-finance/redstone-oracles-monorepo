@@ -5905,19 +5905,31 @@
     },
     "FGNX_EOD": {
       "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
         "financialmodelingprep-eod-deferred",
         "twelve-data-stocks-eod-deferred"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
     },
     "FGNXP_EOD": {
       "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
         "financialmodelingprep-eod-deferred",
         "twelve-data-stocks-eod-deferred"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
     },
     "CURR_EOD": {
       "source": [
