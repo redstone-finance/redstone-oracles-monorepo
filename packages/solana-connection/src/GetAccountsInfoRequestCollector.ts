@@ -1,24 +1,32 @@
 import { Collector } from "@redstone-finance/utils";
-import { AccountInfo, Commitment, DataSlice, PublicKey } from "@solana/web3.js";
+import {
+  AccountInfo,
+  Commitment,
+  DataSlice,
+  PublicKey,
+  RpcResponseAndContext,
+} from "@solana/web3.js";
 
 export type CollectableCommitmentOrConfig =
   Commitment | { minContextSlot?: number; commitment?: Commitment; dataSlice?: DataSlice };
 
 export type GetAccountsInfoRequestCollectorDelegate = {
-  getAccountsInfoRequestCollectorGetMultipleAccountsInfo(
+  getAccountsInfoRequestCollectorGetMultipleAccountsInfoAndContext(
     publicKeys: PublicKey[],
     commitmentOrConfig?: CollectableCommitmentOrConfig
-  ): GetMultipleAccountsInfoResult;
+  ): GetMultipleAccountsInfoAndContextResult;
   getAccountsInfoRequestCollectorDispose?(commitmentOrConfig?: CollectableCommitmentOrConfig): void;
 };
-type GetMultipleAccountsInfoResult = Promise<(AccountInfo<Buffer> | null)[]>;
+type GetMultipleAccountsInfoAndContextResult = Promise<
+  RpcResponseAndContext<(AccountInfo<Buffer> | null)[]>
+>;
 
 const DEFAULT_COLLECTING_INTERVAL_MS = 10;
 const MAX_NUMBER_OF_ACCOUNTS_TO_FETCH = 100; // solana requirement
 
 export class GetAccountsInfoRequestCollector extends Collector.RequestCollector<
   PublicKey,
-  AccountInfo<Buffer> | null
+  RpcResponseAndContext<AccountInfo<Buffer> | null>
 > {
   delegate?: WeakRef<GetAccountsInfoRequestCollectorDelegate>;
 
@@ -45,10 +53,13 @@ export class GetAccountsInfoRequestCollector extends Collector.RequestCollector<
       throw new Error("Connection not set - delegate is empty");
     }
 
-    return await connection.getAccountsInfoRequestCollectorGetMultipleAccountsInfo(
-      publicKeys,
-      this.commitmentOrConfig
-    );
+    const { context, value } =
+      await connection.getAccountsInfoRequestCollectorGetMultipleAccountsInfoAndContext(
+        publicKeys,
+        this.commitmentOrConfig
+      );
+
+    return value.map((accountInfo) => ({ context, value: accountInfo }));
   }
 
   protected override onIdle() {

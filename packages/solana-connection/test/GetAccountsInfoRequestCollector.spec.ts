@@ -1,8 +1,5 @@
-import {
-  CollectableCommitmentOrConfig,
-  GetAccountsInfoRequestCollector,
-} from "../src/GetAccountsInfoRequestCollector";
-import { makeAccountInfo, makePublicKey, MockDelegate } from "./test-helpers";
+import { CollectableCommitmentOrConfig, GetAccountsInfoRequestCollector } from "../src";
+import { makeAccountInfo, makePublicKey, MOCK_CONTEXT_SLOT, MockDelegate } from "./test-helpers";
 
 function setUp(commitmentOrConfig?: CollectableCommitmentOrConfig, collectingIntervalMs = 10) {
   const collector = new GetAccountsInfoRequestCollector(commitmentOrConfig, collectingIntervalMs);
@@ -39,7 +36,7 @@ describe("GetAccountsInfoRequestCollector", () => {
 
       const result = await sut.collectMany([key]);
 
-      expect(result).toEqual([makeAccountInfo(1)]);
+      expect(result).toEqual([{ context: { slot: MOCK_CONTEXT_SLOT }, value: makeAccountInfo(1) }]);
       expect(delegate.commitmentOrConfigs).toEqual([undefined]);
     });
 
@@ -50,7 +47,7 @@ describe("GetAccountsInfoRequestCollector", () => {
 
       const result = await sut.collectMany([key]);
 
-      expect(result).toEqual([makeAccountInfo(1)]);
+      expect(result).toEqual([{ context: { slot: MOCK_CONTEXT_SLOT }, value: makeAccountInfo(1) }]);
       expect(delegate.commitmentOrConfigs).toEqual([
         { commitment: "confirmed", minContextSlot: 7 },
       ]);

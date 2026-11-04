@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@redstone-finance/utils": "workspace:*",
-    "@solana/web3.js": "^1.98.4",
+    "@solana/web3.js": "^1.99.0",
     "lodash": "^4.17.23"
   },
   "files": [

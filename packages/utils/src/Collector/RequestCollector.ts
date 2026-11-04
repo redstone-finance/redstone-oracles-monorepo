@@ -111,16 +111,13 @@ export abstract class RequestCollector<Key, Result> {
       const waitingKeysCount = this.waitingEntries.reduce((sum, e) => sum + e.keys.length, 0);
 
       if (waitingKeysCount > 0 && keys.length + waitingKeysCount > this.maxBatchSize) {
-        await this.consumeWaitingEntries();
+        this.startConsumingWaitingEntries();
       }
 
       return await new Promise<Result[]>((resolve, reject) => {
         this.waitingEntries.push({ keys, resolve, reject });
         this.timer ??= setTimeout(
-          () =>
-            void this.consumeWaitingEntries().catch((e) =>
-              this.logger.error(`consumeWaitingEntries failed: ${stringifyError(e)}`)
-            ),
+          this.startConsumingWaitingEntries.bind(this),
           this.collectingIntervalMs
         );
       });
@@ -128,6 +125,12 @@ export abstract class RequestCollector<Key, Result> {
       this.activeRegisterCalls--;
       this.maybeFireOnIdle();
     }
+  }
+
+  private startConsumingWaitingEntries() {
+    void this.consumeWaitingEntries().catch((e) =>
+      this.logger.error(`consumeWaitingEntries failed: ${stringifyError(e)}`)
+    );
   }
 
   private async consumeWaitingEntries() {
