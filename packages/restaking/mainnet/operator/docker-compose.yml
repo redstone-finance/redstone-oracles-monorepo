@@ -1,6 +1,6 @@
 services:
   operator-attester:
-    image: public.ecr.aws/z6z4q0a5/prod-avs-othentic-client:e1637186
+    image: public.ecr.aws/z6z4q0a5/prod-avs-othentic-client:e1637186@sha256:d55bb12996496ca0b636e5d3bbb199636c59c7c3f4a82ef51748722404bf4370
     platform: linux/arm64
     command: [
         "node",
@@ -28,5 +28,5 @@ services:
     ports:
       - "3000:3000"
   operator-validation-api:
-    image: public.ecr.aws/z6z4q0a5/prod-avs-validation-api:e1637186
+    image: public.ecr.aws/z6z4q0a5/prod-avs-validation-api:e1637186@sha256:8652238c12a54d6844f44f34a464d19ac1790cb268efead91e7aa5f7544ed08d
     platform: linux/arm64

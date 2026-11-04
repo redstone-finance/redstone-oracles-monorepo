@@ -1,5 +1,5 @@
 # Stage 1: Build environment
-FROM rust:1.81.0-slim AS builder
+FROM rust:1.81.0-slim@sha256:f9fb6bdb0483de4ade93b262a3f6cf8c2985fca1d34784914bbcabd5a34d3197 AS builder
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y \

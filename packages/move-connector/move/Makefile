@@ -8,16 +8,26 @@ FEED_ETH=0x4554480000000000000000000000000000000000000000000000000000000000
 FEED_BTC=0x4254430000000000000000000000000000000000000000000000000000000000
 BUILDER=aptos#or movement
 DIR=contracts
+APTOS_CLI_VERSION=9.6.0
+APTOS_CLI_ZIP=aptos-cli-$(APTOS_CLI_VERSION)-macOS-$(shell uname -m).zip
+APTOS_CLI_SHA256_arm64=8b59fcd0ea768a173c5b90c299b6d6f53a9052e91160a98a465416f7330eecc5
+APTOS_CLI_SHA256_x86_64=1cc8e173cb4ed45f1365b5d79e83026bd007fd49ae7f74246b4238983ba73d35
 
 install-cli:
-	curl -LO https://github.com/movementlabsxyz/homebrew-movement-cli/releases/download/bypass-homebrew/movement-cli-l1-macos-x86_64.tar.gz
+	curl -fLO https://github.com/movementlabsxyz/homebrew-movement-cli/releases/download/bypass-homebrew/movement-cli-l1-macos-x86_64.tar.gz
+	echo "76ccb07b2e77106c110548720bab2e0fb9ed5b7e348e287231af2ea50388fb02  movement-cli-l1-macos-x86_64.tar.gz" | shasum -a 256 -c -
 	mkdir -p temp_extract
 	tar -xzf movement-cli-l1-macos-x86_64.tar.gz -C temp_extract
 	chmod +x temp_extract/movement
 	sudo mv temp_extract/movement /usr/local/bin/movement
 	rm -rf temp_extract
 	rm movement-cli-l1-macos-x86_64.tar.gz
-	brew install aptos
+	curl -fLO https://github.com/aptos-labs/aptos-core/releases/download/aptos-cli-v$(APTOS_CLI_VERSION)/$(APTOS_CLI_ZIP)
+	echo "$(APTOS_CLI_SHA256_$(shell uname -m))  $(APTOS_CLI_ZIP)" | shasum -a 256 -c -
+	unzip -o $(APTOS_CLI_ZIP) aptos -d temp_extract
+	sudo mv temp_extract/aptos /usr/local/bin/aptos
+	rm -rf temp_extract
+	rm $(APTOS_CLI_ZIP)
 
 init-movement:
 	movement init --skip-faucet
