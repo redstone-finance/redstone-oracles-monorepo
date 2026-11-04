@@ -333,7 +333,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "",
-        "maxAcceptableDeviation": 1,
+        "maxAcceptableDeviation": 4,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
@@ -7767,7 +7767,8 @@
         "primarySource": "",
         "maxAcceptableDeviation": 2.5,
         "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+        "upperClampPercent": 0.1,
+        "includePrimaryInMedian": true
       },
       "denomination": "points",
       "rateFeed": false,
@@ -12234,7 +12235,8 @@
         "primarySource": "",
         "maxAcceptableDeviation": 2.5,
         "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+        "upperClampPercent": 0.1,
+        "includePrimaryInMedian": true
       },
       "denomination": "KRW",
       "rateFeed": false,
@@ -12249,7 +12251,8 @@
         "primarySource": "",
         "maxAcceptableDeviation": 2.5,
         "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+        "upperClampPercent": 0.1,
+        "includePrimaryInMedian": true
       },
       "denomination": "KRW",
       "rateFeed": false,
@@ -12264,7 +12267,8 @@
         "primarySource": "",
         "maxAcceptableDeviation": 2.5,
         "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+        "upperClampPercent": 0.1,
+        "includePrimaryInMedian": true
       },
       "denomination": "KRW",
       "rateFeed": false,
@@ -12279,7 +12283,8 @@
         "primarySource": "",
         "maxAcceptableDeviation": 2.5,
         "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+        "upperClampPercent": 0.1,
+        "includePrimaryInMedian": true
       },
       "broadcasters": [
         "influx",
@@ -12298,7 +12303,8 @@
         "primarySource": "",
         "maxAcceptableDeviation": 2.5,
         "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+        "upperClampPercent": 0.1,
+        "includePrimaryInMedian": true
       },
       "broadcasters": [
         "influx",
@@ -12317,7 +12323,8 @@
         "primarySource": "",
         "maxAcceptableDeviation": 2.5,
         "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+        "upperClampPercent": 0.1,
+        "includePrimaryInMedian": true
       },
       "broadcasters": [
         "influx",
@@ -12336,7 +12343,8 @@
         "primarySource": "",
         "maxAcceptableDeviation": 2.5,
         "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+        "upperClampPercent": 0.1,
+        "includePrimaryInMedian": true
       },
       "broadcasters": [
         "influx",
@@ -12355,7 +12363,8 @@
         "primarySource": "",
         "maxAcceptableDeviation": 2.5,
         "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+        "upperClampPercent": 0.1,
+        "includePrimaryInMedian": true
       },
       "broadcasters": [
         "influx",
