@@ -12606,9 +12606,9 @@
     "BILL": {
       "source": [
         "bingx_deferred-usdt",
-        "coinbase_deferred-usd",
         "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt"
       ],
@@ -12667,8 +12667,8 @@
     "BASED": {
       "source": [
         "binancealpha_deferred-usdt",
-        "coinbase_deferred-usd",
         "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
@@ -12724,10 +12724,10 @@
     },
     "PAXG": {
       "source": [
-        "coinbase_deferred-usd",
         "lbank_deferred-usdt",
         "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
+        "ws-spot-coinbase-usd",
         "ws-spot-gate-usdt",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
@@ -12742,10 +12742,10 @@
     },
     "KAT": {
       "source": [
-        "coinbase_deferred-usd",
         "lbank_deferred-usdt",
         "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
+        "ws-spot-coinbase-usd",
         "ws-spot-gate-usdt",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
@@ -13029,7 +13029,7 @@
         "ws-spot-bitget-usdt",
         "mexc_deferred-usdt",
         "mexc_deferred-usdc",
-        "coinbase_deferred-usd"
+        "ws-spot-coinbase-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -13251,9 +13251,9 @@
     },
     "GWEI": {
       "source": [
-        "coinbase_deferred-usd",
         "lbank_deferred-usdt",
         "ws-spot-bitget-usdt",
+        "ws-spot-coinbase-usd",
         "ws-spot-gate-usdt",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt"
@@ -13443,11 +13443,11 @@
     "OPG": {
       "source": [
         "binance_deferred-usdc",
-        "coinbase_deferred-usd",
         "lbank_deferred-usdt",
         "mexc_deferred-usdt",
         "ws-spot-binance-usdt",
         "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
         "ws-spot-htx-usdt"
       ],
       "denomination": "USD",
@@ -13473,9 +13473,9 @@
     },
     "IRYS": {
       "source": [
-        "coinbase_deferred-usd",
         "lbank_deferred-usdt",
         "ws-spot-bitget-usdt",
+        "ws-spot-coinbase-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt"
@@ -13755,11 +13755,11 @@
     },
     "JTO": {
       "source": [
-        "coinbase_deferred-usd",
         "lbank_deferred-usdt",
         "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
         "ws-spot-gate-usdt",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
@@ -13797,10 +13797,10 @@
     "FIDA": {
       "source": [
         "bingx_deferred-usdt",
-        "coinbase_deferred-usd",
         "lbank_deferred-usdt",
         "ws-spot-binance-usdt",
         "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
         "ws-spot-kucoin-usdt"
       ],
       "denomination": "USD",
@@ -13973,8 +13973,8 @@
     "USELESS": {
       "source": [
         "binancealpha_deferred-usdt",
-        "coinbase_deferred-usd",
         "lbank_deferred-usdt",
+        "ws-spot-coinbase-usd",
         "ws-spot-gate-usdt",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt"
@@ -18223,6 +18223,537 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AERO": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
+        "ws-spot-gate-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "APT": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BGB": {
+      "source": [
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-kraken-usd"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-bitget-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BSV": {
+      "source": [
+        "ws-spot-bitget-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BTT": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-binance-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CAKE": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CRO": {
+      "source": [
+        "ws-spot-coinbase-usd",
+        "ws-spot-gate-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FLR": {
+      "source": [
+        "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GRAM": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GT": {
+      "source": [
+        "lbank_deferred-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-gate-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "JST": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KAS": {
+      "source": [
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "M": {
+      "source": [
+        "mexc_deferred-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MNT": {
+      "source": [
+        "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "NEXO": {
+      "source": [
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "NIGHT": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "OKB": {
+      "source": [
+        "bingx_deferred-usdt",
+        "lbank_deferred-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-spot-okx-usdt",
+        "maxAcceptableDeviation": 2,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PI": {
+      "source": [
+        "ws-spot-bitget-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PIEVERSE": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "lbank_deferred-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kucoin-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PYUSD": {
+      "source": [
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "QNT": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "RAY": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-coinbase-usd",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "RLUSD": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TIA": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "U": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "USD1": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
+        "ws-spot-gate-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "USDD": {
+      "source": [
+        "bingx_deferred-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kucoin-usdt"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "USDG": {
+      "source": [
+        "bitstamp_deferred-usd",
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "VET": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "VVV": {
+      "source": [
+        "ws-spot-bybit-usdt",
+        "ws-spot-coinbase-usd",
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-okx-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "XDC": {
+      "source": [
+        "ws-spot-bitget-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
         "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
