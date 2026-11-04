@@ -70,9 +70,6 @@
     "wstETH/ETH": {
       "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc"
     },
-    "rsETH_FUNDAMENTAL": {
-      "priceFeedAddress": "0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D"
-    },
     "weETH_FUNDAMENTAL": {
       "priceFeedAddress": "0xBf3bA2b090188B40eF83145Be0e9F30C6ca63689"
     },

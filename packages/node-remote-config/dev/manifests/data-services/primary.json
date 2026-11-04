@@ -1456,19 +1456,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "rsETH_FUNDAMENTAL": {
-      "source": [
-        "ethereum-evm-fetcher-kelp"
-      ],
-      "denomination": "ETH",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
     "rswETH_FUNDAMENTAL": {
       "source": [
         "ethereum-evm-fetcher-swell"
