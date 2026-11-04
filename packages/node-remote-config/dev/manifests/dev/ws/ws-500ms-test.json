@@ -435,6 +435,86 @@
         "rwa"
       ]
     },
+    "MSFT---OVERNIGHT": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "MSFT---EXTENDED": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "AMZN---OVERNIGHT": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "AMZN---EXTENDED": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GOOGL---OVERNIGHT": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "GOOGL---EXTENDED": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "META---OVERNIGHT": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "META---EXTENDED": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "AAPL---PRE_AFTER": {
       "source": [],
       "priceAggregator": "redstoneX",

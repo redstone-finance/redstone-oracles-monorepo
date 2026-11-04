@@ -19969,7 +19969,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "BX---PRE_AFTER_EMA_30S": {
+    "BX---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20491,7 +20491,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "CRM---PRE_AFTER_EMA_30S": {
+    "CRM---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20665,7 +20665,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "CSCO---PRE_AFTER_EMA_30S": {
+    "CSCO---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -20781,7 +20781,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "DIS---PRE_AFTER_EMA_30S": {
+    "DIS---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21071,7 +21071,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "EWZ---PRE_AFTER_EMA_30S": {
+    "EWZ---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21303,7 +21303,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "GS---PRE_AFTER_EMA_30S": {
+    "GS---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21361,7 +21361,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "HD---PRE_AFTER_EMA_30S": {
+    "HD---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21709,7 +21709,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IWM---PRE_AFTER_EMA_30S": {
+    "IWM---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -21767,7 +21767,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "JPM---PRE_AFTER_EMA_30S": {
+    "JPM---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -22753,7 +22753,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "NVO---PRE_AFTER_EMA_30S": {
+    "NVO---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -22811,7 +22811,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ONDS---PRE_AFTER_EMA_30S": {
+    "ONDS---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -22927,7 +22927,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "PAYP---PRE_AFTER_EMA_30S": {
+    "PAYP---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -24029,7 +24029,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "UBER---PRE_AFTER_EMA_30S": {
+    "UBER---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -24261,7 +24261,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "V---PRE_AFTER_EMA_30S": {
+    "V---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -24377,7 +24377,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "WMT---PRE_AFTER_EMA_30S": {
+    "WMT---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
@@ -24551,7 +24551,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "XLE---PRE_AFTER_EMA_30S": {
+    "XLE---EXTENDED_EMA_30S": {
       "source": [
         "ema"
       ],
