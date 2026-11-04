@@ -17,6 +17,7 @@ import {
   TransactionResponse,
   VersionedTransactionResponse,
 } from "@solana/web3.js";
+import _ from "lodash";
 import {
   CollectableCommitmentOrConfig,
   GetAccountsInfoRequestCollector,
@@ -68,24 +69,50 @@ export class RedStoneConnection
     super(endpoint, commitmentOrConfig);
   }
 
+  override async getMultipleAccountsInfoAndContext(
+    publicKeys: PublicKey[],
+    commitmentOrConfig?: Commitment | GetMultipleAccountsConfig
+  ) {
+    if (!publicKeys.length) {
+      return await super.getMultipleAccountsInfoAndContext(publicKeys, commitmentOrConfig);
+    }
+
+    const results = await this.getAccountsInfoRequestCollectors
+      .get(commitmentOrConfig)
+      .collectMany(publicKeys);
+    const slots = _.uniq(results.map(({ context }) => context.slot));
+
+    if (slots.length > 1) {
+      this.logger.warn(
+        `getMultipleAccountsInfoAndContext read ${RedstoneCommon.getNS(publicKeys.length, "account")} in ${RedstoneCommon.getNS(slots.length, "slot")} (${slots.join(", ")}), reporting the lowest`
+      );
+    }
+
+    return {
+      context: { slot: Math.min(...slots) },
+      value: results.map(({ value }) => value),
+    };
+  }
+
+  override async getAccountInfoAndContext(
+    publicKey: PublicKey,
+    commitmentOrConfig?: Commitment | GetAccountInfoConfig
+  ) {
+    return await this.getAccountsInfoRequestCollectors.get(commitmentOrConfig).collect(publicKey);
+  }
+
   override async getMultipleAccountsInfo(
     publicKeys: PublicKey[],
     commitmentOrConfig?: Commitment | GetMultipleAccountsConfig
   ) {
-    return await this.getAccountsInfoRequestCollectors
-      .get(commitmentOrConfig)
-      .collectMany(publicKeys);
+    return (await this.getMultipleAccountsInfoAndContext(publicKeys, commitmentOrConfig)).value;
   }
 
   override async getAccountInfo(
     publicKey: PublicKey,
     commitmentOrConfig?: Commitment | GetAccountInfoConfig
   ) {
-    const [result] = await this.getAccountsInfoRequestCollectors
-      .get(commitmentOrConfig)
-      .collectMany([publicKey]);
-
-    return result;
+    return (await this.getAccountInfoAndContext(publicKey, commitmentOrConfig)).value;
   }
 
   override getTransaction(
@@ -113,9 +140,7 @@ export class RedStoneConnection
     return tx;
   }
 
-  override async getEpochInfo(
-    commitmentOrConfig?: Commitment | GetEpochInfoConfig
-  ): Promise<EpochInfo> {
+  override async getEpochInfo(commitmentOrConfig?: Commitment | GetEpochInfoConfig) {
     if (commitmentOrConfig) {
       this.logger.debug("getEpochInfo - skips collecting due to commitmentOrConfig set");
 
@@ -131,7 +156,7 @@ export class RedStoneConnection
     }
   }
 
-  override async getSlot(commitmentOrConfig?: Commitment | GetSlotConfig): Promise<number> {
+  override async getSlot(commitmentOrConfig?: Commitment | GetSlotConfig) {
     if (commitmentOrConfig) {
       this.logger.debug("getSlot - skips collecting due to commitmentOrConfig set");
 
@@ -188,11 +213,11 @@ export class RedStoneConnection
 
   /// GetAccountsInfoRequestCollectorDelegate
 
-  getAccountsInfoRequestCollectorGetMultipleAccountsInfo(
+  getAccountsInfoRequestCollectorGetMultipleAccountsInfoAndContext(
     publicKeys: PublicKey[],
     commitmentOrConfig?: CollectableCommitmentOrConfig
   ) {
-    return super.getMultipleAccountsInfo(publicKeys, commitmentOrConfig);
+    return super.getMultipleAccountsInfoAndContext(publicKeys, commitmentOrConfig);
   }
 
   getAccountsInfoRequestCollectorDispose(commitmentOrConfig?: CollectableCommitmentOrConfig) {

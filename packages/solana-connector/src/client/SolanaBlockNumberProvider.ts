@@ -1,7 +1,7 @@
 import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import type { Connection } from "@solana/web3.js";
 
-export const SOLANA_SLOT_TIME_INTERVAL_MS = 400;
+export const SOLANA_SLOT_TIME_INTERVAL_MS = 200;
 
 export class SolanaBlockNumberProvider extends RedstoneCommon.BlockNumberProvider {
   protected override readonly description = "solana slot";

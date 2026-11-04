@@ -1,8 +1,7 @@
 import { AccountInfo, PublicKey } from "@solana/web3.js";
-import {
-  CollectableCommitmentOrConfig,
-  GetAccountsInfoRequestCollectorDelegate,
-} from "../src/GetAccountsInfoRequestCollector";
+import { CollectableCommitmentOrConfig, GetAccountsInfoRequestCollectorDelegate } from "../src";
+
+export const MOCK_CONTEXT_SLOT = 654321;
 
 export function makePublicKey(seed: number): PublicKey {
   const bytes = Buffer.alloc(32, 0);
@@ -28,10 +27,10 @@ export class MockDelegate implements GetAccountsInfoRequestCollectorDelegate {
   rejectNext?: Error;
   disposeCalls: (CollectableCommitmentOrConfig | undefined)[] = [];
 
-  getAccountsInfoRequestCollectorGetMultipleAccountsInfo(
+  getAccountsInfoRequestCollectorGetMultipleAccountsInfoAndContext(
     publicKeys: PublicKey[],
     commitmentOrConfig?: CollectableCommitmentOrConfig
-  ): Promise<(AccountInfo<Buffer> | null)[]> {
+  ) {
     this.calls.push([...publicKeys]);
     this.commitmentOrConfigs.push(commitmentOrConfig);
 
@@ -42,10 +41,13 @@ export class MockDelegate implements GetAccountsInfoRequestCollectorDelegate {
       return Promise.reject(err);
     }
 
-    const result = publicKeys.map((pk) => this.results.get(pk.toBase58()) ?? null);
+    const result = {
+      context: { slot: MOCK_CONTEXT_SLOT },
+      value: publicKeys.map((pk) => this.results.get(pk.toBase58()) ?? null),
+    };
 
     if (this.delay > 0) {
-      return new Promise((resolve) => setTimeout(() => resolve(result), this.delay));
+      return new Promise<typeof result>((resolve) => setTimeout(() => resolve(result), this.delay));
     }
 
     return Promise.resolve(result);

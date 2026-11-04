@@ -874,7 +874,7 @@
       "networkId": "solana/3",
       "currencySymbol": "SOL",
       "publicRpcUrls": ["https://api.devnet.solana.com"],
-      "avgBlockTimeMs": 1000,
+      "avgBlockTimeMs": 200,
       "multicall3": {
         "address": "",
         "type": "Multicall3"
@@ -894,7 +894,7 @@
         "https://dallas.testnet.block-engine.jito.wtf#type=jito",
         "https://ny.testnet.block-engine.jito.wtf#type=jito"
       ],
-      "avgBlockTimeMs": 1000,
+      "avgBlockTimeMs": 200,
       "multicall3": {
         "address": "",
         "type": "Multicall3"
@@ -921,7 +921,7 @@
         "https://tokyo.mainnet.block-engine.jito.wtf#type=jito",
         "https://singapore.mainnet.block-engine.jito.wtf#type=jito"
       ],
-      "avgBlockTimeMs": 400,
+      "avgBlockTimeMs": 200,
       "multicall3": {
         "address": "",
         "type": "Multicall3"

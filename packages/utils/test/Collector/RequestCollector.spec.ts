@@ -97,6 +97,19 @@ describe("RequestCollector", () => {
       expect(sut.calls).toEqual([keys1, keys2]);
     });
 
+    it("sends the next batch without waiting for the overflow flush to respond", async () => {
+      const sut = setUp(MAX, QUICK_FLUSH_MS);
+      sut.delay = SLOW_BACKEND_DELAY_MS;
+      const keys1 = seedKeys(sut, "k1", 60);
+      const keys2 = seedKeys(sut, "k2", 50, 100);
+
+      const results = Promise.all([sut.collectMany(keys1), sut.collectMany(keys2)]);
+      await RedstoneCommon.sleep(QUICK_FLUSH_MS * 2);
+
+      expect(sut.calls).toEqual([keys1, keys2]);
+      await results;
+    });
+
     it("chunks within fetchBatch when one batch alone exceeds the limit", async () => {
       const sut = setUp(MAX, NEVER_FIRES_WITHIN_TEST_MS);
       const overflowing = seedKeys(sut, "k", MAX + 50);
