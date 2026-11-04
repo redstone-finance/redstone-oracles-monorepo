@@ -19,23 +19,27 @@
   "tokens": {
     "USDT": {
       "source": [
-        "bitstamp-usd",
-        "coinbase-usd",
-        "gemini-usd",
-        "kraken-usd",
-        "okx-usd"
+        "binance_deferred-usd",
+        "bitget_deferred-usd",
+        "bitstamp_deferred-usd",
+        "bullish_deferred-usd",
+        "bybit_deferred-usd",
+        "coinbase_deferred-usd",
+        "gemini_deferred-usd",
+        "okx_deferred-usd",
+        "ws-spot-kraken-usd"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
       "denomination": "USD",
       "rateFeed": false,
-      "broadcasters": [
-        "influx",
-        "s3"
+      "minValidSourcesCount": 3,
+      "types": [
+        "crypto"
       ]
     },
     "USDC": {
@@ -74,15 +78,18 @@
     "BTC": {
       "source": [
         "ws-spot-binance-usdt",
+        "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
+        "ws-spot-htx-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-bitget-usdt",
-        "ws-spot-htx-usdt"
+        "ws-spot-xt-usdt"
       ],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
+      "minValidSourcesCount": 3,
       "types": [
         "crypto"
       ]
@@ -112,11 +119,11 @@
         "ema"
       ],
       "denomination": "USD",
+      "rateFeed": false,
       "broadcasters": [
         "influx",
         "s3"
       ],
-      "rateFeed": false,
       "types": [
         "crypto"
       ]
@@ -254,7 +261,55 @@
         "rwa"
       ]
     },
-    "TSLA---PRE_AFTER_EMA_30S": {
+    "TSLA---OVERNIGHT": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "TSLA---EXTENDED": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "TSLA_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "TSLA---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "TSLA---24_7_EMA_30S": {
       "source": [
         "ema"
       ],
