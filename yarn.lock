@@ -1894,320 +1894,333 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@canton-network/core-acs-reader@npm:^1.10.3":
-  version: 1.10.3
-  resolution: "@canton-network/core-acs-reader@npm:1.10.3"
+"@canton-network/core-acs-reader@npm:1.22.0":
+  version: 1.22.0
+  resolution: "@canton-network/core-acs-reader@npm:1.22.0"
   dependencies:
-    "@canton-network/core-ledger-client-types": "npm:^1.2.3"
-    "@canton-network/core-provider-ledger": "npm:^1.2.3"
-    "@canton-network/core-types": "npm:^1.2.3"
-    bignumber.js: "npm:^9.3.1"
-    dayjs: "npm:^1.11.19"
-    openapi-fetch: "npm:^0.15.0"
-    pino: "npm:^10.2.1"
-    typescript-lru-cache: "npm:^2.0.0"
-  checksum: 10c0/ac3b4f2551b8b8b21864b4285fbed985031702373d5c582bcd67af21876b8991c57666d20e75deba387f0b9d0dcef904a16dd4e9eb7dffce5960a5331355c492
-  languageName: node
-  linkType: hard
-
-"@canton-network/core-amulet-service@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-amulet-service@npm:1.2.3"
-  dependencies:
-    "@canton-network/core-ledger-client": "npm:^1.2.3"
-    "@canton-network/core-ledger-client-types": "npm:^1.2.3"
-    "@canton-network/core-splice-client": "npm:^1.2.3"
-    "@canton-network/core-token-standard-service": "npm:^1.2.3"
-    "@canton-network/core-types": "npm:^1.2.3"
-    "@canton-network/core-wallet-auth": "npm:^1.2.3"
-    bignumber.js: "npm:^10.0.2"
-    dayjs: "npm:^1.11.19"
-    openapi-fetch: "npm:^0.17.0"
-    pino: "npm:^10.3.1"
-  checksum: 10c0/43afbee0f98047a6fc8c3f8f31774d0f2fd5b85bedbe7356dbfceb4fa19b076e6ed8b84546aa1d187fe0b65f1d19cdf3e4bc6bd37e35e61ef3c7615c3db370d6
-  languageName: node
-  linkType: hard
-
-"@canton-network/core-asyncapi-client@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-asyncapi-client@npm:1.2.3"
-  dependencies:
-    "@canton-network/core-ledger-client-types": "npm:^1.2.3"
-    "@canton-network/core-types": "npm:^1.2.3"
-    "@canton-network/core-wallet-auth": "npm:^1.2.3"
-    bignumber.js: "npm:^10.0.2"
-    pino: "npm:^10.3.1"
-  checksum: 10c0/30da24f3bbccd5c54b9b08f98f5eca64845172f34929bf949323e2ed98cf134d812bb294872be86d98b8eef7c0457d8aacd787b61b5316f9f87477ff56f2ca4f
-  languageName: node
-  linkType: hard
-
-"@canton-network/core-ledger-client-types@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-ledger-client-types@npm:1.2.3"
-  dependencies:
-    "@canton-network/core-types": "npm:^1.2.3"
-    bignumber.js: "npm:^10.0.2"
-    dayjs: "npm:^1.11.19"
-    openapi-fetch: "npm:^0.17.0"
-    pino: "npm:^10.3.1"
-  checksum: 10c0/ac055c200a9968b07dcde6f613e96a43261869aa98cbbf3e537be59e8156bde377ee31d8cbca6bc347a9f311a0f11b5dc7ad41c0b46aa5c8c113dce52fde908e
-  languageName: node
-  linkType: hard
-
-"@canton-network/core-ledger-client@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-ledger-client@npm:1.2.3"
-  dependencies:
-    "@canton-network/core-ledger-client-types": "npm:^1.2.3"
-    "@canton-network/core-ledger-proto": "npm:^1.2.3"
-    "@canton-network/core-splice-client": "npm:^1.2.3"
-    "@canton-network/core-token-standard": "npm:^1.2.3"
-    "@canton-network/core-types": "npm:^1.2.3"
-    "@canton-network/core-wallet-auth": "npm:^1.2.3"
-    bignumber.js: "npm:^10.0.2"
-    dayjs: "npm:^1.11.19"
+    "@canton-network/core-ledger-client-types": "npm:1.14.0"
+    "@canton-network/core-provider-ledger": "npm:1.14.0"
+    "@canton-network/core-types": "npm:1.14.0"
+    dayjs: "npm:^1.11.21"
     openapi-fetch: "npm:^0.17.0"
     pino: "npm:^10.3.1"
     typescript-lru-cache: "npm:^2.0.0"
-  checksum: 10c0/56e0ec7069853fdf3d502896b5a8201bc644d98746e4703895cacc78ae15546378c046bb901254ca83d422fe357819022caa8125e9f667f2f1aa8b880bee64f9
+  checksum: 10c0/f1736748e0b628aa41cdc958ad6ebe066efb26278237a166ced52301649c537a917d75480df66606f26b7ee5248402ed3b2dcdf5a7682fc7eea68cf12fa47338
   languageName: node
   linkType: hard
 
-"@canton-network/core-ledger-proto@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-ledger-proto@npm:1.2.3"
+"@canton-network/core-amulet-service@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-amulet-service@npm:1.14.0"
+  dependencies:
+    "@canton-network/core-ledger-client": "npm:1.14.0"
+    "@canton-network/core-ledger-client-types": "npm:1.14.0"
+    "@canton-network/core-splice-client": "npm:1.14.0"
+    "@canton-network/core-token-standard-service": "npm:1.14.0"
+    "@canton-network/core-types": "npm:1.14.0"
+    "@canton-network/core-wallet-auth": "npm:1.14.0"
+    dayjs: "npm:^1.11.21"
+    decimal.js: "npm:^10.6.0"
+    openapi-fetch: "npm:^0.17.0"
+    pino: "npm:^10.3.1"
+  checksum: 10c0/bcddb2227dd4b2cf159c1fc437efc360fcddcb897431bbe209eea819d828c6c9ac34f580c111c0d7b1338de0545445ef3ca7f0c5ce99778edc2206dfd2d886fc
+  languageName: node
+  linkType: hard
+
+"@canton-network/core-asyncapi-client@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-asyncapi-client@npm:1.14.0"
+  dependencies:
+    "@canton-network/core-ledger-client-types": "npm:1.14.0"
+    "@canton-network/core-types": "npm:1.14.0"
+    "@canton-network/core-wallet-auth": "npm:1.14.0"
+    pino: "npm:^10.3.1"
+  checksum: 10c0/e970cd68166f8d5297ed3caabab8ae4568a4a37092073d2cefea80e578bb2c8a0cc51911b707716fcbb8dffd5412716113090a35f48a8930d3effe7856fd5ed7
+  languageName: node
+  linkType: hard
+
+"@canton-network/core-ledger-client-types@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-ledger-client-types@npm:1.14.0"
+  dependencies:
+    "@canton-network/core-types": "npm:1.14.0"
+    dayjs: "npm:^1.11.21"
+    openapi-fetch: "npm:^0.17.0"
+    pino: "npm:^10.3.1"
+  checksum: 10c0/e8b37c64e348d5b69dfc6eef4df19df43ebd4bccbaab734181aed31723b5c1e9ae874a05abe390aacd579b144e0cf94e294078adb7def6e2ebf343d764b706b1
+  languageName: node
+  linkType: hard
+
+"@canton-network/core-ledger-client@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-ledger-client@npm:1.14.0"
+  dependencies:
+    "@canton-network/core-ledger-client-types": "npm:1.14.0"
+    "@canton-network/core-ledger-proto": "npm:1.13.0"
+    "@canton-network/core-splice-client": "npm:1.14.0"
+    "@canton-network/core-token-standard": "npm:1.14.0"
+    "@canton-network/core-types": "npm:1.14.0"
+    "@canton-network/core-wallet-auth": "npm:1.14.0"
+    dayjs: "npm:^1.11.21"
+    openapi-fetch: "npm:^0.17.0"
+    pino: "npm:^10.3.1"
+    typescript-lru-cache: "npm:^2.0.0"
+  checksum: 10c0/00837ab133145090115b3740766db87d2b626c22dca658e53dab250829b979751858099a7d38377b1f6a4e51c2830ac14a03eac4f438da79b959fc0816b0d550
+  languageName: node
+  linkType: hard
+
+"@canton-network/core-ledger-proto@npm:1.13.0":
+  version: 1.13.0
+  resolution: "@canton-network/core-ledger-proto@npm:1.13.0"
   dependencies:
     "@protobuf-ts/runtime": "npm:^2.11.1"
     "@protobuf-ts/runtime-rpc": "npm:^2.11.1"
-  checksum: 10c0/ff62bfd7ce28adefa2a6a4a62770c977f3b5ebabeb5e3dca352c3a08e9a6c04beb65e332afe093ca0a1fdcf99d2b5748dae09186e96150e498461d2636d40cd2
+  checksum: 10c0/2ad0dadd9f575ae5c561633282524b7cb1de67c07301d945e04567184d3b4c880c25e00cde25a523fb32f0cbd93fab9f0080268163c9fd68084a1db6ba59c5d4
   languageName: node
   linkType: hard
 
-"@canton-network/core-provider-dapp@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-provider-dapp@npm:1.2.3"
+"@canton-network/core-provider-dapp@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-provider-dapp@npm:1.14.0"
   dependencies:
-    "@canton-network/core-ledger-client-types": "npm:^1.2.3"
-    "@canton-network/core-rpc-transport": "npm:^1.2.3"
-    "@canton-network/core-splice-provider": "npm:^1.2.3"
-    "@canton-network/core-types": "npm:^1.2.3"
-    "@canton-network/core-wallet-dapp-remote-rpc-client": "npm:^1.2.3"
-    "@canton-network/core-wallet-dapp-rpc-client": "npm:^1.2.3"
-  checksum: 10c0/a75c778d4fbffa3a60a6ab36798d50d4f05b2c2ce9656e09e35f80944dd8c0a0dbe4b4406d2db062fee36fa485d16488e52aa02ceb794a69882f5b567b6fe0d0
+    "@canton-network/core-ledger-client-types": "npm:1.14.0"
+    "@canton-network/core-rpc-transport": "npm:1.14.0"
+    "@canton-network/core-splice-provider": "npm:1.14.0"
+    "@canton-network/core-types": "npm:1.14.0"
+    "@canton-network/core-wallet-dapp-remote-rpc-client": "npm:1.14.0"
+    "@canton-network/core-wallet-dapp-rpc-client": "npm:1.14.0"
+  checksum: 10c0/345997c1d3ebdb86fcc2875355967c41de20ab1fde4e302b396b89f7d3b1f091707cbfd7a1273a75d69f65582d9a6c57b8996e62f09defeab926870c86daff88
   languageName: node
   linkType: hard
 
-"@canton-network/core-provider-ledger@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-provider-ledger@npm:1.2.3"
+"@canton-network/core-provider-ledger@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-provider-ledger@npm:1.14.0"
   dependencies:
-    "@canton-network/core-ledger-client": "npm:^1.2.3"
-    "@canton-network/core-ledger-client-types": "npm:^1.2.3"
-    "@canton-network/core-splice-provider": "npm:^1.2.3"
-    "@canton-network/core-types": "npm:^1.2.3"
-    "@canton-network/core-wallet-auth": "npm:^1.2.3"
+    "@canton-network/core-ledger-client": "npm:1.14.0"
+    "@canton-network/core-ledger-client-types": "npm:1.14.0"
+    "@canton-network/core-splice-provider": "npm:1.14.0"
+    "@canton-network/core-types": "npm:1.14.0"
+    "@canton-network/core-wallet-auth": "npm:1.14.0"
     pino: "npm:^10.3.1"
-  checksum: 10c0/537c75ab291c1356ee92955920d963841c10b31f521cda944b8c3d81b42935386c060c124d62bdbc19739bd2c17f64eeea7da8b1b56f4997f21f0592aa0ae2ac
+  checksum: 10c0/ce805a58249d10c8f7eb16450359cf25b171c76bb59f51066b12f17271a4cde7b3eb151eb92bbab4ba6e21670f51c2671f067374e5a233faf5b3b4fae1eae0ff
   languageName: node
   linkType: hard
 
-"@canton-network/core-rpc-errors@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-rpc-errors@npm:1.2.3"
+"@canton-network/core-rpc-errors@npm:1.13.0":
+  version: 1.13.0
+  resolution: "@canton-network/core-rpc-errors@npm:1.13.0"
   dependencies:
     "@metamask/rpc-errors": "npm:^7.0.3"
-  checksum: 10c0/f2dff44de78df071363c08acea9ab9917b10591d0d6ef3f90962bf9920df16b4d3ff2726050fa7f4cbad47a7aba6c4f784a5719b520b8553d252bd1fe4c538e5
+  checksum: 10c0/62ef8359376c77c44cf09fe58708556f277fc1e3d05c168830e1fd9ba148e6c9e3826a9b2a03e9bf4eda92977955100d25052a0647525141c97e2de1c9599082
   languageName: node
   linkType: hard
 
-"@canton-network/core-rpc-transport@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-rpc-transport@npm:1.2.3"
+"@canton-network/core-rpc-transport@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-rpc-transport@npm:1.14.0"
   dependencies:
-    "@canton-network/core-types": "npm:^1.2.3"
-    uuid: "npm:^14.0.0"
-  checksum: 10c0/354c30ff46e2772cd9c09105d3dae8f0162fb5209b9509a1e9847f50f35beac51647f89ec30773afbacd8fe92ef68a6e6cf70925c415b382506f8777b2243448
+    "@canton-network/core-rpc-errors": "npm:1.13.0"
+    "@canton-network/core-types": "npm:1.14.0"
+    uuid: "npm:^14.0.1"
+  checksum: 10c0/a6a6234d752bdaaf5bd7aa498ae3d067010c1b187f4015eae3f4fc8a795da8ba5d3c204ce6abb7c36821fa8ce775c4255fc8f69fb821c4017b82b2486b755e23
   languageName: node
   linkType: hard
 
-"@canton-network/core-signing-lib@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-signing-lib@npm:1.2.3"
+"@canton-network/core-signing-lib@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-signing-lib@npm:1.14.0"
   dependencies:
-    "@canton-network/core-wallet-auth": "npm:^1.2.3"
-    fs-extra: "npm:^11.3.3"
+    "@canton-network/core-wallet-auth": "npm:1.14.0"
+    fs-extra: "npm:^11.3.6"
     lodash: "npm:^4.18.1"
     tweetnacl: "npm:^1.0.3"
     tweetnacl-util: "npm:^0.15.1"
-    zod: "npm:^4.3.6"
-  checksum: 10c0/b88dbfcfe0f1b773fbf8c69d2a15f9530a850ebbf0cbb5fc4a283ea80b8d4fe2fd78d01d51c0b425619f193471401bce86fb01fe2b8442fa7c482e352e8e9ad2
+    zod: "npm:^4.4.3"
+  checksum: 10c0/af59d67f113946a289912d80eb40846d4fe2b44f59949b5cc84968fe7d79461f2a64ec11a93954e26296f29d022002de9c8343cd0d25145b27034369ab55faf4
   languageName: node
   linkType: hard
 
-"@canton-network/core-splice-client@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-splice-client@npm:1.2.3"
+"@canton-network/core-splice-client@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-splice-client@npm:1.14.0"
   dependencies:
-    "@canton-network/core-types": "npm:^1.2.3"
-    "@canton-network/core-wallet-auth": "npm:^1.2.3"
+    "@canton-network/core-types": "npm:1.14.0"
+    "@canton-network/core-wallet-auth": "npm:1.14.0"
     openapi-fetch: "npm:^0.17.0"
-    uuid: "npm:^14.0.0"
-    zod: "npm:^4.3.6"
-  checksum: 10c0/ee5cd1d181f193d05334250ce65c657440b68bdafc3918420a204241170b9beb0f9fcedbb791002b849e509342a8492bb14c0d48752784e51841237cb36ba118
+    uuid: "npm:^14.0.1"
+    zod: "npm:^4.4.3"
+  checksum: 10c0/aed51876ac3086d8a3c5d93c5d28b5085e7d812a64e01f5d30eccd0b9aa1d918c07faf545e0c3ca5300972c023b5d473df5fa7f556c2fc585f546ac7f5aab8f5
   languageName: node
   linkType: hard
 
-"@canton-network/core-splice-provider@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-splice-provider@npm:1.2.3"
+"@canton-network/core-splice-provider@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-splice-provider@npm:1.14.0"
   dependencies:
-    "@canton-network/core-rpc-transport": "npm:^1.2.3"
-    "@canton-network/core-types": "npm:^1.2.3"
-    "@canton-network/core-wallet-dapp-remote-rpc-client": "npm:^1.2.3"
-    "@canton-network/core-wallet-dapp-rpc-client": "npm:^1.2.3"
-  checksum: 10c0/23b592f6580c303c3efb5d87cca7ac78286a386f3f609e0be9dfd5f361d3e999cf9832d50d6d71944ff707b4cfbd02159aeadec7a2bfd3fa7f0b6c818795a74d
+    "@canton-network/core-rpc-transport": "npm:1.14.0"
+    "@canton-network/core-types": "npm:1.14.0"
+    "@canton-network/core-wallet-dapp-remote-rpc-client": "npm:1.14.0"
+    "@canton-network/core-wallet-dapp-rpc-client": "npm:1.14.0"
+  checksum: 10c0/a5a425e4cabbcbea629447a1c7c084e1a3f090df88bb4a5b560f01f5d08e5d0ec2929ff1633b3f3c768b8193f9af0f58cdb5d8cd83d23df2df41946e3577f4af
   languageName: node
   linkType: hard
 
-"@canton-network/core-token-standard-service@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-token-standard-service@npm:1.2.3"
+"@canton-network/core-token-standard-service@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-token-standard-service@npm:1.14.0"
   dependencies:
-    "@canton-network/core-acs-reader": "npm:^1.10.3"
-    "@canton-network/core-ledger-client-types": "npm:^1.2.3"
-    "@canton-network/core-provider-ledger": "npm:^1.2.3"
-    "@canton-network/core-splice-client": "npm:^1.2.3"
-    "@canton-network/core-token-standard": "npm:^1.2.3"
-    "@canton-network/core-tx-parser": "npm:^1.2.3"
-    "@canton-network/core-types": "npm:^1.2.3"
-    "@canton-network/core-wallet-auth": "npm:^1.2.3"
-    bignumber.js: "npm:^10.0.2"
-    dayjs: "npm:^1.11.19"
+    "@canton-network/core-acs-reader": "npm:1.22.0"
+    "@canton-network/core-ledger-client-types": "npm:1.14.0"
+    "@canton-network/core-provider-ledger": "npm:1.14.0"
+    "@canton-network/core-splice-client": "npm:1.14.0"
+    "@canton-network/core-token-standard": "npm:1.14.0"
+    "@canton-network/core-token-standard-v2": "npm:1.2.0"
+    "@canton-network/core-tx-parser": "npm:1.14.0"
+    "@canton-network/core-types": "npm:1.14.0"
+    "@canton-network/core-wallet-auth": "npm:1.14.0"
+    dayjs: "npm:^1.11.21"
+    decimal.js: "npm:^10.6.0"
     openapi-fetch: "npm:^0.17.0"
     pino: "npm:^10.3.1"
     typescript-lru-cache: "npm:^2.0.0"
-  checksum: 10c0/8a8f280280e0b68746922f992c2471723c6ba05f6364916b24925c7c346e2e9aca7898f35f174aefa65c44f32f1ce914f8fe48805ccfb50daf2d7186a8e4c337
+  checksum: 10c0/becf01690141cfe5b28a896ee035ba393e3bf3b486fcd542034c706f291c67f7299d03c34fd81a2bd31ec1d2a4701531eda320517f398044435108e751ab8a2f
   languageName: node
   linkType: hard
 
-"@canton-network/core-token-standard@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-token-standard@npm:1.2.3"
+"@canton-network/core-token-standard-v2@npm:1.2.0":
+  version: 1.2.0
+  resolution: "@canton-network/core-token-standard-v2@npm:1.2.0"
   dependencies:
-    "@canton-network/core-types": "npm:^1.2.3"
-    "@canton-network/core-wallet-auth": "npm:^1.2.3"
-    "@daml/types": "npm:3.4.11"
+    "@canton-network/core-types": "npm:1.14.0"
+    "@canton-network/core-wallet-auth": "npm:1.14.0"
+    "@daml/types": "npm:^3.5.2"
     "@mojotech/json-type-validation": "npm:^3.1.0"
     lodash: "npm:^4.18.1"
     openapi-fetch: "npm:^0.17.0"
-    uuid: "npm:^14.0.0"
-    zod: "npm:^4.3.6"
-  checksum: 10c0/4d1614eda30a8ee59e6a53f70eafd95f87595e07666f886edce8119436173186734b50312d25a77e860754a795557c481bba392d4e7dd1307d58c0728244e54c
+    uuid: "npm:^14.0.1"
+    zod: "npm:^4.4.3"
+  checksum: 10c0/c8cda5b85279b58bc60bfc972bd86014aff4a06978898ea2cbe12362c8c6b202d014037382d1aab95c00c33776b0d58c667fa12ae412c0d63b4b96f906e3fb50
   languageName: node
   linkType: hard
 
-"@canton-network/core-tx-parser@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-tx-parser@npm:1.2.3"
+"@canton-network/core-token-standard@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-token-standard@npm:1.14.0"
   dependencies:
-    "@canton-network/core-ledger-client-types": "npm:^1.2.3"
-    "@canton-network/core-ledger-proto": "npm:^1.2.3"
-    "@canton-network/core-provider-ledger": "npm:^1.2.3"
-    "@canton-network/core-splice-client": "npm:^1.2.3"
-    "@canton-network/core-token-standard": "npm:^1.2.3"
-    "@canton-network/core-types": "npm:^1.2.3"
-    "@canton-network/core-wallet-auth": "npm:^1.2.3"
+    "@canton-network/core-types": "npm:1.14.0"
+    "@canton-network/core-wallet-auth": "npm:1.14.0"
+    "@daml/types": "npm:^3.5.2"
+    "@mojotech/json-type-validation": "npm:^3.1.0"
+    lodash: "npm:^4.18.1"
+    openapi-fetch: "npm:^0.17.0"
+    uuid: "npm:^14.0.1"
+    zod: "npm:^4.4.3"
+  checksum: 10c0/cbc3da5e811462ea54417ce8392e4172c8f205bc06bee543cc2167ea8c90f82a2c304c032ccf95010097c885f763fd08657fff4bb04c6e4854467c3d2aae7d9a
+  languageName: node
+  linkType: hard
+
+"@canton-network/core-tx-parser@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-tx-parser@npm:1.14.0"
+  dependencies:
+    "@canton-network/core-ledger-client-types": "npm:1.14.0"
+    "@canton-network/core-ledger-proto": "npm:1.13.0"
+    "@canton-network/core-provider-ledger": "npm:1.14.0"
+    "@canton-network/core-splice-client": "npm:1.14.0"
+    "@canton-network/core-token-standard": "npm:1.14.0"
+    "@canton-network/core-types": "npm:1.14.0"
+    "@canton-network/core-wallet-auth": "npm:1.14.0"
     bignumber.js: "npm:^10.0.2"
-    dayjs: "npm:^1.11.19"
+    dayjs: "npm:^1.11.21"
     openapi-fetch: "npm:^0.17.0"
     pino: "npm:^10.3.1"
-  checksum: 10c0/8e9f8395f207eff7fd4492fb8191a15f39cbdc6455500bf7aca0df5aeb35ae00c68af7283a20e2c4d1988d004ca422ea6190e31594d3e7b617ddd63cbb0f7e74
+  checksum: 10c0/0c9014671446a8a561ae9ddc069eca15e103d150685c4b592ec9a191ffa78f358f5f3b503843ecf3c88d018ab165ee3b2d701b2dba71778b58d3a96f3cd49b80
   languageName: node
   linkType: hard
 
-"@canton-network/core-tx-visualizer@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-tx-visualizer@npm:1.2.3"
+"@canton-network/core-tx-visualizer@npm:1.13.0":
+  version: 1.13.0
+  resolution: "@canton-network/core-tx-visualizer@npm:1.13.0"
   dependencies:
-    "@canton-network/core-ledger-proto": "npm:^1.2.3"
-    "@types/node": "npm:^25.3.3"
+    "@canton-network/core-ledger-proto": "npm:1.13.0"
+    "@types/node": "npm:^25.9.4"
     camelcase-keys: "npm:^10.0.2"
-  checksum: 10c0/04d4b445ac007177c5b3c799735156ed232d0e0ce90bd40607ae2393c1b0d90ff4aee3f6ff5d8600617031df1b253226d1e7dd73abe39f27fadaa06bc6506432
+  checksum: 10c0/2b84c9028105a7d5cb95a1589770f7c1020a00a67c24d1478c53790b3f8571df0b30b7c0db9e296b15ab77aa54c6d7fcb39f55fef8e2803d1130c7a915880646
   languageName: node
   linkType: hard
 
-"@canton-network/core-types@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-types@npm:1.2.3"
+"@canton-network/core-types@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-types@npm:1.14.0"
   dependencies:
-    uuid: "npm:^14.0.0"
-    zod: "npm:^4.3.6"
-  checksum: 10c0/6ccb0009add95a83961f80e9e9daf104deea654c05ef6b113bfea940d1e48ef7a845df17fcd959dc82e07cc1ccc6572e1ce7cdb12987c2e45082bb81657ded3c
+    "@daml/types": "npm:^3.5.2"
+    uuid: "npm:^14.0.1"
+    zod: "npm:^4.4.3"
+  checksum: 10c0/a61df0c69a7887923ed4dc8aa77c3cc0960793eede90cfd78753dd84edb47d5aa1e405eeaca5da03eaf89da65a5953cd59ab9c5e337e22b2fe3b75edb716e29c
   languageName: node
   linkType: hard
 
-"@canton-network/core-wallet-auth@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-wallet-auth@npm:1.2.3"
+"@canton-network/core-wallet-auth@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-wallet-auth@npm:1.14.0"
   dependencies:
-    "@canton-network/core-rpc-errors": "npm:^1.2.3"
-    "@canton-network/core-types": "npm:^1.2.3"
-    jose: "npm:^6.1.3"
-    zod: "npm:^4.3.6"
-  checksum: 10c0/8b690ece822fd0a3ebea3721407e338708347156c8a2ae1d60c053478385b886d5f999507f664be92701962593db5a77e6053999d78542a82351a63db824c638
+    "@canton-network/core-rpc-errors": "npm:1.13.0"
+    "@canton-network/core-types": "npm:1.14.0"
+    jose: "npm:^5.10.0"
+    zod: "npm:^4.4.3"
+  checksum: 10c0/7032c3a0daad7ab6e21135583d21374f868c19f0b52aa87d0f36252883a9aa7318dbac0df5dbf095cef4bc209e28c5bcd81d29d8eba254afe0d3eb3fef4a2be2
   languageName: node
   linkType: hard
 
-"@canton-network/core-wallet-dapp-remote-rpc-client@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-wallet-dapp-remote-rpc-client@npm:1.2.3"
+"@canton-network/core-wallet-dapp-remote-rpc-client@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-wallet-dapp-remote-rpc-client@npm:1.14.0"
   dependencies:
-    "@canton-network/core-rpc-transport": "npm:^1.2.3"
-    "@canton-network/core-types": "npm:^1.2.3"
-    lodash: "npm:^4.18.1"
-  checksum: 10c0/5c524a276d276755830b8ceac5d4a3b61de02b63ee24d7d94ff33b5e53bdbdc7cd86eb5b46c229bbb0afbbc9222b7ca0a66ad613f1a166a4ae0d0145bcb37a95
+    "@canton-network/core-rpc-transport": "npm:1.14.0"
+    "@canton-network/core-types": "npm:1.14.0"
+  checksum: 10c0/b307070e6b5640b56cb1edb5dfe54d25b1f17a652336404ebff696584ce3cc229998a43ef016d5408696b061118fddfbef75501ca3e2997b94361a26d0f674e7
   languageName: node
   linkType: hard
 
-"@canton-network/core-wallet-dapp-rpc-client@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@canton-network/core-wallet-dapp-rpc-client@npm:1.2.3"
+"@canton-network/core-wallet-dapp-rpc-client@npm:1.14.0":
+  version: 1.14.0
+  resolution: "@canton-network/core-wallet-dapp-rpc-client@npm:1.14.0"
   dependencies:
-    "@canton-network/core-rpc-transport": "npm:^1.2.3"
-    "@canton-network/core-types": "npm:^1.2.3"
-    lodash: "npm:^4.18.1"
-  checksum: 10c0/c1d2b0729560373f65b4c50246c35493e7581022be8b688a613a525d844a1d071a898cbe45cbae12af1f221e0e85f63917907b6d9de6080cec47dfea8902a5d4
+    "@canton-network/core-rpc-transport": "npm:1.14.0"
+    "@canton-network/core-types": "npm:1.14.0"
+  checksum: 10c0/141657cbdd530c2e3798a942c14af2e7b4d1ad04d89638c64a777e817cd9ea5d495f5d0275cfaacd371c4050efa5bf5f593e1330e8864ea795c3ae2e8ec0ab87
   languageName: node
   linkType: hard
 
-"@canton-network/wallet-sdk@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@canton-network/wallet-sdk@npm:1.2.1"
+"@canton-network/wallet-sdk@npm:1.6.0":
+  version: 1.6.0
+  resolution: "@canton-network/wallet-sdk@npm:1.6.0"
   dependencies:
-    "@canton-network/core-acs-reader": "npm:^1.10.3"
-    "@canton-network/core-amulet-service": "npm:^1.2.3"
-    "@canton-network/core-asyncapi-client": "npm:^1.2.3"
-    "@canton-network/core-ledger-client-types": "npm:^1.2.3"
-    "@canton-network/core-ledger-proto": "npm:^1.2.3"
-    "@canton-network/core-provider-dapp": "npm:^1.2.3"
-    "@canton-network/core-provider-ledger": "npm:^1.2.3"
-    "@canton-network/core-signing-lib": "npm:^1.2.3"
-    "@canton-network/core-splice-client": "npm:^1.2.3"
-    "@canton-network/core-splice-provider": "npm:^1.2.3"
-    "@canton-network/core-token-standard": "npm:^1.2.3"
-    "@canton-network/core-token-standard-service": "npm:^1.2.3"
-    "@canton-network/core-tx-parser": "npm:^1.2.3"
-    "@canton-network/core-tx-visualizer": "npm:^1.2.3"
-    "@canton-network/core-types": "npm:^1.2.3"
-    "@canton-network/core-wallet-auth": "npm:^1.2.3"
-    "@grpc/grpc-js": "npm:^1.14.3"
-    "@protobuf-ts/grpc-transport": "npm:^2.11.1"
+    "@canton-network/core-acs-reader": "npm:1.22.0"
+    "@canton-network/core-amulet-service": "npm:1.14.0"
+    "@canton-network/core-asyncapi-client": "npm:1.14.0"
+    "@canton-network/core-ledger-client-types": "npm:1.14.0"
+    "@canton-network/core-ledger-proto": "npm:1.13.0"
+    "@canton-network/core-provider-dapp": "npm:1.14.0"
+    "@canton-network/core-provider-ledger": "npm:1.14.0"
+    "@canton-network/core-signing-lib": "npm:1.14.0"
+    "@canton-network/core-splice-client": "npm:1.14.0"
+    "@canton-network/core-splice-provider": "npm:1.14.0"
+    "@canton-network/core-token-standard": "npm:1.14.0"
+    "@canton-network/core-token-standard-service": "npm:1.14.0"
+    "@canton-network/core-token-standard-v2": "npm:1.2.0"
+    "@canton-network/core-tx-parser": "npm:1.14.0"
+    "@canton-network/core-tx-visualizer": "npm:1.13.0"
+    "@canton-network/core-types": "npm:1.14.0"
+    "@canton-network/core-wallet-auth": "npm:1.14.0"
     decimal.js: "npm:^10.6.0"
-    jose: "npm:^6.1.3"
+    jose: "npm:^5.10.0"
     pino: "npm:^10.3.1"
     pino-pretty: "npm:^13.1.3"
-    uuid: "npm:^14.0.0"
-  checksum: 10c0/168446cd11c0c57e8cba62024520c5069e488139c69fc32f12b3a8dc082520cffb3bfd56bd49cbade44e0b9f827f6afe7247417c4b52e76baadd802b89080657
+    typescript-lru-cache: "npm:^2.0.0"
+    uuid: "npm:^14.0.1"
+  checksum: 10c0/06ad452aded79aa265cbd8b403e381a5aaf73386507aa97f032eedc2e398cf9dbd563554b90c02bea3303c5e8e51c1aef47f48ce47fe2623f7db38535e3af692
   languageName: node
   linkType: hard
 
@@ -2992,14 +3005,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@daml/types@npm:3.4.11":
-  version: 3.4.11
-  resolution: "@daml/types@npm:3.4.11"
+"@daml/types@npm:^3.5.2":
+  version: 3.6.2
+  resolution: "@daml/types@npm:3.6.2"
   dependencies:
     "@mojotech/json-type-validation": "npm:^3.1.0"
     "@types/lodash": "npm:^4.5"
     lodash: "npm:^4.5"
-  checksum: 10c0/acfc461910451aec81445d546ab2ec5e2d98727720f336864a4cd54e8a8c08406577fda80385b7c9e7b68cf869a8ce9bba33ba98eedf1c348c8d6d26c473fc74
+  checksum: 10c0/b6c511326f92fb4cf34a00388ceac8f7eaecb50949982446fcb261664ac57f0d57297d4e630ce2ecb0355bb829a3d494391ca209105536d4da3058e39e5e9b0c
   languageName: node
   linkType: hard
 
@@ -8527,8 +8540,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/canton-connector@workspace:packages/canton-connector"
   dependencies:
-    "@canton-network/core-token-standard-service": "npm:^1.2.3"
-    "@canton-network/wallet-sdk": "npm:1.2.1"
+    "@canton-network/core-token-standard-service": "npm:1.14.0"
+    "@canton-network/wallet-sdk": "npm:1.6.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
@@ -13448,7 +13461,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=13.7.0, @types/node@npm:^25.3.3":
+"@types/node@npm:*, @types/node@npm:>=13.7.0":
   version: 25.9.1
   resolution: "@types/node@npm:25.9.1"
   dependencies:
@@ -13495,6 +13508,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~7.16.0"
   checksum: 10c0/8b31c0af5b5474f13048a4e77c57f22cd4f8fe6e58c4b6fde9456b0c13f46a5bfaf5744ff88fd089581de9f0d6e99c584e022681de7acb26a58d258c654c4843
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^25.9.4":
+  version: 25.9.9
+  resolution: "@types/node@npm:25.9.9"
+  dependencies:
+    undici-types: "npm:>=7.24.0 <7.24.7"
+  checksum: 10c0/2ba08caa7118af2f2761f2f5db9b6304faf5bd027a2dcb72bf6fcae3dd9e470d17045fec27f89023c02e7d4e0661c6e5877174bd39794bef080db8b35ad4a1ea
   languageName: node
   linkType: hard
 
@@ -17971,10 +17993,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.11.12, dayjs@npm:^1.11.19, dayjs@npm:^1.11.5":
+"dayjs@npm:^1.11.12, dayjs@npm:^1.11.5":
   version: 1.11.20
   resolution: "dayjs@npm:1.11.20"
   checksum: 10c0/8af525e2aa100c8db9923d706c42b2b2d30579faf89456619413a5c10916efc92c2b166e193c27c02eb3174b30aa440ee1e7b72b0a2876b3da651d204db848a0
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.11.21":
+  version: 1.11.23
+  resolution: "dayjs@npm:1.11.23"
+  checksum: 10c0/69ab04bf19c676e44ab50cc2fca223d265f3dafd107151ef3b0f3ad74d360c37caa602abe62f87cb25d90bd9f6bee003698af47df5b0dbf10a998b7b5f3bb3f1
   languageName: node
   linkType: hard
 
@@ -20751,7 +20780,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:^11.2.0, fs-extra@npm:^11.3.3, fs-extra@npm:^11.3.5":
+"fs-extra@npm:^11.2.0, fs-extra@npm:^11.3.5, fs-extra@npm:^11.3.6":
   version: 11.4.1
   resolution: "fs-extra@npm:11.4.1"
   dependencies:
@@ -23476,10 +23505,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:^6.1.3":
-  version: 6.2.3
-  resolution: "jose@npm:6.2.3"
-  checksum: 10c0/aa91bccba22cc84d86308f833749bcb0b00441e35c24e0ac79abeac5f76dc62d47bdef9c1da6a0c609f5da6478595f52b252085888b89dbdb163861e40ea4188
+"jose@npm:^5.10.0":
+  version: 5.10.0
+  resolution: "jose@npm:5.10.0"
+  checksum: 10c0/e20d9fc58d7e402f2e5f04e824b8897d5579aae60e64cb88ebdea1395311c24537bf4892f7de413fab1acf11e922797fb1b42269bc8fc65089a3749265ccb7b0
   languageName: node
   linkType: hard
 
@@ -26663,15 +26692,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openapi-fetch@npm:^0.15.0":
-  version: 0.15.2
-  resolution: "openapi-fetch@npm:0.15.2"
-  dependencies:
-    openapi-typescript-helpers: "npm:^0.0.15"
-  checksum: 10c0/8d203b9c3982f85a299f96704be290ceebc9b6f85fde4ffa2ee893475319e53e270688178a89325578f33349120c6b2dec82eaf8a063656df7f28bc166265547
-  languageName: node
-  linkType: hard
-
 "openapi-fetch@npm:^0.17.0":
   version: 0.17.0
   resolution: "openapi-fetch@npm:0.17.0"
@@ -26693,13 +26713,6 @@ __metadata:
   bin:
     openapi: bin/index.js
   checksum: 10c0/1067ded4fb648aca62fc4a0e658e9ab89d4cd40b3d6f63bb578d573b77704a03a7b704e083797b653bc4e19221da3d985286596f7540bd25bd1d62ea06b97902
-  languageName: node
-  linkType: hard
-
-"openapi-typescript-helpers@npm:^0.0.15":
-  version: 0.0.15
-  resolution: "openapi-typescript-helpers@npm:0.0.15"
-  checksum: 10c0/5eb68d487b787e3e31266470b1a310726549dd45a1079655ab18066ab291b0b3c343fdf629991013706a2329b86964f8798d56ef0272b94b931fe6c19abd7a88
   languageName: node
   linkType: hard
 
@@ -27375,7 +27388,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino@npm:^10.2.1, pino@npm:^10.3.1":
+"pino@npm:^10.3.1":
   version: 10.3.1
   resolution: "pino@npm:10.3.1"
   dependencies:
@@ -31649,6 +31662,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"uuid@npm:^14.0.1":
+  version: 14.0.3
+  resolution: "uuid@npm:14.0.3"
+  bin:
+    uuid: dist-node/bin/uuid
+  checksum: 10c0/e56e610ae3bd1ca099244e01ee5eff502675ede4601d971b80fff993ad97236c80197340113f759e6ead501ee6a8d52648f6deef1332ce9f192c4720f4891f62
+  languageName: node
+  linkType: hard
+
 "v8-compile-cache-lib@npm:^3.0.1":
   version: 3.0.1
   resolution: "v8-compile-cache-lib@npm:3.0.1"
@@ -32444,7 +32466,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^4.1.12, zod@npm:^4.3.6":
+"zod@npm:^4.1.12, zod@npm:^4.4.3":
   version: 4.6.7
   resolution: "zod@npm:4.6.7"
   checksum: 10c0/4ce2eb14034317b7254e347ca37b5ad591cf8333147030cf05b9b5d31692d45073f7f2747aa50cf8c6b29012194d2b22978cecc89969cf34a0d18e89d0ee7d7b
