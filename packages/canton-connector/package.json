@@ -23,8 +23,8 @@
     "check-cc-transfer": "yarn global:tsx scripts/check-cc-transfer.ts"
   },
   "dependencies": {
-    "@canton-network/core-token-standard-service": "^1.2.3",
-    "@canton-network/wallet-sdk": "1.2.1",
+    "@canton-network/core-token-standard-service": "1.14.0",
+    "@canton-network/wallet-sdk": "1.6.0",
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
