@@ -10101,7 +10101,7 @@ __metadata:
     axios: "npm:^1.20"
     dotenv: "npm:^16.0.3"
     ethers-v6: "npm:ethers@^6"
-    uWebSockets.js: "github:uNetworking/uWebSockets.js#v20.57.0"
+    uWebSockets.js: "github:uNetworking/uWebSockets.js#v20.71.0"
     ws: "npm:^8.18.3"
     zod: "npm:^4.1.12"
   languageName: unknown
@@ -10284,7 +10284,7 @@ __metadata:
     "@swc/core": "npm:^1.9.2"
     "@types/jest": "npm:^30"
     "@types/mocha": "npm:^10.0.10"
-    "@types/node": "npm:^24.12.0"
+    "@types/node": "npm:^26.6.6"
     depcheck: "npm:^1.4.7"
     esbuild: "npm:^0.28"
     eslint: "npm:^10.10.0"
@@ -13450,12 +13450,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^24.12.0":
-  version: 24.12.0
-  resolution: "@types/node@npm:24.12.0"
+"@types/node@npm:^26.6.6":
+  version: 26.6.6
+  resolution: "@types/node@npm:26.6.6"
   dependencies:
-    undici-types: "npm:~7.16.0"
-  checksum: 10c0/8b31c0af5b5474f13048a4e77c57f22cd4f8fe6e58c4b6fde9456b0c13f46a5bfaf5744ff88fd089581de9f0d6e99c584e022681de7acb26a58d258c654c4843
+    undici-types: "npm:~8.9.0"
+  checksum: 10c0/5cb63f644f6e85a257a9cd2403cbcbe196760e2a35fd3ec9fb8b5cff663e14cc832b198cc17b53f870a2e30900ed45a1fb3f53e6589aba26b8e8c484aa672053
   languageName: node
   linkType: hard
 
@@ -31187,10 +31187,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uWebSockets.js@github:uNetworking/uWebSockets.js#v20.57.0":
-  version: 20.57.0
-  resolution: "uWebSockets.js@https://github.com/uNetworking/uWebSockets.js.git#commit=fcfc622a4286909593b7f390056d89e0ca3b56b9"
-  checksum: 10c0/aaf5e190c76379079396fc83ca9f66af4ac5dc9a363cacc8795a894a0cf7ece065b677d03a9908a7abbf7b1cda8f8c5e66d38ec17d09949083bd74c5e2cd7059
+"uWebSockets.js@github:uNetworking/uWebSockets.js#v20.71.0":
+  version: 20.71.0
+  resolution: "uWebSockets.js@https://github.com/uNetworking/uWebSockets.js.git#commit=9ec36de7709996c58dce03d63796216c90a17136"
+  checksum: 10c0/6826d8230ccd9a0108942bab5d01024b80cc3b7dcc0c0981c99e87e421c87b8fa225fe1d0b1840f78a9c164565ab034357de9f5434e953e2c4b2955b33e5d710
   languageName: node
   linkType: hard
 
@@ -31270,10 +31270,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~7.16.0":
-  version: 7.16.0
-  resolution: "undici-types@npm:7.16.0"
-  checksum: 10c0/3033e2f2b5c9f1504bdc5934646cb54e37ecaca0f9249c983f7b1fc2e87c6d18399ebb05dc7fd5419e02b2e915f734d872a65da2e3eeed1813951c427d33cc9a
+"undici-types@npm:~8.9.0":
+  version: 8.9.0
+  resolution: "undici-types@npm:8.9.0"
+  checksum: 10c0/51c712c20c087368f62c6fc0f2bc49fa76bfe5dec28ff01584bb677ff29b0622569783c02d43e151143808c48c0503f804093bd2c491b10f2a830138034cb451
   languageName: node
   linkType: hard
 

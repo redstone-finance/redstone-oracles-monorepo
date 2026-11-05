@@ -33,14 +33,15 @@ ENV CC=clang \
     CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 RUN <<EOF
-    curl --proto '=https' --tlsv1.2 -fsSL https://deb.nodesource.com/setup_24.x | bash
+    curl --proto '=https' --tlsv1.2 -fsSL https://deb.nodesource.com/setup_26.x | bash
     apt-get install -y --no-install-recommends nodejs
     npm install -g tsx@4.23.0
     npm cache clean --force
     rm -rf /var/lib/apt/lists/* /root/.npm
 EOF
 
-RUN corepack enable && corepack prepare yarn@4.11.0 --activate
+ARG COREPACK_VERSION=0.36.0
+RUN npm install -g corepack@${COREPACK_VERSION} && corepack enable
 
 WORKDIR /
 COPY rust-toolchain.toml rust-toolchain.toml
