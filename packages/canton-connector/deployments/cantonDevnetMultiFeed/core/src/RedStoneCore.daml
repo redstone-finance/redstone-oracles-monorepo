@@ -1,0 +1,32 @@
+module RedStoneCore where
+
+import RedStone.GetPrices as G
+import Featured
+import IRedStoneCore
+import RedStoneTypes
+import RedStoneCore.Config
+
+template RedStoneCore
+  with
+    coreId: Text
+    owner : Party
+    viewers : [Party]
+    shouldVerifyViewer : Bool
+    beneficiary : Optional Party
+    featuredCid : Optional RedStoneFeaturedContract
+  where
+    signatory owner, beneficiary
+    observer viewers
+
+    interface instance IRedStoneCore for RedStoneCore where
+      view = RedStoneCoreView with coreId
+
+      iRedStoneCore_VerifyViewer caller = if shouldVerifyViewer then assertMsg "GetPrices: caller must be a viewer" (caller `elem` viewers) else pure ()
+
+      iRedStoneCore_GetPricesImpl caller feedIds currentTime payloadHex = do
+          case (featuredCid, beneficiary) of
+            (Some featured, Some party) -> takeReward party featured
+            _ -> pure ()
+
+          let config = adapter_config_fun feedIds currentTime
+          uncurry RedStoneResult <$> G.getPricesNumeric config payloadHex
