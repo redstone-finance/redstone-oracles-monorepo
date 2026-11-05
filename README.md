@@ -26,8 +26,8 @@ You can learn more at https://docs.redstone.finance
 
 ## Configure development environment
 
-- install nvm `brew install nvm` and select node 24 `nvm install 24 && nvm use 24`
-- enable corepack feature of node `corepack enable`
+- install nvm `brew install nvm` and select node 26 `nvm install 26 && nvm use 26`
+- install and enable corepack `npm install -g corepack && corepack enable`
 - install dependencies `yarn`
 - build everything `yarn build:all`
 

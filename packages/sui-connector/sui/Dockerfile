@@ -51,11 +51,12 @@ COPY --from=dependency-cache /root/.move /root/.move
 # Install Node.js and npm
 RUN ARCH=$(uname -m) && \
     if [ "$ARCH" = "x86_64" ]; then NODE_ARCH="x64"; elif [ "$ARCH" = "aarch64" ]; then NODE_ARCH="arm64"; else NODE_ARCH="$ARCH"; fi && \
-    curl -fsSL https://nodejs.org/dist/v24.22.1/node-v24.22.1-linux-${NODE_ARCH}.tar.xz | tar -xJ -C /usr/local --strip-components=1 \
+    curl -fsSL https://nodejs.org/dist/v26.13.0/node-v26.13.0-linux-${NODE_ARCH}.tar.xz | tar -xJ -C /usr/local --strip-components=1 \
     && npm install -g tsx@4.23.0
 
-RUN corepack enable \
-    && corepack prepare yarn@4.11.0 --activate
+ARG COREPACK_VERSION=0.36.0
+RUN npm install -g corepack@${COREPACK_VERSION} \
+    && corepack enable
 
 ENV PATH="/usr/local/bin:${PATH}"
 
