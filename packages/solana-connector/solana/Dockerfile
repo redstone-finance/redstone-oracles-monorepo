@@ -55,7 +55,7 @@ EOF
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 RUN <<EOF
-    curl --proto '=https' --tlsv1.2 -sSfL https://release.anza.xyz/stable/install | bash
+    curl --proto '=https' --tlsv1.2 -sSfL https://release.anza.xyz/v4.2.1/install | bash
     rm -rf /root/.cache/solana /tmp/* /var/tmp/*
 EOF
 
