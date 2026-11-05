@@ -19,14 +19,22 @@ export class StellarContractUpdater implements ContractUpdater<
     private readonly contract: Contract
   ) {}
 
-  async update(paramsProvider: ContractParamsProvider, context: StellarContractUpdateContext) {
+  async update(
+    paramsProvider: ContractParamsProvider,
+    context: StellarContractUpdateContext,
+    attempt: number
+  ) {
+    if (attempt === 0) {
+      delete context.baseTxHash;
+    }
+
     const updater = XdrUtils.addressToScVal(await this.executor.getPublicKey());
 
     const args = await this.prepareCallArgs(paramsProvider, context.updateStartTimeMs);
     const operation = this.contract.call(WRITE_PRICES_METHOD, updater, ...args);
-    const attempt = this.executor.executeOperation(operation, context);
+    const execution = this.executor.executeOperation(operation, context);
 
-    const updateResult = await FP.tryAwait(attempt);
+    const updateResult = await FP.tryAwait(execution);
 
     return FP.mapStringifyError(updateResult, (result) => ({
       transactionHash: result.hash,
