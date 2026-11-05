@@ -9,8 +9,8 @@ import Decimal from "decimal.js";
 import "dotenv/config";
 import { z } from "zod";
 import * as AllDefs from "../src/canton-defs.json";
-import { CantonScanApiClient } from "../src/client/CantonScanApiClient";
-import { latestMigrationId, makeScanApi } from "./canton-scan";
+import { CantonScanApiClient, findLatestMigrationId } from "../src/client/CantonScanApiClient";
+import { makeScanApi } from "./canton-scan";
 import { readNetwork } from "./utils";
 
 async function main() {
@@ -35,7 +35,7 @@ async function main() {
   const now = new Date().toISOString();
   const { data: snapshot } = await api.requestWithProxy<{ record_time: string }>(
     `/v0/state/acs/snapshot-timestamp?before=${encodeURIComponent(now)}` +
-      `&migration_id=${await latestMigrationId(api)}`
+      `&migration_id=${await findLatestMigrationId(api)}`
   );
   const ageMinutes = (Date.parse(now) - Date.parse(snapshot.record_time)) / 60_000;
 

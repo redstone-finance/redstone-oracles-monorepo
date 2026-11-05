@@ -70,17 +70,3 @@ export function upstreamStatus(message: string): number | undefined {
 
   return match ? Number(match[1]) : undefined;
 }
-
-export async function latestMigrationId(api: ScanCantonApi) {
-  const { data } = await api.requestWithProxy<{
-    domainSequencers: { sequencers: { migrationId: number }[] }[];
-  }>("/v0/dso-sequencers");
-
-  const ids = data.domainSequencers.flatMap((d) => d.sequencers).map((s) => s.migrationId);
-
-  if (ids.length === 0) {
-    throw new Error("No migration IDs in /v0/dso-sequencers response");
-  }
-
-  return Math.max(...ids);
-}

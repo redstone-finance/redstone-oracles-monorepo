@@ -23,6 +23,10 @@ type DsoSequencersResponse = {
   domainSequencers: { sequencers: { migrationId: number }[] }[];
 };
 
+type LastMigrationResponse = {
+  migration_id: number;
+};
+
 type HoldingsSummaryResponse = {
   summaries: { party_id: string; total_available_coin: string }[];
 };
@@ -67,22 +71,9 @@ export class CantonScanApiClient {
   }
 
   private getCachedMigrationId(): Promise<number> {
-    this.migrationIdCache ??= this.findLatestMigrationId();
+    this.migrationIdCache ??= findLatestMigrationId(this.api);
 
     return this.migrationIdCache;
-  }
-
-  private async findLatestMigrationId(): Promise<number> {
-    const result = await this.api.requestWithProxy<DsoSequencersResponse>(`/v0/dso-sequencers`);
-    const migrationIds = result.data.domainSequencers
-      .flatMap((d) => d.sequencers)
-      .map((s) => s.migrationId);
-
-    if (migrationIds.length === 0) {
-      throw new Error("No migration IDs found in DSO sequencers response");
-    }
-
-    return Math.max(...migrationIds);
   }
 
   async getTrafficStatus() {
@@ -128,4 +119,22 @@ export class ScanCantonApi extends CantonApi {
       }
     );
   }
+}
+
+// Since Splice 0.9.4 the migration id is frozen and sequencers addressed by a synchronizer serial
+// report migrationId=-1, so fall back to /v0/migrations/last when no sequencer carries a real id.
+export async function findLatestMigrationId(api: ScanCantonApi): Promise<number> {
+  const result = await api.requestWithProxy<DsoSequencersResponse>(`/v0/dso-sequencers`);
+  const migrationIds = result.data.domainSequencers
+    .flatMap((d) => d.sequencers)
+    .map((s) => s.migrationId)
+    .filter((id) => id >= 0);
+
+  if (migrationIds.length > 0) {
+    return Math.max(...migrationIds);
+  }
+
+  const lastMigration = await api.requestWithProxy<LastMigrationResponse>(`/v0/migrations/last`);
+
+  return lastMigration.data.migration_id;
 }
