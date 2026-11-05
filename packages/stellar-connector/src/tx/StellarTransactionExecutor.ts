@@ -29,11 +29,16 @@ export class StellarTransactionExecutor {
       this.signer,
       this.gasLimit.toString()
     );
+    const transactionHash = transaction.hash().toString("hex");
     const response = await this.client.sendTransaction(transaction);
 
     this.logger.log(
       `Transaction ${response.hash} sent with status ${response.status}, ` +
         `latestLedger: ${response.latestLedger} closed on ${getLedgerCloseDate(response.latestLedgerCloseTime).toISOString()}`
+    );
+    RedstoneCommon.assert(
+      response.hash === transactionHash,
+      `RPC returned hash ${response.hash} for transaction ${transactionHash}`
     );
 
     let waitingHash = response.hash;

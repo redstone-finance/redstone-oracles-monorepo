@@ -19,5 +19,6 @@ export * from "./stellar/StellarContractDeployer";
 export * from "./tx/StellarContractUpdater";
 export * from "./tx/StellarOperationSender";
 export * from "./tx/StellarTransactionExecutor";
+export * from "./tx/StellarTxDeliveryManConfig";
 export * from "./utils";
 export * from "./XdrUtils";
