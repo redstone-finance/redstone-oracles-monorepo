@@ -8477,7 +8477,6 @@ __metadata:
     class-transformer: "npm:^0.5.1"
     class-validator: "npm:^0.14.0"
     dotenv: "npm:^16.0.3"
-    ethers-v6: "npm:ethers@^6"
     express: "npm:^4.18.1"
     graphql-request: "npm:^5.2.0"
     ioredis: "npm:^5.4.1"
@@ -9821,7 +9820,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-pyth-hermes-influx-synchronizer@workspace:packages/lambda/lambda-pyth-hermes-influx-synchronizer"
   dependencies:
-    "@ethersproject/bignumber": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -9850,7 +9848,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-pythnet-influx-synchronizer@workspace:packages/lambda/lambda-pythnet-influx-synchronizer"
   dependencies:
-    "@ethersproject/bignumber": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
@@ -10125,6 +10122,7 @@ __metadata:
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/pub-sub": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/ws": "npm:^8.18.1"
     axios: "npm:^1.20"
@@ -10202,7 +10200,6 @@ __metadata:
     async-mutex: "npm:^0.5.0"
     decimal.js: "npm:^10.6.0"
     dotenv: "npm:^16.0.3"
-    ethers-v6: "npm:ethers@^6"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
@@ -10281,7 +10278,6 @@ __metadata:
     axios: "npm:^1.20"
     decimal.js: "npm:^10.6.0"
     dotenv: "npm:^16.0.3"
-    ethers-v6: "npm:ethers@^6"
     express: "npm:^4.18.1"
     google-auth-library: "npm:^10.3.0"
     hyparquet: "npm:^1.27.1"
@@ -10687,6 +10683,7 @@ __metadata:
   dependencies:
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/signing": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/node-schedule": "npm:^2.1.0"
     dotenv: "npm:^16.0.3"
@@ -10754,7 +10751,6 @@ __metadata:
     "@types/express": "npm:^4.17.14"
     cors: "npm:^2.8.5"
     dotenv: "npm:^16.0.3"
-    ethers-v6: "npm:ethers@^6"
     express: "npm:^4.18.1"
     zod: "npm:^4.1.12"
   languageName: unknown
