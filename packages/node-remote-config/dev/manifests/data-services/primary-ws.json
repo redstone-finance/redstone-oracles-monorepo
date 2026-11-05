@@ -101,12 +101,9 @@
     },
     "EUR_FX": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -116,12 +113,9 @@
     },
     "GBP_FX": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -131,12 +125,9 @@
     },
     "KRW_FX": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -146,12 +137,9 @@
     },
     "JPY_FX": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -169,12 +157,9 @@
     },
     "MYR_FX": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -184,12 +169,9 @@
     },
     "THB_FX": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -199,12 +181,9 @@
     },
     "IDR_FX": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -214,12 +193,9 @@
     },
     "SGD_FX": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -229,12 +205,9 @@
     },
     "TWD_FX": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -244,12 +217,9 @@
     },
     "BRL_FX": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -7910,12 +7880,9 @@
     },
     "TRY_FX": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
