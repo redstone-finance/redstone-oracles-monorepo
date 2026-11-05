@@ -3,7 +3,7 @@ import { Signer } from "@ethersproject/abstract-signer";
 import { Contract } from "@ethersproject/contracts";
 import { RedstonePayload, SignedDataPackage } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { addContractWait } from "../helpers/add-contract-wait";
+import { addContractWait } from "../helpers/add-contract-wait.js";
 
 interface OverwriteFunctionArgs<T extends Contract> {
   wrappedContract: T;

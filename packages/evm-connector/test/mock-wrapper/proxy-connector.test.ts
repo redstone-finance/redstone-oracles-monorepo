@@ -8,17 +8,17 @@ import {
   WrapperBuilder,
   getMockNumericPackage,
   getRange,
-} from "../../src";
-import { expectCustomError, expectNumber } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleProxyConnector } from "../contract-types";
+} from "../../src/index.js";
+import { expectCustomError, expectNumber } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleProxyConnector } from "../contract-types.js";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
   UNAUTHORISED_SIGNER_INDEX,
   expectedNumericValues,
   mockNumericPackageConfigs,
   mockNumericPackages,
-} from "../tests-common";
+} from "../tests-common.js";
 
 describe("SampleProxyConnector", function () {
   let contract: SampleProxyConnector;

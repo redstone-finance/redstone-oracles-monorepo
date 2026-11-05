@@ -1,12 +1,12 @@
 import { Contract } from "@ethersproject/contracts";
 import { DataPackagesResponse } from "@redstone-finance/sdk";
-import { DataPackagesWrapper } from "./wrappers/DataPackagesWrapper";
-import { DataPackagesRequestInput, DataServiceWrapper } from "./wrappers/DataServiceWrapper";
-import { MockDataPackageConfig, MockWrapper } from "./wrappers/MockWrapper";
+import { DataPackagesWrapper } from "./wrappers/DataPackagesWrapper.js";
+import { DataPackagesRequestInput, DataServiceWrapper } from "./wrappers/DataServiceWrapper.js";
+import { MockDataPackageConfig, MockWrapper } from "./wrappers/MockWrapper.js";
 import {
   SimpleNumericMockConfig,
   SimpleNumericMockWrapper,
-} from "./wrappers/SimpleMockNumericWrapper";
+} from "./wrappers/SimpleMockNumericWrapper.js";
 
 export class WrapperBuilder<T extends Contract> {
   constructor(private baseContract: T) {}

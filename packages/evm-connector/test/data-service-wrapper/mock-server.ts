@@ -1,6 +1,6 @@
 import { delay, http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { mockSignedDataPackageObjects } from "../tests-common";
+import { mockSignedDataPackageObjects } from "../tests-common.js";
 
 const singedDataPackageObj = mockSignedDataPackageObjects;
 

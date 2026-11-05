@@ -3,7 +3,7 @@ import { consts } from "@redstone-finance/protocol";
 import { getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon, RedstoneConstants } from "@redstone-finance/utils";
 import { expect } from "chai";
-import { WrapperBuilder } from "../src";
+import { WrapperBuilder } from "../src/index.js";
 
 describe("DataServiceWrapper against a real authenticated gateway", () => {
   it("fetches real data packages and builds a valid RedStone payload", async () => {

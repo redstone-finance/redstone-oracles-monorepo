@@ -10,7 +10,7 @@ import {
 } from "@redstone-finance/protocol";
 import { createWallet } from "@redstone-finance/signing";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import type { MockDataPackageConfig } from "../wrappers/MockWrapper";
+import type { MockDataPackageConfig } from "../wrappers/MockWrapper.js";
 
 export const MAX_MOCK_SIGNERS_COUNT = 19;
 

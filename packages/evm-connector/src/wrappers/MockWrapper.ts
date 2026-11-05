@@ -1,8 +1,8 @@
 import { Contract } from "@ethersproject/contracts";
 import { DataPackage, SignedDataPackage } from "@redstone-finance/protocol";
-import { version } from "../../package.json";
-import { MockSignerAddress, getMockSignerPrivateKey } from "../helpers/test-utils";
-import { BaseWrapper } from "./BaseWrapper";
+import packageJson from "../../package.json" with { type: "json" };
+import { MockSignerAddress, getMockSignerPrivateKey } from "../helpers/test-utils.js";
+import { BaseWrapper } from "./BaseWrapper.js";
 
 export interface MockDataPackageConfig {
   signer: MockSignerAddress;
@@ -15,7 +15,7 @@ export class MockWrapper<T extends Contract> extends BaseWrapper<T> {
   }
 
   override getUnsignedMetadata(): string {
-    return `${version}#mock`;
+    return `${packageJson.version}#mock`;
   }
 
   // This function is async, because it's async in BaseWrapper

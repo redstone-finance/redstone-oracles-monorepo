@@ -1,10 +1,10 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { expect } from "chai";
 import hre from "hardhat";
-import { getRange } from "../../src";
-import { expectCustomError } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleNumericArrayLib } from "../contract-types";
+import { getRange } from "../../src/index.js";
+import { expectCustomError } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleNumericArrayLib } from "../contract-types.js";
 
 describe("SampleNumericArrayLib", function () {
   let contract: SampleNumericArrayLib;

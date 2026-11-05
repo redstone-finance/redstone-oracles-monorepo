@@ -1,10 +1,10 @@
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
 import hre from "hardhat";
-import { getRange, WrapperBuilder } from "../../src";
-import { deployContract } from "../commons";
-import { SampleDuplicatedDataFeeds } from "../contract-types";
-import { expectedNumericValues, mockNumericPackages } from "../tests-common";
+import { getRange, WrapperBuilder } from "../../src/index.js";
+import { deployContract } from "../commons.js";
+import { SampleDuplicatedDataFeeds } from "../contract-types.js";
+import { expectedNumericValues, mockNumericPackages } from "../tests-common.js";
 
 describe("DuplicatedDataFeeds", function () {
   let contract: SampleDuplicatedDataFeeds;

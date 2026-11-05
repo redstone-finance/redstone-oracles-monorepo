@@ -1,7 +1,7 @@
 import { Contract } from "@ethersproject/contracts";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { HardhatRuntimeEnvironment } from "hardhat/types";
-import { hardhatContractFactory } from "./hre-utils";
+import { type HardhatRuntimeEnvironment } from "hardhat/types/hre";
+import { hardhatContractFactory } from "./hre-utils.js";
 
 export async function deployContract<Deployed extends Contract = Contract>(
   hre: HardhatRuntimeEnvironment,

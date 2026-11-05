@@ -6,9 +6,9 @@ import {
   MockDataPackageConfig,
   MockSignerAddress,
   WrapperBuilder,
-} from "../src";
-import { deployContract } from "../test/commons";
-import { Benchmark } from "../test/contract-types";
+} from "../src/index.js";
+import { deployContract } from "../test/commons.js";
+import { Benchmark } from "../test/contract-types.js";
 
 interface BenchmarkTestCaseParams {
   requiredSignersCount: number;

@@ -6,16 +6,16 @@ import {
   getMockStringPackage,
   MockDataPackageConfig,
   WrapperBuilder,
-} from "../../src";
-import { expectCustomError } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleRedstoneConsumerBytesMockManyDataFeeds } from "../contract-types";
+} from "../../src/index.js";
+import { expectCustomError } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleRedstoneConsumerBytesMockManyDataFeeds } from "../contract-types.js";
 import {
   expectedBytesValues,
   mockBytesPackageConfigs,
   mockBytesPackages,
   UNAUTHORISED_SIGNER_INDEX,
-} from "../tests-common";
+} from "../tests-common.js";
 
 const NUMBER_OF_MOCK_SIGNERS = 3;
 

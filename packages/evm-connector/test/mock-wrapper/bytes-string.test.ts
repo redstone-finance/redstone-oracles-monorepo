@@ -7,11 +7,11 @@ import {
   WrapperBuilder,
   getMockPackageWithOneBytesDataPoint,
   getRange,
-} from "../../src";
-import { expectCustomError } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleRedstoneConsumerBytesMockStrings } from "../contract-types";
-import { UNAUTHORISED_SIGNER_INDEX } from "../tests-common";
+} from "../../src/index.js";
+import { expectCustomError } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleRedstoneConsumerBytesMockStrings } from "../contract-types.js";
+import { UNAUTHORISED_SIGNER_INDEX } from "../tests-common.js";
 
 describe("SampleRedstoneConsumerBytesMockStrings", function () {
   let contract: SampleRedstoneConsumerBytesMockStrings;

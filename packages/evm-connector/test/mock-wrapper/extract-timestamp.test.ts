@@ -1,9 +1,13 @@
 import hre from "hardhat";
-import { DEFAULT_TIMESTAMP_FOR_TESTS, getMockNumericPackage, WrapperBuilder } from "../../src";
-import { expectCustomError, expectNumber } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleRedstoneConsumerNumericMock } from "../contract-types";
-import { mockNumericPackages } from "../tests-common";
+import {
+  DEFAULT_TIMESTAMP_FOR_TESTS,
+  getMockNumericPackage,
+  WrapperBuilder,
+} from "../../src/index.js";
+import { expectCustomError, expectNumber } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleRedstoneConsumerNumericMock } from "../contract-types.js";
+import { mockNumericPackages } from "../tests-common.js";
 
 const getSimpleTestPackageWithTimestamp = (timestamp: number) =>
   getMockNumericPackage({

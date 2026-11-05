@@ -2,11 +2,11 @@ import { Contract } from "@ethersproject/contracts";
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
 import hre from "hardhat";
-import { BaseWrapper, WrapperBuilder } from "../../src";
-import { expectRevert } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../contract-types";
-import { expectedNumericValues, mockNumericPackages } from "../tests-common";
+import { BaseWrapper, WrapperBuilder } from "../../src/index.js";
+import { expectRevert } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../contract-types.js";
+import { expectedNumericValues, mockNumericPackages } from "../tests-common.js";
 
 class CustomPayloadWrapper<T extends Contract> extends BaseWrapper<T> {
   constructor(private readonly customRedstonePayload: string) {

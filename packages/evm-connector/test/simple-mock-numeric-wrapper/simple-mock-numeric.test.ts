@@ -1,10 +1,10 @@
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
 import hre from "hardhat";
-import { DEFAULT_TIMESTAMP_FOR_TESTS, WrapperBuilder } from "../../src";
-import { expectCustomError } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../contract-types";
+import { DEFAULT_TIMESTAMP_FOR_TESTS, WrapperBuilder } from "../../src/index.js";
+import { expectCustomError } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../contract-types.js";
 
 const dataPoints = [
   { dataFeedId: "ETH", value: 42 },

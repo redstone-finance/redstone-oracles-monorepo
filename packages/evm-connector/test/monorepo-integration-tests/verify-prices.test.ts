@@ -2,10 +2,10 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { expect } from "chai";
 import hre from "hardhat";
-import { MOCK_SIGNERS, WrapperBuilder } from "../../src";
-import { expectNumber } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleForLocalhostMockTest } from "../contract-types";
+import { MOCK_SIGNERS, WrapperBuilder } from "../../src/index.js";
+import { expectNumber } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleForLocalhostMockTest } from "../contract-types.js";
 
 const dynamicDescribe = process.env.MONOREPO_INTEGRATION_TEST === "true" ? describe : describe.skip;
 

@@ -1,13 +1,15 @@
-import "@nomiclabs/hardhat-ethers";
-import "@nomiclabs/hardhat-solhint";
-import "hardhat-gas-reporter";
-import { HardhatUserConfig } from "hardhat/config";
-import "solidity-coverage";
+import hardhatMocha from "@nomicfoundation/hardhat-mocha";
+import { defineConfig } from "hardhat/config";
+import { type EdrNetworkUserConfig } from "hardhat/types/config";
 
-// import order matters here, having this upper in import list breaks type HardhatUserConfig somehow
-import "@nomicfoundation/hardhat-toolbox";
+const SIMULATED_NETWORK = {
+  type: "edr-simulated",
+  blockGasLimit: 0x1fffffffffffff,
+  transactionGasCap: false,
+} satisfies EdrNetworkUserConfig;
 
-const config: HardhatUserConfig = {
+export default defineConfig({
+  plugins: [hardhatMocha],
   solidity: {
     version: "0.8.17",
     settings: {
@@ -17,21 +19,12 @@ const config: HardhatUserConfig = {
       },
     },
   },
-  gasReporter: {
-    enabled: true,
-    currency: "USD",
-  },
-  mocha: {
-    timeout: 300_000, // 300 seconds
-  },
-  typechain: {
-    dontOverrideCompile: true,
-  },
-  networks: {
-    hardhat: {
-      blockGasLimit: 0x1fffffffffffff, // this particular value allows to override EIP-7825 transaction gas cap limit
+  test: {
+    mocha: {
+      timeout: 300_000, // 300 seconds
     },
   },
-};
-
-export default config;
+  networks: {
+    default: SIMULATED_NETWORK,
+  },
+});

@@ -6,9 +6,9 @@ import {
   getRange,
   MockSignerIndex,
   WrapperBuilder,
-} from "../../src";
-import { deployContract } from "../commons";
-import { SampleRedstoneConsumerBytesMockStrings } from "../contract-types";
+} from "../../src/index.js";
+import { deployContract } from "../commons.js";
+import { SampleRedstoneConsumerBytesMockStrings } from "../contract-types.js";
 
 describe("Long Inputs", function () {
   let contract: SampleRedstoneConsumerBytesMockStrings;

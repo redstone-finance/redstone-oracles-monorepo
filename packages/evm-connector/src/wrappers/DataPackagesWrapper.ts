@@ -1,8 +1,8 @@
 import { Contract } from "@ethersproject/contracts";
 import { SignedDataPackage } from "@redstone-finance/protocol";
 import { DataPackagesResponse } from "@redstone-finance/sdk";
-import { version } from "../../package.json";
-import { BaseWrapper } from "./BaseWrapper";
+import packageJson from "../../package.json" with { type: "json" };
+import { BaseWrapper } from "./BaseWrapper.js";
 
 export class DataPackagesWrapper<T extends Contract = Contract> extends BaseWrapper<T> {
   constructor(private readonly dataPackages: DataPackagesResponse) {
@@ -10,7 +10,7 @@ export class DataPackagesWrapper<T extends Contract = Contract> extends BaseWrap
   }
 
   override getUnsignedMetadata(): string {
-    return `${this.getMetadataTimestamp()}#${version}#data-packages-wrapper`;
+    return `${this.getMetadataTimestamp()}#${packageJson.version}#data-packages-wrapper`;
   }
 
   // eslint-disable-next-line @typescript-eslint/require-await -- add reason here, please

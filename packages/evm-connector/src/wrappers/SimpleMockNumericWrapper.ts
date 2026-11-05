@@ -1,13 +1,13 @@
 import { Contract } from "@ethersproject/contracts";
 import { DataPackage, INumericDataPoint, NumericDataPoint } from "@redstone-finance/protocol";
-import { version } from "../../package.json";
+import packageJson from "../../package.json" with { type: "json" };
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
   MAX_MOCK_SIGNERS_COUNT,
   MockSignerIndex,
   getMockSignerAddress,
-} from "../helpers/test-utils";
-import { MockDataPackageConfig, MockWrapper } from "./MockWrapper";
+} from "../helpers/test-utils.js";
+import { MockDataPackageConfig, MockWrapper } from "./MockWrapper.js";
 
 export interface SimpleNumericMockConfig {
   mockSignersCount: number;
@@ -44,6 +44,6 @@ export class SimpleNumericMockWrapper<T extends Contract> extends MockWrapper<T>
   }
 
   override getUnsignedMetadata(): string {
-    return `${version}#simple-numeric-mock`;
+    return `${packageJson.version}#simple-numeric-mock`;
   }
 }

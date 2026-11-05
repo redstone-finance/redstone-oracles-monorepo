@@ -2,14 +2,15 @@ import { utils } from "@redstone-finance/protocol";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import hre from "hardhat";
-import { DataServiceWrapper, MOCK_SIGNERS, WrapperBuilder } from "../../src";
-import { deployContract } from "../commons";
+import { DataServiceWrapper, MOCK_SIGNERS, WrapperBuilder } from "../../src/index.js";
+import { expectCustomError } from "../assertions.js";
+import { deployContract } from "../commons.js";
 import {
   SampleRedstoneConsumerNumericMockManyDataFeeds,
   SampleRedstoneDataServiceConsumerMock,
-} from "../contract-types";
-import { expectedNumericValues } from "../tests-common";
-import { server } from "./mock-server";
+} from "../contract-types.js";
+import { expectedNumericValues } from "../tests-common.js";
+import { server } from "./mock-server.js";
 
 chai.use(chaiAsPromised);
 
@@ -23,8 +24,11 @@ const checkExpectedValues = async (contract: SampleRedstoneConsumerNumericMockMa
   expect(secondValueFromContract.toNumber()).to.be.equal(expectedNumericValues["BTC"]);
 };
 
-const DEFAULT_GATEWAY_URLS = ["http://valid-cache.com"];
-
+const VALID_CACHE_URL = "http://valid-cache.com";
+const INVALID_CACHE_URL = "http://invalid-cache.com";
+const DEFAULT_GATEWAY_URLS = [VALID_CACHE_URL];
+const MOCK_DATA_SERVICE_ID = "mock-data-service-tests";
+const UNAUTHORISED_SIGNER_ADDRESS = "0xE948D1e3cd0f894275A06ED2Dc53eA145B51CFfa";
 const toAuthenticatedGateways = (urls: string[]) =>
   urls.map((url) => ({ url, apiKey: "test-api-key" }));
 
@@ -74,23 +78,15 @@ describe("DataServiceWrapper", () => {
     });
 
     it("Should properly execute with one valid cache", async () => {
-      await runTest(contract, ["http://valid-cache.com"], "mock-data-service-tests");
+      await runTest(contract, [VALID_CACHE_URL], MOCK_DATA_SERVICE_ID);
     });
 
     it("Should properly execute with one valid and one invalid cache", async () => {
-      await runTest(
-        contract,
-        ["http://valid-cache.com", "http://invalid-cache.com"],
-        "mock-data-service-tests"
-      );
+      await runTest(contract, [VALID_CACHE_URL, INVALID_CACHE_URL], MOCK_DATA_SERVICE_ID);
     });
 
     it("Should properly execute with one valid and one slower cache", async () => {
-      await runTest(
-        contract,
-        ["http://slower-cache.com", "http://valid-cache.com"],
-        "mock-data-service-tests"
-      );
+      await runTest(contract, ["http://slower-cache.com", VALID_CACHE_URL], MOCK_DATA_SERVICE_ID);
     });
 
     it("Should fail if contract doesn't expose getDataServiceId and dataServiceId is not passed", async () => {
@@ -98,21 +94,20 @@ describe("DataServiceWrapper", () => {
     });
 
     it("Should throw error when multiple invalid caches", async () => {
-      const expectedErrorMessage = `VM Exception while processing transaction: reverted with custom error 'SignerNotAuthorised("0xE948D1e3cd0f894275A06ED2Dc53eA145B51CFfa")`;
-      await expect(
-        runTest(
-          contract,
-          ["http://invalid-cache.com", "http://invalid-cache.com"],
-          "mock-data-service-tests",
-          1,
-          ["0xE948D1e3cd0f894275A06ED2Dc53eA145B51CFfa"]
-        )
-      ).to.be.rejectedWith(expectedErrorMessage);
+      await expectCustomError(
+        contract,
+        "SignerNotAuthorised",
+        () =>
+          runTest(contract, [INVALID_CACHE_URL, INVALID_CACHE_URL], MOCK_DATA_SERVICE_ID, 1, [
+            UNAUTHORISED_SIGNER_ADDRESS,
+          ]),
+        [UNAUTHORISED_SIGNER_ADDRESS]
+      );
     });
 
     it("Should work with manual payload with all params passed", async () => {
       const wrapper = new DataServiceWrapper({
-        dataServiceId: "mock-data-service-tests",
+        dataServiceId: MOCK_DATA_SERVICE_ID,
         uniqueSignersCount: 10,
         dataPackagesIds: ["ETH", "BTC"],
         authenticatedGateways: toAuthenticatedGateways(DEFAULT_GATEWAY_URLS),
@@ -134,15 +129,15 @@ describe("DataServiceWrapper", () => {
     });
 
     it("Should work with passed urls", async () => {
-      await runTest(contract, ["http://valid-cache.com"]);
+      await runTest(contract, [VALID_CACHE_URL]);
     });
 
     it("Should work with dataServiceId passed explicit", async () => {
-      await runTest(contract, DEFAULT_GATEWAY_URLS, "mock-data-service-tests");
+      await runTest(contract, DEFAULT_GATEWAY_URLS, MOCK_DATA_SERVICE_ID);
     });
 
     it("Should work with dataServiceId and urls passed explicit", async () => {
-      await runTest(contract, ["http://valid-cache.com"], "mock-data-service-tests");
+      await runTest(contract, [VALID_CACHE_URL], MOCK_DATA_SERVICE_ID);
     });
 
     it("Should work with manual payload without passed params", async () => {

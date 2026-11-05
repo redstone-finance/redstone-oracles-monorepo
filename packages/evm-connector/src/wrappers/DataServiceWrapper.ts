@@ -2,8 +2,8 @@ import { Contract } from "@ethersproject/contracts";
 import { SignedDataPackage } from "@redstone-finance/protocol";
 import { DataPackagesRequestParams, requestDataPackages } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { version } from "../../package.json";
-import { BaseWrapper } from "./BaseWrapper";
+import packageJson from "../../package.json" with { type: "json" };
+import { BaseWrapper } from "./BaseWrapper.js";
 
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
@@ -18,7 +18,7 @@ export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
   }
 
   getUnsignedMetadata(): string {
-    return `${this.getMetadataTimestamp()}#${version}#${
+    return `${this.getMetadataTimestamp()}#${packageJson.version}#${
       this.dataPackagesRequestParams.dataServiceId
     }`;
   }

@@ -6,14 +6,14 @@ import {
   MockDataPackageConfig,
   MockSignerAddress,
   WrapperBuilder,
-} from "../src";
-import { deployContract } from "../test/commons";
+} from "../src/index.js";
+import { deployContract } from "../test/commons.js";
 import {
   SampleChainableProxyConnector,
   SampleChainableStorageProxy,
   SampleChainableStorageProxyConsumer,
   SampleProxyConnectorConsumer,
-} from "../test/contract-types";
+} from "../test/contract-types.js";
 interface BenchmarkTestCaseParams {
   requiredSignersCount: number;
   requestedSymbolsCount: number;

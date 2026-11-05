@@ -2,11 +2,11 @@ import { utils } from "@redstone-finance/protocol";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import hre from "hardhat";
-import { WrapperBuilder } from "../../src";
-import { deployContract } from "../commons";
-import { SampleRedstoneConsumerNumericMock } from "../contract-types";
-import { hardhatProvider } from "../hre-utils";
-import { mockNumericPackages } from "../tests-common";
+import { WrapperBuilder } from "../../src/index.js";
+import { deployContract } from "../commons.js";
+import { SampleRedstoneConsumerNumericMock } from "../contract-types.js";
+import { hardhatProvider } from "../hre-utils.js";
+import { mockNumericPackages } from "../tests-common.js";
 
 chai.use(chaiAsPromised);
 
