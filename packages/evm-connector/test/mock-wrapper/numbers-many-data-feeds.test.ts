@@ -10,17 +10,17 @@ import {
   MockSignerIndex,
   MockWrapper,
   WrapperBuilder,
-} from "../../src";
-import { expectCustomError } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../contract-types";
+} from "../../src/index.js";
+import { expectCustomError } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../contract-types.js";
 import {
   expectedNumericValues,
   mockNumericPackageConfigs,
   mockNumericPackages,
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
   UNAUTHORISED_SIGNER_INDEX,
-} from "../tests-common";
+} from "../tests-common.js";
 
 describe("SampleRedstoneConsumerNumericMockManyDataFeeds", function () {
   let contract: SampleRedstoneConsumerNumericMockManyDataFeeds;

@@ -1,7 +1,7 @@
 import { consts } from "@redstone-finance/protocol";
 import { expect } from "chai";
-import { MockWrapper, type PopulatableContract } from "../../src";
-import { mockNumericPackages } from "../tests-common";
+import { MockWrapper, type PopulatableContract } from "../../src/index.js";
+import { mockNumericPackages } from "../tests-common.js";
 
 const TARGET = "0x" + "1".repeat(40);
 const ORIGINAL_DATA = "0x1234";

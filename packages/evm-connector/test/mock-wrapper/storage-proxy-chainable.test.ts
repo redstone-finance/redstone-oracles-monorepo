@@ -1,17 +1,22 @@
 import { utils } from "@redstone-finance/protocol";
 import hre from "hardhat";
-import { MockSignerIndex, WrapperBuilder, getMockNumericPackage, getRange } from "../../src";
-import { expectNumber } from "../assertions";
-import { deployContract } from "../commons";
+import {
+  MockSignerIndex,
+  WrapperBuilder,
+  getMockNumericPackage,
+  getRange,
+} from "../../src/index.js";
+import { expectNumber } from "../assertions.js";
+import { deployContract } from "../commons.js";
 import {
   SampleChainableStorageProxy,
   SampleChainableStorageProxyConsumer,
-} from "../contract-types";
+} from "../contract-types.js";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
   expectedNumericValues,
   mockNumericPackages,
-} from "../tests-common";
+} from "../tests-common.js";
 
 const dataPoints = [
   { dataFeedId: "ETH", value: 4000 },

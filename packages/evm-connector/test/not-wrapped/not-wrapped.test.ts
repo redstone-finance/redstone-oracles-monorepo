@@ -1,8 +1,8 @@
 import { utils } from "@redstone-finance/protocol";
 import hre from "hardhat";
-import { expectCustomError } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleRedstoneConsumerNumericMock } from "../contract-types";
+import { expectCustomError } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleRedstoneConsumerNumericMock } from "../contract-types.js";
 
 describe("Not Wrapped Contract", function () {
   let contract: SampleRedstoneConsumerNumericMock;

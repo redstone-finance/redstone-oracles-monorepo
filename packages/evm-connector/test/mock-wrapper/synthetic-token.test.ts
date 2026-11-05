@@ -2,12 +2,17 @@ import { Signer } from "@ethersproject/abstract-signer";
 import { utils } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import hre from "hardhat";
-import { getMockNumericPackage, getRange, MockSignerIndex, WrapperBuilder } from "../../src";
-import { expectNumber } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleSyntheticToken } from "../contract-types";
-import { hardhatSigners } from "../hre-utils";
-import { NUMBER_OF_MOCK_NUMERIC_SIGNERS } from "../tests-common";
+import {
+  getMockNumericPackage,
+  getRange,
+  MockSignerIndex,
+  WrapperBuilder,
+} from "../../src/index.js";
+import { expectNumber } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleSyntheticToken } from "../contract-types.js";
+import { hardhatSigners } from "../hre-utils.js";
+import { NUMBER_OF_MOCK_NUMERIC_SIGNERS } from "../tests-common.js";
 
 // TODO audit: measure how many bytes do we add to the consumer contracts
 

@@ -1,4 +1,4 @@
-import { HardhatRuntimeEnvironment } from "hardhat/types";
+import { type HardhatRuntimeEnvironment } from "hardhat/types/hre";
 import {
   getMockNumericPackage,
   getMockSignedDataPackageObj,
@@ -7,8 +7,8 @@ import {
   MockNumericPackageArgs,
   MockSignerIndex,
   MockStringPackageArgs,
-} from "../src";
-import { hardhatProvider } from "./hre-utils";
+} from "../src/index.js";
+import { hardhatProvider } from "./hre-utils.js";
 
 export const NUMBER_OF_MOCK_NUMERIC_SIGNERS = 10;
 

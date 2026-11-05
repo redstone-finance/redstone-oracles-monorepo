@@ -2,10 +2,10 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Event } from "@ethersproject/contracts";
 import { expect } from "chai";
 import hre from "hardhat";
-import { WrapperBuilder } from "../../src";
-import { deployContract } from "../commons";
-import { SampleWithEvents } from "../contract-types";
-import { mockNumericPackages } from "../tests-common";
+import { WrapperBuilder } from "../../src/index.js";
+import { deployContract } from "../commons.js";
+import { SampleWithEvents } from "../contract-types.js";
+import { mockNumericPackages } from "../tests-common.js";
 
 describe("SampleWithEvents", function () {
   let sampleContract: SampleWithEvents;

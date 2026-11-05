@@ -8,10 +8,10 @@ import {
   MockDataPackageConfig,
   MockSignerAddress,
   WrapperBuilder,
-} from "../src";
-import { deployContract } from "../test/commons";
-import { HashCalldataModel, StorageStructureModel } from "../test/contract-types";
-import { hardhatProvider } from "../test/hre-utils";
+} from "../src/index.js";
+import { deployContract } from "../test/commons.js";
+import { HashCalldataModel, StorageStructureModel } from "../test/contract-types.js";
+import { hardhatProvider } from "../test/hre-utils.js";
 
 interface BenchmarkTestCaseParams {
   passedArgumentsCount: number;

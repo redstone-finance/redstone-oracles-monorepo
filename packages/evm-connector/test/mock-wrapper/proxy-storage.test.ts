@@ -2,15 +2,20 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
 import hre from "hardhat";
-import { MockSignerIndex, WrapperBuilder, getMockNumericPackage, getRange } from "../../src";
-import { expectNumber } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleStorageProxy, SampleStorageProxyConsumer } from "../contract-types";
+import {
+  MockSignerIndex,
+  WrapperBuilder,
+  getMockNumericPackage,
+  getRange,
+} from "../../src/index.js";
+import { expectNumber } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleStorageProxy, SampleStorageProxyConsumer } from "../contract-types.js";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
   expectedNumericValues,
   mockNumericPackages,
-} from "../tests-common";
+} from "../tests-common.js";
 
 const dataPoints = [
   { dataFeedId: "ETH", value: 4000 },

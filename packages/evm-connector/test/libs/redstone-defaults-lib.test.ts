@@ -1,10 +1,10 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { expect } from "chai";
 import hre from "hardhat";
-import { expectCustomError } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleRedstoneDefaultsLib } from "../contract-types";
-import { getBlockTimestampMilliseconds } from "../tests-common";
+import { expectCustomError } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleRedstoneDefaultsLib } from "../contract-types.js";
+import { getBlockTimestampMilliseconds } from "../tests-common.js";
 
 const MILLISECONDS_IN_MINUTE = 60 * 1000;
 

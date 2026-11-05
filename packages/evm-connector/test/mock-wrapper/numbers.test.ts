@@ -6,17 +6,17 @@ import {
   MockDataPackageConfig,
   WrapperBuilder,
   getMockNumericPackage,
-} from "../../src";
-import { expectCustomError } from "../assertions";
-import { deployContract } from "../commons";
-import { SampleRedstoneConsumerNumericMock } from "../contract-types";
+} from "../../src/index.js";
+import { expectCustomError } from "../assertions.js";
+import { deployContract } from "../commons.js";
+import { SampleRedstoneConsumerNumericMock } from "../contract-types.js";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
   UNAUTHORISED_SIGNER_INDEX,
   expectedNumericValues,
   mockNumericPackageConfigs,
   mockNumericPackages,
-} from "../tests-common";
+} from "../tests-common.js";
 
 describe("SampleRedstoneConsumerNumericMock", function () {
   let contract: SampleRedstoneConsumerNumericMock;

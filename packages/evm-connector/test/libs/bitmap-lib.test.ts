@@ -1,8 +1,8 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { expect } from "chai";
 import hre from "hardhat";
-import { deployContract } from "../commons";
-import { SampleBitmapLib } from "../contract-types";
+import { deployContract } from "../commons.js";
+import { SampleBitmapLib } from "../contract-types.js";
 
 describe("SampleBitmapLib", function () {
   let contract: SampleBitmapLib,
