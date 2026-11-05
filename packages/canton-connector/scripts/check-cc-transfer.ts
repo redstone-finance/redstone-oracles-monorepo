@@ -8,7 +8,8 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { z } from "zod";
 import * as AllDefs from "../src/canton-defs.json";
-import { describeError, latestMigrationId, makeScanApi, upstreamStatus } from "./canton-scan";
+import { findLatestMigrationId } from "../src/client/CantonScanApiClient";
+import { describeError, makeScanApi, upstreamStatus } from "./canton-scan";
 import { readNetwork } from "./utils";
 
 function isObject(value: unknown): value is Record<string, unknown> {
@@ -67,7 +68,7 @@ async function main() {
     .filter((id) => id.length > 0);
 
   const { api, scanBaseUrl } = makeScanApi();
-  const migrationId = await latestMigrationId(api);
+  const migrationId = await findLatestMigrationId(api);
 
   console.log(`network=${network} scan=${scanBaseUrl} migration_id=${migrationId}\n`);
 
