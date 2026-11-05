@@ -2135,9 +2135,10 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "",
-        "maxAcceptableDeviation": 5,
+        "maxAcceptableDeviation": 2.5,
         "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+        "upperClampPercent": 0.1,
+        "includePrimaryInMedian": true
       },
       "denomination": "KRW",
       "rateFeed": false,
