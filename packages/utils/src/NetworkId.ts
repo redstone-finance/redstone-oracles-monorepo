@@ -48,6 +48,10 @@ export function isNonEvmNetworkId(networkId: NetworkId): networkId is NonEvmNetw
   return !isEvmNetworkId(networkId);
 }
 
+export function isStellarNetworkId(networkId: NetworkId) {
+  return deconstructNetworkId(networkId).chainType === ChainTypeEnum.enum.stellar;
+}
+
 export function isNonEvmChainType(chainType?: string): chainType is NonEvmChainType {
   return !isEvmChainType(chainType);
 }
