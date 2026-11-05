@@ -1,0 +1,33 @@
+module RedStonePricePillFactory where
+
+import IRedStonePricePillFactory
+import IRedStonePricePill
+import RedStonePricePill
+
+template RedStonePricePillFactory
+  with
+    factoryId: Text
+    owner : Party
+    creators : [Party]
+  where
+    signatory owner
+    observer creators
+
+    interface instance IRedStonePricePillFactory for RedStonePricePillFactory where
+      view = RedStonePricePillFactoryView with factoryId
+
+      iRedStonePricePillFactory_VerifyCreator caller =  assertMsg "Caller must be a creator" $ caller `elem` creators
+      iRedStonePricePillFactory_VerifyArchiver caller = assertMsg "Caller must be a creator" $ caller `elem` creators
+        
+      iRedStonePricePillFactory_CreatePricePillsImpl params inputData = do
+        forA inputData \input ->
+          (toInterfaceContractId @IRedStonePricePill <$> create RedStonePricePill
+            with
+              owner
+              viewers = params.viewers
+              creators
+              feedId = input.feedId
+              priceData = input.priceData
+              stalenessMs = params.stalenessMs
+              adapterId = params.adapterId
+          )

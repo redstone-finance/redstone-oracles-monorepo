@@ -49,7 +49,14 @@ interface IRedStoneCore where
       iRedStoneCore_GetPricesImpl this caller feedIds currentTime payloadHex
 ```
 
-The `caller : Party` pattern is used as the `controller`. `iRedStoneCore_VerifyViewer` decides whether viewer authorization is enforced — its implementation may check that the caller is in the `viewers` list or no-op. This allows templates like `RedStoneCore` (disclosed contract pattern) to disable the check (via its `shouldVerifyViewer` flag) while `RedStoneAdapter` always enforces it. See the [Caller Pattern](../README.md#caller-pattern) section for details.
+The `caller : Party` pattern is used as the `controller`.
+`iRedStoneCore_VerifyViewer` decides whether viewer authorization is enforced —
+its implementation may check that the caller is in the `viewers` list or no-op.
+This allows templates like `RedStoneCore` (disclosed contract pattern) to
+disable the check (via its `shouldVerifyViewer` flag) while `RedStoneAdapter`
+always enforces it. See the Caller
+[Pattern](../../deployments/cantonDevnetMultiFeed/README.md#caller-pattern)
+section for details.
 
 #### Contract template
 

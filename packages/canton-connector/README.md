@@ -22,7 +22,8 @@ the [whole RedStone Oracle model](https://docs.redstone.finance/docs/introductio
 ## 👨‍💻 Code structure
 
 - [daml](daml) directory contains the canton-network on-chain contracts.
-  - You can read [here](daml/README.md) how the contracts work.
+  - You can read [here](deployments/cantonDevnetMultiFeed/README.md) how the
+    contracts work.
 - [src](src) directory contains the TypeScript classes, useful for establishing a connection between TypeScript and
   canton-network layers.
   - See [below](#-connecting-to-the-contract), how to connect to the contract.
