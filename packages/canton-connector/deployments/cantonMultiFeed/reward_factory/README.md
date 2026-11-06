@@ -55,7 +55,7 @@ rewardWeight total =
      0.0
 ```
 
-With the current constants (`one_mb_price = 60`, factor 1.15) that is ≈69 per MB of traffic. The factory only
+With the current constants (`one_mb_price = 60`, factor 0) that is 0 per MB of traffic. The factory only
 creates a marker once the weight reaches `1.0`; below that it returns `0.0` and creates nothing.
 
 ## Contract template
@@ -95,5 +95,5 @@ make update-reward-factory-id
 
 - `min_reward_creation_ms`: Minimum interval between reward creation calls (default: 7 minutes)
 - `reward_factor_frac_num / reward_factor_frac_den`: Reward weight per byte of traffic
-  (default: `60 * 115 / (1 MB * 100)`, i.e. ≈69 per MB)
+  (default: `60 * 0 / (1 MB * 100)`, i.e. 0 per MB)
 - `reward_min_count`: Traffic not rewarded, covering the marker's own cost (default: 5 kB)
