@@ -227,6 +227,90 @@
         "rwa"
       ]
     },
+    "INR_FX": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CNH_FX": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "HKD_FX": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "AUD_FX": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CHF_FX": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CAD_FX": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NZD_FX": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "BTC": {
       "source": [
         "ws-spot-binance-usdt",
@@ -31397,90 +31481,6 @@
       ],
       "denomination": "USD",
       "rateFeed": false
-    },
-    "INR_FX": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "types": [
-        "rwa"
-      ]
-    },
-    "CNH_FX": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "types": [
-        "rwa"
-      ]
-    },
-    "HKD_FX": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "types": [
-        "rwa"
-      ]
-    },
-    "AUD_FX": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "types": [
-        "rwa"
-      ]
-    },
-    "CHF_FX": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "types": [
-        "rwa"
-      ]
-    },
-    "CAD_FX": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "types": [
-        "rwa"
-      ]
-    },
-    "NZD_FX": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "types": [
-        "rwa"
-      ]
     },
     "ADANI_ENTERPRISES": {
       "source": [],
