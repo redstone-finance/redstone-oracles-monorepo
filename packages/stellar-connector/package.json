@@ -58,15 +58,6 @@
     "lodash": "^4.17.23",
     "zod": "^4.1.12"
   },
-  "devDependencies": {
-    "@ledgerhq/hw-app-str": "^7.7.1",
-    "@ledgerhq/hw-transport-node-hid-singleton": "^6.35.1",
-    "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*",
-    "@redstone-finance/chain-configs": "workspace:*",
-    "@redstone-finance/mars-rover": "git+https://github.com/redstone-finance/mars-rover.git#v0.0.4",
-    "@types/urijs": "^1.19.25",
-    "dotenv": "^16.0.3"
-  },
   "files": [
     "src",
     "dist/src/**/*"
