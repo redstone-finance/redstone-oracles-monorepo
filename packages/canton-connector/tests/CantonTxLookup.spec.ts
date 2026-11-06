@@ -1,5 +1,4 @@
-import { CantonClient, JsonCantonApi } from "../src";
-import { WRITE_PRICES_CHOICE } from "../src/adapters/PricesCantonContractAdapter";
+import { CantonClient, JsonCantonApi, WRITE_PRICES_CHOICE } from "../src";
 import contracts from "../src/canton-defs.json";
 import { CantonTxLookup, PUBLISH_CHOICE } from "../src/CantonTxLookup";
 
