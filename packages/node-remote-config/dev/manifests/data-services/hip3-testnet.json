@@ -185,6 +185,20 @@
         "snoozed"
       ]
     },
+    "MID_ani:DOG_EMA_HALF_30M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
+    },
     "MARK_ani:DOG_EMA_HALF_1H": {
       "source": [
         "ema"
@@ -411,6 +425,20 @@
       ]
     },
     "MID_ani:DOG2_EMA_HALF_5M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "snoozed"
+      ]
+    },
+    "MID_ani:DOG2_EMA_HALF_30M": {
       "source": [
         "ema"
       ],
@@ -847,6 +875,17 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "MID_io:ANTH_EMA_HALF_30M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "ENTROPY_DEPTH_io:ANTH": {
       "source": [
         "ws-hydromancer-depth",
@@ -1034,6 +1073,17 @@
       "rateFeed": false
     },
     "MID_io:OAI_EMA_HALF_5M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_io:OAI_EMA_HALF_30M": {
       "source": [
         "ema"
       ],
@@ -3030,6 +3080,17 @@
       "rateFeed": false
     },
     "MID_io:PRL_EMA_HALF_5M": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_io:PRL_EMA_HALF_30M": {
       "source": [
         "ema"
       ],
