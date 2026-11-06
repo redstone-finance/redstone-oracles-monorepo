@@ -91,22 +91,11 @@ export function makeInterfaceFilterByParty(interfaceId: string, partyId: string)
   return filtersByParty;
 }
 
-export function makeWildcardFilterByParty(partyId: string, viewInterfaceId: string) {
+export function makeWildcardFilterByParty(partyId: string) {
   const filtersByParty: Map_Filters = {};
   filtersByParty[partyId] = {
     cumulative: [
       { identifierFilter: { WildcardFilter: { value: { includeCreatedEventBlob: false } } } },
-      {
-        identifierFilter: {
-          InterfaceFilter: {
-            value: {
-              interfaceId: viewInterfaceId,
-              includeInterfaceView: true,
-              includeCreatedEventBlob: false,
-            },
-          },
-        },
-      },
     ],
   };
 
