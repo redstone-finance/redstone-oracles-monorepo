@@ -1,7 +1,7 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { CantonClient } from "../client/CantonClient";
 import { convertDecimalValue, getCantonFeedId } from "../utils/conversions";
-import { ContractFilter } from "../utils/price-feed-utils";
+import { makeContractFilter } from "../utils/price-feed-utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
 
 export const ICORE_TEMPLATE_NAME = `IRedStoneCore:IRedStoneCore`;
@@ -19,8 +19,9 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
   }
 
   protected override getContractFilter() {
-    return ((createArgument: { coreId: string }) =>
-      createArgument.coreId === this.adapterId) as ContractFilter;
+    return makeContractFilter(
+      (createArgument: { coreId: string }) => createArgument.coreId === this.adapterId
+    );
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {

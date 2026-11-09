@@ -11,7 +11,7 @@ import {
 import { SigningKey } from "@ethersproject/signing-key";
 import { computeAddress } from "@ethersproject/transactions";
 import { verifyMessage } from "@ethersproject/wallet";
-import { ecdsaRecover } from "secp256k1";
+import { ecdsaRecover, ecdsaSign, signatureExport } from "secp256k1";
 import { keccak256 } from "./keccak";
 import { addressFromPrivateKey, publicKeyFromPrivateKey } from "./keys";
 
@@ -37,6 +37,16 @@ export class UniversalSigner {
 
   static signDigest(digest: BytesLike, privateKey: string) {
     return new SigningKey(privateKey).signDigest(digest);
+  }
+
+  static signDigestDer(digest: BytesLike, privateKey: string) {
+    return UniversalSigner.signatureToDer(
+      ecdsaSign(arrayify(digest), arrayify(privateKey)).signature
+    );
+  }
+
+  static signatureToDer(rsSignature: BytesLike) {
+    return signatureExport(arrayify(rsSignature));
   }
 
   static joinSignature(signature: SignatureLike) {

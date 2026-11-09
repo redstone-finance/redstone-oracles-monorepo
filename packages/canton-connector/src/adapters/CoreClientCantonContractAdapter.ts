@@ -1,7 +1,7 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { CantonClient } from "../client/CantonClient";
 import { convertDecimalValue } from "../utils/conversions";
-import { ContractFilter } from "../utils/price-feed-utils";
+import { makeContractFilter } from "../utils/price-feed-utils";
 import { DisclosedContractData } from "../utils/utils";
 import { CantonContractAdapter, ExerciseChoiceOptions } from "./CantonContractAdapter";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
@@ -28,8 +28,10 @@ export class CoreClientCantonContractAdapter extends CantonContractAdapter {
     };
   }
   protected override getContractFilter() {
-    return ((createArgument: { contractId: string }) =>
-      createArgument.contractId === this.activeContractData?.contractId) as ContractFilter;
+    return makeContractFilter(
+      (createArgument: { contractId: string }) =>
+        createArgument.contractId === this.activeContractData?.contractId
+    );
   }
 
   private async getDisclosedPricesParams(

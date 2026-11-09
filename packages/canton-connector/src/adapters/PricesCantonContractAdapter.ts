@@ -56,20 +56,22 @@ export class PricesCantonContractAdapter
       },
     };
 
-    const { result, metadata } = await this.exerciseChoice<ActiveContractData | string>(
-      this.config.viewerPartyId,
-      actAs,
-      WRITE_PRICES_CHOICE,
-      {
-        ...argument,
-        ...context,
-      },
-      {
-        withCurrentTime: true,
-        disclosedContractData: [this.client.getDefs()[DEFS_KEY_FEATURED_APP_RIGHT]],
-        withCaller: true,
-        withRetry: false,
-      }
+    const { result, metadata } = await this.trafficMeter.addBackOnFailure(paidTrafficCost, () =>
+      this.exerciseChoice<ActiveContractData | string>(
+        this.config.viewerPartyId,
+        actAs,
+        WRITE_PRICES_CHOICE,
+        {
+          ...argument,
+          ...context,
+        },
+        {
+          withCurrentTime: true,
+          disclosedContractData: [this.client.getDefs()[DEFS_KEY_FEATURED_APP_RIGHT]],
+          withCaller: true,
+          withRetry: false,
+        }
+      )
     );
 
     if (typeof result === "string" && paidTrafficCost) {

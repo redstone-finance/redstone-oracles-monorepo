@@ -3,7 +3,7 @@ import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient } from "../client/CantonClient";
 import { CantonFeedId, decodeCantonFeedId, getCantonFeedId } from "../utils/conversions";
-import { ContractFilter, parsePriceData, PriceData } from "../utils/price-feed-utils";
+import { makeContractFilter, parsePriceData, PriceData } from "../utils/price-feed-utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
 import { CantonContractAdapterConfig } from "./CantonContractAdapterConfig";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
@@ -39,8 +39,9 @@ export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implement
   }
 
   protected override getContractFilter() {
-    return ((createArgument: { adapterId: string }) =>
-      createArgument.adapterId === this.config.adapterId) as ContractFilter;
+    return makeContractFilter(
+      (createArgument: { adapterId: string }) => createArgument.adapterId === this.config.adapterId
+    );
   }
 
   protected async readFeedData(offset?: number): Promise<DamlFeedData> {
@@ -142,7 +143,8 @@ function newestPriceData(feedData: DamlFeedData, feedId: string) {
 
 class CoreInsidePricesCantonContractAdapter extends CoreCantonContractAdapter {
   protected override getContractFilter() {
-    return ((createArgument: { adapterId: string }) =>
-      createArgument.adapterId === this.adapterId) as ContractFilter;
+    return makeContractFilter(
+      (createArgument: { adapterId: string }) => createArgument.adapterId === this.adapterId
+    );
   }
 }

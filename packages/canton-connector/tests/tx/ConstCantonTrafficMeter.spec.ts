@@ -13,14 +13,13 @@ const SENT_FEEDS = ALL_FEEDS.slice(0, 2);
 const SENT_FEED_COUNT = SENT_FEEDS.length;
 const START_MS = 1_700_000_000_000;
 const OK_RESULT = FP.ok({ transactionHash: "0x", metadata: {} });
-
 const SUB_CAP_GAP_MS = MAX_ELAPSED_MS / 2;
 const SUB_CAP_LATE_MS = MAX_ELAPSED_MS / 4;
 const OVER_CAP_GAP_MS = MAX_ELAPSED_MS * 1_000;
-
+const SPENT_TRAFFIC = 3_000;
+const REJECTION_ERROR = new Error("CONTRACT_NOT_FOUND");
 const expectedCost = (elapsedMsSum: number) =>
   Math.round((DAILY_TRAFFIC_BUDGET_BYTES * elapsedMsSum) / (ONE_DAY_MS * TOTAL_FEED_COUNT));
-
 const makeMeter = (shouldAccumulate = true, feedCount = TOTAL_FEED_COUNT) =>
   new ConstCantonTrafficMeter(shouldAccumulate, feedCount);
 
@@ -117,5 +116,15 @@ describe("ConstCantonTrafficMeter", () => {
     sut.refund();
 
     expect(sut.consumeAccumulated()).toBeFalsy();
+  });
+
+  it("adds the consumed traffic back when Canton rejects the write", async () => {
+    const sut = makeMeter();
+
+    await expect(
+      sut.addBackOnFailure(SPENT_TRAFFIC, () => Promise.reject(REJECTION_ERROR))
+    ).rejects.toBe(REJECTION_ERROR);
+
+    expect(sut.consumeAccumulated()).toBe(SPENT_TRAFFIC);
   });
 });

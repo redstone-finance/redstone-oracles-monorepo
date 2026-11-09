@@ -132,6 +132,15 @@ export function isCreatedEvent(event: Event) {
 
 export type DisclosedContractData = Required<Omit<ActiveContractData, "createArgument">>;
 
+export type TypedCreatedEvent<Argument> = Omit<CreatedEvent, "createArgument"> & {
+  createArgument: Argument;
+};
+
+export interface ActiveContract<Argument = unknown> {
+  createdEvent: TypedCreatedEvent<Argument>;
+  synchronizerId: string;
+}
+
 export interface ActiveContractData<T = unknown> {
   contractId: string;
   createArgument?: T;

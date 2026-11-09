@@ -14,8 +14,12 @@ export async function sampleRun(
   refreshStateCallback = async () => {}
 ) {
   await executePullModel(adapter, paramsProvider);
-  const blockNumber = await provider.getBlockNumber();
-  await executePushModel(adapter, paramsProvider, blockNumber, refreshStateCallback);
+  const blockNumber = await executePushModel(
+    adapter,
+    paramsProvider,
+    provider,
+    refreshStateCallback
+  );
 
   await readFromContractAdapter(adapter, paramsProvider.getDataFeedIds(), blockNumber);
 
@@ -53,7 +57,7 @@ async function executePullModel(
 async function executePushModel(
   adapter: WriteContractAdapter,
   paramsProvider: ContractParamsProvider,
-  blockNumber: number,
+  provider: BlockProvider,
   refreshStateCallback: () => Promise<void>
 ) {
   logHeader("Pushing values using classic model");
@@ -62,6 +66,7 @@ async function executePushModel(
   console.log(`Update transaction ${txId}`);
 
   await refreshStateCallback();
+  const blockNumber = await provider.getBlockNumber();
 
   console.log(`Current block number: ${blockNumber}`);
 

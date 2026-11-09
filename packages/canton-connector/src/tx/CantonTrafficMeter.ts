@@ -1,5 +1,6 @@
 import { TxDeliveryManUpdateStatus } from "@redstone-finance/multichain-kit";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { isWrongContractError } from "../utils/utils";
 import { CantonTxResultExt } from "./CantonContractUpdater";
 
 export abstract class CantonTrafficMeter {
@@ -43,6 +44,18 @@ export abstract class CantonTrafficMeter {
 
   refund(paidTrafficCost: number) {
     this.addPaidTrafficCost(paidTrafficCost);
+  }
+
+  async addBackOnFailure<T>(paidTrafficCost: number, spend: () => Promise<T>) {
+    try {
+      return await spend();
+    } catch (error) {
+      if (isWrongContractError(error)) {
+        this.addPaidTrafficCost(paidTrafficCost);
+      }
+
+      throw error;
+    }
   }
 
   protected addPaidTrafficCost(paidTrafficCost?: number) {

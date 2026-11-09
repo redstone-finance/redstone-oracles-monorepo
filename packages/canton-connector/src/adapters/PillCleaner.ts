@@ -39,13 +39,11 @@ export class PillCleaner extends CantonContractAdapter {
 
     this.logger.log(`Found ${RedstoneCommon.getNS(active.length, "stale contract")} to archive`);
 
-    const cmds = active
-      .map((contract) => contract.contractEntry)
-      .map((entry) => ({
-        choice: ARCHIVE_CHOICE,
-        argument: {},
-        contractId: entry.JsActiveContract.createdEvent.contractId,
-      }));
+    const cmds = active.map(({ createdEvent }) => ({
+      choice: ARCHIVE_CHOICE,
+      argument: {},
+      contractId: createdEvent.contractId,
+    }));
 
     if (cmds.length === 0) {
       return false;
@@ -56,9 +54,9 @@ export class PillCleaner extends CantonContractAdapter {
     });
 
     const lastActive = active[active.length - 1];
-    const createdAt = lastActive.contractEntry.JsActiveContract.createdEvent.createdAt;
+    const creationTime = lastActive.createdEvent.createdAt;
     this.logger.log(
-      `Archived ${RedstoneCommon.getNS(cmds.length, "contract")}, last contract created at: ${createdAt}`
+      `Archived ${RedstoneCommon.getNS(cmds.length, "contract")}, last contract created at: ${creationTime}`
     );
 
     return true;

@@ -19,6 +19,7 @@ import {
 } from "../utils/extract-utils";
 import { ContractFilter, CreatedArgumentCallback } from "../utils/price-feed-utils";
 import {
+  ActiveContract,
   isJsActiveContract,
   makeActiveContractData,
   makeInterfaceFilterByParty,
@@ -55,7 +56,7 @@ export class CantonClient {
   }
 
   async getCurrentOffset() {
-    const { offset } = await this.api.performRequest(
+    const { offset } = await this.api.performRequestCollected(
       DefaultService.getV2StateLedgerEnd,
       "getCurrentOffset"
     );
@@ -163,14 +164,14 @@ export class CantonClient {
     return this.scanApiClient;
   }
 
-  async getActiveContractsData(
+  async getActiveContractsData<Argument = unknown>(
     actAs: string,
     interfaceId: string,
     filter?: ContractFilter,
     atOffset?: number,
     limit = MAX_RESPONSE_LIMIT
   ) {
-    return await this.queryActiveContracts(
+    return await this.queryActiveContracts<Argument>(
       makeInterfaceFilterByParty(interfaceId, actAs),
       filter,
       atOffset,
@@ -178,14 +179,14 @@ export class CantonClient {
     );
   }
 
-  async getActiveTemplateContractsData(
+  async getActiveTemplateContractsData<Argument = unknown>(
     actAs: string,
     templateId: string,
     filter?: ContractFilter,
     atOffset?: number,
     limit = MAX_RESPONSE_LIMIT
   ) {
-    return await this.queryActiveContracts(
+    return await this.queryActiveContracts<Argument>(
       makeTemplateFilterByParty(templateId, actAs),
       filter,
       atOffset,
@@ -199,19 +200,20 @@ export class CantonClient {
     filter?: ContractFilter,
     atOffset?: number
   ) {
-    const adapters = await this.getActiveContractsData(actAs, interfaceId, filter, atOffset);
-    if (adapters.length === 0) {
-      throw new Error("No active contract data");
-    }
+    return CantonClient.toSingleContractData(
+      await this.getActiveContractsData<T>(actAs, interfaceId, filter, atOffset)
+    );
+  }
 
-    const [adapter, ...rest] = adapters;
-    if (rest.length > 0) {
-      throw new Error(`Unable to determine contract data of ${adapters.length} contracts`);
-    }
-
-    const { createdEvent, synchronizerId } = adapter.contractEntry.JsActiveContract;
-
-    return makeActiveContractData<T>(createdEvent, synchronizerId);
+  async getActiveTemplateContractData<T = unknown>(
+    actAs: string,
+    templateId: string,
+    filter?: ContractFilter,
+    atOffset?: number
+  ) {
+    return CantonClient.toSingleContractData(
+      await this.getActiveTemplateContractsData<T>(actAs, templateId, filter, atOffset)
+    );
   }
 
   async getCreatedContractData<T = unknown>(
@@ -252,16 +254,13 @@ export class CantonClient {
     }
 
     if (sorter) {
-      adapters = _.sortBy(adapters, (contract) =>
-        sorter(
-          contract.contractEntry.JsActiveContract.createdEvent.createArgument,
-          contract.contractEntry.JsActiveContract.createdEvent.signatories
-        )
+      adapters = _.sortBy(adapters, ({ createdEvent }) =>
+        sorter(createdEvent.createArgument, createdEvent.signatories)
       );
     }
 
     const [adapter] = adapters;
-    const { createdEvent, synchronizerId } = adapter.contractEntry.JsActiveContract;
+    const { createdEvent, synchronizerId } = adapter;
 
     return makeActiveContractData<T>(createdEvent, synchronizerId);
   }
@@ -485,7 +484,7 @@ export class CantonClient {
     return makeActiveContractData<T>(createdEvent, synchronizerId);
   }
 
-  private async queryActiveContracts(
+  private async queryActiveContracts<Argument>(
     filtersByParty: Map_Filters,
     filter?: ContractFilter,
     atOffset?: number,
@@ -514,13 +513,10 @@ export class CantonClient {
 
     return contracts
       .filter(isJsActiveContract)
+      .map<ActiveContract<Argument>>(({ contractEntry }) => contractEntry.JsActiveContract)
       .filter(
-        (contract) =>
-          !filter ||
-          filter(
-            contract.contractEntry.JsActiveContract.createdEvent.createArgument,
-            contract.contractEntry.JsActiveContract.createdEvent.signatories
-          )
+        ({ createdEvent }) =>
+          !filter || filter(createdEvent.createArgument, createdEvent.signatories)
       );
   }
 
@@ -575,6 +571,19 @@ export class CantonClient {
     }
 
     return updates;
+  }
+
+  private static toSingleContractData<T>(contracts: ActiveContract<T>[]) {
+    if (contracts.length === 0) {
+      throw new Error("No active contract data");
+    }
+
+    const [contract, ...rest] = contracts;
+    if (rest.length > 0) {
+      throw new Error(`Unable to determine contract data of ${contracts.length} contracts`);
+    }
+
+    return makeActiveContractData<T>(contract.createdEvent, contract.synchronizerId);
   }
 }
 

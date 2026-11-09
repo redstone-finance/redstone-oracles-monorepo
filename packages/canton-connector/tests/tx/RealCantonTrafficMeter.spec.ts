@@ -4,7 +4,9 @@ import { TX_HASH } from "../test-helpers";
 import { ResetableCantonTrafficMeter } from "./resetable-canton-traffic-meter";
 
 const BASE = 1_000_000_000;
-
+const SPENT_TRAFFIC = 3_000;
+const REJECTION_ERROR = new Error("CONTRACT_NOT_FOUND");
+const TIMEOUT_ERROR = new Error("timed out");
 const makeMeter = (shouldAccumulate = true, fetch = () => Promise.resolve(0)) =>
   new RealCantonTrafficMeter(shouldAccumulate, fetch);
 
@@ -248,6 +250,36 @@ describe("RealCantonTrafficMeter", () => {
       makeMeter(false);
 
       expect(() => makeMeter()).not.toThrow();
+    });
+  });
+
+  describe("addBackOnFailure", () => {
+    it("keeps the consumed traffic out when the spending succeeds", async () => {
+      const sut = makeMeter();
+
+      await sut.addBackOnFailure(SPENT_TRAFFIC, () => Promise.resolve());
+
+      expect(sut.consumeAccumulated()).toBe(0);
+    });
+
+    it("adds the consumed traffic back and rethrows when Canton rejects the write", async () => {
+      const sut = makeMeter();
+
+      await expect(
+        sut.addBackOnFailure(SPENT_TRAFFIC, () => Promise.reject(REJECTION_ERROR))
+      ).rejects.toBe(REJECTION_ERROR);
+
+      expect(sut.consumeAccumulated()).toBe(SPENT_TRAFFIC);
+    });
+
+    it("keeps the consumed traffic out and rethrows when the write may have gone through", async () => {
+      const sut = makeMeter();
+
+      await expect(
+        sut.addBackOnFailure(SPENT_TRAFFIC, () => Promise.reject(TIMEOUT_ERROR))
+      ).rejects.toBe(TIMEOUT_ERROR);
+
+      expect(sut.consumeAccumulated()).toBe(0);
     });
   });
 });

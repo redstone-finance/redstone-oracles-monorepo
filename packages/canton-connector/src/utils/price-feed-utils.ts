@@ -51,26 +51,31 @@ export function findNewestContract(events: CreatedEvent[]): CreatedEvent | undef
   );
 }
 
-export function createFeedIdFilter(
-  arrayifiedFeedIds: CantonFeedId[],
-  adapterId?: string
-): ContractFilter {
-  return ((createArgument: { feedId: CantonFeedId; adapterId: string }) =>
-    (!adapterId || createArgument.adapterId === adapterId) &&
-    arrayifiedFeedIds.some((arrayified) =>
-      _.isEqual(createArgument.feedId, arrayified)
-    )) as ContractFilter;
+export function makeContractFilter<Argument>(
+  filter: (createArgument: Argument, signatories?: string[]) => boolean | undefined
+) {
+  return filter as ContractFilter;
 }
 
-export function createStalenessFilter(keepFresh: boolean = true): ContractFilter {
-  return ((createArgument: { priceData: { writeTimestamp: string }; stalenessMs: string }) => {
-    const currentTime = Date.now();
-    const writeTimestamp = Number(createArgument.priceData.writeTimestamp);
-    const stalenessMs = Number(createArgument.stalenessMs);
-    const isFresh = currentTime - writeTimestamp <= stalenessMs;
+export function createFeedIdFilter(arrayifiedFeedIds: CantonFeedId[], adapterId?: string) {
+  return makeContractFilter(
+    (createArgument: { feedId: CantonFeedId; adapterId: string }) =>
+      (!adapterId || createArgument.adapterId === adapterId) &&
+      arrayifiedFeedIds.some((arrayified) => _.isEqual(createArgument.feedId, arrayified))
+  );
+}
 
-    return keepFresh === isFresh;
-  }) as ContractFilter;
+export function createStalenessFilter(keepFresh: boolean = true) {
+  return makeContractFilter(
+    (createArgument: { priceData: { writeTimestamp: string }; stalenessMs: string }) => {
+      const currentTime = Date.now();
+      const writeTimestamp = Number(createArgument.priceData.writeTimestamp);
+      const stalenessMs = Number(createArgument.stalenessMs);
+      const isFresh = currentTime - writeTimestamp <= stalenessMs;
+
+      return keepFresh === isFresh;
+    }
+  );
 }
 
 export function groupEventsByFeedId(

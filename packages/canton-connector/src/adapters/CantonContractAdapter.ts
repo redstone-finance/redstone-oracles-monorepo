@@ -1,6 +1,6 @@
 import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient } from "../client/CantonClient";
-import { ContractFilter } from "../utils/price-feed-utils";
+import { ContractFilter, makeContractFilter } from "../utils/price-feed-utils";
 import {
   ActiveContractData,
   combineIntoId,
@@ -79,12 +79,11 @@ export abstract class CantonContractAdapter {
     return () => true;
   }
 
-  protected getCombinedSignatoryContractFilter(
-    signatory = this.client.getDefs().signatory
-  ): ContractFilter {
-    return ((adapter: unknown, signatories) =>
-      signatories?.includes(signatory) &&
-      this.getContractFilter()(adapter, signatories)) as ContractFilter;
+  protected getCombinedSignatoryContractFilter(signatory = this.client.getDefs().signatory) {
+    return makeContractFilter(
+      (adapter: unknown, signatories) =>
+        signatories?.includes(signatory) && this.getContractFilter()(adapter, signatories)
+    );
   }
 
   private static buildCommand<Arg extends object>(

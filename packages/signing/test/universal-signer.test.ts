@@ -1,5 +1,6 @@
-import { hexlify, splitSignature } from "@ethersproject/bytes";
+import { arrayify, concat, hexlify, splitSignature } from "@ethersproject/bytes";
 import { Wallet } from "@ethersproject/wallet";
+import { ecdsaVerify, signatureImport } from "secp256k1";
 import { UniversalSigner } from "../src";
 
 const PRIVATE_KEY_FOR_TESTS = "0x1111111111111111111111111111111111111111111111111111111111111111";
@@ -41,6 +42,23 @@ describe("UniversalSigner", () => {
       signature
     );
     expect(recoveredSigner).not.toBe(new Wallet(PRIVATE_KEY_FOR_TESTS).address);
+  });
+
+  test("Should sign a digest in DER verifiable with the signer's public key", () => {
+    const digest = UniversalSigner.getDigestForData(stringifiableData);
+    const publicKey = arrayify(UniversalSigner.publicKeyFromPrivateKey(PRIVATE_KEY_FOR_TESTS));
+    const signature = UniversalSigner.signDigestDer(digest, PRIVATE_KEY_FOR_TESTS);
+
+    expect(ecdsaVerify(signatureImport(signature), digest, publicKey)).toBe(true);
+  });
+
+  test("Should encode an r and s signature in DER", () => {
+    const digest = UniversalSigner.getDigestForData(stringifiableData);
+    const { r, s } = UniversalSigner.signDigest(digest, PRIVATE_KEY_FOR_TESTS);
+
+    expect(hexlify(UniversalSigner.signatureToDer(concat([r, s])))).toBe(
+      hexlify(UniversalSigner.signDigestDer(digest, PRIVATE_KEY_FOR_TESTS))
+    );
   });
 
   test("Should sign with Ethereum Hash Message", async () => {
