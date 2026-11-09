@@ -8501,7 +8501,6 @@ __metadata:
     "@nomicfoundation/hardhat-verify": "npm:^3.0.22"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    ethers: "npm:^6"
     hardhat: "npm:^3.13.0"
   languageName: unknown
   linkType: soft
