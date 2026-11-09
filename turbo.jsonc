@@ -60,8 +60,7 @@
     },
     "bundle": {
       "inputs": ["dist/**", "$TURBO_ROOT$/rollup.config.mjs"],
-      // If your bundle script produces other outputs, you *have* to declare them in local turbo.json
-      "outputs": ["dist/index.js"],
+      "outputs": ["bundle/**"],
       "dependsOn": ["build"]
     },
     "zip": {
