@@ -8712,7 +8712,6 @@ __metadata:
   resolution: "@redstone-finance/integration-tests@workspace:packages/integration"
   dependencies:
     "@actions/core": "npm:^3"
-    "@ethersproject/bignumber": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
     "@ethersproject/wallet": "npm:^5.7.0"
     "@redstone-finance/cache-service": "workspace:*"
@@ -9369,7 +9368,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-multi-top-up@workspace:packages/lambda/lambda-multi-top-up"
   dependencies:
-    "@ethersproject/bignumber": "npm:^5.7.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/evm-multicall": "workspace:*"
@@ -9639,7 +9637,6 @@ __metadata:
   resolution: "@redstone-finance/lambda-redstone-txs-indexer@workspace:packages/lambda/lambda-redstone-txs-indexer"
   dependencies:
     "@ethersproject/abi": "npm:^5.6.3"
-    "@ethersproject/bignumber": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
@@ -12956,12 +12953,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=13.7.0, @types/node@npm:^25.9.4":
-  version: 25.9.9
-  resolution: "@types/node@npm:25.9.9"
+"@types/node@npm:*, @types/node@npm:>=13.7.0, @types/node@npm:^26.6.6":
+  version: 26.6.6
+  resolution: "@types/node@npm:26.6.6"
   dependencies:
-    undici-types: "npm:>=7.24.0 <7.24.7"
-  checksum: 10c0/2ba08caa7118af2f2761f2f5db9b6304faf5bd027a2dcb72bf6fcae3dd9e470d17045fec27f89023c02e7d4e0661c6e5877174bd39794bef080db8b35ad4a1ea
+    undici-types: "npm:~8.9.0"
+  checksum: 10c0/5cb63f644f6e85a257a9cd2403cbcbe196760e2a35fd3ec9fb8b5cff663e14cc832b198cc17b53f870a2e30900ed45a1fb3f53e6589aba26b8e8c484aa672053
   languageName: node
   linkType: hard
 
@@ -12990,12 +12987,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^26.6.6":
-  version: 26.6.6
-  resolution: "@types/node@npm:26.6.6"
+"@types/node@npm:^25.9.4":
+  version: 25.9.9
+  resolution: "@types/node@npm:25.9.9"
   dependencies:
-    undici-types: "npm:~8.9.0"
-  checksum: 10c0/5cb63f644f6e85a257a9cd2403cbcbe196760e2a35fd3ec9fb8b5cff663e14cc832b198cc17b53f870a2e30900ed45a1fb3f53e6589aba26b8e8c484aa672053
+    undici-types: "npm:>=7.24.0 <7.24.7"
+  checksum: 10c0/2ba08caa7118af2f2761f2f5db9b6304faf5bd027a2dcb72bf6fcae3dd9e470d17045fec27f89023c02e7d4e0661c6e5877174bd39794bef080db8b35ad4a1ea
   languageName: node
   linkType: hard
 

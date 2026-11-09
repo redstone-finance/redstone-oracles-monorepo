@@ -23,7 +23,7 @@ describe("SampleSyntheticToken", function () {
     address: string;
 
   const toEth = function (val: number) {
-    return RedstoneCommon.parseEther(val.toString());
+    return RedstoneCommon.parseUnitsToBigInt(val.toString());
   };
   const toVal = function (val: number) {
     return RedstoneCommon.parseUnits(val.toString(), 26);

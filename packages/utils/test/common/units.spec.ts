@@ -42,10 +42,9 @@ describe("utils/units", () => {
       expect(parsed.toHexString()).toBe("0x08f0d180");
     });
 
-    it("should take numbers, bigints, BigNumbers and exponential notation", () => {
+    it("should take numbers, bigints and exponential notation", () => {
       expect(parseUnits(1.5, PRICE_DECIMALS).toString()).toBe("150000000");
       expect(parseUnits(7n, PRICE_DECIMALS).toString()).toBe("700000000");
-      expect(parseUnits(BigNumber.from(3), PRICE_DECIMALS).toString()).toBe("300000000");
       expect(parseUnits("1e-8", PRICE_DECIMALS).toString()).toBe("1");
       expect(parseUnits("-2.5", PRICE_DECIMALS).toString()).toBe("-250000000");
     });

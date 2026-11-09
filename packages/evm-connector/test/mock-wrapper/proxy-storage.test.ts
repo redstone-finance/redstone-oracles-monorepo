@@ -154,7 +154,7 @@ describe("SampleStorageProxy", function () {
       );
       await consumerContract.checkOracleValue(
         utils.convertStringToBytes32(dataPoint.dataFeedId),
-        Math.round(dataPoint.value * 10 ** 8)
+        BigInt(Math.round(dataPoint.value * 10 ** 8))
       );
     }
   });
@@ -165,7 +165,7 @@ describe("SampleStorageProxy", function () {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
-    const dataValues = dataPoints.map((dataPoint) => Math.round(dataPoint.value * 10 ** 8));
+    const dataValues = dataPoints.map((dataPoint) => BigInt(Math.round(dataPoint.value * 10 ** 8)));
 
     await wrappedContract.saveOracleValuesInContractStorage(dataFeedIdsBytes);
     await consumerContract.checkOracleValues(dataFeedIdsBytes, dataValues);

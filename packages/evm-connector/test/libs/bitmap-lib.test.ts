@@ -1,4 +1,3 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { expect } from "chai";
 import hre from "hardhat";
 import { deployContract } from "../commons.js";
@@ -6,18 +5,18 @@ import { SampleBitmapLib } from "../contract-types.js";
 
 describe("SampleBitmapLib", function () {
   let contract: SampleBitmapLib,
-    bitmapNumber = BigNumber.from(0);
+    bitmapNumber = 0n;
   const expectedBitmap = {} as Record<number, number>;
 
   const setBit = async (bitIndex: number) => {
     expectedBitmap[bitIndex] = 1;
-    bitmapNumber = await contract.setBitInBitmap(bitmapNumber, bitIndex);
+    bitmapNumber = (await contract.setBitInBitmap(bitmapNumber, BigInt(bitIndex))).toBigInt();
   };
 
   const validateBitmap = async () => {
     for (let bitIndex = 0; bitIndex < 256; bitIndex++) {
       const expectedBit = !!expectedBitmap[bitIndex];
-      const receivedBit = await contract.getBitFromBitmap(bitmapNumber, bitIndex);
+      const receivedBit = await contract.getBitFromBitmap(bitmapNumber, BigInt(bitIndex));
       const customErrMsg = "Bitmap invalid: " + JSON.stringify({ bitIndex });
       expect(receivedBit).to.eq(expectedBit, customErrMsg);
     }

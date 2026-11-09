@@ -3,7 +3,7 @@ import Decimal from "decimal.js";
 import { getOrSet } from "./maps";
 import { getNS } from "./misc";
 
-export type UnitValue = string | number | bigint | BigNumber | Decimal;
+export type UnitValue = string | number | bigint | Decimal;
 
 const ETHER_DECIMALS = 18;
 const UINT256_DIGIT_COUNT = 78;

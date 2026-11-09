@@ -21,12 +21,12 @@ describe("SampleNumericArrayLib", function () {
   });
 
   it("Should store array in storage", async () => {
-    const tx = await contract.testArrayUpdatingInStorage([3, 1, 4, 5, 2, 9, 8, 7, 4]);
+    const tx = await contract.testArrayUpdatingInStorage([3n, 1n, 4n, 5n, 2n, 9n, 8n, 7n, 4n]);
     await tx.wait();
   });
 
   it("Should correctly sort values", async () => {
-    const tx = await contract.testSortTx([3, 1, 4, 5, 2, 9, 8, 7, 4]);
+    const tx = await contract.testSortTx([3n, 1n, 4n, 5n, 2n, 9n, 8n, 7n, 4n]);
     await tx.wait();
 
     const cachedArray = await contract.getCachedArray();
@@ -34,26 +34,26 @@ describe("SampleNumericArrayLib", function () {
   });
 
   it("Should correctly pick the median value in an array with an odd length", async () => {
-    const tx = await contract.testMedianSelection([3, 2, 5, 4, 1]);
+    const tx = await contract.testMedianSelection([3n, 2n, 5n, 4n, 1n]);
     await tx.wait();
     const selectedMedian = await contract.cachedMedian();
     expect(selectedMedian.toNumber()).to.eq(3);
   });
 
   it("Should correctly pick the median value in an array with an even length", async () => {
-    const tx = await contract.testMedianSelection([300, 200, 500, 400]);
+    const tx = await contract.testMedianSelection([300n, 200n, 500n, 400n]);
     await tx.wait();
     const selectedMedian = await contract.cachedMedian();
     expect(selectedMedian.toNumber()).to.eq(350);
   });
 
   it("Should store array in storage", async () => {
-    const tx = await contract.testArrayUpdatingInStorage([3, 1, 4, 5, 2, 9, 8, 7, 4]);
+    const tx = await contract.testArrayUpdatingInStorage([3n, 1n, 4n, 5n, 2n, 9n, 8n, 7n, 4n]);
     await tx.wait();
   });
 
   it("Should store array in storage", async () => {
-    const tx = await contract.testArrayUpdatingInStorage([3, 1, 4, 5, 2, 9, 8, 7, 4]);
+    const tx = await contract.testArrayUpdatingInStorage([3n, 1n, 4n, 5n, 2n, 9n, 8n, 7n, 4n]);
     await tx.wait();
   });
 
@@ -74,28 +74,28 @@ describe("SampleNumericArrayLib", function () {
   });
 
   it("Should properly sort 1-elem array", async () => {
-    const sortTx = await contract.testSortTx([42]);
+    const sortTx = await contract.testSortTx([42n]);
     await sortTx.wait();
     const cachedArray = await contract.getCachedArray();
     expect(cachedArray).to.eql([BigNumber.from(42)]);
   });
 
   it("Should correctly pick median from 1-elem array", async () => {
-    const tx = await contract.testMedianSelection([12]);
+    const tx = await contract.testMedianSelection([12n]);
     await tx.wait();
     const selectedMedian = await contract.cachedMedian();
     expect(selectedMedian.toNumber()).to.eq(12);
   });
 
   it("Should properly sort 2-elem array", async () => {
-    const sortTx = await contract.testSortTx([42, 12]);
+    const sortTx = await contract.testSortTx([42n, 12n]);
     await sortTx.wait();
     const cachedArray = await contract.getCachedArray();
     expect(cachedArray).to.eql([BigNumber.from(12), BigNumber.from(42)]);
   });
 
   it("Should correctly pick median from 2-elem array", async () => {
-    const tx = await contract.testMedianSelection([42, 12]);
+    const tx = await contract.testMedianSelection([42n, 12n]);
     await tx.wait();
     const selectedMedian = await contract.cachedMedian();
     expect(selectedMedian.toNumber()).to.eq(27);
@@ -103,7 +103,7 @@ describe("SampleNumericArrayLib", function () {
 
   it("Should properly sort 100-elem array", async () => {
     const arr = prepareRandomArray(100);
-    const sortTx = await contract.testSortTx(arr);
+    const sortTx = await contract.testSortTx(arr.map(BigInt));
     await sortTx.wait();
     const cachedArray = await contract.getCachedArray();
     arr.sort((a, b) => a - b);
@@ -112,7 +112,7 @@ describe("SampleNumericArrayLib", function () {
 
   it("Should correctly pick median from 100-elem array", async () => {
     const arr = prepareRandomArray(101);
-    const tx = await contract.testMedianSelection(arr);
+    const tx = await contract.testMedianSelection(arr.map(BigInt));
     await tx.wait();
     const selectedMedian = await contract.cachedMedian();
     arr.sort((a, b) => a - b);

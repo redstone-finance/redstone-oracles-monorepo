@@ -131,10 +131,10 @@ describe("Benchmark", function () {
 
     try {
       let sendStructRequestFunction: (...args: Uint8Array[]) => Promise<ContractTransaction>;
-      let executeStructRequestFunction: (requestId: number) => Promise<ContractTransaction>;
+      let executeStructRequestFunction: (requestId: bigint) => Promise<ContractTransaction>;
       let sendHashRequestFunction: (...args: Uint8Array[]) => Promise<ContractTransaction>;
       let executeHashRequestFunction: (
-        blockNumber: number,
+        blockNumber: bigint,
         address: string,
         ...args: Uint8Array[]
       ) => Promise<ContractTransaction>;
@@ -178,7 +178,7 @@ describe("Benchmark", function () {
       const requestStructTx = await sendStructRequestFunction(...bytes32Symbols);
       const requestStructTxReceipt = await requestStructTx.wait();
 
-      const executeRequestStructTx = await executeStructRequestFunction(1);
+      const executeRequestStructTx = await executeStructRequestFunction(1n);
       const executeRequestStructTxReceipt = await executeRequestStructTx.wait();
 
       const requestHashTx = await sendHashRequestFunction(...bytes32Symbols);
@@ -188,7 +188,7 @@ describe("Benchmark", function () {
       const blockNumber = await provider.getBlockNumber();
       const sender = await provider.getSigner(0).getAddress();
       const executeRequestHashTx = await executeHashRequestFunction(
-        blockNumber,
+        BigInt(blockNumber),
         sender,
         ...bytes32Symbols
       );

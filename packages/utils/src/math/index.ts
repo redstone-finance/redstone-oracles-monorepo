@@ -1,4 +1,4 @@
-import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
+import type { BigNumberish } from "@ethersproject/bignumber";
 import Decimal from "decimal.js";
 import * as ISafeNumberMath from "../ISafeNumber";
 import { ISafeNumber, createSafeNumber } from "../ISafeNumber";
@@ -6,7 +6,7 @@ import { assert, bignumberishToDecimal } from "../common";
 
 export * from "./monotonic-cubic-spline";
 
-export type ConvertibleToISafeNumber = number | string | Decimal | ISafeNumber | BigNumber;
+export type ConvertibleToISafeNumber = number | string | Decimal | ISafeNumber;
 
 export const castToISafeNumber = (numberLike: ConvertibleToISafeNumber | null): ISafeNumber => {
   if (numberLike === null) {
@@ -16,8 +16,6 @@ export const castToISafeNumber = (numberLike: ConvertibleToISafeNumber | null): 
     return createSafeNumber(numberLike.toString());
   } else if (numberLike instanceof Decimal) {
     return createSafeNumber(numberLike.toString());
-  } else if (numberLike instanceof BigNumber) {
-    return createSafeNumber(bignumberishToDecimal(numberLike).toString());
   } else if (numberLike.isSafeNumber()) {
     return numberLike;
   } else {
@@ -41,7 +39,9 @@ export const getMedian = (numbers: ConvertibleToISafeNumber[]) =>
   ISafeNumberMath.getMedian(numbers.map(castToISafeNumber)).unsafeToNumber();
 
 export const getMedianOfBigNumbers = (numbers: BigNumberish[]) =>
-  ISafeNumberMath.getMedian(numbers.map(BigNumber.from).map(castToISafeNumber)).unsafeToNumber();
+  ISafeNumberMath.getMedian(
+    numbers.map(bignumberishToDecimal).map(castToISafeNumber)
+  ).unsafeToNumber();
 
 export const getMaxOfBigInts = (values: bigint[]) => {
   assert(values.length > 0, "Cannot get max of an empty array");

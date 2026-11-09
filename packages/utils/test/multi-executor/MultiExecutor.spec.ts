@@ -1,4 +1,3 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import "dotenv/config";
 import { MultiExecutor } from "../../src";
 import {
@@ -167,13 +166,13 @@ describe("MultiExecutor", () => {
       const sut = makeSut(instances, config);
 
       const result = await sut.someHexFunction("0x1234");
-      expect(result).toEqual(BigNumber.from("0x123401").toNumber());
+      expect(result).toEqual(0x123401);
 
       const result2 = await sut.someHexFunction("0x1fffffffffff");
-      expect(result2).toEqual(BigNumber.from("0x1fffffffffff01").toNumber());
+      expect(result2).toEqual(0x1fffffffffff01);
 
       const result3 = await sut.someHexFunction("1234");
-      expect(result3).toEqual(BigNumber.from("123401").toNumber());
+      expect(result3).toEqual(123401);
 
       instances.forEach((instance) => {
         expect(instance.calledArgs).toStrictEqual(["0x1234", "0x1fffffffffff", "1234"]);

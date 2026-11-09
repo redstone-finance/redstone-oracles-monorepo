@@ -1,6 +1,6 @@
 import { Provider } from "@ethersproject/abstract-provider";
 import { Signer } from "@ethersproject/abstract-signer";
-import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
+import { BigNumber } from "@ethersproject/bignumber";
 import {
   BaseContract,
   CallOverrides,
@@ -89,33 +89,22 @@ export interface SampleRedstoneConsumerBytesMockManyDataFeeds extends SampleCont
 export interface SampleNumericArrayLib extends SampleContract {
   cachedMedian(overrides?: CallOverrides): Promise<BigNumber>;
   getCachedArray(overrides?: CallOverrides): Promise<BigNumber[]>;
-  testArrayUpdatingInStorage(
-    arr: BigNumberish[],
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-  testMedianSelection(arr: BigNumberish[], overrides?: Overrides): Promise<ContractTransaction>;
-  testSortTx(arr: BigNumberish[], overrides?: Overrides): Promise<ContractTransaction>;
+  testArrayUpdatingInStorage(arr: bigint[], overrides?: Overrides): Promise<ContractTransaction>;
+  testMedianSelection(arr: bigint[], overrides?: Overrides): Promise<ContractTransaction>;
+  testSortTx(arr: bigint[], overrides?: Overrides): Promise<ContractTransaction>;
 }
 
 export interface SampleRedstoneDefaultsLib extends SampleContract {
-  aggregateValues(values: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+  aggregateValues(values: bigint[], overrides?: CallOverrides): Promise<BigNumber>;
   validateTimestamp(
-    receivedTimestampMilliseconds: BigNumberish,
+    receivedTimestampMilliseconds: bigint,
     overrides?: CallOverrides
   ): Promise<void>;
 }
 
 export interface SampleBitmapLib extends SampleContract {
-  getBitFromBitmap(
-    bitmap: BigNumberish,
-    bitIndex: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-  setBitInBitmap(
-    bitmap: BigNumberish,
-    bitIndex: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  getBitFromBitmap(bitmap: bigint, bitIndex: bigint, overrides?: CallOverrides): Promise<boolean>;
+  setBitInBitmap(bitmap: bigint, bitIndex: bigint, overrides?: CallOverrides): Promise<BigNumber>;
 }
 
 export interface SampleForLocalhostMockTest extends SampleContract {
@@ -160,12 +149,12 @@ export interface SampleStorageProxy extends SampleContract {
 export interface SampleStorageProxyConsumer extends SampleContract {
   checkOracleValue(
     dataFeedId: RedstoneCommon.BytesLike,
-    expectedValue: BigNumberish,
+    expectedValue: bigint,
     overrides?: CallOverrides
   ): Promise<void>;
   checkOracleValues(
     dataFeedIds: RedstoneCommon.BytesLike[],
-    expectedValues: BigNumberish[],
+    expectedValues: bigint[],
     overrides?: CallOverrides
   ): Promise<void>;
   getOracleValue(
@@ -189,7 +178,7 @@ export interface SampleSyntheticToken extends SampleContract {
   debtValueOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
   solvencyOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
   totalValue(overrides?: CallOverrides): Promise<BigNumber>;
-  mint(amount: BigNumberish, overrides?: PayableOverrides): Promise<ContractTransaction>;
+  mint(amount: bigint, overrides?: PayableOverrides): Promise<ContractTransaction>;
 }
 
 export interface SampleWithEvents extends SampleContract {
@@ -199,12 +188,12 @@ export interface SampleWithEvents extends SampleContract {
 export interface SampleProxyConnector extends SampleContract {
   checkOracleValue(
     dataFeedId: RedstoneCommon.BytesLike,
-    expectedValue: BigNumberish,
+    expectedValue: bigint,
     overrides?: CallOverrides
   ): Promise<void>;
   checkOracleValueLongEncodedFunction(
     asset: RedstoneCommon.BytesLike,
-    price: BigNumberish,
+    price: bigint,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
   getOracleValueUsingProxy(
@@ -219,7 +208,7 @@ export interface SampleProxyConnector extends SampleContract {
 export interface SampleProxyConnectorConsumer extends SampleContract {
   getComputationResult(overrides?: CallOverrides): Promise<BigNumber>;
   updateUniqueSignersThreshold(
-    newUniqueSignersThreshold: BigNumberish,
+    newUniqueSignersThreshold: number,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 }
@@ -246,7 +235,7 @@ export interface SampleChainableProxyConnector extends SampleContract {
 export interface SampleChainableStorageProxy extends SampleContract {
   register(sampleContract: string, overrides?: Overrides): Promise<ContractTransaction>;
   updateUniqueSignersThreshold(
-    newUniqueSignersThreshold: BigNumberish,
+    newUniqueSignersThreshold: number,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
   processOracleValue(
@@ -282,7 +271,7 @@ export interface Benchmark extends SampleContract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
   updateUniqueSignersThreshold(
-    newUniqueSignersThreshold: BigNumberish,
+    newUniqueSignersThreshold: number,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 }
@@ -303,7 +292,7 @@ export interface HashCalldataModel extends SampleContract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
   executeRequestWith3ArgsWithPrices(
-    blockNumber: BigNumberish,
+    blockNumber: bigint,
     sender: string,
     arg1: RedstoneCommon.BytesLike,
     arg2: RedstoneCommon.BytesLike,
@@ -311,7 +300,7 @@ export interface HashCalldataModel extends SampleContract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
   executeRequestWith5ArgsWithPrices(
-    blockNumber: BigNumberish,
+    blockNumber: bigint,
     sender: string,
     arg1: RedstoneCommon.BytesLike,
     arg2: RedstoneCommon.BytesLike,
@@ -342,11 +331,11 @@ export interface StorageStructureModel extends SampleContract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
   executeRequestWith3ArgsWithPrices(
-    requestId: BigNumberish,
+    requestId: bigint,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
   executeRequestWith5ArgsWithPrices(
-    requestId: BigNumberish,
+    requestId: bigint,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
   setDeleteFromStorage(

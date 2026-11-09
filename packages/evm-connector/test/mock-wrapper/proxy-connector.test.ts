@@ -80,7 +80,7 @@ describe("SampleProxyConnector", function () {
     for (const dataPoint of dataPoints) {
       await wrappedContract.checkOracleValue(
         utils.convertStringToBytes32(dataPoint.dataFeedId),
-        Math.round(dataPoint.value * 10 ** 8)
+        BigInt(Math.round(dataPoint.value * 10 ** 8))
       );
     }
   });
@@ -98,12 +98,12 @@ describe("SampleProxyConnector", function () {
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
     await wrappedContract.checkOracleValueLongEncodedFunction(
       ethDataFeedId,
-      expectedNumericValues.ETH
+      BigInt(expectedNumericValues.ETH)
     );
     await expectCustomError(
       wrappedContract,
       "WrongValue",
-      async () => await wrappedContract.checkOracleValueLongEncodedFunction(ethDataFeedId, 9999),
+      async () => await wrappedContract.checkOracleValueLongEncodedFunction(ethDataFeedId, 9999n),
       []
     );
   });
