@@ -597,6 +597,13 @@
       "updateTriggersOverrides": {
         "cron": ["5 12 * * *"]
       }
+    },
+    "USDC": {
+      "priceFeedAddress": "0x32e4Ca443f2Fe86f39b5Ca8fAa667A085016b7Fa",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }

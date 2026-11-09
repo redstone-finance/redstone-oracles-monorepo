@@ -28,7 +28,7 @@
       "priceFeedAddress": "CC2GB2TZTX24XIAM375YDWUDXA3PR2GDMNFUL2Z5VNXUMKPPOBES3CXM",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 43200000
+        "timeSinceLastUpdateInMilliseconds": 300000
       }
     },
     "EUROC/EUR": {
@@ -124,7 +124,11 @@
       }
     },
     "XLM": {
-      "priceFeedAddress": "CAXRDLYBL7ZNE754UX33XTVGTA7MNTIFWURTFJBTRKHPTNP2P36TU2ZF"
+      "priceFeedAddress": "CAXRDLYBL7ZNE754UX33XTVGTA7MNTIFWURTFJBTRKHPTNP2P36TU2ZF",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 600000
+      }
     },
     "EUROC": {
       "updateTriggersOverrides": {
@@ -192,7 +196,7 @@
       "priceFeedAddress": "CB3J6JU2L26HUMWPINRCUACGPJPSQPKPHSZLGQ2VV7YCJBFWERECZB7O",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.25,
-        "timeSinceLastUpdateInMilliseconds": 43200000
+        "timeSinceLastUpdateInMilliseconds": 21600000
       }
     },
     "XAUm_FUNDAMENTAL/USD": {

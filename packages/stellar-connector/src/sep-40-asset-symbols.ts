@@ -11,6 +11,7 @@ const FEED_ID_OVERRIDES: Record<string, string | undefined> = {
   deJAAA: "deJAAA_FUNDAMENTAL/USD",
   earnUSDC: "earnUSDC_FUNDAMENTAL/USD",
   "savUSD/avUSD": "savUSD_FUNDAMENTAL",
+  earnUSDC_PPS: "earnUSDC_PPS_FUNDAMENTAL/USD",
 };
 
 const USD_DENOMINATION = "USD";

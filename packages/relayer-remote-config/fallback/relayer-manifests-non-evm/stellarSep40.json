@@ -12,13 +12,17 @@
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "XLM": {
-      "priceFeedAddress": "CBMGLKUQZVSAIL5CPDDAWSUY7MAKXISHMOZEVLMBUWBMFGHRJSR4WYRF"
+      "priceFeedAddress": "CBMGLKUQZVSAIL5CPDDAWSUY7MAKXISHMOZEVLMBUWBMFGHRJSR4WYRF",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 600000
+      }
     },
     "USDC": {
       "priceFeedAddress": "CBMGLKUQZVSAIL5CPDDAWSUY7MAKXISHMOZEVLMBUWBMFGHRJSR4WYRF",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 43200000
+        "timeSinceLastUpdateInMilliseconds": 300000
       }
     },
     "EUROC": {
@@ -116,7 +120,7 @@
       "priceFeedAddress": "CBMGLKUQZVSAIL5CPDDAWSUY7MAKXISHMOZEVLMBUWBMFGHRJSR4WYRF",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.25,
-        "timeSinceLastUpdateInMilliseconds": 43200000
+        "timeSinceLastUpdateInMilliseconds": 21600000
       }
     },
     "XAUm_FUNDAMENTAL/USD": {
@@ -148,6 +152,13 @@
       }
     },
     "earnUSDC_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "CBMGLKUQZVSAIL5CPDDAWSUY7MAKXISHMOZEVLMBUWBMFGHRJSR4WYRF",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "earnUSDC_PPS_FUNDAMENTAL/USD": {
       "priceFeedAddress": "CBMGLKUQZVSAIL5CPDDAWSUY7MAKXISHMOZEVLMBUWBMFGHRJSR4WYRF",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.5,

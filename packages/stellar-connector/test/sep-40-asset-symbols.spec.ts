@@ -16,6 +16,7 @@ describe("getFeedId", () => {
     expect(getFeedId("USDY", "USD")).toBe("USDY_FUNDAMENTAL/USD");
     expect(getFeedId("xSolvBTC", "USD")).toBe("SolvBTC.BBN_FUNDAMENTAL/USD");
     expect(getFeedId("deJTRSY", "USD")).toBe("deJTRSY_FUNDAMENTAL/USD");
+    expect(getFeedId("earnUSDC_PPS", "USD")).toBe("earnUSDC_PPS_FUNDAMENTAL/USD");
   });
 
   it("maps a pair denominated in something other than usd", () => {
