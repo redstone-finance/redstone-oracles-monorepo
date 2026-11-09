@@ -18,8 +18,6 @@ build-%:
 clean-%:
 	cd $(DEPLOY_DIR)/$* && $(DAML) clean
 
-build_redstone_adapter: build-common build-sdk build-interface build-adapter
-
 build_redstone_core: build-common build-sdk build-interface build-core
 
 build_test:
@@ -35,7 +33,7 @@ clean:
 	cd $(DEPLOY_DIR) && $(DAML) clean --all
 	rm -f $(ADAPTER_ID_TXT) $(CORE_ID_TXT) refresh_token.txt token.txt $(DEPLOY_DIR)/test/input.json $(DEPLOY_DIR)/test/sample_data/payload.hex
 
-lint: lint-common lint-types lint-sdk lint-sdk-tests lint-core lint-adapter lint-price_pill lint-price_feed lint-interface lint-featured lint-factory lint-reward_factory lint-test
+lint: lint-common lint-types lint-sdk lint-sdk-tests lint-core lint-interface lint-featured lint-reward_factory lint-test
 	./scripts/lint-whitespaces.sh
 
 build: build_test
@@ -45,18 +43,16 @@ lint-%:
 
 run_main: run-Main
 
-run_test: build_test lint-test run-Test run-Core run-Factory run-PartialNewData run-RewardsBatching
+run_test: build_test lint-test run-Core
 
-test-%: build_redstone_adapter build_redstone_core build_test
+test-%: build_redstone_core build_test
 	cd $(DEPLOY_DIR)/test && $(DAML) script --ide-ledger \
 		--dar $(TEST_DAR) \
 		--script-name $*:main
 
-test: test-UnitTests test-PillArchival
+test: test-UnitTests
 
 integration_tests: prepare_data run_main run_test
-
-run_ledger: ledger-Run
 
 ledger-%: build_test
 	cd $(DEPLOY_DIR)/test && $(DAML) script --script-name $*:main \
@@ -82,10 +78,8 @@ ledger_upload: build
 
 ledger_deploy: build ledger-Deploy
 
-ledger_tests: allocate_parties get_party_suffix ledger_deploy run_ledger
+ledger_tests: allocate_parties get_party_suffix ledger_deploy
 start_local: start_daemon allocate_parties get_party_suffix ledger_deploy
-
-archive: ledger-Archive
 
 allocate_parties:
 	@for party in $(PARTIES); do \

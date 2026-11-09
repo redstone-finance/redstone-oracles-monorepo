@@ -59,17 +59,37 @@ extract_version() {
   extract_dar_field "$1" version
 }
 
+extract_optional_hash() {
+  if [ -f "$1/daml.yaml" ]; then
+    extract_hash "$1"
+  fi
+}
+
+extract_optional_name_ref() {
+  if [ -f "$1/daml.yaml" ]; then
+    echo "#$(extract_name "$1")"
+  fi
+}
+
+interface_exists() {
+  if [ -f "interface/src/$1.daml" ]; then
+    echo "$1"
+  fi
+}
+
 echo "Extracting package IDs from DARs..." >&2
 
 INTERFACE_HASH=\#$(extract_name interface)
 CORE_HASH=$(extract_hash core)
-ADAPTER_HASH=$(extract_hash adapter)
-FACTORY_HASH=$(extract_hash factory)
+ADAPTER_HASH=$(extract_optional_hash adapter)
+FACTORY_HASH=$(extract_optional_hash factory)
 REWARD_FACTORY_HASH=$(extract_hash reward_factory)
-PRICE_FEED_HASH=$(extract_hash price_feed)
-PRICE_PILL_HASH=\#$(extract_name price_pill)
+PRICE_FEED_HASH=$(extract_optional_hash price_feed)
+PRICE_PILL_HASH=$(extract_optional_name_ref price_pill)
 FEATURED_HASH=$(extract_hash featured)
 SDK_HASH=$(extract_hash sdk)
+ADAPTER_INTERFACE=$(interface_exists IRedStoneAdapter)
+PILL_FACTORY_INTERFACE=$(interface_exists IRedStonePricePillFactory)
 
 jq -n \
   --arg interface "$INTERFACE_HASH" \
@@ -81,6 +101,8 @@ jq -n \
   --arg price_pill "$PRICE_PILL_HASH" \
   --arg featured "$FEATURED_HASH" \
   --arg sdk "$SDK_HASH" \
+  --arg adapter_interface "$ADAPTER_INTERFACE" \
+  --arg pill_factory_interface "$PILL_FACTORY_INTERFACE" \
   '{
     redstone_sdk: $sdk,
     interface: $interface,
@@ -105,4 +127,10 @@ jq -n \
       reward_factory: ($interface + ":IRedStoneRewardFactory:IRedStoneRewardFactory"),
       pill: ($price_pill + ":IRedStonePricePill:IRedStonePricePill")
     }
-  }'
+  }
+  | if $adapter == "" then del(.adapter, .templates.adapter) else . end
+  | if $factory == "" then del(.factory, .templates.factory) else . end
+  | if $price_feed == "" then del(.price_feed) else . end
+  | if $price_pill == "" then del(.price_pill, .interfaces.pill) else . end
+  | if $adapter_interface == "" then del(.interfaces.adapter) else . end
+  | if $pill_factory_interface == "" then del(.interfaces.pill_factory) else . end'

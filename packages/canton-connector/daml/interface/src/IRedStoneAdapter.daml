@@ -1,30 +1,14 @@
 module IRedStoneAdapter where
 
 import RedStoneTypes
-import WritePricesContext
 
 interface IRedStoneAdapter where
   viewtype RedStoneAdapterView
 
   iRedStoneAdapter_VerifyViewer : Party -> Update ()
-  iRedStoneAdapter_VerifyUpdater : Party -> Update ()
-  iRedStoneAdapter_WritePricesImpl : Party -> (ContractId IRedStoneAdapter) -> [RedStoneFeedId] -> Time -> PayloadHex -> WritePricesContext -> Update (ContractId IRedStoneAdapter)
   iRedStoneAdapter_ReadPriceDataImpl : [RedStoneFeedId] -> Update [Optional (RedStonePriceData RedStoneValue)]
   iRedStoneAdapter_ReadPricesImpl : [RedStoneFeedId] -> Update [RedStoneValue]
   iRedStoneAdapter_GetUniqueSignerThresholdImpl: () -> Update Int
-
-  nonconsuming choice WritePrices : ContractId IRedStoneAdapter
-    with
-      caller : Party
-      feedIds : [RedStoneFeedId]
-      currentTime : Time
-      payloadHex : PayloadHex
-      context : WritePricesContext
-    controller caller
-    do
-      assertMsg "WritePrices: paidTrafficCost must be non-negative" (context.paidTrafficCost >= 0)
-      iRedStoneAdapter_VerifyUpdater this caller
-        >> iRedStoneAdapter_WritePricesImpl this caller self feedIds currentTime payloadHex context
 
   nonconsuming choice ReadPrices : [RedStoneValue]
     with

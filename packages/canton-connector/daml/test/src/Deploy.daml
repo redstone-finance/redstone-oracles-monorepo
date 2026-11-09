@@ -1,13 +1,8 @@
 module Deploy where
 
-import DA.Map as M
 import Daml.Script
-import IRedStonePricePillFactory
-import IRedStoneRewardFactory
-import RedStoneAdapter
 import RedStoneCore
 import RedStoneCoreClient
-import RedStonePricePillFactory
 import RedStoneRewardFactory
 import Splice.Api.FeaturedAppRightV2
 import Helpers.MockFeatured
@@ -38,14 +33,6 @@ main input = script do
 
   debug $ "RedStoneCore " <> show coreCid
 
-  pillFactoryCid <- submit (actAs owner) do
-    createCmd RedStonePricePillFactory with
-      factoryId = "Factory for " <> Input.adapterId
-      owner
-      creators = [updater]
-
-  debug $ "RedStonePricePillFactory " <> show pillFactoryCid
-
   rewardFactoryCid <- submit (actAs [owner, beneficiary]) do
     createCmd RedStoneRewardFactory with
       factoryId = "RewardFactory for " <> Input.adapterId
@@ -55,19 +42,6 @@ main input = script do
       beneficiary
 
   debug $ "RedStoneRewardFactory " <> show rewardFactoryCid
-
-  adapterCid <- submit owner do
-      createCmd RedStoneAdapter with
-        adapterId = Input.adapterId
-        owner
-        updaters = [updater]
-        viewers = [viewer]
-        feedData = M.empty
-        pillFactory = Some $ toInterfaceContractId @IRedStonePricePillFactory pillFactoryCid
-        rewardState = None
-        rewardFactory = Some $ toInterfaceContractId @IRedStoneRewardFactory rewardFactoryCid
-
-  debug $ "RedStoneAdapter " <> show adapterCid
 
   coreClientCid <- submit owner do
      createCmd RedStoneCoreClient with

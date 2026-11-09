@@ -13,14 +13,19 @@ allowing rewards to be accumulated and submitted in batches with a configurable 
 
 ### How it works
 
-1. The [`RedStoneAdapter`](../adapter/src/RedStoneAdapter.daml) accumulates `paidTrafficCost` — the traffic
-   cost in **bytes**, measured off-ledger and passed in via `WritePricesContext` — in its `RewardState`
+1. The
+   [`RedStoneAdapter`](../../deployments/cantonDevnetMultiFeed/adapter/src/RedStoneAdapter.daml)
+   accumulates `paidTrafficCost` — the traffic cost in **bytes**, measured
+   off-ledger and passed in via `WritePricesContext` — in its `RewardState`
    each time new prices are written.
-2. When the time since the last reward creation exceeds `min_reward_creation_ms` (configured in
-   [`RedStoneAdapter/Config.daml`](../adapter/src/RedStoneAdapter/Config.daml)) **and** the accumulated cost is
-   greater than zero, the adapter calls the `RedStoneRewardFactory` via the
-   [`IRedStoneRewardFactory.CreateRewards`](../interface/src/IRedStoneRewardFactory.daml) choice
-   (see [`Internal/Rewards.daml`](../adapter/src/Internal/Rewards.daml)).
+2. When the time since the last reward creation exceeds
+   `min_reward_creation_ms` (configured in
+   [`RedStoneAdapter/Config.daml`](../../deployments/cantonDevnetMultiFeed/adapter/src/RedStoneAdapter/Config.daml))
+   **and** the accumulated cost is greater than zero, the adapter calls the
+   `RedStoneRewardFactory` via the
+   [`IRedStoneRewardFactory.CreateRewards`](../interface/src/IRedStoneRewardFactory.daml)
+   choice (see
+   [`Internal/Rewards.daml`](../../deployments/cantonDevnetMultiFeed/adapter/src/Internal/Rewards.daml)).
 3. The accumulated byte count is passed as the `count` parameter to `CreateRewards`, and `RewardState` is reset.
 4. The `RedStoneRewardFactory` calculates a weighted reward using [`RewardConfig`](src/RewardConfig.daml)
    and — only if the weight reaches `1.0` — creates a `FeaturedAppActivityMarker` via the `FeaturedAppRight`
