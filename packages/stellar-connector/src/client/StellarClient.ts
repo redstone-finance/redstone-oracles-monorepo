@@ -50,11 +50,11 @@ export class StellarClient implements IStellarCaller, LedgerEntriesCollectorDele
   private getNetwork = RedstoneCommon.memoize({
     functionToMemoize: () => this.server.getNetwork(),
     ttl: RedstoneCommon.hourToMs(24),
-    cacheKeyBuilder: () => this.server.serverURL.href(),
+    cacheKeyBuilder: () => this.server.serverURL.href,
     cacheReporter: (isMissing) =>
       RedstoneCommon.reportMemoizeCacheUsage(
         isMissing,
-        `network metadata of ${this.server.serverURL.href()}`
+        `network metadata of ${this.server.serverURL.href}`
       ),
   });
 
@@ -338,7 +338,7 @@ export class StellarClient implements IStellarCaller, LedgerEntriesCollectorDele
 
   async getTimeForBlock(sequence: number) {
     try {
-      const response = await this.server.getLedgers({
+      const response = await this.server._getLedgers({
         startLedger: sequence,
         pagination: {
           limit: 1,

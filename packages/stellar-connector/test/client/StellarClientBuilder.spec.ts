@@ -85,7 +85,7 @@ describe("StellarClientBuilder", () => {
       this: rpc.Server,
       ...keys
     ) {
-      const { value, ttl } = entryByHost[this.serverURL.hostname()];
+      const { value, ttl } = entryByHost[this.serverURL.hostname];
 
       return Promise.resolve({
         latestLedger: LATEST_LEDGER,

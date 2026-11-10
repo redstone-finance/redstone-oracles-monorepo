@@ -7,6 +7,6 @@ export class StellarBlockNumberProvider extends RedstoneCommon.BlockNumberProvid
   }
 
   protected override async fetchBlockNumber() {
-    return (await this.server.getLatestLedger()).sequence;
+    return (await this.server._getLatestLedger()).sequence;
   }
 }
