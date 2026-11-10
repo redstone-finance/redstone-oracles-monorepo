@@ -746,7 +746,6 @@
         "bitget-usdt-reversed",
         "bitso-usdt-reversed",
         "bybit-usdt-reversed",
-        "mercado-btc-reversed",
         "mexc-usdt",
         "okx-usdt-reversed"
       ],
@@ -5163,7 +5162,6 @@
     },
     "BRETT": {
       "source": [
-        "bitget-usdt",
         "bybit-usdt",
         "gate-usdt",
         "kucoin-usdt",
