@@ -100,7 +100,7 @@
         "rwa"
       ]
     },
-    "ANTHROPIC_PERP": {
+    "ANT_PERP": {
       "source": [
         "ws-perp-binance-usdt",
         "ws-perp-coinbase-usdc",
@@ -109,7 +109,7 @@
       "priceAggregator": "twapValidatedGeomean",
       "localCacheTTL": "1h",
       "twapValidatedGeomeanAggregatorConfig": {
-        "twapFeed": "ANTHROPIC_PERP-TWAP-60",
+        "twapFeed": "ANT_PERP-TWAP-60",
         "maxDeviationPercent": 5,
         "medianClamps": 25
       },
@@ -119,7 +119,7 @@
         "pre-ipo"
       ]
     },
-    "ANTHROPIC_PERP-TWAP-60": {
+    "ANT_PERP-TWAP-60": {
       "source": [
         "twap-local-lenient"
       ],
