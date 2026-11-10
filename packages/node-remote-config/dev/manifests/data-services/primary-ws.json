@@ -11231,7 +11231,8 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-htx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -11376,7 +11377,8 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-htx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -11448,7 +11450,8 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-htx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -11573,7 +11576,8 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-htx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -11678,7 +11682,8 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-htx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -11747,7 +11752,8 @@
         "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-kucoin-usdt",
+        "ws-spot-kraken-usd"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -11829,7 +11835,8 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-htx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -13027,7 +13034,8 @@
         "ws-spot-bybit-usdt",
         "ws-spot-htx-usdt",
         "ws-spot-kraken-usd",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-kucoin-usdt",
+        "ws-spot-gate-usdt"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -13051,7 +13059,8 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-htx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -13081,7 +13090,8 @@
         "ws-spot-binance-usdt",
         "ws-spot-gate-usdt",
         "ws-spot-htx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -13143,7 +13153,9 @@
         "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
         "ws-spot-kucoin-usdt",
-        "ws-spot-okx-usdt"
+        "ws-spot-okx-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -13588,7 +13600,8 @@
         "binancealpha_deferred-usdt",
         "ws-spot-gate-usdt",
         "ws-spot-bitget-usdt",
-        "mexc_deferred-usdt"
+        "mexc_deferred-usdt",
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -13645,7 +13658,8 @@
         "ws-spot-bitget-usdt",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
-        "ws-spot-okx-usdt"
+        "ws-spot-okx-usdt",
+        "ws-spot-gate-usdt"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -13712,7 +13726,8 @@
         "ws-spot-coinbase-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-gate-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -13781,7 +13796,8 @@
         "ws-spot-gate-usdt",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-htx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -13869,7 +13885,9 @@
         "ws-spot-bybit-usdt",
         "ws-spot-htx-usdt",
         "ws-spot-kucoin-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -13944,7 +13962,8 @@
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-gate-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -14035,7 +14054,8 @@
         "ws-spot-binance-usdt",
         "ws-spot-bybit-usdt",
         "ws-spot-coinbase-usd",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-kucoin-usdt",
+        "ws-spot-gate-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -14153,7 +14173,9 @@
         "ws-spot-htx-usdt",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
-        "ws-spot-okx-usdt"
+        "ws-spot-okx-usdt",
+        "ws-spot-gate-usdt",
+        "ws-spot-xt-usdt"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -14174,7 +14196,10 @@
         "ws-spot-okx-usdt",
         "ws-spot-kucoin-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-htx-usdt"
+        "ws-spot-htx-usdt",
+        "ws-spot-xt-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-gate-usdt"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -14196,7 +14221,8 @@
         "ws-spot-bybit-usdt",
         "ws-spot-htx-usdt",
         "ws-spot-kucoin-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-gate-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -14414,7 +14440,8 @@
         "ws-spot-bybit-usdt",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-gate-usdt"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -14449,7 +14476,8 @@
         "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
         "ws-spot-kraken-usd",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-kucoin-usdt",
+        "ws-spot-xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -14494,7 +14522,8 @@
         "lbank_deferred-usdt",
         "mexc_deferred-usdt",
         "ws-spot-binance-usdt",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-kucoin-usdt",
+        "ws-spot-gate-usdt"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -14555,7 +14584,8 @@
         "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
         "ws-spot-kucoin-usdt",
-        "ws-spot-okx-usdt"
+        "ws-spot-okx-usdt",
+        "ws-spot-gate-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -14582,7 +14612,10 @@
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-htx-usdt"
+        "ws-spot-htx-usdt",
+        "ws-spot-xt-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-gate-usdt"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -14664,7 +14697,8 @@
         "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-kucoin-usdt",
+        "ws-spot-kraken-usd"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -14714,7 +14748,8 @@
         "ws-spot-bybit-usdt",
         "ws-spot-okx-usdt",
         "ws-spot-kucoin-usdt",
-        "ws-spot-bitget-usdt"
+        "ws-spot-bitget-usdt",
+        "ws-spot-gate-usdt"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -17313,7 +17348,9 @@
     "HEMI": {
       "source": [
         "ws-spot-binance-usdt",
-        "ws-spot-gate-usdt"
+        "ws-spot-gate-usdt",
+        "mexc_deferred-usdc",
+        "mexc_deferred-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -17542,7 +17579,8 @@
         "ws-spot-kraken-usd",
         "ws-spot-gate-usdt",
         "ws-spot-xt-usdt",
-        "ws-spot-bitget-usdt"
+        "ws-spot-bitget-usdt",
+        "mexc_deferred-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -18362,7 +18400,8 @@
         "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -18577,7 +18616,8 @@
         "ws-spot-gate-usdt",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -18702,7 +18742,8 @@
         "mexc_deferred-usdt",
         "ws-spot-binance-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-gate-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -18753,7 +18794,8 @@
         "ws-spot-bitget-usdt",
         "ws-spot-gate-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "lbank_deferred-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -18767,7 +18809,8 @@
         "lbank_deferred-usdt",
         "ws-spot-bybit-usdt",
         "ws-spot-gate-usdt",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-kucoin-usdt",
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -18782,7 +18825,8 @@
         "ws-spot-gate-usdt",
         "ws-spot-kraken-usd",
         "ws-spot-kucoin-usdt",
-        "ws-spot-okx-usdt"
+        "ws-spot-okx-usdt",
+        "ws-spot-htx-usdt"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -18875,7 +18919,8 @@
         "ws-spot-binance-usdt",
         "ws-spot-bitget-usdt",
         "ws-spot-htx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "mexc_deferred-usdt"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -18897,7 +18942,8 @@
         "ws-spot-coinbase-usd",
         "ws-spot-gate-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-kraken-usd"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -18916,7 +18962,8 @@
         "bingx_deferred-usdt",
         "ws-spot-gate-usdt",
         "ws-spot-htx-usdt",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-kucoin-usdt",
+        "kraken_deferred-eur"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
