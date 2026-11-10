@@ -51,14 +51,12 @@ function formatDate(date: Date): string {
   return `${year}-${month}-${day}`;
 }
 
+export function toWarsawTime(date: Date): Date {
+  return new Date(date.toLocaleString("en-US", { timeZone: "Europe/Warsaw" }));
+}
+
 export function isWithinWorkingHours(): boolean {
-  const now = new Date();
-
-  const warsawTimeString = now.toLocaleString("en-US", {
-    timeZone: "Europe/Warsaw",
-  });
-
-  const warsawDate = new Date(warsawTimeString);
+  const warsawDate = toWarsawTime(new Date());
 
   const hour = warsawDate.getHours(); // 0–23
   const weekday = warsawDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
