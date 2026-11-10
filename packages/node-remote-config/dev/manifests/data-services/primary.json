@@ -851,6 +851,7 @@
         "curve-ethereum-crvfrax",
         "curve-ethereum-frxusd",
         "velodrome-optimism-usdc",
+        "velodrome-optimism-usdc-2",
         "curve-ethereum-usdc",
         "curve-arbitrumone-usdc"
       ],
