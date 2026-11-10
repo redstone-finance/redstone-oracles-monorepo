@@ -229,9 +229,11 @@
         "snoozed"
       ]
     },
-    "OPENAI": {
-      "source": [],
-      "fixedValue": 1000,
+    "OPENAI_MCAP": {
+      "source": [
+        "fixed-value"
+      ],
+      "fixedValue": 1900,
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
