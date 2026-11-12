@@ -7962,11 +7962,12 @@
         "rwa"
       ]
     },
-    "SEAM": {
+    "LOVI": {
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
+        "priceValidationSources": [],
+        "fallbackToValidationSources": true
       },
       "broadcasters": [
         "influx",
@@ -7978,11 +7979,12 @@
         "rwa"
       ]
     },
-    "SEAM---PRE_AFTER": {
+    "LOVI---PRE_AFTER": {
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
+        "priceValidationSources": [],
+        "fallbackToValidationSources": true
       },
       "broadcasters": [
         "influx",
@@ -7995,11 +7997,12 @@
         "ui-no-display"
       ]
     },
-    "SEAM---OVERNIGHT": {
+    "LOVI---OVERNIGHT": {
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
+        "priceValidationSources": [],
+        "fallbackToValidationSources": true
       },
       "broadcasters": [
         "influx",
@@ -8011,7 +8014,7 @@
         "rwa"
       ]
     },
-    "SEAM---EXTENDED": {
+    "LOVI---EXTENDED": {
       "source": [],
       "broadcasters": [
         "influx",
@@ -8023,11 +8026,12 @@
         "rwa"
       ]
     },
-    "LTEQ": {
+    "VVVV": {
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
+        "priceValidationSources": [],
+        "fallbackToValidationSources": true
       },
       "broadcasters": [
         "influx",
@@ -8039,72 +8043,12 @@
         "rwa"
       ]
     },
-    "LTEQ---PRE_AFTER": {
+    "VVVV---PRE_AFTER": {
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
-      },
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa",
-        "ui-no-display"
-      ]
-    },
-    "LTEQ---OVERNIGHT": {
-      "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
-      },
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "LTEQ---EXTENDED": {
-      "source": [],
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "EMDI": {
-      "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
-      },
-      "broadcasters": [
-        "influx",
-        "s3"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "EMDI---PRE_AFTER": {
-      "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
+        "priceValidationSources": [],
+        "fallbackToValidationSources": true
       },
       "broadcasters": [
         "influx",
@@ -8117,11 +8061,12 @@
         "ui-no-display"
       ]
     },
-    "EMDI---OVERNIGHT": {
+    "VVVV---OVERNIGHT": {
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceValidationSources": []
+        "priceValidationSources": [],
+        "fallbackToValidationSources": true
       },
       "broadcasters": [
         "influx",
@@ -8133,7 +8078,71 @@
         "rwa"
       ]
     },
-    "EMDI---EXTENDED": {
+    "VVVV---EXTENDED": {
+      "source": [],
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "RZRA": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": [],
+        "fallbackToValidationSources": true
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "RZRA---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": [],
+        "fallbackToValidationSources": true
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa",
+        "ui-no-display"
+      ]
+    },
+    "RZRA---OVERNIGHT": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": [],
+        "fallbackToValidationSources": true
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "RZRA---EXTENDED": {
       "source": [],
       "broadcasters": [
         "influx",
