@@ -15,7 +15,6 @@
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "test": "yarn global:with-auth-gateways yarn global:jest",
-    "test-e2e": "yarn global:with-auth-gateways yarn global:jest e2e.spec.ts",
     "coverage": "yarn global:jest:cov --coveragePathIgnorePatterns=\"src/index.ts\" --coveragePathIgnorePatterns=\"src/radix/parser/generated/converter.ts\"",
     "convert-keys": "yarn global:tsx scripts/convert-keys.ts",
     "transfer-xrd": "yarn global:tsx scripts/transfer-xrd.ts",
@@ -52,7 +51,6 @@
     "@redstone-finance/signing": "workspace:*",
     "dotenv": "^16.0.3",
     "node-jq": "^6.0.0",
-    "redstone-api": "^0.4.13",
     "secp256k1": "^5.0.1",
     "zod": "^4.1.12"
   },

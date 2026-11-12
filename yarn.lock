@@ -6935,14 +6935,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/hashes@npm:2.2.0, @noble/hashes@npm:^2.0.1, @noble/hashes@npm:~2.2.0":
+"@noble/hashes@npm:2.2.0, @noble/hashes@npm:~2.2.0":
   version: 2.2.0
   resolution: "@noble/hashes@npm:2.2.0"
   checksum: 10c0/cad8630c504d6b9271984f685cd0af9101b40988fc2dfbe17ccdf068a9941f95cc5c9957d89e9ca4b7ca94c15cb35f93510c5d53a09fbcc83ee503b93d0a1034
   languageName: node
   linkType: hard
 
-"@noble/hashes@npm:^2.2.0":
+"@noble/hashes@npm:^2.0.1, @noble/hashes@npm:^2.2.0":
   version: 2.4.0
   resolution: "@noble/hashes@npm:2.4.0"
   checksum: 10c0/f5820a38c52886073a69722a030688ad188bbacb822d01554545371259961c2b916266c57c013c2ce5a0d78aec977142fc68fd2a79be4c97b0644fcee9bb35f6
@@ -8577,7 +8577,6 @@ __metadata:
     dotenv: "npm:^16.0.3"
     fuels: "npm:^0.97.0"
     lodash: "npm:^4.17.23"
-    redstone-api: "npm:^0.4.13"
     toml: "npm:^5.0.0"
     zod: "npm:^4.1.12"
   languageName: unknown
@@ -10136,7 +10135,6 @@ __metadata:
     dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.23"
     node-jq: "npm:^6.0.0"
-    redstone-api: "npm:^0.4.13"
     secp256k1: "npm:^5.0.1"
     zod: "npm:^4.1.12"
   languageName: unknown
@@ -14851,15 +14849,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ar-gql@npm:^0.0.6":
-  version: 0.0.6
-  resolution: "ar-gql@npm:0.0.6"
-  dependencies:
-    axios: "npm:^0.21.1"
-  checksum: 10c0/df5f0173af555da35bbd9df92ace714732d17a985b0287fa64e56800dae36a26034071a861d80df13806d380a1284c8810fc21425e7b3cde13268013c9bdd476
-  languageName: node
-  linkType: hard
-
 "arbundles@npm:^0.9.9":
   version: 0.9.11
   resolution: "arbundles@npm:0.9.11"
@@ -14991,16 +14980,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"arweave-multihost@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "arweave-multihost@npm:0.1.0"
-  dependencies:
-    arweave: "npm:^1.10.15"
-    axios: "npm:^0.21.1"
-  checksum: 10c0/26ee4f10969bc746a1e99980f4e518021adb8194fc17d78d4c88c75f6b05b2c642550f65bf64318698e727599fa9a1231d0f4d3d6324fda94568b3a3a4e9678b
-  languageName: node
-  linkType: hard
-
 "arweave-stream-tx@npm:^1.1.0":
   version: 1.2.2
   resolution: "arweave-stream-tx@npm:1.2.2"
@@ -15026,7 +15005,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"arweave@npm:^1.10.13, arweave@npm:^1.10.15, arweave@npm:^1.10.16, arweave@npm:^1.14.4":
+"arweave@npm:^1.10.13, arweave@npm:^1.14.4":
   version: 1.15.1
   resolution: "arweave@npm:1.15.1"
   dependencies:
@@ -17369,15 +17348,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deep-sort-object@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "deep-sort-object@npm:1.0.2"
-  dependencies:
-    is-plain-object: "npm:^2.0.1"
-  checksum: 10c0/a1dcb479b806cfdecd554d890233a73af909f402e90bdc64b8f6f0bfffc7839730950549395915dea8d1cffd9169cbfa3cc92ae4286987a2e1b3cfb4766dc3be
-  languageName: node
-  linkType: hard
-
 "deepmerge@npm:^4.2.2, deepmerge@npm:^4.3.1":
   version: 4.3.1
   resolution: "deepmerge@npm:4.3.1"
@@ -18988,12 +18958,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventsource@npm:*, eventsource@npm:^4.0.0":
-  version: 4.1.0
-  resolution: "eventsource@npm:4.1.0"
+"eventsource@npm:*, eventsource@npm:^4.0.0, eventsource@npm:^4.1.0":
+  version: 4.1.1
+  resolution: "eventsource@npm:4.1.1"
   dependencies:
     eventsource-parser: "npm:^3.0.1"
-  checksum: 10c0/5d8f0f60fdafc5a3b4ce5d53f6a6c75cf07fbec250cfb870c44ea38d9689b9996e4a6f3779e520a6e7d32fbf398f42ea011a2c10772a9bc932fb419accede73e
+  checksum: 10c0/9aea4a68faeb82f3dd24f8d021f102c3ff6cd35e51a75208b700a96460c1849636120ec60ffdce49dd5ad1fb8ec04e61ef3831392659424cf3449635df44b44f
   languageName: node
   linkType: hard
 
@@ -19001,15 +18971,6 @@ __metadata:
   version: 2.0.2
   resolution: "eventsource@npm:2.0.2"
   checksum: 10c0/0b8c70b35e45dd20f22ff64b001be9d530e33b92ca8bdbac9e004d0be00d957ab02ef33c917315f59bf2f20b178c56af85c52029bc8e6cc2d61c31d87d943573
-  languageName: node
-  linkType: hard
-
-"eventsource@npm:^4.1.0":
-  version: 4.1.1
-  resolution: "eventsource@npm:4.1.1"
-  dependencies:
-    eventsource-parser: "npm:^3.0.1"
-  checksum: 10c0/9aea4a68faeb82f3dd24f8d021f102c3ff6cd35e51a75208b700a96460c1849636120ec60ffdce49dd5ad1fb8ec04e61ef3831392659424cf3449635df44b44f
   languageName: node
   linkType: hard
 
@@ -21359,15 +21320,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-plain-object@npm:^2.0.1":
-  version: 2.0.4
-  resolution: "is-plain-object@npm:2.0.4"
-  dependencies:
-    isobject: "npm:^3.0.1"
-  checksum: 10c0/f050fdd5203d9c81e8c4df1b3ff461c4bc64e8b5ca383bcdde46131361d0a678e80bcf00b5257646f6c636197629644d53bd8e2375aea633de09a82d57e942f4
-  languageName: node
-  linkType: hard
-
 "is-promise@npm:^4.0.0":
   version: 4.0.0
   resolution: "is-promise@npm:4.0.0"
@@ -21531,13 +21483,6 @@ __metadata:
   version: 4.0.0
   resolution: "isexe@npm:4.0.0"
   checksum: 10c0/5884815115bceac452877659a9c7726382531592f43dc29e5d48b7c4100661aed54018cb90bd36cb2eaeba521092570769167acbb95c18d39afdccbcca06c5ce
-  languageName: node
-  linkType: hard
-
-"isobject@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "isobject@npm:3.0.1"
-  checksum: 10c0/03344f5064a82f099a0cd1a8a407f4c0d20b7b8485e8e816c39f249e9416b06c322e8dec5b842b6bb8a06de0af9cb48e7bc1b5352f0fadc2f0abac033db3d4db
   languageName: node
   linkType: hard
 
@@ -26742,21 +26687,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redstone-api@npm:^0.4.13":
-  version: 0.4.13
-  resolution: "redstone-api@npm:0.4.13"
-  dependencies:
-    ar-gql: "npm:^0.0.6"
-    arweave: "npm:^1.10.16"
-    arweave-multihost: "npm:^0.1.0"
-    axios: "npm:^1.6.0"
-    deep-sort-object: "npm:^1.0.2"
-    lodash: "npm:^4.17.21"
-    pako: "npm:^2.0.3"
-  checksum: 10c0/5c718c35e81fe781168bcbd9890fde24021409841fd06be409ea2f84364e30c03f7f87753157dda783aa6af8f94fe2d85f205598231271010c51a2cb4bc6518e
-  languageName: node
-  linkType: hard
-
 "redstone-prettier-config@npm:^1.1.0":
   version: 1.1.0
   resolution: "redstone-prettier-config@npm:1.1.0"
@@ -29414,14 +29344,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uint8array-extras@npm:^1.4.0":
-  version: 1.5.0
-  resolution: "uint8array-extras@npm:1.5.0"
-  checksum: 10c0/0e74641ac7dadb02eadefc1ccdadba6010e007757bda824960de3c72bbe2b04e6d3af75648441f412148c4103261d54fcb60be45a2863beb76643a55fddba3bd
-  languageName: node
-  linkType: hard
-
-"uint8array-extras@npm:^1.5.0":
+"uint8array-extras@npm:^1.4.0, uint8array-extras@npm:^1.5.0":
   version: 1.6.0
   resolution: "uint8array-extras@npm:1.6.0"
   checksum: 10c0/d53177c025ebea31af1e445abd474027b66341a56f207f352a5a486aa1d492e228bbc883dc4a51ea8358bb88d60a019351e20a92dd17c2ef8326e29fbad57127
