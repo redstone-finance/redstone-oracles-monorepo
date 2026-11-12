@@ -9861,8 +9861,10 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    "@types/lodash": "npm:^4.14.195"
     dotenv: "npm:^16.0.3"
     jsonc-parser: "npm:^3.3.1"
+    lodash: "npm:^4.17.23"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
