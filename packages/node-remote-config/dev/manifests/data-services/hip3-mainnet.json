@@ -178,6 +178,10 @@
     },
     "ANT---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -599,6 +603,10 @@
     },
     "SNDK---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -810,6 +818,10 @@
     },
     "DRAM---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -1021,6 +1033,10 @@
     },
     "IONQ---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -1232,6 +1248,10 @@
     },
     "EWY---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -1443,6 +1463,10 @@
     },
     "NBIS---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -1654,6 +1678,10 @@
     },
     "GPRO---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -2578,6 +2606,10 @@
     },
     "NVDA---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -2789,6 +2821,10 @@
     },
     "INTC---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -3000,6 +3036,10 @@
     },
     "AAPL---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -3211,6 +3251,10 @@
     },
     "CRCL---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -3422,6 +3466,10 @@
     },
     "QQQ---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -3633,6 +3681,10 @@
     },
     "GOOGL---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -3844,6 +3896,10 @@
     },
     "MU---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
@@ -4055,6 +4111,10 @@
     },
     "META---OVERNIGHT": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": ""
+      },
       "broadcasters": [
         "influx",
         "s3"
