@@ -9,3 +9,5 @@ packages:
   - ./test
   - ./featured
   - ./reward_factory
+  - ./caps-oracle
+  - ./caps-test

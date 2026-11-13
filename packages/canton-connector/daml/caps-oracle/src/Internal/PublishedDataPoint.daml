@@ -1,0 +1,21 @@
+module Internal.PublishedDataPoint where
+
+import DA.Numeric (cast)
+import DA.Text (fromCodePoints)
+import qualified DA.TextMap as TM
+import DataStandard.DataPointV1 (PublishedDataPointView(..))
+import DataStandard.Utils (AnyValue(AVDecimal), emptyMetadata)
+import RedStone.Result (resultUnwrap)
+import Time (millisToTime)
+
+redstone_aggregated_schema_version = "1.0.0"
+
+publishedDataPoint distributor feedIds medians dataTimestamp = PublishedDataPointView with
+  distributor
+  publishedAt = millisToTime dataTimestamp
+  schemaVersion = redstone_aggregated_schema_version
+  values = dataPointValues feedIds medians
+  metadata = emptyMetadata
+
+dataPointValues feedIds medians =
+  TM.fromList $ zip (map fromCodePoints feedIds) $ map (AVDecimal . cast . resultUnwrap) medians

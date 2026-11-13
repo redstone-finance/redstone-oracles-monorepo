@@ -1,0 +1,61 @@
+module Caps.Helpers where
+
+import DA.Optional (isSome)
+import DA.Text (toCodePoints)
+import DA.Time (milliseconds)
+import Daml.Script
+import Caps.Api.CoreV1
+import qualified Caps.Core.License as Core
+import Caps.Verifier.RedStone (RedStoneVerifier(..))
+import DataStandard.DataPointV1 (PublishedDataPointView(..))
+import DataStandard.Utils (emptyMetadata)
+import RedStoneCapsOracle
+import Time (millisToTime)
+import Caps.Fixtures
+
+createVerifier operator observers signers =
+  toInterfaceContractId @Verifier <$> submit operator do
+    createCmd RedStoneVerifier with
+      owner = operator
+      observers
+      signers
+      signerCountThreshold = verifier_threshold
+      feedIds = feed_ids
+      attestationKeys = []
+      maxBehind = milliseconds freshness_window_ms
+      maxAhead = milliseconds freshness_window_ms
+
+createLicense operator owner licensees definition =
+  toInterfaceContractId @License <$> submit owner do
+    createCmd Core.License with
+      definition
+      owner
+      licensor = operator
+      operator
+      licensees
+      licenseType = plain_license_type
+      validUntil = None
+      delegate = None
+
+publishedDataPoint distributor dataTimestamp = PublishedDataPointView with
+  distributor
+  publishedAt = millisToTime dataTimestamp
+  schemaVersion = "1.0.0"
+  values = signed_values
+  metadata = emptyMetadata
+
+publish oracle roundHead license payloadHex =
+  publishFeeds oracle roundHead license feed_ids payloadHex
+
+publishFeeds oracle roundHead license feedIds payloadHex =
+  exerciseCmd oracle RedStoneCapsOracle_Publish with
+    roundHead
+    license
+    feedIds = map toCodePoints feedIds
+    payloadHex
+    attestation = None
+
+createRound actor roundHead content =
+  exerciseCmd roundHead RoundHead_CreateRound with actor, content, attestation = None
+
+isActive party contract = isSome <$> queryInterfaceContractId party contract
