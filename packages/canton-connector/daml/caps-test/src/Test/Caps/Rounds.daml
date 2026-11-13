@@ -1,0 +1,57 @@
+module Test.Caps.Rounds where
+
+import DA.Action (void)
+import Daml.Script
+import qualified Caps.Core.RoundHead as Core
+import Time (millisToTime)
+import Caps.Fixtures
+import Caps.Helpers
+import Caps.SetUp
+
+testOracleRejectsUncoveredFeed = do
+  deployment <- setUp
+  let Deployment{operator, oracle, setupRoundHead, license} = deployment
+  setTime $ millisToTime first_data_timestamp
+
+  submitMustFail operator $ publishFeeds oracle setupRoundHead license
+    (feed_ids <> [uncovered_feed_id]) first_payload
+
+testOracleRejectsNonOperator = do
+  deployment <- setUp
+  let Deployment{licensee, oracle, setupRoundHead, license} = deployment
+  setTime $ millisToTime first_data_timestamp
+
+  submitMustFail licensee $ publish oracle setupRoundHead license first_payload
+
+testOracleRejectsRoundHeadOfOtherDefinition = do
+  deployment <- setUp
+  let Deployment{operator, oracle, otherRoundHead, license} = deployment
+  setTime $ millisToTime first_data_timestamp
+
+  submitMustFail operator $ publish oracle otherRoundHead license first_payload
+
+testPauseAndResume = do
+  deployment <- setUp
+  let Deployment{operator, auditor, oracle, setupRoundHead, license} = deployment
+  setTime $ millisToTime first_data_timestamp
+  paused <- submit auditor do
+    exerciseCmd (fromInterfaceContractId @Core.RoundHead setupRoundHead)
+      Core.RoundHead_Pause with auditor
+  submitMustFail operator $
+    publish oracle (toInterfaceContractId paused) license first_payload
+  resumed <- submit auditor do exerciseCmd paused Core.RoundHead_Resume with auditor
+
+  void $ submit operator $
+    publish oracle (toInterfaceContractId resumed) license first_payload
+
+testConsumedHeadRejectsPublish = do
+  (deployment, published) <- setUpPublished
+
+  submitMustFail deployment.operator $
+    publish deployment.oracle published.firstResult.head deployment.license first_payload
+
+testPublishRejectsStalePayload = do
+  (deployment, published) <- setUpPublished
+
+  submitMustFail deployment.operator $
+    publish deployment.oracle published.secondResult.head deployment.license first_payload

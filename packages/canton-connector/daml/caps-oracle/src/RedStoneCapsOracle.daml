@@ -1,0 +1,50 @@
+module RedStoneCapsOracle where
+
+import Caps.Api.CoreV1
+import DataStandard.Utils (AnyValue(AVText))
+import RedStone.Config (BaseConfig)
+import RedStoneTypes (PayloadHex, RedStoneFeedId)
+import RedStoneCapsOracleState
+import Internal.PublishedDataPoint
+import Internal.RedStonePayload
+
+template RedStoneCapsOracle
+  with
+    operator : Party
+    viewers : [Party]
+    adapterId : Text
+    definition : ContractId DataDefinition
+    license : ContractId License
+    config : BaseConfig
+  where
+    signatory operator
+    observer viewers
+
+    nonconsuming choice RedStoneCapsOracle_Publish : CreateRoundResult
+      with
+        roundHead : ContractId RoundHead
+        license : ContractId License
+        feedIds : [RedStoneFeedId]
+        payloadHex : PayloadHex
+        attestation : Optional Text
+      controller operator
+      do
+        headView <- view <$> fetch roundHead
+        assertMsg "RedStoneCapsOracle: round head belongs to another definition" $
+          headView.definition == definition
+
+        currentTime <- getTime
+        (medians, dataTimestamp) <- decodePayload config feedIds currentTime payloadHex
+
+        result <- exercise roundHead RoundHead_CreateRound with
+          actor = operator
+          content = CapsuleContent with
+            dataPoint = publishedDataPoint operator feedIds medians dataTimestamp
+            payload = AVText payloadHex
+            license
+          attestation
+
+        _ <- exerciseByKey @RedStoneCapsOracleState (operator, adapterId)
+          RedStoneCapsOracleState_Advance with result
+
+        pure result

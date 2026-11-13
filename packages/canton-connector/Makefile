@@ -1,14 +1,21 @@
 include ./ops.mk
+include ./caps.mk
 
-VERSION=-v20-0.5.0
+VERSION=-v1-0.5.0
 LEDGER_HOST=localhost
 LEDGER_PORT=6865
 JSON_API_PORT=7575
 JSON_API=http://$(LEDGER_HOST):$(JSON_API_PORT)
 PARTIES=RedStoneOracleOwner RedStoneOracleUpdater RedStoneOracleViewer Client Beneficiary
 DAML=dpm
+export PATH := $(HOME)/.dpm/bin:$(PATH)
 
 TEST_DAR=.daml/dist/redstone-test$(VERSION).dar
+CAPS_DARS=deps/caps-core-0.1.0.dar \
+	deps/caps-verifier-redstone-0.1.1.dar \
+	deps/caps-capsule-archiver-0.1.0.dar \
+	deps/caps-round-archiver-0.1.0.dar \
+	caps-oracle/.daml/dist/caps-redstone-oracle-0.1.1.dar
 
 .PHONY: get_party_suffix
 
@@ -33,8 +40,9 @@ clean:
 	cd $(DEPLOY_DIR) && $(DAML) clean --all
 	rm -f $(ADAPTER_ID_TXT) $(CORE_ID_TXT) refresh_token.txt token.txt $(DEPLOY_DIR)/test/input.json $(DEPLOY_DIR)/test/sample_data/payload.hex
 
-lint: lint-common lint-types lint-sdk lint-sdk-tests lint-core lint-interface lint-featured lint-reward_factory lint-test
+lint: lint-common lint-types lint-sdk lint-sdk-tests lint-core lint-interface lint-featured lint-reward_factory lint-caps-oracle lint-caps-test lint-test
 	./scripts/lint-whitespaces.sh
+	./scripts/lint-exposed-modules.sh $(DEPLOY_DIR)
 
 build: build_test
 
@@ -50,7 +58,16 @@ test-%: build_redstone_core build_test
 		--dar $(TEST_DAR) \
 		--script-name $*:main
 
-test: test-UnitTests
+caps-test: build_test
+	cd $(DEPLOY_DIR)/caps-test && $(DAML) test --test-pattern test
+
+caps-start: build_test
+	cd $(DEPLOY_DIR) && $(DAML) sandbox \
+	--ledger-api-port $(LEDGER_PORT) \
+	--json-api-port $(JSON_API_PORT) \
+	$(addprefix --dar ,$(CAPS_DARS))
+
+test: test-UnitTests caps-test
 
 integration_tests: prepare_data run_main run_test
 
@@ -69,6 +86,10 @@ start: build_test
 
 start_daemon:
 	make start & \
+	sleep 20
+
+start_caps_daemon:
+	make caps-start & \
 	sleep 20
 
 ledger_upload: build

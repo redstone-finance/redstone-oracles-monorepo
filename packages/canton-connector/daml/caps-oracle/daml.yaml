@@ -1,0 +1,19 @@
+sdk-version: 3.5.12
+name: caps-redstone-oracle
+version: 0.1.1
+source: src
+dependencies:
+  - daml-prim
+  - daml-stdlib
+exposed-modules:
+  - RedStoneCapsOracle
+  - RedStoneCapsOracleState
+data-dependencies:
+  - ../types/.daml/dist/redstone-types-v1-0.5.0.dar
+  - ../common/.daml/dist/redstone-common-v1-0.5.0.dar
+  - ../sdk/.daml/dist/redstone-sdk-v1-0.5.0.dar
+  - ../deps/canton-data-standard-utils-v1-0.2.0.dar
+  - ../deps/canton-data-standard-datapoint-v1-0.2.0.dar
+  - ../deps/caps-api-core-v1-0.1.0.dar
+build-options:
+  - --target=2.3

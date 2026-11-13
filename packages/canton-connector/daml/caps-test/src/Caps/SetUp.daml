@@ -1,0 +1,139 @@
+module Caps.SetUp where
+
+import DA.Action (void)
+import DA.Optional (fromSome)
+import Daml.Script
+import Caps.Api.CoreV1
+import qualified Caps.Core.DataDefinition as Core
+import DataStandard.Utils (AnyValue(AVText))
+import RedStone.PrimaryProdConfig (redstonePrimaryProdDefaultBaseConfig)
+import RedStoneCapsOracle
+import RedStoneCapsOracleState
+import Time (millisToTime)
+import Caps.Fixtures
+import Caps.Helpers
+
+data Deployment = Deployment with
+    operator : Party
+    licensee : Party
+    auditor : Party
+    oracle : ContractId RedStoneCapsOracle
+    adapterId : Text
+    definition : ContractId DataDefinition
+    otherDefinition : ContractId DataDefinition
+    setupRoundHead : ContractId RoundHead
+    otherRoundHead : ContractId RoundHead
+    license : ContractId License
+
+data Published = Published with
+    firstResult : CreateRoundResult
+    secondResult : CreateRoundResult
+
+setUp = do
+  operator <- allocateParty "CapsOperator"
+  licensee <- allocateParty "CapsLicensee"
+  auditor <- allocateParty "CapsAuditor"
+  verifier <- createVerifier operator [licensee] test_signers
+
+  setTime $ millisToTime setup_data_timestamp
+  let bootstrap dataId = do
+        proposal <- proposeDefinition operator [auditor] [licensee] verifier dataId
+        accepted <- submit auditor do
+          exerciseCmd proposal Core.DefinitionProposal_Accept with auditor
+        (definition, roundHead) <- submit operator do
+          exerciseCmd accepted Core.DefinitionProposal_Finalize
+
+        pure
+          ( toInterfaceContractId @DataDefinition definition
+          , toInterfaceContractId @RoundHead roundHead
+          )
+
+  (definition, setupRoundHead) <- bootstrap data_id
+  (otherDefinition, otherRoundHead) <- bootstrap other_data_id
+
+  license <- createLicense operator operator [licensee] definition
+
+  let adapterId = show definition
+  oracle <- createOracle operator [licensee] adapterId definition license
+  createState operator [licensee] adapterId setup_data_timestamp
+
+  pure Deployment with
+    operator
+    licensee
+    auditor
+    oracle
+    adapterId
+    definition
+    otherDefinition
+    setupRoundHead
+    otherRoundHead
+    license
+
+setUpPublished = do
+  deployment <- setUp
+  published <- publishRounds deployment
+
+  pure (deployment, published)
+
+publishRounds deployment = do
+  firstResult <- publishFirstRound deployment
+  secondResult <- publishSecondRound deployment firstResult second_data_timestamp
+
+  pure Published with firstResult, secondResult
+
+publishFirstRound deployment = do
+  let Deployment{operator, setupRoundHead} = deployment
+  setTime $ millisToTime first_data_timestamp
+
+  submit operator $ createRound operator setupRoundHead (firstContent deployment)
+
+publishSecondRound deployment firstResult timestamp = do
+  let Deployment{operator, oracle, license} = deployment
+  setTime $ millisToTime timestamp
+
+  submit operator $ publish oracle firstResult.head license second_payload
+
+writeRound deployment roundHead timestamp payloadHex = do
+  let Deployment{operator, oracle, license} = deployment
+  setTime $ millisToTime timestamp
+
+  submit operator $ publish oracle roundHead license payloadHex
+
+queryState deployment = do
+  let Deployment{operator, adapterId} = deployment
+
+  snd . fromSome <$> queryByKey @RedStoneCapsOracleState operator (operator, adapterId)
+
+firstContent deployment = CapsuleContent with
+  dataPoint = publishedDataPoint deployment.operator first_data_timestamp
+  payload = AVText first_payload
+  license = deployment.license
+
+proposeDefinition operator auditors readers verifier dataId = submit operator do
+  createCmd Core.DefinitionProposal with
+    dataId
+    operator
+    auditors
+    readers
+    verifier
+    publishers = Some []
+    accepted = []
+
+createOracle operator viewers adapterId definition license = submit operator do
+  createCmd RedStoneCapsOracle with
+    operator
+    viewers
+    adapterId
+    definition
+    license
+    config = redstonePrimaryProdDefaultBaseConfig with
+      signers = test_signers
+      signerCountThreshold = signer_count_threshold
+
+createState operator viewers adapterId writeTimestamp = void $ submit operator do
+  createCmd RedStoneCapsOracleState with
+    operator
+    viewers
+    adapterId
+    capsule = None
+    writeTimestamp

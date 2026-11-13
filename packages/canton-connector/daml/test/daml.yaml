@@ -1,5 +1,5 @@
 sdk-version: 3.5.12
-name: redstone-test-v20
+name: redstone-test-v1
 version: 0.5.0
 source: src
 dependencies:
@@ -7,15 +7,15 @@ dependencies:
   - daml-stdlib
   - daml-script
 data-dependencies:
-  - ../common/.daml/dist/redstone-common-v20-0.5.0.dar
-  - ../types/.daml/dist/redstone-types-v20-0.5.0.dar
-  - ../interface/.daml/dist/redstone-interface-v20-0.5.0.dar
-  - ../core/.daml/dist/redstone-core-v20-0.5.0.dar
-  - ../sdk/.daml/dist/redstone-sdk-v20-0.5.0.dar
-  - ../sdk-tests/.daml/dist/redstone-sdk-tests-v20-0.5.0.dar
-  - ../featured/.daml/dist/redstone-featured-v20-0.5.0.dar
-  - ../reward_factory/.daml/dist/redstone-reward-factory-v20-0.5.0.dar
-  - ../featured/dars/splice-api-featured-app-v2-1.0.0.dar
+  - ../common/.daml/dist/redstone-common-v1-0.5.0.dar
+  - ../types/.daml/dist/redstone-types-v1-0.5.0.dar
+  - ../interface/.daml/dist/redstone-interface-v1-0.5.0.dar
+  - ../core/.daml/dist/redstone-core-v1-0.5.0.dar
+  - ../sdk/.daml/dist/redstone-sdk-v1-0.5.0.dar
+  - ../sdk-tests/.daml/dist/redstone-sdk-tests-v1-0.5.0.dar
+  - ../featured/.daml/dist/redstone-featured-v1-0.5.0.dar
+  - ../reward_factory/.daml/dist/redstone-reward-factory-v1-0.5.0.dar
+  - ../deps/splice-api-featured-app-v2-1.0.0.dar
 build-options:
   - --target=2.1
   - -Wno-template-interface-depends-on-daml-script

@@ -1,0 +1,14 @@
+module Internal.RedStonePayload where
+
+import qualified RedStone.Config as RedStoneConfig (config)
+import RedStone.Processor (processPayloadNumeric)
+import RedStone.Result (resultIsOk, resultUnwrap)
+
+decodePayload baseConfig feedIds currentTime payloadHex = do
+  let redstoneConfig = resultUnwrap $ RedStoneConfig.config baseConfig feedIds currentTime
+
+  let (medians, dataTimestamp) = resultUnwrap $ processPayloadNumeric redstoneConfig payloadHex
+  assertMsg "RedStoneCapsOracle: payload does not cover every feed of the oracle" $
+    all resultIsOk medians
+
+  pure (medians, dataTimestamp)

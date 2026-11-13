@@ -17,6 +17,13 @@ extract_dar_field() {
     exit 1
   fi
 
+  dar_file_field "$dar" "$field"
+}
+
+dar_file_field() {
+  local dar=$1
+  local field=$2
+
   local dar_name
   dar_name=$(basename "$dar" .dar)
 
@@ -71,6 +78,16 @@ extract_optional_name_ref() {
   fi
 }
 
+extract_optional_vendored_hash() {
+  if [ -d "$1" ]; then
+    local dar
+    dar=$(find "$1" -maxdepth 1 -name "$2-*.dar" -print -quit)
+    if [ -n "$dar" ]; then
+      dar_file_field "$dar" hash
+    fi
+  fi
+}
+
 interface_exists() {
   if [ -f "interface/src/$1.daml" ]; then
     echo "$1"
@@ -90,6 +107,9 @@ FEATURED_HASH=$(extract_hash featured)
 SDK_HASH=$(extract_hash sdk)
 ADAPTER_INTERFACE=$(interface_exists IRedStoneAdapter)
 PILL_FACTORY_INTERFACE=$(interface_exists IRedStonePricePillFactory)
+CAPS_ORACLE_HASH=$(extract_optional_hash caps-oracle)
+CAPS_CAPSULE_ARCHIVER_HASH=$(extract_optional_vendored_hash deps caps-capsule-archiver)
+CAPS_ROUND_ARCHIVER_HASH=$(extract_optional_vendored_hash deps caps-round-archiver)
 
 jq -n \
   --arg interface "$INTERFACE_HASH" \
@@ -103,6 +123,9 @@ jq -n \
   --arg sdk "$SDK_HASH" \
   --arg adapter_interface "$ADAPTER_INTERFACE" \
   --arg pill_factory_interface "$PILL_FACTORY_INTERFACE" \
+  --arg caps_oracle "$CAPS_ORACLE_HASH" \
+  --arg caps_capsule_archiver "$CAPS_CAPSULE_ARCHIVER_HASH" \
+  --arg caps_round_archiver "$CAPS_ROUND_ARCHIVER_HASH" \
   '{
     redstone_sdk: $sdk,
     interface: $interface,
@@ -113,12 +136,19 @@ jq -n \
     price_feed: $price_feed,
     price_pill: $price_pill,
     featured: $featured,
+    caps_oracle: $caps_oracle,
+    caps_capsule_archiver: $caps_capsule_archiver,
+    caps_round_archiver: $caps_round_archiver,
     templates: {
       adapter: ($adapter + ":RedStoneAdapter:RedStoneAdapter"),
       core: ($core + ":RedStoneCore:RedStoneCore"),
       core_client: ($core + ":RedStoneCoreClient:RedStoneCoreClient"),
       factory: ($factory + ":RedStonePricePillFactory:RedStonePricePillFactory"),
-      reward_factory: ($reward_factory + ":RedStoneRewardFactory:RedStoneRewardFactory")
+      reward_factory: ($reward_factory + ":RedStoneRewardFactory:RedStoneRewardFactory"),
+      caps_oracle: ($caps_oracle + ":RedStoneCapsOracle:RedStoneCapsOracle"),
+      caps_oracle_state: ($caps_oracle + ":RedStoneCapsOracleState:RedStoneCapsOracleState"),
+      caps_capsule_archiver: ($caps_capsule_archiver + ":Caps.CapsuleArchiver:CapsuleArchiver"),
+      caps_round_archiver: ($caps_round_archiver + ":Caps.RoundArchiver:RoundArchiver")
     },
     interfaces: {
       adapter: ($interface + ":IRedStoneAdapter:IRedStoneAdapter"),
@@ -133,4 +163,7 @@ jq -n \
   | if $price_feed == "" then del(.price_feed) else . end
   | if $price_pill == "" then del(.price_pill, .interfaces.pill) else . end
   | if $adapter_interface == "" then del(.interfaces.adapter) else . end
-  | if $pill_factory_interface == "" then del(.interfaces.pill_factory) else . end'
+  | if $pill_factory_interface == "" then del(.interfaces.pill_factory) else . end
+  | if $caps_oracle == "" then del(.caps_oracle, .templates.caps_oracle, .templates.caps_oracle_state) else . end
+  | if $caps_capsule_archiver == "" then del(.caps_capsule_archiver, .templates.caps_capsule_archiver) else . end
+  | if $caps_round_archiver == "" then del(.caps_round_archiver, .templates.caps_round_archiver) else . end'

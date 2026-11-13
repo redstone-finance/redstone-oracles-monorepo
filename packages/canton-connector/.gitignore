@@ -1,4 +1,5 @@
 **/.daml
 **/log
 ai-audits/
+caps-deploy/out/
 *[Tt]oken*

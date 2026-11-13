@@ -1,0 +1,19 @@
+sdk-version: 3.5.12
+name: caps-test
+version: 0.1.0
+source: src
+dependencies:
+  - daml-prim
+  - daml-stdlib
+  - daml-script
+data-dependencies:
+  - ../common/.daml/dist/redstone-common-v1-0.5.0.dar
+  - ../sdk/.daml/dist/redstone-sdk-v1-0.5.0.dar
+  - ../deps/canton-data-standard-utils-v1-0.2.0.dar
+  - ../deps/canton-data-standard-datapoint-v1-0.2.0.dar
+  - ../deps/caps-api-core-v1-0.1.0.dar
+  - ../deps/caps-core-0.1.0.dar
+  - ../deps/caps-verifier-redstone-0.1.1.dar
+  - ../caps-oracle/.daml/dist/caps-redstone-oracle-0.1.1.dar
+build-options:
+  - --target=2.3

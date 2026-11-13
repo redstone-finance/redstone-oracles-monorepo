@@ -1,0 +1,30 @@
+module Test.Caps.Archiving where
+
+import DA.Assert
+import Caps.Fixtures
+import Caps.Helpers
+import Caps.SetUp
+
+testPublishArchivesNoCapsules = do
+  deployment <- setUp
+  first <- publishFirstRound deployment
+  second <- publishSecondRound deployment first second_data_timestamp
+  active <- forA [first.capsule, second.capsule] (isActive deployment.operator)
+
+  active === [True, True]
+
+testPublishKeepsTheLatestCapsuleInState = do
+  deployment <- setUp
+  first <- writeRound deployment deployment.setupRoundHead first_data_timestamp first_payload
+  latest <- writeRound deployment first.head second_data_timestamp second_payload
+  state <- queryState deployment
+
+  state.capsule === Some latest.capsule
+
+testPublishRecordsTheWriteTimeInState = do
+  deployment <- setUp
+  let writeTimestamp = first_data_timestamp + 1
+  _ <- writeRound deployment deployment.setupRoundHead writeTimestamp first_payload
+  state <- queryState deployment
+
+  state.writeTimestamp === writeTimestamp

@@ -1,17 +1,24 @@
 {
-  "redstone_sdk": "c85b34b4032f1e3925431d4e86c0c6d5ed9d642b2052f49e8c81ba0caf517bae",
-  "interface": "#redstone-interface-v20",
-  "core": "b09315b592fc66edb81eb85a3d4fbfee7c0394ec9767ece7a273b62ad6c061e3",
-  "reward_factory": "23ed65104c1fd31c0d24bdc74a9e466c9ffa417d73ec9b6c2e28d063578142a3",
-  "featured": "946f8121a192fea5463743c8e94cdd68b0fe94660cf3b17ebdcb2e4717d55a56",
+  "redstone_sdk": "08102a40b306bb2833d2b2e7bb353bdde2754f57052379990c41a08579aa8c45",
+  "interface": "#redstone-interface-v1",
+  "core": "3d64ee08a4e24c79651f7a9523b9761720b17b5655521cd778a9eb8f571a09bb",
+  "reward_factory": "ebe9ba67fcb11997f1b487457d22fe6155bc2430284df2d1123ca414d9e692fb",
+  "featured": "ae6101f56b5f06c3d53296f9015bb40764442182ad7d09f12d6565cfbae8a7e7",
+  "caps_oracle": "928d5dc31ce0ac01b37f17fff429e4618416f2f2ea3c484ffd93c6e42e19502b",
+  "caps_capsule_archiver": "526d51e495749ba4a93ced8def45de21bf55cfe1548c05fe9fe94d651fab36dd",
+  "caps_round_archiver": "bd05f4e838bf23ea07f72500b88e5e73ce0646213c94d2d2a0b6c6b251251c42",
   "templates": {
-    "core": "b09315b592fc66edb81eb85a3d4fbfee7c0394ec9767ece7a273b62ad6c061e3:RedStoneCore:RedStoneCore",
-    "core_client": "b09315b592fc66edb81eb85a3d4fbfee7c0394ec9767ece7a273b62ad6c061e3:RedStoneCoreClient:RedStoneCoreClient",
-    "reward_factory": "23ed65104c1fd31c0d24bdc74a9e466c9ffa417d73ec9b6c2e28d063578142a3:RedStoneRewardFactory:RedStoneRewardFactory"
+    "core": "3d64ee08a4e24c79651f7a9523b9761720b17b5655521cd778a9eb8f571a09bb:RedStoneCore:RedStoneCore",
+    "core_client": "3d64ee08a4e24c79651f7a9523b9761720b17b5655521cd778a9eb8f571a09bb:RedStoneCoreClient:RedStoneCoreClient",
+    "reward_factory": "ebe9ba67fcb11997f1b487457d22fe6155bc2430284df2d1123ca414d9e692fb:RedStoneRewardFactory:RedStoneRewardFactory",
+    "caps_oracle": "928d5dc31ce0ac01b37f17fff429e4618416f2f2ea3c484ffd93c6e42e19502b:RedStoneCapsOracle:RedStoneCapsOracle",
+    "caps_oracle_state": "928d5dc31ce0ac01b37f17fff429e4618416f2f2ea3c484ffd93c6e42e19502b:RedStoneCapsOracleState:RedStoneCapsOracleState",
+    "caps_capsule_archiver": "526d51e495749ba4a93ced8def45de21bf55cfe1548c05fe9fe94d651fab36dd:Caps.CapsuleArchiver:CapsuleArchiver",
+    "caps_round_archiver": "bd05f4e838bf23ea07f72500b88e5e73ce0646213c94d2d2a0b6c6b251251c42:Caps.RoundArchiver:RoundArchiver"
   },
   "interfaces": {
-    "adapter": "#redstone-interface-v20:IRedStoneAdapter:IRedStoneAdapter",
-    "core": "#redstone-interface-v20:IRedStoneCore:IRedStoneCore",
-    "reward_factory": "#redstone-interface-v20:IRedStoneRewardFactory:IRedStoneRewardFactory"
+    "adapter": "#redstone-interface-v1:IRedStoneAdapter:IRedStoneAdapter",
+    "core": "#redstone-interface-v1:IRedStoneCore:IRedStoneCore",
+    "reward_factory": "#redstone-interface-v1:IRedStoneRewardFactory:IRedStoneRewardFactory"
   }
 }

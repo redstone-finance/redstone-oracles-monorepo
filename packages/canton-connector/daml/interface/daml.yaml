@@ -1,11 +1,11 @@
 sdk-version: 3.5.12
-name: redstone-interface-v20
+name: redstone-interface-v1
 version: 0.5.0
 source: src
 dependencies:
   - daml-prim
   - daml-stdlib
 data-dependencies:
-  - ../types/.daml/dist/redstone-types-v20-0.5.0.dar
+  - ../types/.daml/dist/redstone-types-v1-0.5.0.dar
 build-options:
   - --target=2.1

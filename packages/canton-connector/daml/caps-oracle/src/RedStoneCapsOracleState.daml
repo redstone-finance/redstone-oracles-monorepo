@@ -1,0 +1,29 @@
+module RedStoneCapsOracleState where
+
+import Caps.Api.CoreV1
+import Time (timeToMillis)
+
+template RedStoneCapsOracleState
+  with
+    operator : Party
+    viewers : [Party]
+    adapterId : Text
+    capsule : Optional (ContractId Capsule)
+    writeTimestamp : Int
+  where
+    signatory operator
+    observer viewers
+
+    key (operator, adapterId) : (Party, Text)
+    maintainer key._1
+
+    choice RedStoneCapsOracleState_Advance : ContractId RedStoneCapsOracleState
+      with
+        result : CreateRoundResult
+      controller operator
+      do
+        currentTime <- getTime
+
+        create this with
+          capsule = Some result.capsule
+          writeTimestamp = timeToMillis currentTime
