@@ -8,6 +8,8 @@ import { CantonContractAdapter } from "./CantonContractAdapter";
 import { CantonContractAdapterConfig } from "./CantonContractAdapterConfig";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
 
+export type DamlFeedData = [CantonFeedId, DamlPillRecord[]][];
+
 export const IADAPTER_TEMPLATE_NAME = `IRedStoneAdapter:IRedStoneAdapter`;
 
 export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implements ContractAdapter {
@@ -106,8 +108,6 @@ export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implement
 interface DamlPillRecord {
   priceData: PriceData;
 }
-
-type DamlFeedData = [CantonFeedId, DamlPillRecord[]][];
 
 interface RedStoneAdapterPayload {
   adapterId: string;

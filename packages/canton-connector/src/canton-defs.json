@@ -5,6 +5,8 @@
     "pricePillInterfaceId": "#redstone-price-pill-v19",
     "capsInterfaceId": "#caps-api-core-v1",
     "capsOracleId": "#caps-redstone-oracle",
+    "capsCapsuleArchiverId": "#caps-capsule-archiver",
+    "capsRoundArchiverId": "#caps-round-archiver",
     "featuredInterfaceId": "#splice-api-featured-app-v2:Splice.Api.FeaturedAppRightV2:FeaturedAppRight",
     "node": {
       "globalDomain": "global-domain::1220b1431ef217342db44d516bb9befde802be7d8899637d290895fa58880f19accc",
@@ -40,6 +42,8 @@
     "pricePillInterfaceId": "#redstone-price-pill-v20",
     "capsInterfaceId": "#caps-api-core-v1",
     "capsOracleId": "#caps-redstone-oracle",
+    "capsCapsuleArchiverId": "#caps-capsule-archiver",
+    "capsRoundArchiverId": "#caps-round-archiver",
     "featuredInterfaceId": "#splice-api-featured-app-v2:Splice.Api.FeaturedAppRightV2:FeaturedAppRight",
     "node": {
       "globalDomain": "global-domain::1220be58c29e65de40bf273be1dc2b266d43a9a002ea5b18955aeef7aac881bb471a",
@@ -72,6 +76,8 @@
     "pricePillInterfaceId": "#redstone-price-pill-v20",
     "capsInterfaceId": "#caps-api-core-v1",
     "capsOracleId": "#caps-redstone-oracle",
+    "capsCapsuleArchiverId": "#caps-capsule-archiver",
+    "capsRoundArchiverId": "#caps-round-archiver",
     "featuredInterfaceId": "#redstone-featured-v1",
     "node": {
       "globalDomain": "",

@@ -18,9 +18,9 @@ export class PricesCantonContractAdapter
   extends PricesCantonReadOnlyAdapter
   implements WriteContractAdapter, CantonChoiceExerciser
 {
+  protected readonly trafficMeter: CantonTrafficMeter;
   private readonly txDeliveryMan: CantonTxDeliveryMan;
   private readonly contractUpdater: CantonContractUpdater;
-  private readonly trafficMeter: CantonTrafficMeter;
   private readonly additionalPillViewers?: string[];
 
   constructor(
@@ -82,7 +82,7 @@ export class PricesCantonContractAdapter
     return { result, metadata };
   }
 
-  async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
+  async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
     try {
       const result = await this.txDeliveryMan.updateContract(this.contractUpdater, paramsProvider);
       const contractId = FP.unwrapSuccess(result).transactionHash;

@@ -1,12 +1,16 @@
 import { TxDeliveryManUpdateStatus } from "@redstone-finance/multichain-kit";
-import { FP, RedstoneCommon } from "@redstone-finance/utils";
+import { FP, MathUtils, RedstoneCommon } from "@redstone-finance/utils";
+import _ from "lodash";
 import { TransactionMetadata } from "../client/CantonClient";
+import { ConsumedRange, overlapLength } from "../utils/overlap-length";
 import { CantonTxResultExt } from "./CantonContractUpdater";
 import { CantonTrafficMeter } from "./CantonTrafficMeter";
 
 export class RealCantonTrafficMeter extends CantonTrafficMeter {
   private initialConsumedTrafficPromise?: Promise<number | undefined>;
   private lastRegisteredConsumed?: number;
+  private openMeasurementCount = 0;
+  private registeredRanges: ConsumedRange[] = [];
 
   constructor(
     shouldAccumulateTraffic: boolean,
@@ -16,6 +20,7 @@ export class RealCantonTrafficMeter extends CantonTrafficMeter {
   }
 
   override beforeUpdate() {
+    this.openMeasurementCount++;
     this.initialConsumedTrafficPromise = this.getTotalConsumedTrafficSafe();
   }
 
@@ -34,8 +39,29 @@ export class RealCantonTrafficMeter extends CantonTrafficMeter {
           );
           this.addPaidTrafficCost(metadata?.paidTrafficCost);
         }
+        this.closeMeasurement();
       }
     );
+  }
+
+  override async measureSpending(spend: () => Promise<number>) {
+    this.openMeasurementCount++;
+    try {
+      const initial = await this.getTotalConsumedTrafficSafe();
+      const paidTrafficCost = await spend();
+      if (!paidTrafficCost) {
+        return;
+      }
+
+      const totalConsumed = await this.getTotalConsumedTrafficSafe();
+      if (RedstoneCommon.isDefined(initial) && RedstoneCommon.isDefined(totalConsumed)) {
+        this.registerMeasured(initial, totalConsumed);
+      } else {
+        this.addPaidTrafficCost(paidTrafficCost);
+      }
+    } finally {
+      this.closeMeasurement();
+    }
   }
 
   registerMeasured(initial: number, totalConsumed: number, metadata?: TransactionMetadata) {
@@ -43,16 +69,53 @@ export class RealCantonTrafficMeter extends CantonTrafficMeter {
       RedstoneCommon.isDefined(this.lastRegisteredConsumed) && initial < this.lastRegisteredConsumed
         ? this.lastRegisteredConsumed
         : initial;
-
-    const usedTraffic = totalConsumed - base;
-
-    CantonTrafficMeter.logger.info(
-      `Traffic used: ${usedTraffic} bytes (initial: ${initial}, base: ${base}, total: ${totalConsumed})`,
-      { usedTraffic, initial, base, totalConsumed, metadata }
+    const range = { from: base, to: totalConsumed };
+    const alreadyCounted = MathUtils.sumBy(this.registeredRanges, (registered) =>
+      overlapLength(registered, range)
     );
 
-    this.lastRegisteredConsumed = totalConsumed;
+    const usedTraffic = totalConsumed - base - alreadyCounted;
+
+    CantonTrafficMeter.logger.info(
+      `Traffic used: ${usedTraffic} bytes (initial: ${initial}, base: ${base}, already counted: ${alreadyCounted}, total: ${totalConsumed})`,
+      { usedTraffic, initial, base, alreadyCounted, totalConsumed, metadata }
+    );
+
+    this.addRegisteredRange(range);
     this.addPaidTrafficCost(usedTraffic);
+    this.foldRangesWhenIdle();
+  }
+
+  private closeMeasurement() {
+    this.openMeasurementCount--;
+    this.foldRangesWhenIdle();
+  }
+
+  private addRegisteredRange(range: ConsumedRange) {
+    if (range.to <= range.from) {
+      return;
+    }
+
+    const [overlapping, separate] = _.partition(
+      this.registeredRanges,
+      (registered) => overlapLength(registered, range) > 0
+    );
+    this.registeredRanges = [
+      ...separate,
+      {
+        from: Math.min(range.from, ...overlapping.map(({ from }) => from)),
+        to: Math.max(range.to, ...overlapping.map(({ to }) => to)),
+      },
+    ];
+  }
+
+  private foldRangesWhenIdle() {
+    if (this.openMeasurementCount > 0 || !this.registeredRanges.length) {
+      return;
+    }
+
+    this.lastRegisteredConsumed = Math.max(...this.registeredRanges.map(({ to }) => to));
+    this.registeredRanges = [];
   }
 
   private async getTotalConsumedTrafficSafe() {

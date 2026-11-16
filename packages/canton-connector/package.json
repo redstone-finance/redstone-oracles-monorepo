@@ -18,6 +18,7 @@
     "sample-run": "yarn build:turbo && node dist/scripts/sample-run.js",
     "core-client-sample": "yarn build:turbo && node dist/scripts/core-client-sample.js",
     "clear-old-pills": "yarn global:tsx scripts/clear-old-pills.ts",
+    "archive-caps-rounds": "yarn global:tsx scripts/archive-caps-rounds.ts",
     "measure-canton-latency": "yarn global:tsx scripts/measure-canton-latency.ts",
     "check-cc-balances": "yarn global:tsx scripts/check-cc-balances.ts",
     "check-cc-transfer": "yarn global:tsx scripts/check-cc-transfer.ts"
@@ -26,7 +27,9 @@
     "@canton-network/core-token-standard-service": "1.14.0",
     "@canton-network/wallet-sdk": "1.6.0",
     "@redstone-finance/multichain-kit": "workspace:*",
+    "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
+    "@redstone-finance/signing": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "decimal.js": "^10.6.0",
     "form-data": "^4",
@@ -34,11 +37,9 @@
   },
   "devDependencies": {
     "@redstone-finance/internal-utils": "workspace:*",
-    "@redstone-finance/protocol": "workspace:*",
     "axios": "^1.20",
     "dotenv": "^16.0.3",
     "openapi-typescript-codegen": "^0.31.0",
-    "secp256k1": "^5.0.1",
     "zod": "^4.1.12"
   },
   "files": [

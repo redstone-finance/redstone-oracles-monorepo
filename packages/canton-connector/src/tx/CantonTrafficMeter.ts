@@ -46,6 +46,10 @@ export abstract class CantonTrafficMeter {
     this.addPaidTrafficCost(paidTrafficCost);
   }
 
+  async measureSpending(spend: () => Promise<number>) {
+    this.addPaidTrafficCost(await spend());
+  }
+
   async addBackOnFailure<T>(paidTrafficCost: number, spend: () => Promise<T>) {
     try {
       return await spend();
@@ -58,7 +62,7 @@ export abstract class CantonTrafficMeter {
     }
   }
 
-  protected addPaidTrafficCost(paidTrafficCost?: number) {
+  addPaidTrafficCost(paidTrafficCost?: number) {
     if (
       !this.shouldAccumulateTraffic ||
       !RedstoneCommon.isDefined(paidTrafficCost) ||
