@@ -415,15 +415,15 @@
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
     },
-    "FGNX_EOD": {
-      "priceFeedAddress": "0x48ACab99130b3f319f2B272619E83985A3f2c4C4",
+    "FGC_EOD": {
+      "priceFeedAddress": "0xBF821Dd392bD672746a7d8E3337D01600EEf94f4",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
     },
-    "FGNXP_EOD": {
-      "priceFeedAddress": "0xa798aAAa41EBB8ea7e519924bbBF7c32C135e07c",
+    "FGCPP_EOD": {
+      "priceFeedAddress": "0xf25eeBf4f52B4597D39F71a2D84987E576001f2D",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 43200000
