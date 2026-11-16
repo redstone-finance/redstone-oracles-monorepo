@@ -604,6 +604,13 @@
         "deviationPercentage": 0.05,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "syrupUSDC_FUNDAMENTAL": {
+      "priceFeedAddress": "0xDFc8f9406E3a5CBe22Fa59B415125852bB9CF9e8",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
