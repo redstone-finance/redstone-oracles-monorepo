@@ -1,6 +1,7 @@
 import { CantonClient, JsonCantonApi, WRITE_PRICES_CHOICE } from "../src";
+import { PUBLISH_CHOICE } from "../src/adapters/CapsOracleCantonContractAdapter";
 import contracts from "../src/canton-defs.json";
-import { CantonTxLookup, PUBLISH_CHOICE } from "../src/CantonTxLookup";
+import { CantonTxLookup } from "../src/CantonTxLookup";
 
 const Defs = contracts.devnet;
 const UPDATER_PARTY_ID = "RedStoneOracleUpdater::1220ab";

@@ -12,6 +12,10 @@ export type CantonContractAdapterConfig = {
   uniqueSignerThreshold: number;
   shouldAccumulateTraffic: boolean;
   useConstTrafficMeter: boolean;
+  capsRoundArchiveIntervalMs?: number;
+  capsCapsuleArchiveIntervalMs?: number;
+  capsRewardsIntervalMs?: number;
+  privateKey?: string;
   totalFeedCount: number;
 };
 
@@ -38,8 +42,33 @@ export function readAdditionalPillViewers() {
   );
 }
 
+export function readPrivateKey() {
+  return RedstoneCommon.getFromEnv("PRIVATE_KEY", z.string().optional());
+}
+
 export function readUseConstTrafficMeter() {
   return RedstoneCommon.getFromEnv("CANTON_USE_CONST_TRAFFIC_METER", z.boolean().default(false));
+}
+
+export function readCapsRoundArchiveIntervalMs() {
+  return RedstoneCommon.getFromEnv(
+    "CANTON_CAPS_ROUND_ARCHIVE_INTERVAL_MS",
+    z.number().int().positive().optional()
+  );
+}
+
+export function readCapsCapsuleArchiveIntervalMs() {
+  return RedstoneCommon.getFromEnv(
+    "CANTON_CAPS_CAPSULE_ARCHIVE_INTERVAL_MS",
+    z.number().int().positive().optional()
+  );
+}
+
+export function readCapsRewardsIntervalMs() {
+  return RedstoneCommon.getFromEnv(
+    "CANTON_CAPS_REWARDS_INTERVAL_MS",
+    z.number().int().positive().optional()
+  );
 }
 
 export function readCantonPartyIds(network: CantonNetwork) {

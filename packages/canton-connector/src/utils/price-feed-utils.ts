@@ -65,6 +65,13 @@ export function createFeedIdFilter(arrayifiedFeedIds: CantonFeedId[], adapterId?
   );
 }
 
+export function makeDefinitionFilter(definition: string, signatory: string) {
+  return makeContractFilter(
+    (createArgument: { definition: string }, signatories) =>
+      createArgument.definition === definition && signatories?.includes(signatory)
+  );
+}
+
 export function createStalenessFilter(keepFresh: boolean = true) {
   return makeContractFilter(
     (createArgument: { priceData: { writeTimestamp: string }; stalenessMs: string }) => {

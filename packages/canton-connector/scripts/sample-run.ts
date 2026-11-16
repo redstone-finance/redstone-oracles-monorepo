@@ -4,15 +4,17 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
   CantonBlockchainService,
-  PricePillCantonContractAdapter,
-  PricesCantonContractAdapter,
+  makeCantonContractAdapter,
   readAdditionalPillViewers,
+  readPrivateKey,
+  readUseConstTrafficMeter,
 } from "../src";
 import { makeDefaultClient, makePartyId } from "./utils";
 
 const VIEWER_PARTY_NAME = `RedStoneOracleViewer`;
 const UPDATER_PARTY_NAME = `RedStoneOracleUpdater`;
-const ADAPTER_ID = "RedStoneAdapter-v20-0.5.0";
+const ADAPTER_ID =
+  "004f4041ca1cbeb0333a45828380eef045826a9918054cb9223d95b46b3614e086ca12122066489fff8ddceee0dbc8772f3f3f481529399d0249a4a3604e78ca02cb20112b";
 
 async function main() {
   const client = makeDefaultClient();
@@ -33,14 +35,20 @@ async function main() {
       : ["ETH", "BTC", "CC"];
 
   const viewerPartyId = makePartyId(VIEWER_PARTY_NAME);
-  const adapter = new PricesCantonContractAdapter(client, {
-    ...CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
-    viewerPartyId,
-    updaterPartyId: makePartyId(UPDATER_PARTY_NAME),
-    adapterId: ADAPTER_ID,
-    additionalPillViewers: readAdditionalPillViewers(),
-    totalFeedCount: dataPackagesIds.length,
-  });
+  const adapter = makeCantonContractAdapter(
+    client,
+    {
+      ...CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
+      viewerPartyId,
+      updaterPartyId: makePartyId(UPDATER_PARTY_NAME),
+      adapterId: ADAPTER_ID,
+      additionalPillViewers: readAdditionalPillViewers(),
+      totalFeedCount: dataPackagesIds.length,
+      useConstTrafficMeter: readUseConstTrafficMeter(),
+      privateKey: readPrivateKey(),
+    },
+    client.getDefs().capsOracleId
+  );
   const service = new CantonBlockchainService(client);
   const authenticatedGateways = RedstoneCommon.getRequiredAuthenticatedGatewaysFromEnv();
 
@@ -52,14 +60,7 @@ async function main() {
     authenticatedGateways,
   });
 
-  const feedAdapter = new PricePillCantonContractAdapter(
-    client,
-    viewerPartyId,
-    ADAPTER_ID,
-    dataPackagesIds[0]
-  );
-
-  await sampleRun(paramsProvider, adapter, service, feedAdapter);
+  await sampleRun(paramsProvider, adapter, service);
 }
 
 void main();

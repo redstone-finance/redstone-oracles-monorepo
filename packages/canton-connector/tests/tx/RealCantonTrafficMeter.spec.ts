@@ -5,6 +5,7 @@ import { ResetableCantonTrafficMeter } from "./resetable-canton-traffic-meter";
 
 const BASE = 1_000_000_000;
 const SPENT_TRAFFIC = 3_000;
+const REPORTED_TRAFFIC = 7_000;
 const REJECTION_ERROR = new Error("CONTRACT_NOT_FOUND");
 const TIMEOUT_ERROR = new Error("timed out");
 const makeMeter = (shouldAccumulate = true, fetch = () => Promise.resolve(0)) =>
@@ -155,6 +156,114 @@ describe("RealCantonTrafficMeter", () => {
         expect.objectContaining({ metadata: { paidTrafficCost: 2_000 } })
       );
       warnSpy.mockRestore();
+    });
+  });
+
+  describe("measureSpending", () => {
+    it("registers the traffic measured around the spending instead of the reported costs", async () => {
+      const sut = makeMeter(
+        true,
+        jest
+          .fn()
+          .mockResolvedValueOnce(BASE)
+          .mockResolvedValueOnce(BASE + 5_000)
+      );
+
+      await sut.measureSpending(() => Promise.resolve(REPORTED_TRAFFIC));
+
+      expect(sut.consumeAccumulated()).toBe(5_000);
+    });
+
+    it("counts spending inside a measured write once", async () => {
+      const sut = makeMeter(
+        true,
+        jest
+          .fn()
+          .mockResolvedValueOnce(BASE + 2_000)
+          .mockResolvedValueOnce(BASE + 9_000)
+      );
+      sut.registerMeasured(BASE, BASE + 5_000);
+
+      await sut.measureSpending(() => Promise.resolve(REPORTED_TRAFFIC));
+
+      expect(sut.consumeAccumulated()).toBe(9_000);
+    });
+
+    it("counts a write measured after overlapping spending once", async () => {
+      const sut = makeMeter(
+        true,
+        jest
+          .fn()
+          .mockResolvedValueOnce(BASE)
+          .mockResolvedValueOnce(BASE + 9_000)
+      );
+      await sut.measureSpending(() => Promise.resolve(REPORTED_TRAFFIC));
+
+      sut.registerMeasured(BASE + 1_000, BASE + 5_000);
+      sut.registerMeasured(BASE + 6_000, BASE + 12_000);
+
+      expect(sut.consumeAccumulated()).toBe(12_000);
+    });
+
+    it("counts spending around a write measured inside it", async () => {
+      const sut = makeMeter(
+        true,
+        jest
+          .fn()
+          .mockResolvedValueOnce(BASE)
+          .mockResolvedValueOnce(BASE + 1_000)
+          .mockResolvedValueOnce(BASE + 5_000)
+          .mockResolvedValueOnce(BASE + 9_000)
+      );
+
+      await sut.measureSpending(async () => {
+        sut.beforeUpdate();
+        await sut.afterUpdate([], FP.ok({ transactionHash: TX_HASH.btc, metadata: {} }));
+
+        return REPORTED_TRAFFIC;
+      });
+
+      expect(sut.consumeAccumulated()).toBe(9_000);
+    });
+
+    it("counts a write around spending measured inside it", async () => {
+      const sut = makeMeter(
+        true,
+        jest
+          .fn()
+          .mockResolvedValueOnce(BASE)
+          .mockResolvedValueOnce(BASE + 1_000)
+          .mockResolvedValueOnce(BASE + 5_000)
+          .mockResolvedValueOnce(BASE + 9_000)
+      );
+
+      sut.beforeUpdate();
+      await sut.measureSpending(() => Promise.resolve(REPORTED_TRAFFIC));
+      await sut.afterUpdate([], FP.ok({ transactionHash: TX_HASH.btc, metadata: {} }));
+
+      expect(sut.consumeAccumulated()).toBe(9_000);
+    });
+
+    it("adds the reported costs when the participant traffic cannot be read", async () => {
+      const sut = makeMeter(true, jest.fn().mockResolvedValue(undefined));
+
+      await sut.measureSpending(() => Promise.resolve(REPORTED_TRAFFIC));
+
+      expect(sut.consumeAccumulated()).toBe(REPORTED_TRAFFIC);
+    });
+
+    it("adds nothing when the spending sent no transaction", async () => {
+      const sut = makeMeter(
+        true,
+        jest
+          .fn()
+          .mockResolvedValueOnce(BASE)
+          .mockResolvedValueOnce(BASE + 5_000)
+      );
+
+      await sut.measureSpending(() => Promise.resolve(0));
+
+      expect(sut.consumeAccumulated()).toBe(0);
     });
   });
 

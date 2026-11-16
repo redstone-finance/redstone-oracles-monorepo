@@ -2,6 +2,7 @@ export * from "./adapters/CantonContractAdapter";
 export * from "./adapters/CantonContractAdapterConfig";
 export * from "./adapters/CoreCantonContractAdapter";
 export * from "./adapters/CoreClientCantonContractAdapter";
+export * from "./adapters/make-canton-contract-adapter";
 export * from "./adapters/PricePillCantonContractAdapter";
 export * from "./adapters/PricesCantonContractAdapter";
 export * from "./adapters/PricesCantonReadOnlyAdapter";

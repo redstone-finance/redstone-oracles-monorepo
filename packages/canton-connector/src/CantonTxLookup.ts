@@ -3,13 +3,14 @@ import {
   MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE,
   PerManifestTxLookup,
 } from "@redstone-finance/multichain-kit";
+import {
+  PUBLISH_CHOICE,
+  REDSTONE_CAPS_ORACLE_TEMPLATE,
+} from "./adapters/CapsOracleCantonContractAdapter";
 import { WRITE_PRICES_CHOICE } from "./adapters/PricesCantonContractAdapter";
 import { IADAPTER_TEMPLATE_NAME } from "./adapters/PricesCantonReadOnlyAdapter";
 import { CantonClient } from "./client/CantonClient";
 import { combineIntoId } from "./utils/utils";
-
-export const PUBLISH_CHOICE = "RedStoneCapsOracle_Publish";
-export const REDSTONE_CAPS_ORACLE_TEMPLATE = "RedStoneCapsOracle:RedStoneCapsOracle";
 
 export class CantonTxLookup extends PerManifestTxLookup {
   constructor(

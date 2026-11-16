@@ -118,6 +118,14 @@ describe("ConstCantonTrafficMeter", () => {
     expect(sut.consumeAccumulated()).toBeFalsy();
   });
 
+  it("adds the cost the spending reports", async () => {
+    const sut = makeMeter();
+
+    await sut.measureSpending(() => Promise.resolve(SPENT_TRAFFIC));
+
+    expect(sut.consumeAccumulated()).toBe(SPENT_TRAFFIC);
+  });
+
   it("adds the consumed traffic back when Canton rejects the write", async () => {
     const sut = makeMeter();
 
