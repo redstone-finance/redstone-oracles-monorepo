@@ -162,5 +162,5 @@ is described in the TypeScript [`@redstone-finance/sdk`](../../../../packages/sd
 
 ## License
 
-[Apache-2.0](./LICENSE). The `redstone-common-v20` package this SDK depends on is
+[Apache-2.0](./LICENSE). The `redstone-common-v1` package this SDK depends on is
 licensed the same way.
