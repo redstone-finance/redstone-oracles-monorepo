@@ -744,7 +744,6 @@
       "source": [
         "binance-btc-reversed",
         "binance-usdt-reversed",
-        "bingx-usdt",
         "bitget-btc-reversed",
         "bitget-usdt-reversed",
         "bitso-usdt-reversed",
@@ -6003,7 +6002,6 @@
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
-        "okx-usd",
         "okx-usdt",
         "xt-usdt",
         "fluid-ethereum-xaut",

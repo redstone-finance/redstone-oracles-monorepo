@@ -135,7 +135,6 @@
     "XVS": {
       "source": [
         "binance-usdt",
-        "bingx-usdt",
         "bitrue-usdt",
         "gate-usdt",
         "lbank-usdt",
@@ -180,7 +179,6 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
         "xt-usdt"
@@ -272,7 +270,6 @@
     "FXS": {
       "source": [
         "binance-usdt",
-        "bingx-usdt",
         "bybit-usdt",
         "gate-usdt",
         "mexc-usdt"
