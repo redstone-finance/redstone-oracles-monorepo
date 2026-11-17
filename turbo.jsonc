@@ -67,28 +67,6 @@
       "cache": false,
       "dependsOn": ["build"]
     },
-    "pushDev": {
-      "cache": false,
-      "dependsOn": ["zip"],
-      "passThroughEnv": [
-        "AWS_PROFILE",
-        "AWS_ACCESS_KEY_ID",
-        "AWS_SECRET_ACCESS_KEY",
-        "AWS_SESSION_TOKEN",
-        "AWS_REGION"
-      ]
-    },
-    "pushProd": {
-      "cache": false,
-      "dependsOn": ["zip"],
-      "passThroughEnv": [
-        "AWS_PROFILE",
-        "AWS_ACCESS_KEY_ID",
-        "AWS_SECRET_ACCESS_KEY",
-        "AWS_SESSION_TOKEN",
-        "AWS_REGION"
-      ]
-    },
     "clean": {
       "cache": false
     }
