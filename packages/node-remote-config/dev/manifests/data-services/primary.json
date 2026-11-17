@@ -6148,6 +6148,39 @@
       ],
       "maxStaleCacheMilliseconds": 108000000
     },
+    "USDrf_FUNDAMENTAL/USD": {
+      "source": [
+        "realfi-usdrf"
+      ],
+      "denomination": "USD",
+      "rateFeed": true,
+      "types": [
+        "stale-cache-risk"
+      ],
+      "maxStaleCacheMilliseconds": 86400000
+    },
+    "sUSDrf_ETH_FUNDAMENTAL/USD": {
+      "source": [
+        "ethereum-evm-fetcher-realfi-susdrf"
+      ],
+      "denomination": "USD",
+      "rateFeed": true,
+      "types": [
+        "stale-cache-risk"
+      ],
+      "maxStaleCacheMilliseconds": 86400000
+    },
+    "sUSDrf_SEPOLIA_FUNDAMENTAL/USD": {
+      "source": [
+        "ethereum-sepolia-evm-fetcher-realfi-susdrf"
+      ],
+      "denomination": "USD",
+      "rateFeed": true,
+      "types": [
+        "stale-cache-risk"
+      ],
+      "maxStaleCacheMilliseconds": 86400000
+    },
     "thUSD_FUNDAMENTAL": {
       "source": [
         "accountable-theo"
