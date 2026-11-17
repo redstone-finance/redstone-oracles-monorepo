@@ -3512,8 +3512,7 @@
         "mexc-usdt",
         "okx-usdc",
         "okx-usdt",
-        "xt-usdt",
-        "bullish-usdt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4720,8 +4719,7 @@
         "okx-usdt",
         "xt-usdt",
         "meteora-solana-mainnet-wsol",
-        "orca-solana-mainnet-wsol",
-        "bullish-usd"
+        "orca-solana-mainnet-wsol"
       ],
       "denomination": "USD",
       "rateFeed": false
