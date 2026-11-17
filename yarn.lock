@@ -8646,6 +8646,7 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
+    "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     axios: "npm:^1.20"
     ccxt: "npm:^4.5.77"
