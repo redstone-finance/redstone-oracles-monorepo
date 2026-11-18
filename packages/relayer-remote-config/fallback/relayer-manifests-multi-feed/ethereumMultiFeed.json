@@ -611,6 +611,20 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
+    },
+    "USDrf_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0xfd73818CE104EdECb96fb902Bf5ef7Ec840AFD08",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "sUSDrf_ETH_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x740C49409bde0a1D74274Faf28abfe09Cf83Ba5A",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }

@@ -79,6 +79,20 @@
         "deviationPercentage": 0.000001,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
+    },
+    "USDrf_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x8B4736f5eaD8ed579Ecf65a13F9c1E8B44dEdF20",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "sUSDrf_SEPOLIA_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x4C89968338b75551243C99B452c84a01888282fD",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
