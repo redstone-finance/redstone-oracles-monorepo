@@ -233,7 +233,7 @@
       "source": [
         "fixed-value"
       ],
-      "fixedValue": 1900,
+      "fixedValue": 61.8,
       "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
