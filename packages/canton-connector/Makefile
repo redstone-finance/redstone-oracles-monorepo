@@ -12,7 +12,7 @@ export PATH := $(HOME)/.dpm/bin:$(PATH)
 
 TEST_DAR=.daml/dist/redstone-test$(VERSION).dar
 CAPS_DARS=deps/caps-core-0.1.0.dar \
-	deps/caps-verifier-redstone-0.1.1.dar \
+	deps/caps-verifier-redstone-0.1.2.dar \
 	deps/caps-capsule-archiver-0.1.0.dar \
 	deps/caps-round-archiver-0.1.0.dar \
 	caps-oracle/.daml/dist/caps-redstone-oracle-0.1.1.dar
