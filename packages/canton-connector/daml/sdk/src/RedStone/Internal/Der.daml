@@ -13,7 +13,10 @@ import RedStone.Internal.Flow
 
 -- Public
 
-signatureToDer fullSignature | isDerSignature fullSignature = Ok fullSignature
+signatureToDer fullSignature | Some (r, s) <- derScalars fullSignature =
+  isDerScalar r ??? RedStoneError Verification "Signature r value is negative, not minimal or not below N" r
+  ?> isDerScalar s ??? RedStoneError Verification "Signature s value is negative, not minimal or not below N" s
+  ?> Ok fullSignature
 signatureToDer fullSignature =
   let
     sigLen = L.length fullSignature
@@ -76,12 +79,22 @@ isValidR rBytes = rBytes < secp256k1_N
 
 isCanonicalS sBytes = sBytes <= secp256k1_N_div_2
 
-isDerSignature (0x30 :: seqLength :: 0x02 :: rLength :: rest) = case L.drop rLength rest of
-  0x02 :: sLength :: s -> seqLength == rLength + sLength + 4 && L.length s == sLength
-  _ -> False
-isDerSignature _ = False
+derScalars (0x30 :: seqLength :: 0x02 :: rLength :: rest) =
+  let (r, afterR) = L.splitAt rLength rest
+  in case afterR of
+    0x02 :: sLength :: s | seqLength == rLength + sLength + 4 && L.length s == sLength -> Some (r, s)
+    _ -> None
+derScalars _ = None
+
+isDerScalar scalar = case scalar of
+  0x00 :: magnitude@(first :: _) -> first >= 0x80 && isBelowN magnitude
+  first :: _ -> first < 0x80 && isBelowN scalar
+  [] -> False
+
+isBelowN magnitude =
+  L.length magnitude < sig_r_length || L.length magnitude == sig_r_length && magnitude < secp256k1_N
 
 isDerPublicKey pubKeyHex =
   C.isHex pubKeyHex
-    && T.isPrefixOf der_public_key_prefix pubKeyHex
+    && T.isPrefixOf (der_public_key_prefix <> "04") pubKeyHex
     && T.length pubKeyHex == T.length der_public_key_prefix + 2 * (public_key_length + 1)

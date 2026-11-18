@@ -41,6 +41,26 @@ signatureToDerErrorSuite = ErrorTestSuite with
         input = "fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141" <>
                 "4175202bafcbd5854274988d892680d3c3f0abcca4925bbbf7bf9428c28e3ebd"
         expectedSubstring = "Signature r value is not below N"
+    , ErrorTestCase with
+        name = "DER signature with a negative r rejected"
+        input = "303f021e801111111111111111111111111111111111111111111111111111111111" <>
+                "021d1111111111111111111111111111111111111111111111111111111111"
+        expectedSubstring = "Signature r value is negative, not minimal or not below N"
+    , ErrorTestCase with
+        name = "DER signature with a redundant leading zero in r rejected"
+        input = "303f021e001111111111111111111111111111111111111111111111111111111111" <>
+                "021d1111111111111111111111111111111111111111111111111111111111"
+        expectedSubstring = "Signature r value is negative, not minimal or not below N"
+    , ErrorTestCase with
+        name = "DER signature with r equal to N rejected"
+        input = "303f022100fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141" <>
+                "021a1111111111111111111111111111111111111111111111111111"
+        expectedSubstring = "Signature r value is negative, not minimal or not below N"
+    , ErrorTestCase with
+        name = "DER signature with a negative s rejected"
+        input = "303f021d1111111111111111111111111111111111111111111111111111111111" <>
+                "021e801111111111111111111111111111111111111111111111111111111111"
+        expectedSubstring = "Signature s value is negative, not minimal or not below N"
     ]
 
 publicKeyToDerErrorSuite = ErrorTestSuite with
@@ -55,5 +75,10 @@ publicKeyToDerErrorSuite = ErrorTestSuite with
         name = "65-byte key without 04 prefix rejected"
         input = "05" <>
           "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        expectedSubstring = "Expected 65 bytes"
+    , ErrorTestCase with
+        name = "DER key without 04 prefix rejected"
+        input = "3056301006072a8648ce3d020106052b8104000a034200" <> "05" <>
+          "9a0e6cada7938a0fc616578aff2b11337d90ec4e99e9fee95e57e9d8371562b31698225fb73c666ba586842b913e67ad289f374f7a46fc873342f805a8683d4e"
         expectedSubstring = "Expected 65 bytes"
     ]

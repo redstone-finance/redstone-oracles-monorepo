@@ -13,7 +13,7 @@ data-dependencies:
   - ../deps/canton-data-standard-datapoint-v1-0.2.0.dar
   - ../deps/caps-api-core-v1-0.1.0.dar
   - ../deps/caps-core-0.1.0.dar
-  - ../deps/caps-verifier-redstone-0.1.1.dar
+  - ../deps/caps-verifier-redstone-0.1.2.dar
   - ../caps-oracle/.daml/dist/caps-redstone-oracle-0.1.1.dar
 build-options:
   - --target=2.3
