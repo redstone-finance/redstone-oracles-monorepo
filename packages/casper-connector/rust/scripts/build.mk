@@ -29,11 +29,11 @@ build_contracts: build-$(PRICE_ADAPTER) build-$(PRICE_FEED) build-$(PRICE_RELAY_
     done
 
 build-%: prepare
-	@cd $(CONTRACTS_DIR)/$* && (AR=llvm-ar CC=clang cargo build --release --target wasm32-unknown-unknown)
+	@cd $(CONTRACTS_DIR)/$* && (AR=llvm-ar CC=clang CFLAGS_wasm32_unknown_unknown=-mcpu=mvp cargo build --release --target wasm32-unknown-unknown)
 	@wasm-strip target/wasm32-unknown-unknown/release/$*.wasm 2>/dev/null | true
 
 brun-%:
-	cd $(CONTRACTS_DIR)/$* && (AR=llvm-ar CC=clang cargo build --release --target wasm32-unknown-unknown $(RUN_FEATURES))
+	cd $(CONTRACTS_DIR)/$* && (AR=llvm-ar CC=clang CFLAGS_wasm32_unknown_unknown=-mcpu=mvp cargo build --release --target wasm32-unknown-unknown $(RUN_FEATURES))
 	wasm-strip target/wasm32-unknown-unknown/release/$*.wasm 2>/dev/null | true
 	mkdir -p $(CONTRACTS_DIR)/tests/wasm
 	cp target/wasm32-unknown-unknown/release/$*.wasm $(CONTRACTS_DIR)/tests/wasm
