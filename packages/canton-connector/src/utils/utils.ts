@@ -1,5 +1,6 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import {
+  ArchivedEvent,
   CreatedEvent,
   Event,
   JsActiveContract,
@@ -68,7 +69,11 @@ export async function unwrapResponse<T>(promise: Promise<T | JsCantonError>) {
   }
 }
 
-export function makeInterfaceFilterByParty(interfaceId: string, partyId: string) {
+export function makeInterfaceFilterByParty(
+  interfaceId: string,
+  partyId: string,
+  includeCreatedEventBlob = true
+) {
   const partyFilter = {
     cumulative: [
       {
@@ -77,7 +82,7 @@ export function makeInterfaceFilterByParty(interfaceId: string, partyId: string)
             value: {
               interfaceId,
               includeInterfaceView: true,
-              includeCreatedEventBlob: true,
+              includeCreatedEventBlob,
             },
           },
         },
@@ -126,13 +131,17 @@ export function isTransactionUpdate(update: Update): update is { Transaction: Tr
   return "Transaction" in update;
 }
 
-export function isCreatedEvent(event: Event) {
+export function isCreatedEvent(event: Event): event is { CreatedEvent: CreatedEvent } {
   return "CreatedEvent" in event;
+}
+
+export function isArchivedEvent(event: Event): event is { ArchivedEvent: ArchivedEvent } {
+  return "ArchivedEvent" in event;
 }
 
 export type DisclosedContractData = Required<Omit<ActiveContractData, "createArgument">>;
 
-export type TypedCreatedEvent<Argument> = Omit<CreatedEvent, "createArgument"> & {
+export type TypedCreatedEvent<Argument = unknown> = Omit<CreatedEvent, "createArgument"> & {
   createArgument: Argument;
 };
 
