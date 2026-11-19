@@ -38,9 +38,10 @@ export type JsAssignedEvent = {
      */
     submitter?: string;
     /**
-     * Each corresponding assigned and unassigned event has the same reassignment_counter. This strictly increases
-     * with each unassign command for the same contract. Creation of the contract corresponds to reassignment_counter
-     * equals zero.
+     * The reassignment counter associated with this assignment on the target synchronizer.
+     *
+     * Reassignment counters strictly increase with each unassign command for the same contract.
+     * Creation of the contract corresponds to reassignment_counter equal to zero.
      *
      * Required
      */

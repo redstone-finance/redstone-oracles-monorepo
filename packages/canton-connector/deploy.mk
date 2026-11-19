@@ -119,70 +119,58 @@ deploy-core: check-party-suffix get-token
 	./scripts/canton-cmd.sh
 
 deploy-core-client: check-party-suffix get-token
-	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
-	  -H "Content-Type: application/json" \
-	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
-	  -d '{ \
-		"commands": [{ \
-			"CreateCommand": { \
-				"templateId": "$(CORE_CLIENT_TEMPLATE_ID)", \
-				"createArguments": { \
-					"owner": "$(PARTY_OWNER)", \
-					"viewers": ["Client::$(CANTON_PARTY_SUFFIX)"]}}}], \
-		"actAs": ["$(PARTY_OWNER)"], \
-		"commandId": "deploy-core-client-$(shell date +%s)"}' | jq '.'
+	@TEMPLATE_ID="$(CORE_CLIENT_TEMPLATE_ID)" \
+	CREATE_ARGS='{ \
+		"owner": "$(PARTY_OWNER)", \
+		"viewers": ["Client::$(CANTON_PARTY_SUFFIX)"]}' \
+	ACT_AS='["$(PARTY_OWNER)"]' \
+	CMD_NAME=deploy-core-client \
+	CANTON_API="$(CANTON_API)" \
+	TOKEN="$(TOKEN)" \
+	./scripts/canton-cmd.sh
 
 deploy-factory: check-party-suffix get-token
-	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
-	  -H "Content-Type: application/json" \
-	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
-	  -d '{ \
-		"commands": [{ \
-			"CreateCommand": { \
-				"templateId": "$(FACTORY_TEMPLATE_ID)", \
-				"createArguments": { \
-					"factoryId": "$(FACTORY_NAME)", \
-					"owner": "$(PARTY_OWNER)", \
-					"creators": ["$(PARTY_UPDATER)"]}}}], \
-		"actAs": ["$(PARTY_OWNER)"], \
-		"commandId": "deploy-factory-$(shell date +%s)"}' | jq '.'
+	@TEMPLATE_ID="$(FACTORY_TEMPLATE_ID)" \
+	CREATE_ARGS='{ \
+		"factoryId": "$(FACTORY_NAME)", \
+		"owner": "$(PARTY_OWNER)", \
+		"creators": ["$(PARTY_UPDATER)"]}' \
+	ACT_AS='["$(PARTY_OWNER)"]' \
+	CMD_NAME=deploy-factory \
+	CANTON_API="$(CANTON_API)" \
+	TOKEN="$(TOKEN)" \
+	./scripts/canton-cmd.sh
 
 deploy-reward-factory: check-party-suffix get-token
-	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
-	  -H "Content-Type: application/json" \
-	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
-	  -d '{ \
-		"commands": [{ \
-			"CreateCommand": { \
-				"templateId": "$(REWARD_FACTORY_TEMPLATE_ID)", \
-				"createArguments": { \
-					"factoryId": "$(REWARD_FACTORY_NAME)", \
-					"owner": "$(PARTY_OWNER)", \
-					"beneficiary": "$(PARTY_BENEFICIARY)", \
-					"featuredCid": "$(FEATURED_CID)", \
-					"creators": ["$(PARTY_UPDATER)","$(PARTY_VIEWER)"]}}}], \
-		"actAs": ["$(PARTY_OWNER)", "$(PARTY_BENEFICIARY)"], \
-		"commandId": "deploy-reward-factory-$(shell date +%s)"}' | jq '.'
+	@TEMPLATE_ID="$(REWARD_FACTORY_TEMPLATE_ID)" \
+	CREATE_ARGS='{ \
+		"factoryId": "$(REWARD_FACTORY_NAME)", \
+		"owner": "$(PARTY_OWNER)", \
+		"beneficiary": "$(PARTY_BENEFICIARY)", \
+		"featuredCid": "$(FEATURED_CID)", \
+		"creators": ["$(PARTY_UPDATER)","$(PARTY_VIEWER)"]}' \
+	ACT_AS='["$(PARTY_OWNER)","$(PARTY_BENEFICIARY)"]' \
+	CMD_NAME=deploy-reward-factory \
+	CANTON_API="$(CANTON_API)" \
+	TOKEN="$(TOKEN)" \
+	./scripts/canton-cmd.sh
 
 deploy-adapter: check-party-suffix get-token
-	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
-	  -H "Content-Type: application/json" \
-	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
-	  -d '{ \
-		"commands": [{ \
-			"CreateCommand": { \
-				"templateId": "$(ADAPTER_TEMPLATE_ID)", \
-				"createArguments": { \
-					"adapterId": "$(ADAPTER_NAME)", \
-					"owner": "$(PARTY_OWNER)", \
-					"updaters": ["$(PARTY_UPDATER)"], \
-					"viewers": ["$(PARTY_VIEWER)"], \
-					"pillFactory": "$(FACTORY_ID)", \
-					"rewardFactory": "$(REWARD_FACTORY_ID)", \
-					"rewardState": null, \
-					"feedData": []}}}], \
-		"actAs": ["$(PARTY_OWNER)"], \
-		"commandId": "deploy-adapter-$(shell date +%s)"}' | jq '.'
+	@TEMPLATE_ID="$(ADAPTER_TEMPLATE_ID)" \
+	CREATE_ARGS='{ \
+		"adapterId": "$(ADAPTER_NAME)", \
+		"owner": "$(PARTY_OWNER)", \
+		"updaters": ["$(PARTY_UPDATER)"], \
+		"viewers": ["$(PARTY_VIEWER)"], \
+		"pillFactory": "$(FACTORY_ID)", \
+		"rewardFactory": "$(REWARD_FACTORY_ID)", \
+		"rewardState": null, \
+		"feedData": []}' \
+	ACT_AS='["$(PARTY_OWNER)"]' \
+	CMD_NAME=deploy-adapter \
+	CANTON_API="$(CANTON_API)" \
+	TOKEN="$(TOKEN)" \
+	./scripts/canton-cmd.sh
 
 get-contract-by-interface: get-token
 	@LEDGER_END=$$(curl -s -X GET \

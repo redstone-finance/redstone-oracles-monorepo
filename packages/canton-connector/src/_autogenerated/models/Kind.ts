@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { CanActAs } from './CanActAs';
+import type { CanActAsAnyParty } from './CanActAsAnyParty';
 import type { CanExecuteAs } from './CanExecuteAs';
 import type { CanExecuteAsAnyParty } from './CanExecuteAsAnyParty';
 import type { CanReadAs } from './CanReadAs';
@@ -15,6 +16,8 @@ import type { ParticipantAdmin } from './ParticipantAdmin';
  */
 export type Kind = ({
     CanActAs: CanActAs;
+} | {
+    CanActAsAnyParty: CanActAsAnyParty;
 } | {
     CanExecuteAs: CanExecuteAs;
 } | {

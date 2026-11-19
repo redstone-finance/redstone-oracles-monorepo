@@ -21,8 +21,8 @@ export type GenerateExternalPartyTopologyResponse = {
     /**
      * The serialized topology transactions which need to be signed and submitted as part of the allocate party process
      * Note that the serialization includes the versioning information. Therefore, the transaction here is serialized
-     * as an `UntypedVersionedMessage` which in turn contains the serialized `TopologyTransaction` in the version
-     * supported by the synchronizer.
+     * as an `UntypedVersionedMessage` which in turn contains the serialized `TopologyTransaction` for the requested
+     * protocol version, or for the synchronizer's protocol version if none is requested.
      *
      * Required: must be non-empty
      */

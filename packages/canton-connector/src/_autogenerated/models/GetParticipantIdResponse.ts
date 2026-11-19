@@ -5,7 +5,7 @@
 export type GetParticipantIdResponse = {
     /**
      * Identifier of the participant, which SHOULD be globally unique.
-     * Must be a valid LedgerString (as describe in ``value.proto``).
+     * Must be a valid ParticipantIdStrings (as describe in ``value.proto``).
      *
      * Required
      */

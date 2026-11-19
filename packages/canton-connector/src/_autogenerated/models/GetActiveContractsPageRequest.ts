@@ -36,7 +36,7 @@ export type GetActiveContractsPageRequest = {
      * The page token only works if subsequent requests:
      *
      * - are executed on the same participant,
-     * - use the same active_at_offset and event_format,
+     * - use the same active_at_offset, event_format and include_incomplete_reassignments,
      * - and the participant's store was not pruned to after the active_at_offset.
      *
      * If not specified, the first page of the active contracts snapshot will be returned.
@@ -44,5 +44,13 @@ export type GetActiveContractsPageRequest = {
      * Optional: can be empty
      */
     pageToken?: string;
+    /**
+     * If this flag is true, the IncompleteAssigned and IncompleteUnassigned events will be included in the stream
+     * based on the specified event_format.
+     * If this flag is set to false, Incomplete Reassignments will be omitted.
+     *
+     * Optional
+     */
+    includeIncompleteReassignments?: boolean;
 };
 

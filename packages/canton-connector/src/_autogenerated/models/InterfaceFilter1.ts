@@ -10,8 +10,8 @@ export type InterfaceFilter1 = {
      * The interface that a matching contract must implement.
      * The ``interface_id`` needs to be valid: corresponding interface should be defined in
      * one of the available packages at the time of the query.
-     * Both package-name and package-id reference formats for the identifier are supported.
-     * Note: The package-id reference identifier format is deprecated. We plan to end support for this format in version 3.4.
+     * Only package-name reference format for the identifier is supported.
+     * Note: The package-id reference identifier format was removed in version 3.5.
      *
      * Required
      */
