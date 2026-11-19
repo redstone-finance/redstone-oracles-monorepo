@@ -444,7 +444,8 @@
         "curve-ethereum-usdc",
         "uniswap-v3-ethereum-usdc-500",
         "uniswap-v4-ethereum-eth-3000",
-        "uniswap-v4-ethereum-usdc-500"
+        "uniswap-v4-ethereum-usdc-500",
+        "aero-cl-ethereum-usdc"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -794,7 +795,9 @@
         "uniswap-v4-ethereum-usdc-400",
         "uniswap-v4-ethereum-usdc-500",
         "kraken-eur",
-        "okx-usdc"
+        "okx-usdc",
+        "aero-cl-base-usdc",
+        "aero-cl-base-weth"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1781,7 +1784,9 @@
         "curve-ethereum-weth",
         "pancake-swap-base-weth-100",
         "uniswap-v3-base-weth-500",
-        "uniswap-v3-ethereum-weth-500"
+        "uniswap-v3-ethereum-weth-500",
+        "aero-cl-base-weth",
+        "aero-cl-base-cbbtc"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1839,7 +1844,8 @@
         "curve-ethereum-frxusd",
         "curve-ethereum-gho",
         "curve-ethereum-usdc",
-        "fluid-ethereum-usdc"
+        "fluid-ethereum-usdc",
+        "aero-cl-ethereum-usdc"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
