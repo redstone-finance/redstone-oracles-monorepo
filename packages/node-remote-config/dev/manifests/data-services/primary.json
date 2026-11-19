@@ -1197,7 +1197,8 @@
         "curve-ethereum-steth",
         "curve-ethereum-weth",
         "fraxswap-fraxtal-frxusd",
-        "uniswap-v3-ethereum-frax-10000"
+        "uniswap-v3-ethereum-frax-10000",
+        "curve-fraxtal-frxusd"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1208,7 +1209,8 @@
         "aerodrome-cl-base-usdc",
         "curve-ethereum-crvfrax",
         "curve-ethereum-rsr",
-        "curve-ethereum-usdc-2"
+        "curve-ethereum-usdc-2",
+        "curve-ethereum-crvusd"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -1915,7 +1917,8 @@
         "fluid-ethereum-wbtc",
         "uniswap-v3-ethereum-wbtc-100",
         "uniswap-v3-ethereum-wbtc-500",
-        "uniswap-v4-ethereum-cbbtc-200"
+        "uniswap-v4-ethereum-cbbtc-200",
+        "uniswap-v3-ethereum-cbbtc-100"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3045,7 +3048,9 @@
         "curve-fraxtal-susde",
         "curve-fraxtal-usdt",
         "fraxswap-fraxtal-wfrax",
-        "uniswap-v4-ethereum-usde-100"
+        "uniswap-v4-ethereum-usde-100",
+        "curve-ethereum-usdt",
+        "curve-ethereum-susde"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
