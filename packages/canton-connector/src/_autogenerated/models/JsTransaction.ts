@@ -81,6 +81,7 @@ export type JsTransaction = {
      */
     recordTime: string;
     /**
+     * Deprecated: please use ``transaction_hash`` which has the same value.
      * For transaction externally signed, contains the external transaction hash
      * signed by the external party. Can be used to correlate an external submission with a committed transaction.
      *
@@ -100,5 +101,21 @@ export type JsTransaction = {
      * Optional
      */
     paidTrafficCost?: number;
+    /**
+     * The transaction hash signed by the external party for prepared transactions
+     * that were submitted using `InteractiveSubmissionService.ExecuteSubmission`
+     * or one of its variants.
+     *
+     * Use this to correlate prepared transactions with their execution result
+     * on the *same participant* that executed the transaction.
+     *
+     * Not available for:
+     *
+     * - transactions executed on Canton versions prior to 3.6
+     * - transactions of internal parties submitted using `CommandSubmissionService.Submit` and its variants
+     *
+     * Optional: can be empty
+     */
+    transactionHash?: string;
 };
 

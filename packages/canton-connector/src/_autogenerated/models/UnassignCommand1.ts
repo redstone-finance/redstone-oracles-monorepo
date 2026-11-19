@@ -27,5 +27,18 @@ export type UnassignCommand1 = {
      * Required
      */
     target: string;
+    /**
+     * The package id used to validate the contract on the source synchronizer.
+     *
+     * Optional
+     */
+    overrideSourceValidationPackageId?: string;
+    /**
+     * The package id used to validate the contract on the target synchronizer. This
+     * package id will also become the representative package id used in the created event.
+     *
+     * Optional
+     */
+    overrideTargetValidationPackageId?: string;
 };
 

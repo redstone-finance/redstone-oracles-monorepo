@@ -8,6 +8,7 @@ import type { AllocatePartyRequest } from '../models/AllocatePartyRequest';
 import type { AllocatePartyResponse } from '../models/AllocatePartyResponse';
 import type { CompletionStreamRequest } from '../models/CompletionStreamRequest';
 import type { CompletionStreamResponse } from '../models/CompletionStreamResponse';
+import type { ConvertRecordTimeToOffsetResponse } from '../models/ConvertRecordTimeToOffsetResponse';
 import type { CreateIdentityProviderConfigRequest } from '../models/CreateIdentityProviderConfigRequest';
 import type { CreateIdentityProviderConfigResponse } from '../models/CreateIdentityProviderConfigResponse';
 import type { CreateUserRequest } from '../models/CreateUserRequest';
@@ -19,6 +20,8 @@ import type { GenerateExternalPartyTopologyRequest } from '../models/GenerateExt
 import type { GenerateExternalPartyTopologyResponse } from '../models/GenerateExternalPartyTopologyResponse';
 import type { GetActiveContractsPageRequest } from '../models/GetActiveContractsPageRequest';
 import type { GetActiveContractsRequest } from '../models/GetActiveContractsRequest';
+import type { GetCompletionByHashRequest } from '../models/GetCompletionByHashRequest';
+import type { GetCompletionByHashResponse } from '../models/GetCompletionByHashResponse';
 import type { GetCompletionsRequest } from '../models/GetCompletionsRequest';
 import type { GetConnectedSynchronizersResponse } from '../models/GetConnectedSynchronizersResponse';
 import type { GetContractRequest } from '../models/GetContractRequest';
@@ -33,9 +36,7 @@ import type { GetParticipantIdResponse } from '../models/GetParticipantIdRespons
 import type { GetPartiesResponse } from '../models/GetPartiesResponse';
 import type { GetPreferredPackagesRequest } from '../models/GetPreferredPackagesRequest';
 import type { GetPreferredPackagesResponse } from '../models/GetPreferredPackagesResponse';
-import type { GetPreferredPackageVersionResponse } from '../models/GetPreferredPackageVersionResponse';
-import type { GetTransactionByIdRequest } from '../models/GetTransactionByIdRequest';
-import type { GetTransactionByOffsetRequest } from '../models/GetTransactionByOffsetRequest';
+import type { GetUpdateByHashRequest } from '../models/GetUpdateByHashRequest';
 import type { GetUpdateByIdRequest } from '../models/GetUpdateByIdRequest';
 import type { GetUpdateByOffsetRequest } from '../models/GetUpdateByOffsetRequest';
 import type { GetUpdatesPageRequest } from '../models/GetUpdatesPageRequest';
@@ -52,18 +53,14 @@ import type { JsExecuteSubmissionRequest } from '../models/JsExecuteSubmissionRe
 import type { JsGetActiveContractsPageResponse } from '../models/JsGetActiveContractsPageResponse';
 import type { JsGetActiveContractsResponse } from '../models/JsGetActiveContractsResponse';
 import type { JsGetEventsByContractIdResponse } from '../models/JsGetEventsByContractIdResponse';
-import type { JsGetTransactionResponse } from '../models/JsGetTransactionResponse';
-import type { JsGetTransactionTreeResponse } from '../models/JsGetTransactionTreeResponse';
 import type { JsGetUpdateResponse } from '../models/JsGetUpdateResponse';
 import type { JsGetUpdatesPageResponse } from '../models/JsGetUpdatesPageResponse';
 import type { JsGetUpdatesResponse } from '../models/JsGetUpdatesResponse';
-import type { JsGetUpdateTreesResponse } from '../models/JsGetUpdateTreesResponse';
 import type { JsPrepareSubmissionRequest } from '../models/JsPrepareSubmissionRequest';
 import type { JsPrepareSubmissionResponse } from '../models/JsPrepareSubmissionResponse';
 import type { JsSubmitAndWaitForReassignmentResponse } from '../models/JsSubmitAndWaitForReassignmentResponse';
 import type { JsSubmitAndWaitForTransactionRequest } from '../models/JsSubmitAndWaitForTransactionRequest';
 import type { JsSubmitAndWaitForTransactionResponse } from '../models/JsSubmitAndWaitForTransactionResponse';
-import type { JsSubmitAndWaitForTransactionTreeResponse } from '../models/JsSubmitAndWaitForTransactionTreeResponse';
 import type { ListIdentityProviderConfigsResponse } from '../models/ListIdentityProviderConfigsResponse';
 import type { ListKnownPartiesResponse } from '../models/ListKnownPartiesResponse';
 import type { ListPackagesResponse } from '../models/ListPackagesResponse';
@@ -149,27 +146,6 @@ export class DefaultService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/v2/commands/submit-and-wait-for-reassignment',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Invalid value, Invalid value for: body`,
-            },
-        });
-    }
-    /**
-     * @deprecated
-     * Submit a batch of commands and wait for the transaction trees response. Provided for backwards compatibility, it will be removed in the Canton version 3.5.0, use submit-and-wait-for-transaction instead.
-     * @param requestBody
-     * @returns JsSubmitAndWaitForTransactionTreeResponse
-     * @returns JsCantonError
-     * @throws ApiError
-     */
-    public static postV2CommandsSubmitAndWaitForTransactionTree(
-        requestBody: JsCommands,
-    ): CancelablePromise<JsSubmitAndWaitForTransactionTreeResponse | JsCantonError> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/v2/commands/submit-and-wait-for-transaction-tree',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -286,6 +262,33 @@ export class DefaultService {
             mediaType: 'application/json',
             errors: {
                 400: `Invalid value, Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms`,
+            },
+        });
+    }
+    /**
+     * Look up a completion by its transaction hash.
+     * This is only available for completions received after upgrading to Canton version 3.5.
+     * A COMPLETION_NOT_FOUND error will be raised if either of the following is true:
+     *
+     * - there is no completion with this transaction hash,
+     * - the completion is not visible to the user,
+     * - the completion was populated before upgrading to Canton version 3.5,
+     * - respective completions are all pruned.
+     * @param requestBody
+     * @returns GetCompletionByHashResponse
+     * @returns JsCantonError
+     * @throws ApiError
+     */
+    public static postV2CommandsCompletionByHash(
+        requestBody: GetCompletionByHashRequest,
+    ): CancelablePromise<GetCompletionByHashResponse | JsCantonError> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/v2/commands/completion-by-hash',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
@@ -476,50 +479,6 @@ export class DefaultService {
         });
     }
     /**
-     * @deprecated
-     * Lists which participant node vetted what packages on which synchronizer.
-     * This endpoint (GET /package-vetting) is deprecated and will be removed in a future release. Please use POST /package-vetting/list instead.
-     * @param requestBody
-     * @returns ListVettedPackagesResponse
-     * @returns JsCantonError
-     * @throws ApiError
-     */
-    public static getV2PackageVetting(
-        requestBody: ListVettedPackagesRequest,
-    ): CancelablePromise<ListVettedPackagesResponse | JsCantonError> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/v2/package-vetting',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Invalid value, Invalid value for: body`,
-            },
-        });
-    }
-    /**
-     * @deprecated
-     * Update the vetted packages of this participant
-     * This endpoint (POST /package-vetting) is deprecated and will be removed in a future release. Please use POST /package-vetting/update instead.
-     * @param requestBody
-     * @returns UpdateVettedPackagesResponse
-     * @returns JsCantonError
-     * @throws ApiError
-     */
-    public static postV2PackageVetting(
-        requestBody: UpdateVettedPackagesRequest,
-    ): CancelablePromise<UpdateVettedPackagesResponse | JsCantonError> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/v2/package-vetting',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Invalid value, Invalid value for: body`,
-            },
-        });
-    }
-    /**
      * Lists which participant node vetted what packages on which synchronizer.
      * Can be called by any authenticated user.
      * @param requestBody
@@ -629,6 +588,10 @@ export class DefaultService {
         });
     }
     /**
+     * Alpha 3.3: Endpoint to allocate a new external party on a synchronizer
+     *
+     * Expected to be stable in 3.5
+     *
      * The external party must be hosted (at least) on this node with either confirmation or observation permissions
      * It can optionally be hosted on other nodes (then called a multi-hosted party).
      * If hosted on additional nodes, explicit authorization of the hosting relationship must be performed on those nodes
@@ -731,6 +694,10 @@ export class DefaultService {
         });
     }
     /**
+     * Alpha 3.3: Convenience endpoint to generate topology transactions for external signing
+     *
+     * Expected to be stable in 3.5
+     *
      * You may use this endpoint to generate the common external topology transactions
      * which can be signed externally and uploaded as part of the allocate party process
      *
@@ -767,6 +734,10 @@ export class DefaultService {
      * the client SHOULD begin streaming updates from the update service,
      * starting at the GetActiveContractsRequest.active_at_offset specified in this request.
      * Clients SHOULD NOT assume that the set of active contracts they receive reflects the state at the ledger end.
+     * If the given offset is different than the ledger end, and there are (un)assignments in-flight at the given offset,
+     * the snapshot may fail with "FAILED_PRECONDITION/PARTICIPANT_PRUNED_DATA_ACCESSED".
+     * Note that it is ok to request acs snapshots for party migration with offsets other than ledger end, because party
+     * migration is not concerned with incomplete (un)assignments.
      *
      * Notice: This endpoint should be used for small results set.
      * When number of results exceeded node configuration limit (`http-list-max-elements-limit`)
@@ -800,11 +771,10 @@ export class DefaultService {
         });
     }
     /**
-     * Returns a page of the snapshot of the active contracts and incomplete (un)assignments at a ledger offset.
-     * Once all pages are fetched by repeated calls to ``GetActiveContractsPage``,
-     * the client SHOULD begin retrieving updates from the update service,
-     * starting at the ``GetActiveContractsPageResponse``.``active_at_offset`` specified in this request.
-     * Clients SHOULD NOT assume that the set of active contracts they receive reflects the state at the ledger end.
+     * @deprecated
+     * Deprecated
+     *
+     * Use POST version of this endpoint
      * @param requestBody
      * @returns JsGetActiveContractsPageResponse
      * @returns JsCantonError
@@ -815,6 +785,30 @@ export class DefaultService {
     ): CancelablePromise<JsGetActiveContractsPageResponse | JsCantonError> {
         return __request(OpenAPI, {
             method: 'GET',
+            url: '/v2/state/active-contracts-page',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Invalid value, Invalid value for: body`,
+            },
+        });
+    }
+    /**
+     * Returns a page of the snapshot of the active contracts and incomplete (un)assignments at a ledger offset.
+     * Once all pages are fetched by repeated calls to ``GetActiveContractsPage``,
+     * the client SHOULD begin retrieving updates from the update service,
+     * starting at the ``GetActiveContractsPageResponse``.``active_at_offset`` specified in this request.
+     * Clients SHOULD NOT assume that the set of active contracts they receive reflects the state at the ledger end.
+     * @param requestBody
+     * @returns JsGetActiveContractsPageResponse
+     * @returns JsCantonError
+     * @throws ApiError
+     */
+    public static postV2StateActiveContractsPage(
+        requestBody: GetActiveContractsPageRequest,
+    ): CancelablePromise<JsGetActiveContractsPageResponse | JsCantonError> {
+        return __request(OpenAPI, {
+            method: 'POST',
             url: '/v2/state/active-contracts-page',
             body: requestBody,
             mediaType: 'application/json',
@@ -853,16 +847,22 @@ export class DefaultService {
     /**
      * Get the current ledger end.
      * Subscriptions started with the returned offset will serve events after this RPC was called.
+     * @param synchronizerId
      * @returns GetLedgerEndResponse
      * @returns JsCantonError
      * @throws ApiError
      */
-    public static getV2StateLedgerEnd(): CancelablePromise<GetLedgerEndResponse | JsCantonError> {
+    public static getV2StateLedgerEnd(
+        synchronizerId?: Array<string>,
+    ): CancelablePromise<GetLedgerEndResponse | JsCantonError> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v2/state/ledger-end',
+            query: {
+                'synchronizer_id': synchronizerId,
+            },
             errors: {
-                400: `Invalid value`,
+                400: `Invalid value, Invalid value for: query parameter synchronizer_id`,
             },
         });
     }
@@ -878,6 +878,36 @@ export class DefaultService {
             url: '/v2/state/latest-pruned-offsets',
             errors: {
                 400: `Invalid value`,
+            },
+        });
+    }
+    /**
+     * Translate syncrhonizer record time to an offset
+     * If the requested record time is earlier that the earliest record time known for the given synchronizer
+     * (either because is is before the connection to the synchronizer was established or because it was already pruned),
+     * the request fails with RECORD_TIME_NOT_FOUND error.
+     * If the requested record time is after the latest record time observed for this synchronizer, the request fails with
+     * RECORD_TIME_NOT_OBSERVED_YET error code. This may be transitional condition until participant node catches up with most recent synchronizer updates.
+     * In such case the caller may retry this request.
+     * @param recordTime
+     * @param synchronizerId
+     * @returns ConvertRecordTimeToOffsetResponse
+     * @returns JsCantonError
+     * @throws ApiError
+     */
+    public static getV2StateConvertRecordTimeToOffset(
+        recordTime: string,
+        synchronizerId?: string,
+    ): CancelablePromise<ConvertRecordTimeToOffsetResponse | JsCantonError> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/v2/state/convert-record-time-to-offset',
+            query: {
+                'record-time': recordTime,
+                'synchronizer-id': synchronizerId,
+            },
+            errors: {
+                400: `Invalid value, Invalid value for: query parameter record-time, Invalid value for: query parameter synchronizer-id`,
             },
         });
     }
@@ -920,122 +950,6 @@ export class DefaultService {
         });
     }
     /**
-     * @deprecated
-     * Query flat transactions update list (blocking call). Provided for backwards compatibility, it will be removed in the Canton version 3.5.0, use v2/updates instead.
-     * Notice: This endpoint should be used for small results set.
-     * When number of results exceeded node configuration limit (`http-list-max-elements-limit`)
-     * there will be an error (`413 Content Too Large`) returned.
-     * Increasing this limit may lead to performance issues and high memory consumption.
-     * Consider using websockets (asyncapi) for better efficiency with larger results.
-     * @param requestBody
-     * @param limit maximum number of elements to return, this param is ignored if is bigger than server setting
-     * @param streamIdleTimeoutMs timeout to complete and send result if no new elements are received (for open ended streams)
-     * @returns JsGetUpdatesResponse
-     * @returns JsCantonError
-     * @throws ApiError
-     */
-    public static postV2UpdatesFlats(
-        requestBody: GetUpdatesRequest,
-        limit?: number,
-        streamIdleTimeoutMs?: number,
-    ): CancelablePromise<Array<JsGetUpdatesResponse> | JsCantonError> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/v2/updates/flats',
-            query: {
-                'limit': limit,
-                'stream_idle_timeout_ms': streamIdleTimeoutMs,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Invalid value, Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms`,
-            },
-        });
-    }
-    /**
-     * @deprecated
-     * Query update transactions tree list (blocking call). Provided for backwards compatibility, it will be removed in the Canton version 3.5.0, use v2/updates instead.
-     * Notice: This endpoint should be used for small results set.
-     * When number of results exceeded node configuration limit (`http-list-max-elements-limit`)
-     * there will be an error (`413 Content Too Large`) returned.
-     * Increasing this limit may lead to performance issues and high memory consumption.
-     * Consider using websockets (asyncapi) for better efficiency with larger results.
-     * @param requestBody
-     * @param limit maximum number of elements to return, this param is ignored if is bigger than server setting
-     * @param streamIdleTimeoutMs timeout to complete and send result if no new elements are received (for open ended streams)
-     * @returns JsGetUpdateTreesResponse
-     * @returns JsCantonError
-     * @throws ApiError
-     */
-    public static postV2UpdatesTrees(
-        requestBody: GetUpdatesRequest,
-        limit?: number,
-        streamIdleTimeoutMs?: number,
-    ): CancelablePromise<Array<JsGetUpdateTreesResponse> | JsCantonError> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/v2/updates/trees',
-            query: {
-                'limit': limit,
-                'stream_idle_timeout_ms': streamIdleTimeoutMs,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Invalid value, Invalid value for: body, Invalid value for: query parameter limit, Invalid value for: query parameter stream_idle_timeout_ms`,
-            },
-        });
-    }
-    /**
-     * @deprecated
-     * Get transaction tree by offset. Provided for backwards compatibility, it will be removed in the Canton version 3.5.0, use v2/updates/update-by-offset instead.
-     * @param offset
-     * @param parties
-     * @returns JsGetTransactionTreeResponse
-     * @returns JsCantonError
-     * @throws ApiError
-     */
-    public static getV2UpdatesTransactionTreeByOffsetOffset(
-        offset: number,
-        parties?: Array<string>,
-    ): CancelablePromise<JsGetTransactionTreeResponse | JsCantonError> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/v2/updates/transaction-tree-by-offset/{offset}',
-            path: {
-                'offset': offset,
-            },
-            query: {
-                'parties': parties,
-            },
-            errors: {
-                400: `Invalid value, Invalid value for: path parameter offset, Invalid value for: query parameter parties`,
-            },
-        });
-    }
-    /**
-     * @deprecated
-     * Get transaction by offset. Provided for backwards compatibility, it will be removed in the Canton version 3.5.0, use v2/updates/update-by-offset instead.
-     * @param requestBody
-     * @returns JsGetTransactionResponse
-     * @returns JsCantonError
-     * @throws ApiError
-     */
-    public static postV2UpdatesTransactionByOffset(
-        requestBody: GetTransactionByOffsetRequest,
-    ): CancelablePromise<JsGetTransactionResponse | JsCantonError> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/v2/updates/transaction-by-offset',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Invalid value, Invalid value for: body`,
-            },
-        });
-    }
-    /**
      * Lookup an update by its offset.
      * If there is no update with this offset, or all the events are filtered, an UPDATE_NOT_FOUND error will be raised.
      * @param requestBody
@@ -1049,27 +963,6 @@ export class DefaultService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/v2/updates/update-by-offset',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Invalid value, Invalid value for: body`,
-            },
-        });
-    }
-    /**
-     * @deprecated
-     * Get transaction by id. Provided for backwards compatibility, it will be removed in the Canton version 3.5.0, use v2/updates/update-by-id instead.
-     * @param requestBody
-     * @returns JsGetTransactionResponse
-     * @returns JsCantonError
-     * @throws ApiError
-     */
-    public static postV2UpdatesTransactionById(
-        requestBody: GetTransactionByIdRequest,
-    ): CancelablePromise<JsGetTransactionResponse | JsCantonError> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/v2/updates/transaction-by-id',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -1099,29 +992,25 @@ export class DefaultService {
         });
     }
     /**
-     * @deprecated
-     * Get transaction tree by id. Provided for backwards compatibility, it will be removed in the Canton version 3.5.0, use v2/updates/update-by-id instead.
-     * @param updateId
-     * @param parties
-     * @returns JsGetTransactionTreeResponse
+     * Look up an update by its transaction hash.
+     * This is only available for updates received after upgrading to Canton version 3.6.
+     * If there is no update with this transaction hash, or all the events are filtered,
+     * or the update was populated before upgrading to Canton version 3.6, an UPDATE_NOT_FOUND error will be raised.
+     * @param requestBody
+     * @returns JsGetUpdateResponse
      * @returns JsCantonError
      * @throws ApiError
      */
-    public static getV2UpdatesTransactionTreeByIdUpdateId(
-        updateId: string,
-        parties?: Array<string>,
-    ): CancelablePromise<JsGetTransactionTreeResponse | JsCantonError> {
+    public static postV2UpdatesUpdateByHash(
+        requestBody: GetUpdateByHashRequest,
+    ): CancelablePromise<JsGetUpdateResponse | JsCantonError> {
         return __request(OpenAPI, {
-            method: 'GET',
-            url: '/v2/updates/transaction-tree-by-id/{update-id}',
-            path: {
-                'update-id': updateId,
-            },
-            query: {
-                'parties': parties,
-            },
+            method: 'POST',
+            url: '/v2/updates/update-by-hash',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
-                400: `Invalid value, Invalid value for: query parameter parties`,
+                400: `Invalid value, Invalid value for: body`,
             },
         });
     }
@@ -1572,47 +1461,6 @@ export class DefaultService {
         });
     }
     /**
-     * A preferred package is the highest-versioned package for a provided package-name
-     * that is vetted by all the participants hosting the provided parties.
-     *
-     * Ledger API clients should use this endpoint for constructing command submissions
-     * that are compatible with the provided preferred package, by making informed decisions on:
-     * - which are the compatible packages that can be used to create contracts
-     * - which contract or exercise choice argument version can be used in the command
-     * - which choices can be executed on a template or interface of a contract
-     *
-     * Can be accessed by any Ledger API client with a valid token when Ledger API authorization is enabled.
-     *
-     * Provided for backwards compatibility, it will be removed in the Canton version 3.4.0
-     * @param packageName
-     * @param parties
-     * @param vettingValidAt
-     * @param synchronizerId
-     * @returns GetPreferredPackageVersionResponse
-     * @returns JsCantonError
-     * @throws ApiError
-     */
-    public static getV2InteractiveSubmissionPreferredPackageVersion(
-        packageName: string,
-        parties?: Array<string>,
-        vettingValidAt?: string,
-        synchronizerId?: string,
-    ): CancelablePromise<GetPreferredPackageVersionResponse | JsCantonError> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/v2/interactive-submission/preferred-package-version',
-            query: {
-                'parties': parties,
-                'package-name': packageName,
-                'vetting_valid_at': vettingValidAt,
-                'synchronizer-id': synchronizerId,
-            },
-            errors: {
-                400: `Invalid value, Invalid value for: query parameter parties, Invalid value for: query parameter package-name, Invalid value for: query parameter vetting_valid_at, Invalid value for: query parameter synchronizer-id`,
-            },
-        });
-    }
-    /**
      * Compute the preferred packages for the vetting requirements in the request.
      * A preferred package is the highest-versioned package for a provided package-name
      * that is vetted by all the participants hosting the provided parties.
@@ -1627,8 +1475,6 @@ export class DefaultService {
      * a `FAILED_PRECONDITION` error will be returned.
      *
      * Can be accessed by any Ledger API client with a valid token when Ledger API authorization is enabled.
-     *
-     * Experimental API: this endpoint is not guaranteed to provide backwards compatibility in future releases
      * @param requestBody
      * @returns GetPreferredPackagesResponse
      * @returns JsCantonError
@@ -1697,6 +1543,39 @@ export class DefaultService {
             mediaType: 'application/json',
             errors: {
                 400: `Invalid value, Invalid value for: body`,
+            },
+        });
+    }
+    /**
+     * Retrieve public keys as JWKS for a specific party and synchronizer.
+     * This endpoint is experimental / alpha, therefore no backwards compatibility is guaranteed.
+     * @param synchronizer synchronizer from which to read the public keys
+     * @param party party for which to retrieve the public keys
+     * @returns any
+     * @returns JsCantonError
+     * @throws ApiError
+     */
+    public static getV2JoseJwks(
+        synchronizer: string,
+        party: string,
+    ): CancelablePromise<{
+        /**
+         * List of JWKs for the specified party and synchronizer.
+         * Only keys of which the usage allows for Party JWT authentication will be returned.
+         *
+         * Optional: can be empty
+         */
+        keys: Array<Record<string, any>>;
+    } | JsCantonError> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/v2/jose/jwks/synchronizer/{synchronizer}/party/{party}',
+            path: {
+                'synchronizer': synchronizer,
+                'party': party,
+            },
+            errors: {
+                400: `Invalid value`,
             },
         });
     }

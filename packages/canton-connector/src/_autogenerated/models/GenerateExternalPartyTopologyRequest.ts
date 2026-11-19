@@ -47,5 +47,15 @@ export type GenerateExternalPartyTopologyRequest = {
      * Optional: can be empty
      */
     observingParticipantUids?: Array<string>;
+    /**
+     * The protocol version to create the topology transactions for, so that clients that only read topology
+     * transactions of an older protocol version can read them, e.g. 36 on a synchronizer with protocol version 37.
+     * Must be the synchronizer's protocol version or a lower one whose topology transactions the synchronizer admits:
+     * from protocol version 37 on, a synchronizer admits those of protocol version 36.
+     * Defaults to the synchronizer's protocol version.
+     *
+     * Optional
+     */
+    protocolVersion?: number;
 };
 

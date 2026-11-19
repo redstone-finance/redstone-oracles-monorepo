@@ -135,6 +135,8 @@ export type JsPrepareSubmissionRequest = {
     /**
      * The hashing scheme version to be used when building the hash.
      * Defaults to HASHING_SCHEME_VERSION_V2.
+     * HASHING_SCHEME_VERSION_V4 requires a synchronizer running protocol version 36 or later and is
+     * rejected on synchronizers running older protocol versions.
      *
      * Optional
      */
@@ -144,6 +146,8 @@ export namespace JsPrepareSubmissionRequest {
     /**
      * The hashing scheme version to be used when building the hash.
      * Defaults to HASHING_SCHEME_VERSION_V2.
+     * HASHING_SCHEME_VERSION_V4 requires a synchronizer running protocol version 36 or later and is
+     * rejected on synchronizers running older protocol versions.
      *
      * Optional
      */
@@ -151,6 +155,7 @@ export namespace JsPrepareSubmissionRequest {
         HASHING_SCHEME_VERSION_UNSPECIFIED = 'HASHING_SCHEME_VERSION_UNSPECIFIED',
         HASHING_SCHEME_VERSION_V2 = 'HASHING_SCHEME_VERSION_V2',
         HASHING_SCHEME_VERSION_V3 = 'HASHING_SCHEME_VERSION_V3',
+        HASHING_SCHEME_VERSION_V4 = 'HASHING_SCHEME_VERSION_V4',
     }
 }
 

@@ -50,9 +50,10 @@ export type UnassignedEvent = {
      */
     submitter?: string;
     /**
-     * Each corresponding assigned and unassigned event has the same reassignment_counter. This strictly increases
-     * with each unassign command for the same contract. Creation of the contract corresponds to reassignment_counter
-     * equals zero.
+     * The reassignment counter associated with this unassignment on the source synchronizer.
+     *
+     * Reassignment counters strictly increase with each unassign command for the same contract.
+     * Creation of the contract corresponds to reassignment_counter equal to zero.
      *
      * Required
      */
@@ -60,7 +61,8 @@ export type UnassignedEvent = {
     /**
      * Assignment exclusivity
      * Before this time (measured on the target synchronizer), only the submitter of the unassignment can initiate the assignment
-     * Defined for reassigning participants.
+     * Defined for reassigning participants, up to protocol version 36.
+     * Starting with protocol version 37, it is not set: any stakeholder can submit the assignment as soon as the unassignment is completed.
      *
      * Optional
      */

@@ -23,7 +23,9 @@ export type JsPrepareSubmissionResponse = {
      */
     preparedTransactionHash: string;
     /**
-     * The hashing scheme version used when building the hash
+     * The hashing scheme version used when building the hash.
+     * HASHING_SCHEME_VERSION_V4 is only returned for synchronizers running protocol version 36 or
+     * later.
      *
      * Required
      */
@@ -45,7 +47,9 @@ export type JsPrepareSubmissionResponse = {
 };
 export namespace JsPrepareSubmissionResponse {
     /**
-     * The hashing scheme version used when building the hash
+     * The hashing scheme version used when building the hash.
+     * HASHING_SCHEME_VERSION_V4 is only returned for synchronizers running protocol version 36 or
+     * later.
      *
      * Required
      */
@@ -53,6 +57,7 @@ export namespace JsPrepareSubmissionResponse {
         HASHING_SCHEME_VERSION_UNSPECIFIED = 'HASHING_SCHEME_VERSION_UNSPECIFIED',
         HASHING_SCHEME_VERSION_V2 = 'HASHING_SCHEME_VERSION_V2',
         HASHING_SCHEME_VERSION_V3 = 'HASHING_SCHEME_VERSION_V3',
+        HASHING_SCHEME_VERSION_V4 = 'HASHING_SCHEME_VERSION_V4',
     }
 }
 

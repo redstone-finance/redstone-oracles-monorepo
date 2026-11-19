@@ -40,7 +40,9 @@ export type JsExecuteSubmissionAndWaitRequest = {
      */
     userId?: string;
     /**
-     * The hashing scheme version used when building the hash
+     * The hashing scheme version used when building the hash.
+     * HASHING_SCHEME_VERSION_V4 requires a synchronizer running protocol version 36 or later and is
+     * rejected on synchronizers running older protocol versions.
      *
      * Required
      */
@@ -55,7 +57,9 @@ export type JsExecuteSubmissionAndWaitRequest = {
 };
 export namespace JsExecuteSubmissionAndWaitRequest {
     /**
-     * The hashing scheme version used when building the hash
+     * The hashing scheme version used when building the hash.
+     * HASHING_SCHEME_VERSION_V4 requires a synchronizer running protocol version 36 or later and is
+     * rejected on synchronizers running older protocol versions.
      *
      * Required
      */
@@ -63,6 +67,7 @@ export namespace JsExecuteSubmissionAndWaitRequest {
         HASHING_SCHEME_VERSION_UNSPECIFIED = 'HASHING_SCHEME_VERSION_UNSPECIFIED',
         HASHING_SCHEME_VERSION_V2 = 'HASHING_SCHEME_VERSION_V2',
         HASHING_SCHEME_VERSION_V3 = 'HASHING_SCHEME_VERSION_V3',
+        HASHING_SCHEME_VERSION_V4 = 'HASHING_SCHEME_VERSION_V4',
     }
 }
 

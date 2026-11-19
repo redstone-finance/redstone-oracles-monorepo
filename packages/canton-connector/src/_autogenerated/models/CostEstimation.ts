@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ReassignmentCost } from './ReassignmentCost';
 /**
  * Estimation of the cost of submitting the prepared transaction
  * The estimation is done against the synchronizer chosen during preparation of the transaction
@@ -35,5 +36,11 @@ export type CostEstimation = {
      * Required
      */
     totalTrafficCostEstimation: number;
+    /**
+     * Estimated cost of re-assigning contracts if necessary
+     *
+     * Optional: can be empty
+     */
+    reassignmentCosts?: Array<ReassignmentCost>;
 };
 

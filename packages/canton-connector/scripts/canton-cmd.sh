@@ -36,6 +36,11 @@ body=$(jq -n \
     }
   }')
 
+if [ -n "${DISCLOSED_CONTRACTS:-}" ]; then
+  body=$(jq --argjson disclosedContracts "$DISCLOSED_CONTRACTS" \
+    '.commands.disclosedContracts = $disclosedContracts' <<<"$body")
+fi
+
 auth=()
 if [ -n "${TOKEN:-}" ]; then
   auth=(-H "Authorization: Bearer $TOKEN")
