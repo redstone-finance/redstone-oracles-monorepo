@@ -6335,6 +6335,19 @@
       "denomination": "other",
       "rateFeed": false
     },
+    "SOLX_DEVNET_CANTON": {
+      "source": [
+        "memora-canton-devnet"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 100000000,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "other",
+      "rateFeed": false
+    },
     "USDH": {
       "source": [
         "fixed-value"
