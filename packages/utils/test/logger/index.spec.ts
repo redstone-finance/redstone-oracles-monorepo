@@ -186,6 +186,53 @@ describe("Logger Sanitization Logic", () => {
       expect(sanitized.chainName).toBe("corn");
       expect(sanitized.dataServiceId).toBe("redstone-primary-prod");
     });
+
+    test("should redact keys with sensitive suffixes", () => {
+      const config = {
+        oevAuctionUrl: "https://auction.example.com/new",
+        oevAuctionApiKey: "secret-oev-auction-api-key",
+        lsegClientSecret: "secret-lseg-client-secret",
+        exantePassword: "secret-exante-password",
+        influxBroadcasterAuthToken: "secret-influx-auth-token",
+        gasCurrencyToken: { decimals: 6 },
+      };
+      const sanitized = sanitizeValue(config);
+      expect(sanitized.oevAuctionApiKey).toBe("secr...");
+      expect(sanitized.lsegClientSecret).toBe("secr...");
+      expect(sanitized.exantePassword).toBe("secr...");
+      expect(sanitized.influxBroadcasterAuthToken).toBe("secr...");
+      expect(sanitized.oevAuctionUrl).toBe("https://auction.example.com/new");
+      expect(sanitized.gasCurrencyToken).toEqual({ decimals: 6 });
+    });
+
+    test("should redact plural, snake_case, kebab-case and token-like sensitive keys", () => {
+      const config = {
+        mergerApiKeys: ["secret-merger-api-key-1", "secret-merger-api-key-2"],
+        api_key: "secret-snake-case-api-key",
+        ECDSA_PRIVATE_KEY: "secret-ecdsa-private-key",
+        "X-CMC_PRO_API_KEY": "secret-cmc-pro-api-key",
+        spikoRefreshToken: "secret-spiko-refresh-token",
+        accessToken: "secret-access-token-value",
+        mnemonic: "secret mnemonic words here",
+        nodeSecrets: { key: "value" },
+        apiKeyHeaderName: "x-api-key",
+      };
+      const sanitized = sanitizeValue(config);
+      expect(sanitized.mergerApiKeys).toBe("[Redacted]");
+      expect(sanitized.api_key).toBe("secr...");
+      expect(sanitized.ECDSA_PRIVATE_KEY).toBe("secr...");
+      expect(sanitized["X-CMC_PRO_API_KEY"]).toBe("secr...");
+      expect(sanitized.spikoRefreshToken).toBe("secr...");
+      expect(sanitized.accessToken).toBe("secr...");
+      expect(sanitized.mnemonic).toBe("secr...");
+      expect(sanitized.nodeSecrets).toBe("[Redacted]");
+      expect(sanitized.apiKeyHeaderName).toBe("x-api-key");
+    });
+
+    test("should not redact boolean flags with sensitive key names", () => {
+      const sanitized = sanitizeValue({ hasApiKey: true, withPrivateKey: false, apiKey: true });
+      expect(sanitized).toEqual({ hasApiKey: true, withPrivateKey: false, apiKey: true });
+    });
   });
 
   describe("createSanitizedLogger", () => {

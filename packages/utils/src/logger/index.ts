@@ -30,6 +30,13 @@ export const SENSITIVE_KEYS = new Set([
   "password",
 ]);
 
+const SENSITIVE_KEY_SUFFIX =
+  /(api[-_]?key|private[-_]?key|secret|password|auth[-_]?token|authorization[-_]?token|access[-_]?token|refresh[-_]?token|bearer[-_]?token|mnemonic|seed[-_]?phrase)s?$/i;
+
+function isSensitiveKey(key: string, value: unknown) {
+  return typeof value !== "boolean" && (SENSITIVE_KEYS.has(key) || SENSITIVE_KEY_SUFFIX.test(key));
+}
+
 export type RedstoneLogger = ConsolaInstance | Console;
 
 const LogTypeToLevel: { [key: string]: LogLevel } = {
@@ -229,7 +236,7 @@ function sanitize(val: unknown, seen: WeakSet<object>, depth: number = 0): unkno
     seen.add(val);
     const result: Record<string, unknown> = {};
     for (const [key, item] of Object.entries(val)) {
-      result[key] = SENSITIVE_KEYS.has(key)
+      result[key] = isSensitiveKey(key, item)
         ? maskSensitiveValue(item)
         : sanitize(item, seen, depth + 1);
     }
