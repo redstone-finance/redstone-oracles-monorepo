@@ -8,6 +8,8 @@ import {
   CURSOR,
   DIGEST,
   FEED_ID,
+  GAS_BUDGET,
+  GAS_PRICE,
   GAS_SUMMARY,
   GAS_SUMMARY_COST,
   GRAPHQL_ERROR,
@@ -29,8 +31,6 @@ const MOVE_VALUE = "MoveValue";
 const INPUT_ARGUMENT = "Input";
 const BLOCK_TIMESTAMP_ISO = "2026-09-22T12:40:50.000Z";
 const BLOCK_TIMESTAMP_SECONDS = 1790080850;
-const GAS_BUDGET = "120000000";
-const GAS_PRICE = "1000";
 
 describe("GraphQLSuiTxLookup", () => {
   let sut: GraphQLSuiTxLookup;
@@ -55,7 +55,7 @@ describe("GraphQLSuiTxLookup", () => {
         hash: DIGEST,
         from: SENDER,
         to: ADAPTER_OBJECT_ID,
-        data: PAYLOAD_HEX,
+        data: [PAYLOAD_HEX],
         gasLimit: GAS_BUDGET,
         gasPrice: GAS_PRICE,
         gasUsed: GAS_SUMMARY_COST,
@@ -97,7 +97,7 @@ describe("GraphQLSuiTxLookup", () => {
 
     const { data } = await sut.fetchPage(PAGE);
 
-    expect(data).toMatchObject([{ hash: DIGEST, data: PAYLOAD_HEX }]);
+    expect(data).toMatchObject([{ hash: DIGEST, data: [PAYLOAD_HEX] }]);
   });
 
   it("should throw on a GraphQL error instead of reporting an empty page", async () => {

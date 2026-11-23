@@ -2,12 +2,12 @@ import { bcs } from "@mysten/sui/bcs";
 import type { SuiClientTypes } from "@mysten/sui/client";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
+import { makeFeedIdBytes, uint8ArrayToBcs } from "../src";
 import {
   computeSuiGasUsed,
   SUI_PRICE_WRITE_EVENT_FRAGMENT,
   SUI_UPDATE_ERROR_EVENT_FRAGMENT,
 } from "../src/client/lookup/SuiTxParsing";
-import { makeFeedIdBytes, uint8ArrayToBcs } from "../src/util";
 
 export const NETWORK = "testnet";
 export const PACKAGE_ID = "0xc2102acb2616b695ba5a3ee2fc12f61b9a19e246d6c933ceb1912842bb2b9edb";
@@ -45,6 +45,8 @@ export const GAS_SUMMARY = {
   storageRebate: "14303124",
 };
 export const GAS_SUMMARY_COST = computeSuiGasUsed(GAS_SUMMARY);
+export const GAS_BUDGET = "120000000";
+export const GAS_PRICE = "1000";
 const DATA_SERVICE_ID = "redstone-primary-prod";
 const UNIQUE_SIGNER_COUNT = 3;
 const UpdateErrorEventBcs = bcs.struct("UpdateError", {

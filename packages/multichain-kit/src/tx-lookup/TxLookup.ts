@@ -52,7 +52,7 @@ export interface NormalizedContractTx {
   hash: string;
   from: string;
   to: string;
-  data: string;
+  data: string | string[];
   gasLimit: string;
   gasPrice: string;
   isFailed: boolean;

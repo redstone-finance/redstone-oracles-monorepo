@@ -36,20 +36,22 @@ export function computeSuiGasUsed(gas: SuiNormalizedGas) {
 export function buildNormalizedSuiTx(params: NormalizedSuiTxBase) {
   const isFailed = params.effectFailed || areAllFeedsSkipped(params.events);
 
-  return params.writes.map(({ feedId, payload }) => ({
-    blockNumber: params.blockNumber,
-    blockTimestamp: params.blockTimestamp,
-    hash: params.hash,
-    from: params.sender,
-    to: params.targetObjectId,
-    data: payload,
-    gasLimit: params.gasLimit,
-    gasPrice: params.gasPrice,
-    isFailed,
-    gasUsed: params.gasUsed / params.writes.length,
-    events: pickFeedEvents(feedId, params.events),
-    functionType: MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE,
-  }));
+  return [
+    {
+      blockNumber: params.blockNumber,
+      blockTimestamp: params.blockTimestamp,
+      hash: params.hash,
+      from: params.sender,
+      to: params.targetObjectId,
+      data: params.writes.map(({ payload }) => payload),
+      gasLimit: params.gasLimit,
+      gasPrice: params.gasPrice,
+      isFailed,
+      gasUsed: params.gasUsed,
+      events: pickFeedEvents(params.writes, params.events),
+      functionType: MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE,
+    },
+  ];
 }
 
 function areAllFeedsSkipped(events?: Events) {
@@ -58,10 +60,12 @@ function areAllFeedsSkipped(events?: Events) {
   return entries.length > 0 && entries.every((entry) => !entry.updated);
 }
 
-function pickFeedEvents(feedId: string, events?: Events) {
-  const entry = events?.[feedId];
+function pickFeedEvents(writes: SuiWriteCall[], events?: Events) {
+  const entries = writes
+    .map(({ feedId }) => [feedId, events?.[feedId]] as const)
+    .filter(([, entry]) => RedstoneCommon.isDefined(entry));
 
-  return entry ? { [feedId]: entry } : undefined;
+  return entries.length > 0 ? Object.fromEntries(entries) : undefined;
 }
 
 export function filterSuiTxsAndCheckHasNextPage(
