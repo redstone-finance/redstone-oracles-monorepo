@@ -2,13 +2,16 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import { Agent, createServer, IncomingMessage, Server, ServerResponse } from "node:http";
 import { Agent as HttpsAgent } from "node:https";
 import { AddressInfo } from "node:net";
-import { gzipSync } from "node:zlib";
+import { brotliCompressSync, gzipSync } from "node:zlib";
 import { makeAgentFetch } from "../src/agent-fetch";
 
 const RESPONSE_STATUS = 418;
 const RESPONSE_HEADER = "x-redstone-test";
 const HOLD = "hold";
 const GZIP = "gzip";
+const BR = "br";
+const BOMB = "bomb";
+const MAX_RESPONSE_BYTES = 1000;
 const POLL_INTERVAL_MS = 10;
 const POLL_LIMIT = 200;
 
@@ -34,6 +37,18 @@ describe("makeAgentFetch", () => {
           acceptEncoding: request.headers["accept-encoding"],
         });
         if (body === HOLD) {
+          return;
+        }
+        if (body === BR) {
+          response.writeHead(RESPONSE_STATUS, { "content-encoding": "br" });
+          response.end(brotliCompressSync(Buffer.from(`answer ${BR}`)));
+
+          return;
+        }
+        if (body === BOMB) {
+          response.writeHead(RESPONSE_STATUS, { "content-encoding": "gzip" });
+          response.end(gzipSync(Buffer.alloc(MAX_RESPONSE_BYTES * 10)));
+
           return;
         }
         if (body === GZIP) {
@@ -75,7 +90,7 @@ describe("makeAgentFetch", () => {
         method: "POST",
         body: '{"method":"getSlot"}',
         contentType: "application/json",
-        acceptEncoding: "gzip, deflate, br",
+        acceptEncoding: "gzip",
       },
     ]);
     expect(response.status).toBe(RESPONSE_STATUS);
@@ -143,6 +158,24 @@ describe("makeAgentFetch", () => {
     expect(response.headers.get("content-encoding")).toBeNull();
     expect(response.headers.get("content-length")).toBeNull();
     expect(response.headers.get(RESPONSE_HEADER)).toBe("yes");
+  });
+
+  it("rejects a brotli response instead of decoding it", async () => {
+    await expect(makeAgentFetch(agent)(url, { method: "POST", body: BR })).rejects.toThrow(
+      "Unsupported content-encoding: br"
+    );
+  });
+
+  it("rejects a gzip response that inflates past the cap", async () => {
+    await expect(
+      makeAgentFetch(agent, MAX_RESPONSE_BYTES)(url, { method: "POST", body: BOMB })
+    ).rejects.toMatchObject({ code: "ERR_BUFFER_TOO_LARGE" });
+  });
+
+  it("rejects a plain response that is larger than the cap", async () => {
+    await expect(makeAgentFetch(agent, 4)(url, { method: "POST", body: "one" })).rejects.toThrow(
+      "Response body exceeds 4 bytes"
+    );
   });
 
   it("rejects a body it cannot send", async () => {
