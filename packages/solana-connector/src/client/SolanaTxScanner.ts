@@ -11,14 +11,20 @@ export class SolanaTxScanner {
   constructor(private readonly client: SolanaClient) {}
 
   async fetchTransactionsInRange(fromSlot: number, toSlot: number, addresses: Set<string>) {
-    const [fromSlotSignature, toSlotSignature] = await Promise.all([
+    const [fromSlotAnchor, toSlotAnchor] = await Promise.all([
       this.findBoundaryAnchor(fromSlot - 1, -1),
       this.findBoundaryAnchor(toSlot + 1, 1),
     ]);
+    const minContextSlot = toSlotAnchor?.slot ?? toSlot;
 
     const perAddress = await Promise.all(
       [...addresses].map((address) =>
-        this.getAllSignatureInfos(address, fromSlotSignature, toSlotSignature)
+        this.getAllSignatureInfos(
+          address,
+          minContextSlot,
+          fromSlotAnchor?.signature,
+          toSlotAnchor?.signature
+        )
       )
     );
 
@@ -45,10 +51,11 @@ export class SolanaTxScanner {
         : Math.min(BOUNDARY_SLOT_WALK_LIMIT, (await this.client.getSlot()) - slot + 1);
 
     for (let step = 0; step < stepLimit; step++) {
-      const signatures = await this.getBlockSignaturesSafely(slot + step * direction);
-      const anchor = direction < 0 ? signatures?.at(-1) : signatures?.[0];
-      if (anchor) {
-        return anchor;
+      const anchorSlot = slot + step * direction;
+      const signatures = await this.getBlockSignaturesSafely(anchorSlot);
+      const signature = direction < 0 ? signatures?.at(-1) : signatures?.[0];
+      if (signature) {
+        return { signature, slot: anchorSlot };
       }
     }
 
@@ -75,6 +82,7 @@ export class SolanaTxScanner {
 
   private async getAllSignatureInfos(
     address: string,
+    minContextSlot: number,
     minTxSig?: string,
     maxTxSig?: string
   ): Promise<ConfirmedSignatureInfo[]> {
@@ -82,11 +90,17 @@ export class SolanaTxScanner {
       limit: TX_FETCHING_BATCH_SIZE,
       before: maxTxSig,
       until: minTxSig,
+      minContextSlot,
     });
 
     const oldest = result.at(-1);
     if (result.length === TX_FETCHING_BATCH_SIZE && minTxSig && oldest) {
-      const previous = await this.getAllSignatureInfos(address, minTxSig, oldest.signature);
+      const previous = await this.getAllSignatureInfos(
+        address,
+        minContextSlot,
+        minTxSig,
+        oldest.signature
+      );
       result.push(...previous);
     }
 
