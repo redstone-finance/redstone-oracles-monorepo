@@ -13199,7 +13199,8 @@
         "binancealpha_deferred-usdt",
         "lbank_deferred-usdt",
         "ws-spot-htx-usdt",
-        "ws-spot-bitget-usdt"
+        "ws-spot-bitget-usdt",
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -13239,7 +13240,8 @@
         "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
         "ws-spot-kucoin-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-gate-usdt"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -13496,7 +13498,8 @@
         "ws-spot-bitget-usdt",
         "ws-spot-gate-usdt",
         "ws-spot-htx-usdt",
-        "ws-spot-kucoin-usdt"
+        "ws-spot-kucoin-usdt",
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -13789,7 +13792,8 @@
         "ws-spot-bybit-usdt",
         "ws-spot-bitget-usdt",
         "mexc_deferred-usdt",
-        "bingx_deferred-usdt"
+        "bingx_deferred-usdt",
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -13954,7 +13958,8 @@
         "mexc_deferred-usdt",
         "ws-spot-bitget-usdt",
         "ws-spot-bybit-usdt",
-        "ws-spot-kraken-usd"
+        "ws-spot-kraken-usd",
+        "ws-spot-gate-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -14127,7 +14132,8 @@
         "ws-spot-gate-usdt",
         "ws-spot-kucoin-usdt",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-kraken-usd"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -14260,7 +14266,8 @@
         "lbank_deferred-usdt",
         "ws-spot-gate-usdt",
         "ws-spot-htx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -14433,7 +14440,8 @@
         "ws-spot-gate-usdt",
         "ws-spot-htx-usdt",
         "ws-spot-kucoin-usdt",
-        "ws-spot-okx-usdt"
+        "ws-spot-okx-usdt",
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -14607,7 +14615,8 @@
         "binancealpha_deferred-usdt",
         "mexc_deferred-usdt",
         "ws-spot-bitget-usdt",
-        "ws-spot-gate-usdt"
+        "ws-spot-gate-usdt",
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -14758,7 +14767,8 @@
         "ws-spot-okx-usdt",
         "ws-spot-kucoin-usdt",
         "ws-spot-bitget-usdt",
-        "ws-spot-gate-usdt"
+        "ws-spot-gate-usdt",
+        "ws-spot-xt-usdt"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -17604,7 +17614,8 @@
         "ws-spot-gate-usdt",
         "ws-spot-htx-usdt",
         "ws-spot-kucoin-usdt",
-        "ws-spot-okx-usdt"
+        "ws-spot-okx-usdt",
+        "ws-spot-xt-usdt"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -18521,7 +18532,8 @@
         "ws-spot-coinbase-usd",
         "ws-spot-gate-usdt",
         "ws-spot-kucoin-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -18641,7 +18653,8 @@
         "ws-spot-gate-usdt",
         "ws-spot-kraken-usd",
         "ws-spot-okx-usdt",
-        "ws-spot-xt-usdt"
+        "ws-spot-xt-usdt",
+        "ws-spot-kucoin-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -18804,7 +18817,8 @@
         "ws-spot-gate-usdt",
         "ws-spot-okx-usdt",
         "ws-spot-xt-usdt",
-        "lbank_deferred-usdt"
+        "lbank_deferred-usdt",
+        "ws-spot-kraken-usd"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -19028,7 +19042,8 @@
         "ws-spot-coinbase-usd",
         "ws-spot-gate-usdt",
         "ws-spot-kraken-usd",
-        "ws-spot-okx-usdt"
+        "ws-spot-okx-usdt",
+        "ws-spot-htx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
