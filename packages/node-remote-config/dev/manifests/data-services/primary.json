@@ -5974,6 +5974,384 @@
         "primarySource": "polygon-eod-deferred"
       }
     },
+    "AAPL_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "MSFT_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "NVDA_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "GOOGL_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "TSLA_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "META_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "AMZN_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "NFLX_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "CRCL_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "SPCX_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "MSTR_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "PLTR_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "ANET_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "CIEN_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "XOM_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "FLEX_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "GME_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "JNJ_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "LMT_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "LITE_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "MRK_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "PANW_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "CRM_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "STX_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "TXN_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "DIS_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
+    "UBER_EOD": {
+      "source": [
+        "polygon-eod-deferred",
+        "databento-eod-deferred",
+        "financialmodelingprep-eod-deferred",
+        "twelve-data-stocks-eod-deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "polygon-eod-deferred"
+      }
+    },
     "PAXG": {
       "source": [
         "binance-usdc",
