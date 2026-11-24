@@ -2918,23 +2918,6 @@
         }
       }
     },
-    "USUAL": {
-      "source": [
-        "binance-usdc",
-        "binance-usdt",
-        "bingx-usdt",
-        "bitget-usdt",
-        "gate-usdt",
-        "kraken-eur",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank_deferred-usdt",
-        "mexc-usdt",
-        "xt-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "LBTC_FUNDAMENTAL": {
       "source": [
         "lombard-lbtc"
@@ -6346,14 +6329,6 @@
         }
       },
       "denomination": "other",
-      "rateFeed": false
-    },
-    "USDH": {
-      "source": [
-        "fixed-value"
-      ],
-      "fixedValue": 1,
-      "denomination": "USD",
       "rateFeed": false
     }
   },

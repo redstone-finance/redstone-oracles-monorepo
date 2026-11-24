@@ -147,9 +147,6 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "USUAL": {
-      "priceFeedAddress": "0x2240AE461B34CC56D654ba5FA5830A243Ca54840"
-    },
     "swETH_FUNDAMENTAL": {
       "priceFeedAddress": "0x061bB36F8b67bB922937C102092498dcF4619F86",
       "updateTriggersOverrides": {
