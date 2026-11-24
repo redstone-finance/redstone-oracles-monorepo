@@ -6630,6 +6630,17 @@
       ],
       "maxStaleCacheMilliseconds": 1800000
     },
+    "USPC_FUNDAMENTAL": {
+      "source": [
+        "accountable-uspc"
+      ],
+      "denomination": "USD",
+      "rateFeed": true,
+      "types": [
+        "stale-cache-risk"
+      ],
+      "maxStaleCacheMilliseconds": 43200000
+    },
     "earnUSDC_FUNDAMENTAL": {
       "source": [
         "earn-usdc"
