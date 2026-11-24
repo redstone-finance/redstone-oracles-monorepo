@@ -3295,7 +3295,6 @@
         "lbank_deferred-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "xt-usdt",
         "mexc-usdc"
       ],
       "denomination": "USD",
@@ -3948,7 +3947,6 @@
         "lbank_deferred-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "xt-usdt",
         "pancake-swap-bnb-usdt-100",
         "sushiswap-v3-hemi-usdc.e-500",
         "sushiswap-v3-hemi-usdt-500"
