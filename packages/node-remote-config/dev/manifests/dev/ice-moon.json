@@ -1,8 +1,14 @@
 {
   "interval": 1000,
   "priceAggregator": "median",
-  "defaultSource": ["ws-ice-moon"],
-  "defaultBroadcasters": ["redstone-packages", "influx", "s3"],
+  "defaultSource": [
+    "ws-ice-moon"
+  ],
+  "defaultBroadcasters": [
+    "redstone-packages",
+    "influx",
+    "s3"
+  ],
   "sourceTimeout": 8000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
@@ -29,6 +35,11 @@
       "rateFeed": false
     },
     "NVDA": {
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "US_TBILL_912797VA2": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false
     }
