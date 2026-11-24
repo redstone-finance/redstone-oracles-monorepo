@@ -1269,7 +1269,8 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt-usdt"
+        "xt-usdt",
+        "okx-usdc"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5647,7 +5648,8 @@
         "kucoin-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "xt-usdt"
+        "xt-usdt",
+        "kraken-eur"
       ],
       "denomination": "USD",
       "rateFeed": false
