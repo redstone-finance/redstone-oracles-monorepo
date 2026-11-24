@@ -4886,6 +4886,40 @@
       ],
       "maxStaleCacheMilliseconds": 43200000
     },
+    "mzHUMA_FUNDAMENTAL": {
+      "source": [
+        "accountable-mzhuma"
+      ],
+      "denomination": "USD",
+      "rateFeed": true,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 100000000,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "types": [
+        "stale-cache-risk"
+      ],
+      "maxStaleCacheMilliseconds": 43200000
+    },
+    "mzHUMA_TOTAL_SUPPLY": {
+      "source": [
+        "accountable-mzhuma-total-supply"
+      ],
+      "denomination": "other",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 100000000,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "types": [
+        "stale-cache-risk"
+      ],
+      "maxStaleCacheMilliseconds": 43200000
+    },
     "DLF_FUNDAMENTAL": {
       "source": [
         "accountable-dlf"
