@@ -1769,6 +1769,51 @@
         "rwa"
       ]
     },
+    "DRAM_VIEW---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": [],
+        "maxDeviationBps": 30,
+        "disableRebasing": true
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa",
+        "ui-no-display"
+      ]
+    },
+    "DRAM_VIEW---OVERNIGHT": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": [],
+        "maxDeviationBps": 30,
+        "disableRebasing": true
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "DRAM_VIEW---EXTENDED": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "EBAY---OVERNIGHT": {
       "source": [],
       "priceAggregator": "redstoneX",
@@ -8026,6 +8071,49 @@
         "rwa"
       ]
     },
+    "ANT---PRE_AFTER": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": [],
+        "fallbackToValidationSources": true
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa",
+        "ui-no-display"
+      ]
+    },
+    "ANT---OVERNIGHT": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": [],
+        "fallbackToValidationSources": true
+      },
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ANT---EXTENDED": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "VVVV": {
       "source": [],
       "priceAggregator": "redstoneX",
@@ -8785,6 +8873,14 @@
       ]
     },
     "DRAM---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "DRAM_VIEW---24_7": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -10065,6 +10161,78 @@
       ]
     },
     "SOXL---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "ANT_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "ANT---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SNXX_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "SNXX---24_7": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SOXS_PERP": {
+      "source": [],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 2
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
+    },
+    "SOXS---24_7": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -12260,6 +12428,18 @@
       ]
     },
     "ZIJIN_MINING": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "KINGBOARD_LAMINATES": {
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
