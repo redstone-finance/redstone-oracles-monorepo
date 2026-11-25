@@ -390,8 +390,7 @@
       ],
       "denomination": "ETH",
       "rateFeed": false,
-      "broadcasters": [],
-      "skipBroadcasting": true
+      "broadcasters": []
     },
     "waArbWETH_FUNDAMENTAL": {
       "source": [
@@ -399,8 +398,7 @@
       ],
       "denomination": "ETH",
       "rateFeed": false,
-      "broadcasters": [],
-      "skipBroadcasting": true
+      "broadcasters": []
     },
     "crvFRAX": {
       "source": [
@@ -455,8 +453,7 @@
       },
       "denomination": "USD",
       "rateFeed": false,
-      "broadcasters": [],
-      "skipBroadcasting": true
+      "broadcasters": []
     },
     "GHO": {
       "source": [
@@ -5598,7 +5595,6 @@
       ],
       "fixedValue": 1,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },

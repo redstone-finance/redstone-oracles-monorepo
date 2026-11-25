@@ -235,7 +235,6 @@
       ],
       "fixedValue": 61.8,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [

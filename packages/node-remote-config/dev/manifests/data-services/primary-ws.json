@@ -8327,7 +8327,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -8337,7 +8336,6 @@
     "NIKKEI225_CURRENT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -8351,7 +8349,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -8361,7 +8358,6 @@
     "NIKKEI225_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10663,7 +10659,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10673,7 +10668,6 @@
     "XAG_CURRENT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10687,7 +10681,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10697,7 +10690,6 @@
     "XAG_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10711,7 +10703,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10721,7 +10712,6 @@
     "XAG_NEXT_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10768,7 +10758,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10778,7 +10767,6 @@
     "XAU_CURRENT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10792,7 +10780,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10802,7 +10789,6 @@
     "XAU_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10816,7 +10802,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10826,7 +10811,6 @@
     "XAU_NEXT_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10894,7 +10878,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10904,7 +10887,6 @@
     "XPT_CURRENT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10918,7 +10900,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10928,7 +10909,6 @@
     "XPT_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10942,7 +10922,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -10952,7 +10931,6 @@
     "XPT_NEXT_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11102,7 +11080,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11116,7 +11093,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11126,7 +11102,6 @@
     "USA100_CURRENT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11136,7 +11111,6 @@
     "USA100_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11230,7 +11204,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11244,7 +11217,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11254,7 +11226,6 @@
     "USA500_CURRENT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11264,7 +11235,6 @@
     "USA500_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11322,7 +11292,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11332,7 +11301,6 @@
     "XBR_CURRENT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11346,7 +11314,6 @@
         "priceValidationSources": []
       },
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -11356,7 +11323,6 @@
     "XBR_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -15479,7 +15445,6 @@
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -15491,7 +15456,6 @@
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -16203,7 +16167,6 @@
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -16215,7 +16178,6 @@
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -16587,7 +16549,6 @@
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -16599,7 +16560,6 @@
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -17011,7 +16971,6 @@
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -17023,7 +16982,6 @@
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -17115,7 +17073,6 @@
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -17127,7 +17084,6 @@
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -19734,7 +19690,6 @@
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -19746,7 +19701,6 @@
       "denomination": "USD",
       "rateFeed": false,
       "broadcasters": [],
-      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
