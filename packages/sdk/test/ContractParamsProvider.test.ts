@@ -1,4 +1,5 @@
 import {
+  MOCK_FAST_PACKAGE_ID,
   mockFastMediumPackages,
   mockPayload,
   mockSignedDataPackagesResponse,
@@ -17,6 +18,11 @@ jest.mock("../src/request-data-packages", () => ({
   requestDataPackages: jest.fn().mockResolvedValue(mockSignedDataPackagesResponse),
 }));
 
+const RESPONSE_FEED_IDS = Object.keys(mockSignedDataPackagesResponse);
+const FEED_ID_OUTSIDE_RESPONSE = "LINK";
+const BATCHED_FEED_IDS = [...RESPONSE_FEED_IDS, FEED_ID_OUTSIDE_RESPONSE];
+const BATCH_SIZE = RESPONSE_FEED_IDS.length;
+
 describe("ContractParamsProvider tests", () => {
   const mockRequestParams: DataPackagesRequestParams = {
     dataServiceId: "service-1",
@@ -24,6 +30,10 @@ describe("ContractParamsProvider tests", () => {
     dataPackagesIds: ["ETH", "BTC"],
     authorizedSigners: [],
     authenticatedGateways: [{ apiKey: "mock-api-key" }],
+  };
+  const fastRequestParams: DataPackagesRequestParams = {
+    ...mockRequestParams,
+    dataPackagesIds: [MOCK_FAST_PACKAGE_ID, ...BATCHED_FEED_IDS],
   };
   let sut: ContractParamsProvider;
 
@@ -74,6 +84,55 @@ describe("ContractParamsProvider tests", () => {
     const overrideIds = ["override1", "override2"];
     sut = new ContractParamsProvider(mockRequestParams, undefined, overrideIds);
     expect(sut.getDataFeedIds()).toEqual(overrideIds);
+  });
+
+  it("should split feeds into batches requesting only their own feeds", () => {
+    sut = new ContractParamsProvider(fastRequestParams, undefined, BATCHED_FEED_IDS);
+
+    const batches = sut.splitIntoFeedBatches(BATCH_SIZE);
+
+    expect(batches.map((batch) => batch.requestParams.dataPackagesIds)).toEqual([
+      RESPONSE_FEED_IDS,
+      [FEED_ID_OUTSIDE_RESPONSE],
+    ]);
+    expect(batches.map((batch) => batch.getDataFeedIds())).toEqual([
+      RESPONSE_FEED_IDS,
+      [FEED_ID_OUTSIDE_RESPONSE],
+    ]);
+  });
+
+  it.each([
+    ["overridden feeds", BATCHED_FEED_IDS],
+    ["feeds from the request", undefined],
+  ])(
+    "should split %s into batches requesting multi-point packages",
+    (_title, overriddenFeedIds) => {
+      sut = new ContractParamsProvider(fastRequestParams, undefined, overriddenFeedIds);
+
+      const batches = sut.splitIntoFeedBatches(BATCH_SIZE, true);
+
+      expect(batches.map((batch) => batch.requestParams.dataPackagesIds)).toEqual([
+        [MOCK_FAST_PACKAGE_ID, ...RESPONSE_FEED_IDS],
+        [MOCK_FAST_PACKAGE_ID, FEED_ID_OUTSIDE_RESPONSE],
+      ]);
+      expect(batches.map((batch) => batch.getDataFeedIds())).toEqual([
+        RESPONSE_FEED_IDS,
+        [FEED_ID_OUTSIDE_RESPONSE],
+      ]);
+    }
+  );
+
+  it("should keep a multi-point package instead of single packages of its feeds in a batch", async () => {
+    (requestDataPackages as jest.Mock).mockResolvedValueOnce({
+      ...mockSignedDataPackagesResponse,
+      [MOCK_FAST_PACKAGE_ID]: mockFastMediumPackages,
+    });
+    sut = new ContractParamsProvider(fastRequestParams, undefined, BATCHED_FEED_IDS);
+    const [firstBatch] = sut.splitIntoFeedBatches(BATCH_SIZE, true);
+
+    const result = await firstBatch.requestDataPackages();
+
+    expect(result).toEqual({ [MOCK_FAST_PACKAGE_ID]: mockFastMediumPackages });
   });
 
   it("should return cached data packages if available", async () => {

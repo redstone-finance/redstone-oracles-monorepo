@@ -24,7 +24,8 @@ export class MultiTxDeliveryMan extends TxDeliveryMan {
     context: ContractUpdateContext = { updateStartTimeMs: Date.now() }
   ) {
     const paramsProviders = multiParamsProvider.splitIntoFeedBatches(
-      this.multiConfig.batchSizePerRequestParams(multiParamsProvider.requestParams)
+      this.multiConfig.batchSizePerRequestParams(multiParamsProvider.requestParams),
+      true
     );
     if (paramsProviders.length === 1) {
       return await this.deliverBatch(updater, multiParamsProvider, context);
@@ -49,9 +50,12 @@ export class MultiTxDeliveryMan extends TxDeliveryMan {
     paramsProvider: ContractParamsProvider,
     context: ContractUpdateContext
   ) {
-    return await new TxDeliveryMan(
-      this.multiConfig,
+    return await this.createBatchTxDeliveryMan(
       `tx-delivery-man-${paramsProvider.getDataFeedIds().join("-")}`
     ).updateContract(updater, paramsProvider, context);
+  }
+
+  protected createBatchTxDeliveryMan(logTarget: string) {
+    return new TxDeliveryMan(this.multiConfig, logTarget);
   }
 }

@@ -95,6 +95,7 @@ export const mockSignedDataPackagesResponse = {
   BTC: btcSignedDataPackagesObjects.map(SignedDataPackage.fromObj),
 };
 
+export const MOCK_FAST_PACKAGE_ID = "__FAST__";
 export const mockFastMediumPackages = ethSignedDataPackagesObjects
   .map((ethPackage, index) => {
     const btcPackage = btcSignedDataPackagesObjects[index];
@@ -102,7 +103,7 @@ export const mockFastMediumPackages = ethSignedDataPackagesObjects
     return {
       ...ethPackage,
       dataPoints: [...ethPackage.dataPoints, ...btcPackage.dataPoints],
-      dataPackageId: `__FAST__`,
+      dataPackageId: MOCK_FAST_PACKAGE_ID,
     };
   })
   .map(SignedDataPackage.fromObj);

@@ -44,14 +44,15 @@ export class ContractParamsProvider {
     return new ContractParamsProvider(this.requestParams, this.cache, feedIds);
   }
 
-  copyForFeedIds(feedIds: string[]) {
+  copyForFeedIds(feedIds: string[], overriddenFeedIds?: string[]) {
     return new ContractParamsProvider(
       {
         ...this.requestParams,
         dataPackagesIds: feedIds,
         returnAllPackages: false,
       },
-      this.cache
+      this.cache,
+      overriddenFeedIds
     );
   }
 
@@ -68,10 +69,21 @@ export class ContractParamsProvider {
         );
   }
 
-  splitIntoFeedBatches(batchSize: number) {
-    const feedIds = this.getDataFeedIds();
+  splitIntoFeedBatches(batchSize: number, keepMultiPointPackageIds = false) {
+    const multiPointIds = keepMultiPointPackageIds
+      ? (this.requestParams.dataPackagesIds ?? []).filter(RedstoneCommon.isMultiPointDataPackageId)
+      : [];
+    if (!multiPointIds.length) {
+      return _.chunk(this.getDataFeedIds(), batchSize).map((feedIds) =>
+        this.copyForFeedIds(feedIds)
+      );
+    }
 
-    return _.chunk(feedIds, batchSize).map((feedIds) => this.copyForFeedIds(feedIds));
+    const feedIds = _.difference(this.getDataFeedIds(), multiPointIds);
+
+    return _.chunk(feedIds, batchSize).map((batchFeedIds) =>
+      this.copyForFeedIds([...multiPointIds, ...batchFeedIds], batchFeedIds)
+    );
   }
 
   static hexlifyFeedId(feedId: string) {

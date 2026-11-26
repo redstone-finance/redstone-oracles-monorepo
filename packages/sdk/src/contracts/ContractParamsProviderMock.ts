@@ -21,9 +21,9 @@ export class ContractParamsProviderMock extends ContractParamsProvider {
     });
   }
 
-  override copyForFeedIds(dataFeeds: string[]) {
+  override copyForFeedIds(dataFeeds: string[], overriddenFeedIds?: string[]) {
     return new ContractParamsProviderMock(
-      dataFeeds,
+      overriddenFeedIds ?? dataFeeds,
       this.filePath,
       this.fileReader,
       this.requestParams.uniqueSignersCount

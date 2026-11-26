@@ -45,8 +45,7 @@ export class TxDeliveryMan<TxResultExt = unknown> {
       );
 
       const wrappedResult = await FP.tryCallAsyncStringifyError(
-        async () =>
-          await RedstoneCommon.timeout(operation(attempt), this.config.expectedTxDeliveryTimeInMs)
+        async () => await this.waitForAttempt(operation(attempt))
       );
       const result = FP.flatten(wrappedResult);
 
@@ -60,5 +59,9 @@ export class TxDeliveryMan<TxResultExt = unknown> {
     return await FP.findFirstAsyncApply(
       Array.from({ length: this.config.maxTxSendAttempts }, (_, i) => makeAttempt(i))
     );
+  }
+
+  protected async waitForAttempt<T>(attempt: Promise<T>) {
+    return await RedstoneCommon.timeout(attempt, this.config.expectedTxDeliveryTimeInMs);
   }
 }
