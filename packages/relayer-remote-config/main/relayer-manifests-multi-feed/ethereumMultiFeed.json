@@ -12,7 +12,8 @@
   "dataServiceId": "redstone-primary-prod",
   "feedsToBeUpdatedTogether": [
     ["mzUSD_FUNDAMENTAL", "mzUSD_TOTAL_SUPPLY"],
-    ["mzPRIME_FUNDAMENTAL", "mzPRIME_TOTAL_SUPPLY"]
+    ["mzPRIME_FUNDAMENTAL", "mzPRIME_TOTAL_SUPPLY"],
+    ["mzHUMA_FUNDAMENTAL", "mzHUMA_TOTAL_SUPPLY"]
   ],
   "priceFeeds": {
     "LBTC_FUNDAMENTAL": {
