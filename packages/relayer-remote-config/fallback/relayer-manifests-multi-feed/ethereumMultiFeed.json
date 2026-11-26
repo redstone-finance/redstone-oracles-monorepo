@@ -622,6 +622,18 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "mzHUMA_FUNDAMENTAL": {
+      "priceFeedAddress": "0xD4560858618cEc58E2B05D8133a8482769B68825",
+      "updateTriggersOverrides": {
+        "cron": ["5 12 * * *"]
+      }
+    },
+    "mzHUMA_TOTAL_SUPPLY": {
+      "priceFeedAddress": "0x9CA8ea38841b98920E4e187E5927CB2e26F646A2",
+      "updateTriggersOverrides": {
+        "cron": ["5 12 * * *"]
+      }
     }
   }
 }
