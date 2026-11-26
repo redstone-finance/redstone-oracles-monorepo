@@ -32395,6 +32395,18 @@
       "types": [
         "rwa"
       ]
+    },
+    "US_TBILL_912797VA2": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": [
+        "influx",
+        "s3"
+      ],
+      "types": [
+        "rwa"
+      ]
     }
   },
   "multiPointPackages": {
