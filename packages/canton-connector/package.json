@@ -35,13 +35,6 @@
     "form-data": "^4",
     "lodash": "^4.17.23"
   },
-  "devDependencies": {
-    "@redstone-finance/internal-utils": "workspace:*",
-    "axios": "^1.20",
-    "dotenv": "^16.0.3",
-    "openapi-typescript-codegen": "^0.31.0",
-    "zod": "^4.1.12"
-  },
   "files": [
     "src",
     "dist"
