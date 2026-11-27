@@ -38,7 +38,7 @@ export abstract class ParallelExecutor<R> extends Executor<R> {
     totalLength: number
   ): boolean;
 
-  protected abstract aggregate(results: R[]): R;
+  protected abstract aggregate(results: R[], totalLength: number): R;
 
   override async execute(functions: FnBox<R>[]): Promise<R> {
     const successfulResults: R[] = [];
@@ -86,7 +86,7 @@ export abstract class ParallelExecutor<R> extends Executor<R> {
       const isEnough = this.verifySettlements(successfulResults, errorResults, totalLength);
 
       if (isEnough) {
-        const value = this.aggregate(successfulResults);
+        const value = this.aggregate(successfulResults, totalLength);
         if (isTraceEnabled()) {
           this.logger.trace(`Resolving with ${stringify(value)}`);
         }

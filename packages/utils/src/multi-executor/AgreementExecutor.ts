@@ -10,7 +10,7 @@ export class AgreementExecutor<R> extends ParallelExecutor<R> {
     super(timeoutMs);
   }
 
-  public override aggregate(results: R[]): R {
+  public override aggregate(results: R[], totalLength: number) {
     const modes = this.getModes(results);
     this.logger.debug(`Found modes: ${stringify(modes)}`);
 
@@ -18,9 +18,9 @@ export class AgreementExecutor<R> extends ParallelExecutor<R> {
       throw new Error(`That should've never happened but still...: ${stringify(modes)}`);
     }
 
-    if (modes.length !== 1) {
+    if (modes.length !== 1 || modes[0].count < this.getQuorum(totalLength)) {
       this.logger[this.shouldResolveUnagreedToUndefined ? "info" : "warn"](
-        `Multiple modes found (shouldResolveUnagreedToUndefined = ${this.shouldResolveUnagreedToUndefined}; were the returning promises sync?): ${stringify(modes)}`
+        `No agreement among modes (shouldResolveUnagreedToUndefined = ${this.shouldResolveUnagreedToUndefined}; were the returning promises sync?): ${stringify(modes)}`
       );
 
       if (this.shouldResolveUnagreedToUndefined) {

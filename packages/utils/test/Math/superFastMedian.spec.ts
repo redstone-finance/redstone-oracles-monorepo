@@ -251,3 +251,11 @@ describe("superFastMedian — fuzz: matches reference for random arrays", () => 
     }
   });
 });
+
+describe("superFastMedian — no overflow of the two middle values", () => {
+  it("averages the largest numbers without reaching Infinity", () => {
+    expect(superFastMedian([Number.MAX_VALUE, Number.MAX_VALUE])).toBe(Number.MAX_VALUE);
+    expect(superFastMedian([-Number.MAX_VALUE, -Number.MAX_VALUE])).toBe(-Number.MAX_VALUE);
+    expect(superFastMedian([-Number.MAX_VALUE, Number.MAX_VALUE])).toBe(0);
+  });
+});

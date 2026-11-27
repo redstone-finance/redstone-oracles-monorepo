@@ -1,7 +1,7 @@
 import { BigNumberish } from "@ethersproject/bignumber";
 import _ from "lodash";
 import { getNS } from "../common";
-import { getMedian, getMedianOfBigNumbers } from "../math";
+import { getMedian, getMedianOfBigInts, getMedianOfBigNumbers } from "../math";
 import { ParallelExecutor } from "./ParallelExecutor";
 
 export abstract class ConsensusExecutor<R> extends ParallelExecutor<R> {
@@ -67,6 +67,11 @@ export class MedianConsensusExecutor<R> extends ConsensusExecutor<R> {
     const hasOnlyNumbers = results.every((n) => typeof n === "number");
     if (hasOnlyNumbers) {
       return getMedian(results) as R;
+    }
+
+    const hasOnlyBigInts = results.every((n) => typeof n === "bigint");
+    if (hasOnlyBigInts) {
+      return getMedianOfBigInts(results) as R;
     }
 
     return getMedianOfBigNumbers(results as BigNumberish[]) as R;

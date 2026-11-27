@@ -12,6 +12,7 @@ import {
 import {
   Clamper,
   filterOutliers,
+  getCeilMedianOfBigInts,
   getMaxOfBigInts,
   getMedianOfBigInts,
   monotoneCubicInterpolation,
@@ -558,5 +559,42 @@ describe("Clamper", () => {
       const result = clamper.clamp(newValue, lastValue);
       expect(result.unsafeToNumber()).toBe(0);
     });
+  });
+});
+
+describe("getCeilMedianOfBigInts", () => {
+  it("should throw for an empty array", () => {
+    expect(() => getCeilMedianOfBigInts([])).toThrow();
+  });
+
+  it("should return the middle value for an odd count", () => {
+    expect(getCeilMedianOfBigInts([30n, 10n, 20n])).toEqual(20n);
+  });
+
+  it("should round the middle of an even count up", () => {
+    expect(getCeilMedianOfBigInts([3n, 6n])).toEqual(5n);
+    expect(getCeilMedianOfBigInts([2n, 6n, 4n, 8n])).toEqual(5n);
+    expect(getCeilMedianOfBigInts([-7n, -4n])).toEqual(-5n);
+    expect(getCeilMedianOfBigInts([-4n, 3n])).toEqual(0n);
+    expect(getCeilMedianOfBigInts([-5n, -3n])).toEqual(-4n);
+  });
+
+  it("should stay exact at the ends of the uint256 and int256 ranges", () => {
+    const maxUint256 = 2n ** 256n - 1n;
+    const minInt256 = -(2n ** 255n);
+    const maxInt256 = 2n ** 255n - 1n;
+    expect(getCeilMedianOfBigInts([maxUint256, maxUint256])).toEqual(maxUint256);
+    expect(getCeilMedianOfBigInts([maxUint256, maxUint256 - 2n])).toEqual(maxUint256 - 1n);
+    expect(getCeilMedianOfBigInts([maxUint256, maxUint256 - 1n])).toEqual(maxUint256);
+    expect(getCeilMedianOfBigInts([0n, maxUint256])).toEqual(2n ** 255n);
+    expect(getCeilMedianOfBigInts([minInt256, maxInt256])).toEqual(0n);
+  });
+
+  it("should stay exact one 64-bit digit below the largest BigInt the engine allows", () => {
+    const largestBit = 1n << (2n ** 30n - 65n);
+    const nearMaxBigInt = largestBit | (largestBit - 1n);
+    expect(getCeilMedianOfBigInts([nearMaxBigInt, nearMaxBigInt])).toEqual(nearMaxBigInt);
+    expect(getCeilMedianOfBigInts([nearMaxBigInt - 1n, nearMaxBigInt])).toEqual(nearMaxBigInt);
+    expect(getCeilMedianOfBigInts([-nearMaxBigInt, nearMaxBigInt])).toEqual(0n);
   });
 });

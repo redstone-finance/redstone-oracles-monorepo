@@ -23,8 +23,10 @@ export class MultiAgreementExecutor<R extends unknown[]> extends AgreementExecut
     );
   }
 
-  override aggregate(results: R[][]) {
-    return (_.zip(...results) as R[][]).map((result) => this.agreementExecutor.aggregate(result));
+  override aggregate(results: R[][], totalLength: number) {
+    return (_.zip(...results) as R[][]).map((result) =>
+      this.agreementExecutor.aggregate(result, totalLength)
+    );
   }
 
   override verifySettlements(

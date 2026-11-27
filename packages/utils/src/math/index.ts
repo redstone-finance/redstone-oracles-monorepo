@@ -4,6 +4,7 @@ import * as ISafeNumberMath from "../ISafeNumber";
 import { ISafeNumber, createSafeNumber } from "../ISafeNumber";
 import { assert, bignumberishToDecimal } from "../common";
 
+export * from "./bigint-median";
 export * from "./monotonic-cubic-spline";
 
 export type ConvertibleToISafeNumber = number | string | Decimal | ISafeNumber;
@@ -53,21 +54,6 @@ export const getMinOfBigInts = (values: bigint[]) => {
   assert(values.length > 0, "Cannot get min of an empty array");
 
   return values.reduce((min, value) => (value < min ? value : min));
-};
-
-export const getMedianOfBigInts = (values: bigint[]) => {
-  assert(values.length > 0, "Cannot get median value of an empty array");
-
-  const sorted = [...values].sort((a, b) => (a < b ? -1 : 1));
-  const middle = Math.floor(sorted.length / 2);
-
-  if (sorted.length % 2 === 0) {
-    const [left, right] = [sorted[middle - 1], sorted[middle]];
-
-    return left / 2n + right / 2n + ((left % 2n) + (right % 2n)) / 2n;
-  } else {
-    return sorted[middle];
-  }
 };
 
 export const scaleBigInt = (value: bigint, multiplier: number) =>
@@ -256,7 +242,7 @@ export function superFastMedian(arr: number[]): number {
     }
   }
 
-  return (lowerMedian + arr[mid]) / 2;
+  return lowerMedian / 2 + arr[mid] / 2;
 }
 
 export class Clamper {
